@@ -1,11 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-	<VResponsive>
-		<VApp theme="dark">
-			<RouterView />
-		</VApp>
-	</VResponsive>
+	<VMain>
+		<VContainer></VContainer>
+	</VMain>
 </template>
 
 <style scoped lang="scss"></style>

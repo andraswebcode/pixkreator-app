@@ -7,7 +7,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    FooterBar: typeof import('./src/components/editor/FooterBar.vue')['default']
+    LeftSideBar: typeof import('./src/components/editor/LeftSideBar.vue')['default']
+    MainContent: typeof import('./src/components/editor/MainContent.vue')['default']
+    RightSideBar: typeof import('./src/components/editor/RightSideBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ToolBar: typeof import('./src/components/editor/ToolBar.vue')['default']
+    TopBar: typeof import('./src/components/editor/TopBar.vue')['default']
+    UserMenu: typeof import('./src/components/common/UserMenu.vue')['default']
   }
 }

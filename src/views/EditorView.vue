@@ -1,5 +1,12 @@
 <script setup lang="ts"></script>
 
-<template></template>
+<template>
+	<TopBar />
+	<ToolBar />
+	<LeftSideBar />
+	<MainContent />
+	<RightSideBar />
+	<FooterBar />
+</template>
 
 <style scoped lang="scss"></style>

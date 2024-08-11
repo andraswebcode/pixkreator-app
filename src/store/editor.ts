@@ -1,10 +1,24 @@
 import { defineStore } from 'pinia';
 
-export interface EditorState {}
+type ActiveTool =
+	| 'templates'
+	| 'uploads'
+	| 'photos'
+	| 'graphics'
+	| 'ai'
+	| 'texts'
+	| 'draw'
+	| 'brand';
+
+export interface EditorState {
+	activeTool: ActiveTool;
+}
 
 export interface EditorGetters {}
 
 export default defineStore<string, EditorState, EditorGetters>('editor', {
-	state: () => ({}),
+	state: () => ({
+		activeTool: 'templates'
+	}),
 	getters: {}
 });
