@@ -15,7 +15,7 @@ const editor = useEditor();
 
 <template>
 	<VNavigationDrawer width="56" permanent>
-		<ToolBarList v-model="editor.activeTool">
+		<ToolBarList v-model="editor.tool">
 			<ToolBarItem
 				value="templates"
 				v-tooltip:end="'Templates'"

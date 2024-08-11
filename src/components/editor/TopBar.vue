@@ -5,8 +5,8 @@ import { mdiRedo, mdiUndo } from '@mdi/js';
 <template>
 	<VAppBar>
 		<template v-slot:prepend></template>
-		<VBtn :icon="mdiUndo" />
-		<VBtn :icon="mdiRedo" />
+		<VBtn :icon="mdiUndo" v-tooltip="'Undo'" />
+		<VBtn :icon="mdiRedo" v-tooltip="'Redo'" />
 		<template v-slot:append>
 			<VBtn color="primary" variant="flat">Save</VBtn>
 			<UserMenu />

@@ -1,24 +1,29 @@
 import { defineStore } from 'pinia';
 
-type ActiveTool =
-	| 'templates'
-	| 'uploads'
-	| 'photos'
-	| 'graphics'
-	| 'ai'
-	| 'texts'
-	| 'draw'
-	| 'brand';
+type Tool = 'templates' | 'uploads' | 'photos' | 'graphics' | 'ai' | 'texts' | 'draw' | 'brand';
+
+type Mode = 'select' | 'pan' | 'draw';
 
 export interface EditorState {
-	activeTool: ActiveTool;
+	// UI
+	tool: Tool;
+	// Canvas
+	mode: Mode;
+	zoom: number;
+	panX: number;
+	panY: number;
+	// Pencil
+	penWidth: number;
+	penColor: string;
 }
 
 export interface EditorGetters {}
 
 export default defineStore<string, EditorState, EditorGetters>('editor', {
 	state: () => ({
-		activeTool: 'templates'
+		tool: 'templates',
+		zoom: 1,
+		mode: 'select'
 	}),
 	getters: {}
 });

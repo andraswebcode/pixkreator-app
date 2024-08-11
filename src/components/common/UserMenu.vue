@@ -5,42 +5,38 @@ const userData = useUser();
 </script>
 
 <template>
-	<VBtn id="user-menu" :icon="mdiAccount" />
-	<VMenu activator="#user-menu">
+	<VBtn v-if="userData.loggedIn" id="user-menu" :icon="mdiAccount" />
+	<VBtn v-else :icon="mdiLogin" to="/login" v-tooltip="'Login'" />
+	<VMenu v-if="userData.loggedIn" activator="#user-menu">
 		<VList>
-			<VListItem v-if="userData.loggedIn">
+			<VListItem>
 				<template v-slot:prepend>
 					<VIcon :icon="mdiAccount" />
 				</template>
 				<VListItemTitle>{{ userData.user.name }}</VListItemTitle>
 				<VListItemSubtitle>{{ userData.user.email }}</VListItemSubtitle>
 			</VListItem>
-			<VDivider v-if="userData.loggedIn" />
-			<VListItem to="/" v-if="userData.loggedIn">
+			<VDivider />
+			<VListItem to="/">
 				<template v-slot:prepend>
 					<VIcon :icon="mdiDraw" />
 				</template>
 				<VListItemTitle>Editor</VListItemTitle>
 			</VListItem>
-			<VListItem to="/dashboard" v-if="userData.loggedIn">
+			<VListItem to="/dashboard">
 				<template v-slot:prepend>
 					<VIcon :icon="mdiViewDashboard" />
 				</template>
 				<VListItemTitle>Dashboard</VListItemTitle>
 			</VListItem>
-			<VListItem to="/account" v-if="userData.loggedIn">
+			<VListItem to="/account">
 				<template v-slot:prepend>
 					<VIcon :icon="mdiAccountCog" />
 				</template>
 				<VListItemTitle>Account</VListItemTitle>
 			</VListItem>
-			<VListItem to="/login" v-if="!userData.loggedIn">
-				<template v-slot:prepend>
-					<VIcon :icon="mdiLogin" />
-				</template>
-				<VListItemTitle>Login</VListItemTitle>
-			</VListItem>
-			<VListItem href="#" @click="userData.logout" v-if="userData.loggedIn">
+
+			<VListItem href="#" @click="userData.logout">
 				<template v-slot:prepend>
 					<VIcon :icon="mdiLogout" />
 				</template>

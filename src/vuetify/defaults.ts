@@ -5,6 +5,10 @@ const defaults = {
 	VBtn: {
 		// density: 'default'
 	},
+	VSlider: {
+		thumbSize: 18,
+		hideDetails: true
+	},
 	VNavigationDrawer: {
 		tag: 'aside'
 	},
