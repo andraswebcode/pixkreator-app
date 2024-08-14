@@ -16,9 +16,7 @@ type UserGetters = {
 	bearerToken: (state: UserState) => string;
 };
 
-type UserActions = {
-	logout: () => void;
-};
+type UserActions = {};
 
 let user: UserData = {};
 
@@ -36,10 +34,5 @@ export default defineStore<string, UserState, UserGetters, UserActions>('user', 
 		loggedIn: ({ user: { id, token } }) => !!(id && token),
 		bearerToken: ({ user: { token } }) => 'Bearer ' + token
 	},
-	actions: {
-		logout() {
-			this.user = {};
-			localStorage.removeItem('userData');
-		}
-	}
+	actions: {}
 });

@@ -1,9 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-	<AppBar />
-	<DashboardSideBar />
-	<DashboardContent />
+	<VCol>
+		<VCard></VCard>
+	</VCol>
 </template>
 
 <style scoped lang="scss"></style>

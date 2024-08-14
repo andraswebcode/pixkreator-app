@@ -6,6 +6,17 @@ import RegisterView from '../views/RegisterView.vue';
 import PWResetView from '../views/PWResetView.vue';
 import { useUser } from '../store';
 import AccountView from '../views/AccountView.vue';
+import DashboardHomeView from '../views/dashboard/DashboardHomeView.vue';
+import DashboardTemplatesView from '../views/dashboard/DashboardTemplatesView.vue';
+import DashboardProjectsView from '../views/dashboard/DashboardProjectsView.vue';
+import DashboardUploadsView from '../views/dashboard/DashboardUploadsView.vue';
+import DashboardAIImagesView from '../views/dashboard/DashboardAIImagesView.vue';
+import DashboardBrandView from '../views/dashboard/DashboardBrandView.vue';
+import DashboardPhotosView from '../views/dashboard/DashboardPhotosView.vue';
+import AccountProfileView from '../views/account/AccountProfileView.vue';
+import AccountNotificationView from '../views/account/AccountNotificationView.vue';
+import AccountSubscriptionView from '../views/account/AccountSubscriptionView.vue';
+import AccountSupportView from '../views/account/AccountSupportView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -19,7 +30,44 @@ const routes: RouteRecordRaw[] = [
 		component: DashboardView,
 		meta: {
 			requiresAuth: true
-		}
+		},
+		children: [
+			{
+				name: 'home',
+				path: '',
+				component: DashboardHomeView
+			},
+			{
+				name: 'templates',
+				path: 'templates/:category?',
+				component: DashboardTemplatesView
+			},
+			{
+				name: 'projects',
+				path: 'projects/:folder?',
+				component: DashboardProjectsView
+			},
+			{
+				name: 'uploads',
+				path: 'uploads',
+				component: DashboardUploadsView
+			},
+			{
+				name: 'photos',
+				path: 'photos',
+				component: DashboardPhotosView
+			},
+			{
+				name: 'ai-images',
+				path: 'ai-images',
+				component: DashboardAIImagesView
+			},
+			{
+				name: 'brand',
+				path: 'brand',
+				component: DashboardBrandView
+			}
+		]
 	},
 	{
 		name: 'account',
@@ -27,7 +75,29 @@ const routes: RouteRecordRaw[] = [
 		component: AccountView,
 		meta: {
 			requiresAuth: true
-		}
+		},
+		children: [
+			{
+				name: 'profile',
+				path: '',
+				component: AccountProfileView
+			},
+			{
+				name: 'notification',
+				path: 'notification',
+				component: AccountNotificationView
+			},
+			{
+				name: 'subscription',
+				path: 'subscription',
+				component: AccountSubscriptionView
+			},
+			{
+				name: 'support',
+				path: 'support',
+				component: AccountSupportView
+			}
+		]
 	},
 	{
 		name: 'login',

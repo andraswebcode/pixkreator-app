@@ -1,7 +1,32 @@
 <script setup>
 import { mdiAccount, mdiAccountCog, mdiDraw, mdiLogin, mdiLogout, mdiViewDashboard } from '@mdi/js';
 import { useUser } from '../../store';
+import { useRouter } from 'vue-router';
+import axios from '../../axios';
+
 const userData = useUser();
+const router = useRouter();
+const logout = () => {
+	axios
+		.post(
+			'logout',
+			{},
+			{
+				headers: {
+					Authorization: userData.bearerToken
+				}
+			}
+		)
+		.then(({ data }) => {
+			console.log(data);
+			userData.user = {};
+			localStorage.removeItem('userData');
+			router.push('/login');
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+};
 </script>
 
 <template>
@@ -36,7 +61,7 @@ const userData = useUser();
 				<VListItemTitle>Account</VListItemTitle>
 			</VListItem>
 
-			<VListItem href="#" @click="userData.logout">
+			<VListItem href="#" @click="logout">
 				<template v-slot:prepend>
 					<VIcon :icon="mdiLogout" />
 				</template>

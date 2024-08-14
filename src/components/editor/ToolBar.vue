@@ -4,7 +4,7 @@ import {
 	mdiCloudUpload,
 	mdiCreation,
 	mdiFormatText,
-	mdiImage,
+	mdiImageMultiple,
 	mdiPaletteSwatchVariant,
 	mdiShape,
 	mdiViewDashboardEdit
@@ -22,7 +22,7 @@ const editor = useEditor();
 				:icon="mdiViewDashboardEdit"
 			/>
 			<ToolBarItem value="uploads" v-tooltip:end="'Uploads'" :icon="mdiCloudUpload" />
-			<ToolBarItem value="photos" v-tooltip:end="'Photos'" :icon="mdiImage" />
+			<ToolBarItem value="photos" v-tooltip:end="'Photos'" :icon="mdiImageMultiple" />
 			<ToolBarItem value="graphics" v-tooltip:end="'Graphics'" :icon="mdiShape" />
 			<ToolBarItem value="ai" v-tooltip:end="'Generate With AI'" :icon="mdiCreation" />
 			<ToolBarItem value="texts" v-tooltip:end="'Texts'" :icon="mdiFormatText" />

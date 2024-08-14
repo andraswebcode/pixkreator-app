@@ -1,13 +1,35 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import axios from '../axios';
+import { useUser } from '../store';
+import { useRouter } from 'vue-router';
+import { useNotice } from '../hooks';
 
 const email = ref('');
 const password = ref('');
 const loading = ref(false);
+const userData = useUser();
+const router = useRouter();
+const notice = useNotice();
 const emailRules = [(value: string) => !!value || 'Email is required.'];
 const passwordRules = [(value: string) => !!value || 'Password is required.'];
 const login = () => {
 	loading.value = true;
+	axios
+		.post('login', {
+			email: email.value,
+			password: password.value
+		})
+		.then(({ data }) => {
+			userData.user = data.user;
+			localStorage.setItem('userData', JSON.stringify(userData.user));
+			router.push('/dashboard');
+		})
+		.catch((error) => {
+			console.log(error);
+			loading.value = false;
+			notice.send(error.response?.data?.message || error.message, 'error');
+		});
 };
 </script>
 

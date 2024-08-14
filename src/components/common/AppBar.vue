@@ -1,5 +1,12 @@
 <script setup lang="ts"></script>
 
-<template></template>
+<template>
+	<VAppBar>
+		<template v-slot:prepend></template>
+		<template v-slot:append>
+			<UserMenu />
+		</template>
+	</VAppBar>
+</template>
 
 <style scoped lang="scss"></style>

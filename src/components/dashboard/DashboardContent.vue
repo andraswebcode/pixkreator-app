@@ -1,9 +1,11 @@
 <script setup lang="ts"></script>
 
 <template>
-	<AppBar />
-	<DashboardSideBar />
-	<DashboardContent />
+	<VMain>
+		<VContainer>
+			<RouterView />
+		</VContainer>
+	</VMain>
 </template>
 
 <style scoped lang="scss"></style>

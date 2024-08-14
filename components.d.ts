@@ -8,8 +8,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppBar: typeof import('./src/components/common/AppBar.vue')['default']
+    DashboardContent: typeof import('./src/components/dashboard/DashboardContent.vue')['default']
+    DashboardSideBar: typeof import('./src/components/dashboard/DashboardSideBar.vue')['default']
     FooterBar: typeof import('./src/components/editor/FooterBar.vue')['default']
     FormContainer: typeof import('./src/components/common/FormContainer.vue')['default']
+    GridItem: typeof import('./src/components/common/GridItem.vue')['default']
     LeftSideBar: typeof import('./src/components/editor/LeftSideBar.vue')['default']
     MainContent: typeof import('./src/components/editor/MainContent.vue')['default']
     RightSideBar: typeof import('./src/components/editor/RightSideBar.vue')['default']
