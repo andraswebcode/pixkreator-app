@@ -9,60 +9,33 @@ import {
 	mdiPaletteSwatchVariant,
 	mdiViewDashboardEdit
 } from '@mdi/js';
-import { ref } from 'vue';
-
-const rail = ref(true);
 </script>
 
 <template>
-	<VNavigationDrawer :rail="rail" @click="rail = false">
+	<VNavigationDrawer width="56" permanent>
 		<VList>
-			<VListItem to="/dashboard">
-				<template v-slot:prepend>
-					<VIcon :icon="mdiHome" />
-				</template>
-				<VListItemTitle>Home</VListItemTitle>
+			<VListItem to="/dashboard" v-tooltip:end="'Home'">
+				<VIcon :icon="mdiHome" />
 			</VListItem>
-			<VListItem to="/dashboard/templates">
-				<template v-slot:prepend>
-					<VIcon :icon="mdiViewDashboardEdit" />
-				</template>
-				<VListItemTitle>Templates</VListItemTitle>
+			<VListItem to="/dashboard/projects" v-tooltip:end="'All Projects'">
+				<VIcon :icon="mdiFolderMultiple" />
 			</VListItem>
-			<VListItem to="/dashboard/projects">
-				<template v-slot:prepend>
-					<VIcon :icon="mdiFolderMultiple" />
-				</template>
-				<VListItemTitle>All Projects</VListItemTitle>
+			<VListItem to="/dashboard/uploads" v-tooltip:end="'Uploads'">
+				<VIcon :icon="mdiCloudUpload" />
 			</VListItem>
-			<VListItem to="/dashboard/uploads">
-				<template v-slot:prepend>
-					<VIcon :icon="mdiCloudUpload" />
-				</template>
-				<VListItemTitle>Uploads</VListItemTitle>
+			<VListItem to="/dashboard/templates" v-tooltip:end="'Templates'">
+				<VIcon :icon="mdiViewDashboardEdit" />
 			</VListItem>
-			<VListItem to="/dashboard/photos">
-				<template v-slot:prepend>
-					<VIcon :icon="mdiImageMultiple" />
-				</template>
-				<VListItemTitle>Photos</VListItemTitle>
+			<VListItem to="/dashboard/photos" v-tooltip:end="'Photos'">
+				<VIcon :icon="mdiImageMultiple" />
 			</VListItem>
-			<VListItem to="/dashboard/ai-images">
-				<template v-slot:prepend>
-					<VIcon :icon="mdiCreation" />
-				</template>
-				<VListItemTitle>AI Images</VListItemTitle>
+			<VListItem to="/dashboard/ai-images" v-tooltip:end="'AI Images'">
+				<VIcon :icon="mdiCreation" />
 			</VListItem>
-			<VListItem to="/dashboard/brand">
-				<template v-slot:prepend>
-					<VIcon :icon="mdiPaletteSwatchVariant" />
-				</template>
-				<VListItemTitle>Brand</VListItemTitle>
+			<VListItem to="/dashboard/brand" v-tooltip:end="'Brand'">
+				<VIcon :icon="mdiPaletteSwatchVariant" />
 			</VListItem>
 		</VList>
-		<template v-slot:append>
-			<SideBarToggler v-if="!rail" @click.stop="rail = true" :icon="mdiChevronLeft" />
-		</template>
 	</VNavigationDrawer>
 </template>
 

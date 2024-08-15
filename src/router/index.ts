@@ -38,11 +38,6 @@ const routes: RouteRecordRaw[] = [
 				component: DashboardHomeView
 			},
 			{
-				name: 'templates',
-				path: 'templates/:category?',
-				component: DashboardTemplatesView
-			},
-			{
 				name: 'projects',
 				path: 'projects/:folder?',
 				component: DashboardProjectsView
@@ -51,6 +46,11 @@ const routes: RouteRecordRaw[] = [
 				name: 'uploads',
 				path: 'uploads',
 				component: DashboardUploadsView
+			},
+			{
+				name: 'templates',
+				path: 'templates/:category?',
+				component: DashboardTemplatesView
 			},
 			{
 				name: 'photos',

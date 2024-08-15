@@ -1,3 +1,5 @@
+import { mdiChevronLeft, mdiChevronRight, mdiMenuDown } from '@mdi/js';
+
 const defaults = {
 	global: {
 		// density: 'compact'
@@ -8,6 +10,9 @@ const defaults = {
 	VSlider: {
 		thumbSize: 18,
 		hideDetails: true
+	},
+	VSelect: {
+		menuIcon: mdiMenuDown
 	},
 	VNavigationDrawer: {
 		tag: 'aside'
@@ -22,6 +27,14 @@ const defaults = {
 			variant: 'flat',
 			size: 'small'
 		}
+	},
+	VPagination: {
+		prevIcon: mdiChevronLeft,
+		nextIcon: mdiChevronRight
+	},
+	VTabs: {
+		prevIcon: mdiChevronLeft,
+		nextIcon: mdiChevronRight
 	},
 	// Custom components.
 	ToolBarList: {
