@@ -39,7 +39,7 @@ const routes: RouteRecordRaw[] = [
 			},
 			{
 				name: 'projects',
-				path: 'projects/:folder?',
+				path: 'projects',
 				component: DashboardProjectsView
 			},
 			{

@@ -1,5 +1,26 @@
 <script setup lang="ts">
-const items = Array(6).fill('');
+import { onMounted, ref } from 'vue';
+import useRequest from '../../hooks/request';
+
+const recentProjects = ref([]);
+const editorsChoice = ref([]);
+const { list } = useRequest();
+
+onMounted(() => {
+	list(
+		{
+			per_page: 6
+		},
+		'designs',
+		(data) => {
+			recentProjects.value = data.items;
+		}
+	);
+	list({}, 'templates/editorschoice', (data) => {
+		editorsChoice.value = data;
+		console.log(data);
+	});
+});
 </script>
 
 <template>
@@ -44,25 +65,27 @@ const items = Array(6).fill('');
 					</VCol>
 				</VRow>
 			</VCol>
-			<GridItem v-for="item of items" cols="2" />
+			<GridItem v-for="item of recentProjects" cols="2" />
 		</VRow>
 		<VRow>
 			<VCol>
 				<h2>Editor's Choice</h2>
 			</VCol>
 		</VRow>
-		<VRow>
+		<VRow v-for="item of editorsChoice" :key="item.value">
 			<VCol cols="12">
 				<VRow justify="space-between" align="center">
 					<VCol cols="auto">
-						<VChip>Instagram Story</VChip>
+						<VChip>{{ item.label }}</VChip>
 					</VCol>
 					<VCol cols="auto">
 						<VBtn
 							variant="plain"
 							:to="{
-								path: 'dashboard/templates',
-								query: {}
+								name: 'templates',
+								params: {
+									category: item.value
+								}
 							}"
 						>
 							View All
@@ -70,28 +93,7 @@ const items = Array(6).fill('');
 					</VCol>
 				</VRow>
 			</VCol>
-			<GridItem v-for="item of items" cols="2" />
-		</VRow>
-		<VRow>
-			<VCol cols="12">
-				<VRow justify="space-between" align="center">
-					<VCol cols="auto">
-						<VChip>Instagram Story</VChip>
-					</VCol>
-					<VCol cols="auto">
-						<VBtn
-							variant="plain"
-							:to="{
-								path: 'dashboard/templates',
-								query: {}
-							}"
-						>
-							View All
-						</VBtn>
-					</VCol>
-				</VRow>
-			</VCol>
-			<GridItem v-for="item of items" cols="2" />
+			<GridItem v-for="tmpl of item.templates" :key="tmpl.id" cols="2" />
 		</VRow>
 	</VContainer>
 </template>

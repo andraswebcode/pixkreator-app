@@ -2,7 +2,7 @@
 import { mdiMagnify } from '@mdi/js';
 import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
-import categories from './../../../utils/template-categories';
+import categories from '../../../utils/template-categories';
 
 const { list } = useRequest();
 const search = ref('');

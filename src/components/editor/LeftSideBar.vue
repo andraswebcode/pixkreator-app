@@ -12,7 +12,9 @@ const onClick = () => {
 
 <template>
 	<VNavigationDrawer v-if="editor.tool" v-model="show" :width="356">
-		<TemplatesList v-if="editor.tool === 'templates'" />
+		<LeftSideBarTemplates v-if="editor.tool === 'templates'" />
+		<LeftSideBarUploads v-else-if="editor.tool === 'uploads'" />
+		<LeftSideBarPhotos v-else-if="editor.tool === 'photos'" />
 		<template v-slot:append>
 			<SideBarToggler @click="onClick" :icon="show ? mdiChevronLeft : mdiChevronRight" />
 		</template>

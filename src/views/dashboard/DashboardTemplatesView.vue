@@ -40,9 +40,8 @@ onBeforeRouteUpdate((to) => {
 				label="Search Templates"
 				variant="solo"
 				hide-details
-				single-line
 				:append-inner-icon="mdiMagnify"
-				:model-value="search"
+				v-model="search"
 				@click:append-inner="filter"
 			/>
 		</VCol>

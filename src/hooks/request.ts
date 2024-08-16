@@ -14,13 +14,7 @@ const useRequest = () => {
 					Authorization: bearerToken
 				}
 			})
-			.then(({ data }) => {
-				return {
-					page: data.page,
-					totalPages: data.total_pages,
-					items: data.items
-				};
-			})
+			.then(({ data }) => data)
 			.then(then)
 			.catch((error) => {
 				console.error(error);
