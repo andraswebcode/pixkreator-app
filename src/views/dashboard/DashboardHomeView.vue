@@ -65,14 +65,15 @@ onMounted(() => {
 					</VCol>
 				</VRow>
 			</VCol>
-			<GridItem v-for="item of recentProjects" cols="2" />
+			<GridItem v-if="recentProjects.length" v-for="item of recentProjects" cols="2" />
+			<GridLoader v-else :cols="2" :count="6" />
 		</VRow>
 		<VRow>
 			<VCol>
 				<h2>Editor's Choice</h2>
 			</VCol>
 		</VRow>
-		<VRow v-for="item of editorsChoice" :key="item.value">
+		<VRow v-if="editorsChoice.length" v-for="item of editorsChoice" :key="item.value">
 			<VCol cols="12">
 				<VRow justify="space-between" align="center">
 					<VCol cols="auto">
@@ -94,6 +95,19 @@ onMounted(() => {
 				</VRow>
 			</VCol>
 			<GridItem v-for="tmpl of item.templates" :key="tmpl.id" cols="2" />
+		</VRow>
+		<VRow v-else v-for="i in 3" :key="i">
+			<VCol cols="12">
+				<VRow justify="space-between" align="center">
+					<VCol cols="auto">
+						<VChip>Loading...</VChip>
+					</VCol>
+					<VCol cols="auto">
+						<VBtn variant="plain" disabled>View All</VBtn>
+					</VCol>
+				</VRow>
+			</VCol>
+			<GridLoader :cols="2" :count="6" />
 		</VRow>
 	</VContainer>
 </template>

@@ -58,18 +58,18 @@ onBeforeRouteUpdate((to) => {
 			</VCard>
 		</VCol>
 	</VRow>
-	<VInfiniteScroll v-if="items.length">
-		<VContainer>
+	<VInfiniteScroll>
+		<VContainer v-if="items.length">
 			<VRow>
 				<GridItem v-for="item of items" :key="item.id" cols="2" />
 			</VRow>
 		</VContainer>
+		<VContainer v-else>
+			<VRow>
+				<GridLoader :cols="2" :count="24" />
+			</VRow>
+		</VContainer>
 	</VInfiniteScroll>
-	<VContainer v-else>
-		<VRow>
-			<GridLoader :cols="2" :count="24" />
-		</VRow>
-	</VContainer>
 </template>
 
 <style scoped lang="scss"></style>

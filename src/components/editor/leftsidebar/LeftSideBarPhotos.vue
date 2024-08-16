@@ -25,7 +25,7 @@ onMounted(filter);
 <template>
 	<LibraryWrapper>
 		<VTextField
-			label="Search Templates"
+			label="Search Photos"
 			variant="solo"
 			hide-details
 			single-line
