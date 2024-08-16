@@ -16,6 +16,7 @@ const filter = () => {
 	if (search.value) {
 		query.search = search.value;
 	}
+	items.value = [];
 	router.push({
 		query
 	});
@@ -64,6 +65,11 @@ onBeforeRouteUpdate((to) => {
 			</VRow>
 		</VContainer>
 	</VInfiniteScroll>
+	<VContainer v-else>
+		<VRow>
+			<GridLoader :cols="2" :count="24" />
+		</VRow>
+	</VContainer>
 </template>
 
 <style scoped lang="scss"></style>

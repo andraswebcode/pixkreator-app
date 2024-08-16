@@ -9,6 +9,7 @@ const search = ref('');
 const category = ref('');
 const items = ref([]);
 const filter = () => {
+	items.value = [];
 	list(
 		{
 			search: search.value,
@@ -46,10 +47,15 @@ onMounted(filter);
 			hide-details
 			@update:model-value="filter"
 		/>
-		<VInfiniteScroll v-if="items.length">
-			<VContainer>
+		<VInfiniteScroll>
+			<VContainer v-if="items.length">
 				<VRow>
 					<GridItem v-for="item of items" :key="item.id" cols="6" />
+				</VRow>
+			</VContainer>
+			<VContainer v-else>
+				<VRow>
+					<GridLoader :cols="6" :count="24" />
 				</VRow>
 			</VContainer>
 		</VInfiniteScroll>

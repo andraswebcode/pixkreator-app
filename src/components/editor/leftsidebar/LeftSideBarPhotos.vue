@@ -7,6 +7,7 @@ const { list } = useRequest();
 const query = ref('');
 const items = ref([]);
 const filter = () => {
+	items.value = [];
 	list(
 		{
 			query: query.value
@@ -33,10 +34,15 @@ onMounted(filter);
 			v-model="query"
 			@click:append-inner="filter"
 		/>
-		<VInfiniteScroll v-if="items.length">
-			<VContainer>
+		<VInfiniteScroll>
+			<VContainer v-if="items.length">
 				<VRow>
 					<GridItem v-for="item of items" :key="item.id" cols="6" :src="item.thumbnail" />
+				</VRow>
+			</VContainer>
+			<VContainer v-else>
+				<VRow>
+					<GridLoader :cols="6" :count="24" />
 				</VRow>
 			</VContainer>
 		</VInfiniteScroll>

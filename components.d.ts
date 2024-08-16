@@ -13,6 +13,7 @@ declare module 'vue' {
     FooterBar: typeof import('./src/components/editor/FooterBar.vue')['default']
     FormContainer: typeof import('./src/components/common/FormContainer.vue')['default']
     GridItem: typeof import('./src/components/common/GridItem.vue')['default']
+    GridLoader: typeof import('./src/components/common/GridLoader.vue')['default']
     LeftSideBar: typeof import('./src/components/editor/LeftSideBar.vue')['default']
     LeftSideBarPhotos: typeof import('./src/components/editor/leftsidebar/LeftSideBarPhotos.vue')['default']
     LeftSideBarTemplates: typeof import('./src/components/editor/leftsidebar/LeftSideBarTemplates.vue')['default']
