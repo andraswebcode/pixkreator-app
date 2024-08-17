@@ -52,14 +52,7 @@ onBeforeRouteUpdate((to) => {
 <template>
 	<VRow justify="center">
 		<VCol cols="4">
-			<VTextField
-				label="Search Photos"
-				variant="solo"
-				hide-details
-				:append-inner-icon="mdiMagnify"
-				v-model="search"
-				@click:append-inner="filter"
-			/>
+			<SearchInput label="Search Photos" v-model="search" @click:append-inner="filter" />
 		</VCol>
 	</VRow>
 	<VInfiniteScroll>

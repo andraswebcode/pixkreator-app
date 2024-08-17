@@ -5,7 +5,9 @@ import useRequest from '../../../hooks/request';
 
 const { list } = useRequest();
 const query = ref('');
-const items = ref([]);
+const items = ref<any[]>([]);
+const showDetails = ref(false);
+const index = ref(0);
 const filter = () => {
 	items.value = [];
 	list(
@@ -17,6 +19,10 @@ const filter = () => {
 			items.value = data.items;
 		}
 	);
+};
+const openDetails = (i: number) => {
+	showDetails.value = true;
+	index.value = i;
 };
 
 onMounted(filter);
@@ -37,7 +43,13 @@ onMounted(filter);
 		<VInfiniteScroll>
 			<VContainer v-if="items.length">
 				<VRow>
-					<GridItem v-for="item of items" :key="item.id" cols="6" :src="item.thumbnail" />
+					<GridItem
+						v-for="(item, i) of items"
+						:key="item.id"
+						cols="6"
+						:src="item.thumbnail"
+						@click="openDetails(i)"
+					/>
 				</VRow>
 			</VContainer>
 			<VContainer v-else>
@@ -47,6 +59,16 @@ onMounted(filter);
 			</VContainer>
 		</VInfiniteScroll>
 	</LibraryWrapper>
+	<PersistentHeaderDialog v-model="showDetails" @close="showDetails = false" max-width="800">
+		<DetailsCarousel v-model="index">
+			<VCarouselItem v-for="item of items" :key="item.id">
+				<PhotoDetails v-bind="item" />
+			</VCarouselItem>
+		</DetailsCarousel>
+		<template v-slot:actions>
+			<VBtn>Add Photo</VBtn>
+		</template>
+	</PersistentHeaderDialog>
 </template>
 
 <style scoped lang="scss"></style>

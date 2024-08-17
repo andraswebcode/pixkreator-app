@@ -1,4 +1,4 @@
-import { mdiChevronLeft, mdiChevronRight, mdiMenuDown } from '@mdi/js';
+import { mdiChevronLeft, mdiChevronRight, mdiClose, mdiMagnify, mdiMenuDown } from '@mdi/js';
 
 const defaults = {
 	global: {
@@ -53,6 +53,22 @@ const defaults = {
 		rounded: false,
 		flat: true,
 		density: 'compact'
+	},
+	CloseBtn: {
+		icon: mdiClose,
+		size: 'small'
+	},
+	SearchInput: {
+		variant: 'solo',
+		hideDetails: true,
+		appendInnerIcon: mdiMagnify
+	},
+	DetailsCarousel: {
+		continuous: false,
+		prevIcon: mdiChevronLeft,
+		nextIcon: mdiChevronRight,
+		hideDelimiters: true,
+		hideDelimiterBackground: true
 	}
 };
 

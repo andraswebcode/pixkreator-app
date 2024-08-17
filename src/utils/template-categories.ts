@@ -1,9 +1,5 @@
 const templateCategories = [
 	{
-		label: 'All',
-		value: ''
-	},
-	{
 		label: 'Instagram Post',
 		value: 'instagram_post',
 		width: 1080,

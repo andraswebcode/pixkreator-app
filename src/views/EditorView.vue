@@ -7,6 +7,7 @@
 	<MainContent />
 	<RightSideBar />
 	<FooterBar />
+	<StartDialog />
 </template>
 
 <style scoped lang="scss"></style>

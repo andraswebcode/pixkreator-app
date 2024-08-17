@@ -37,14 +37,7 @@ onBeforeRouteUpdate((to) => {
 <template>
 	<VRow justify="center">
 		<VCol cols="4">
-			<VTextField
-				label="Search Templates"
-				variant="solo"
-				hide-details
-				:append-inner-icon="mdiMagnify"
-				v-model="search"
-				@click:append-inner="filter"
-			/>
+			<SearchInput label="Search Templates" v-model="search" @click:append-inner="filter" />
 		</VCol>
 	</VRow>
 	<VRow justify="center">

@@ -1,14 +1,15 @@
 <script setup lang="ts">
 const props = defineProps<{
 	cols: string | number;
-	src: string;
+	src?: string;
 }>();
+const emit = defineEmits(['click']);
 </script>
 
 <template>
 	<VCol :cols="props.cols">
-		<VCard>
-			<VImg aspect-ratio="1" color="primary" cover :lazy-src="props.src" :src="props.src" />
+		<VCard hover link @click.prevent="emit('click')">
+			<VImg aspect-ratio="1" color="primary" cover :src="props.src" />
 		</VCard>
 	</VCol>
 </template>
