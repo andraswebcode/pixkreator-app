@@ -30,7 +30,7 @@ export interface EditorGetters {}
 
 export default defineStore<string, EditorState, EditorGetters>('editor', {
 	state: () => ({
-		tool: 'templates',
+		tool: '',
 		zoom: 1,
 		mode: 'select'
 	}),

@@ -10,6 +10,7 @@ declare module 'vue' {
     AppBar: typeof import('./src/components/common/AppBar.vue')['default']
     DashboardContent: typeof import('./src/components/dashboard/DashboardContent.vue')['default']
     DashboardSideBar: typeof import('./src/components/dashboard/DashboardSideBar.vue')['default']
+    FabricCanvas: typeof import('./src/components/editor/maincontent/FabricCanvas.vue')['default']
     FooterBar: typeof import('./src/components/editor/FooterBar.vue')['default']
     FormContainer: typeof import('./src/components/common/FormContainer.vue')['default']
     GridItem: typeof import('./src/components/common/GridItem.vue')['default']

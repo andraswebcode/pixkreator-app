@@ -3,7 +3,8 @@ import App from './App.vue';
 import vuetify from './vuetify';
 import router from './router';
 import store from './store';
+import domResize from './directives/dom-resize';
 
 import './style.scss';
 
-createApp(App).use(router).use(vuetify).use(store).mount('#app');
+createApp(App).directive('dom-resize', domResize).use(router).use(vuetify).use(store).mount('#app');

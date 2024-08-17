@@ -2,8 +2,14 @@
 
 <template>
 	<VMain>
-		<VContainer></VContainer>
+		<VContainer>
+			<FabricCanvas />
+		</VContainer>
 	</VMain>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.v-container {
+	height: 100%;
+}
+</style>
