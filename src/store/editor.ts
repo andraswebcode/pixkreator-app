@@ -21,6 +21,8 @@ export interface EditorState {
 	zoom: number;
 	panX: number;
 	panY: number;
+	width: number;
+	height: number;
 	// Pencil
 	penWidth: number;
 	penColor: string;
@@ -34,7 +36,9 @@ export default defineStore<string, EditorState, EditorGetters>('editor', {
 		mode: 'select',
 		zoom: 1,
 		panX: 0,
-		panY: 0
+		panY: 0,
+		width: 0,
+		height: 0
 	}),
 	getters: {}
 });

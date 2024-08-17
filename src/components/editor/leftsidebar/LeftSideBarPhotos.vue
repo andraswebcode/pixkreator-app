@@ -2,8 +2,11 @@
 import { mdiMagnify } from '@mdi/js';
 import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
+import { useProject } from '../../../store';
+import { PHOTO_SIZES } from '../../../utils/constants';
 
 const { list } = useRequest();
+const project = useProject();
 const query = ref('');
 const items = ref<any[]>([]);
 const showDetails = ref(false);
@@ -23,6 +26,13 @@ const filter = () => {
 const openDetails = (i: number) => {
 	showDetails.value = true;
 	index.value = i;
+};
+const addPhoto = () => {
+	const item = items.value[index.value];
+	project.addLayer({
+		type: 'image',
+		src: item.large
+	});
 };
 
 onMounted(filter);
@@ -62,11 +72,14 @@ onMounted(filter);
 	<PersistentHeaderDialog v-model="showDetails" @close="showDetails = false" max-width="800">
 		<DetailsCarousel v-model="index">
 			<VCarouselItem v-for="item of items" :key="item.id">
-				<PhotoDetails v-bind="item" />
+				<PhotoDetails v-bind="item">
+					<VSelect label="Select a Size" :items="PHOTO_SIZES" />
+					<VSwitch label="Resize Canvas to Image Size" />
+				</PhotoDetails>
 			</VCarouselItem>
 		</DetailsCarousel>
 		<template v-slot:actions>
-			<VBtn>Add Photo</VBtn>
+			<VBtn @click="addPhoto">Add Photo</VBtn>
 		</template>
 	</PersistentHeaderDialog>
 </template>

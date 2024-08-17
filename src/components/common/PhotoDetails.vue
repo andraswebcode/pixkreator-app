@@ -1,18 +1,31 @@
 <script setup lang="ts">
 const props = defineProps<{
-	src: string;
+	title: string;
+	medium: string;
+	width: number;
+	height: number;
 }>();
 </script>
 
 <template>
 	<VContainer>
 		<VRow>
-			<VCol>
-				<VImg color="primary" :src="src" />
+			<VCol cols="6" align-self="center">
+				<VImg color="primary" :src="props.medium" />
 			</VCol>
-			<VCol></VCol>
+			<VCol cols="6">
+				<h3 class="mb-2">{{ props.title }}</h3>
+				<p class="mb-4">Original size: {{ props.width }}x{{ props.height }}</p>
+				<slot />
+			</VCol>
 		</VRow>
 	</VContainer>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.v-container,
+.v-row {
+	width: 100%;
+	height: 100%;
+}
+</style>

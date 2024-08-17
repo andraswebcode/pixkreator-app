@@ -40,8 +40,6 @@ onMounted(filter);
 		<VSelect
 			:items="categories"
 			v-model="category"
-			item-title="label"
-			item-value="value"
 			flat
 			single-line
 			hide-details

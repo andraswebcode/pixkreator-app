@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { createLayerObject } from '../utils/layer-object';
 
 export type IDList = string[];
 
@@ -6,6 +7,10 @@ export interface ByID {}
 
 export type ByIDs = {
 	[key: string]: ByID;
+};
+
+export type ChangedProps = {
+	[key: string]: Partial<ByID>;
 };
 
 export interface ProjectState {
@@ -20,7 +25,11 @@ export interface ProjectState {
 
 export interface ProjectGetters {}
 
-export interface ProjectActions {}
+export interface ProjectActions {
+	addLayer: (props: Partial<ByID>) => void;
+	removeLayer: (id: string) => void;
+	updateProps: (id: string | ChangedProps, props?: Partial<ByID>) => void;
+}
 
 export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>('project', {
 	state: () => ({
@@ -33,5 +42,12 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 		ids: []
 	}),
 	getters: {},
-	actions: {}
+	actions: {
+		addLayer(props) {
+			const layer = createLayerObject(props);
+			console.log(layer);
+		},
+		removeLayer() {},
+		updateProps() {}
+	}
 });

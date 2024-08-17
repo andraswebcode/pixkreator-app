@@ -10,18 +10,40 @@ const canvasRef = ref<HTMLCanvasElement | null>(null);
 const project = useProject();
 const editor = useEditor();
 const previousState = ref<any>({});
+const startPan = ref<{ x: number; y: number }>({ x: 0, y: 0 });
+const isPanning = ref(false);
+
+const updateVPT = () => {
+	if (fabricCanvas) {
+		const panX = editor.width / 2 - (project.width / 2) * editor.zoom + editor.panX;
+		const panY = editor.height / 2 - (project.height / 2) * editor.zoom + editor.panY;
+		fabricCanvas.setViewportTransform([editor.zoom, 0, 0, editor.zoom, panX, panY]);
+	}
+};
 const onResize = ({ width, height }: { width: number; height: number }) => {
+	editor.width = width;
+	editor.height = height;
 	if (fabricCanvas) {
 		fabricCanvas.setWidth(width);
 		fabricCanvas.setHeight(height);
 	}
+	updateVPT();
 };
-const updateVPT = () => {
-	if (fabricCanvas) {
-		const panX = fabricCanvas.width / 2 - (project.width / 2) * editor.zoom + editor.panX;
-		const panY = fabricCanvas.height / 2 - (project.height / 2) * editor.zoom + editor.panY;
-		fabricCanvas.setViewportTransform([editor.zoom, 0, 0, editor.zoom, panX, panY]);
+const onPanStart = (e) => {
+	startPan.value = {
+		x: e.clientX - editor.panX,
+		y: e.clientY - editor.panY
+	};
+	isPanning.value = true;
+};
+const onPanMove = (e) => {
+	if (isPanning.value) {
+		editor.panX = e.clientX - startPan.value.x;
+		editor.panY = e.clientY - startPan.value.y;
 	}
+};
+const onPanEnd = (e) => {
+	isPanning.value = false;
 };
 
 onMounted(() => {
@@ -39,6 +61,8 @@ onMounted(() => {
 			originY: 'top'
 		})
 	});
+	editor.width = clientWidth;
+	editor.height = clientHeight;
 	updateVPT();
 });
 
@@ -93,8 +117,16 @@ watch(() => [project.width, project.height, editor.zoom, editor.panX, editor.pan
 </script>
 
 <template>
-	<div id="canvas" class="canvas" v-dom-resize="onResize">
+	<div id="canvas" class="canvas position-relative" v-dom-resize="onResize">
 		<canvas ref="canvasRef" />
+		<div
+			v-if="editor.mode === 'pan'"
+			class="pan position-absolute"
+			@mousedown="onPanStart"
+			@mousemove="onPanMove"
+			@mouseup="onPanEnd"
+			@mouseleave="onPanEnd"
+		></div>
 	</div>
 </template>
 
@@ -102,5 +134,14 @@ watch(() => [project.width, project.height, editor.zoom, editor.panX, editor.pan
 .canvas {
 	width: 100%;
 	height: 100%;
+}
+.pan {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	cursor: grab;
 }
 </style>

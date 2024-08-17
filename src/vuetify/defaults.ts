@@ -12,7 +12,9 @@ const defaults = {
 		hideDetails: true
 	},
 	VSelect: {
-		menuIcon: mdiMenuDown
+		menuIcon: mdiMenuDown,
+		itemTitle: 'label',
+		itemValue: 'value'
 	},
 	VNavigationDrawer: {
 		tag: 'aside'
@@ -64,6 +66,7 @@ const defaults = {
 		appendInnerIcon: mdiMagnify
 	},
 	DetailsCarousel: {
+		height: 'auto',
 		continuous: false,
 		prevIcon: mdiChevronLeft,
 		nextIcon: mdiChevronRight,
