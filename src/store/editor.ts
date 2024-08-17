@@ -31,8 +31,10 @@ export interface EditorGetters {}
 export default defineStore<string, EditorState, EditorGetters>('editor', {
 	state: () => ({
 		tool: '',
+		mode: 'select',
 		zoom: 1,
-		mode: 'select'
+		panX: 0,
+		panY: 0
 	}),
 	getters: {}
 });

@@ -1,14 +1,95 @@
 <script setup lang="ts">
-import { useCanvas } from './../../../hooks';
+import { ref, onMounted, watch } from 'vue';
+import { useEditor, useProject } from './../../../store';
+import Canvas from '../../../canvas/canvas';
+import { Rect, util } from 'fabric';
+import { isEqual } from '../../../utils/functions';
 
-const { canvasRef, getFabricCanvas } = useCanvas();
-const onResize = ({ width, height }) => {
-	const canvas = getFabricCanvas();
-	if (canvas) {
-		canvas.setWidth(width);
-		canvas.setHeight(height);
+let fabricCanvas: Canvas;
+const canvasRef = ref<HTMLCanvasElement | null>(null);
+const project = useProject();
+const editor = useEditor();
+const previousState = ref<any>({});
+const onResize = ({ width, height }: { width: number; height: number }) => {
+	if (fabricCanvas) {
+		fabricCanvas.setWidth(width);
+		fabricCanvas.setHeight(height);
 	}
 };
+const updateVPT = () => {
+	if (fabricCanvas) {
+		const panX = fabricCanvas.width / 2 - (project.width / 2) * editor.zoom + editor.panX;
+		const panY = fabricCanvas.height / 2 - (project.height / 2) * editor.zoom + editor.panY;
+		fabricCanvas.setViewportTransform([editor.zoom, 0, 0, editor.zoom, panX, panY]);
+	}
+};
+
+onMounted(() => {
+	const { clientWidth = 0, clientHeight = 0 } = document.getElementById('canvas') || {};
+	fabricCanvas = new Canvas(canvasRef.value as HTMLCanvasElement, {
+		backgroundColor: '#FFF',
+		width: clientWidth,
+		height: clientHeight,
+		clipPath: new Rect({
+			top: 0,
+			left: 0,
+			width: project.width,
+			height: project.height,
+			originX: 'left',
+			originY: 'top'
+		})
+	});
+	updateVPT();
+});
+
+watch(
+	() => project.byIds,
+	(newLayers) => {
+		const canvasObjects = fabricCanvas.getObjects();
+		const newState = Object.keys(newLayers).reduce((acc, key) => {
+			acc[key] = {
+				id: key,
+				...newLayers[key]
+			};
+			return acc;
+		}, {});
+		const modifiedObjects = Object.keys(newState)
+			.filter((id) => {
+				const previousObj = previousState.value[id];
+				return !previousObj || !isEqual(previousObj, newState[id]);
+			})
+			.map((id) => newState[id]);
+
+		modifiedObjects.forEach((modifiedObj) => {
+			const existingObject = canvasObjects.find((obj: any) => obj.id === modifiedObj.id);
+
+			if (existingObject) {
+				existingObject.set(modifiedObj);
+				fabricCanvas.requestRenderAll();
+			} else {
+				// This is an easier way to update object list, and keep order as well.
+				fabricCanvas.clear();
+				util.enlivenObjects(
+					project.ids.map((id) => project.byIds[id]),
+					(objects) => {
+						fabricCanvas.add(...objects);
+					}
+				);
+			}
+		});
+
+		canvasObjects.forEach((obj: any) => {
+			if (!newState[obj.id]) {
+				fabricCanvas.remove(obj);
+			}
+		});
+
+		fabricCanvas.requestRenderAll();
+
+		previousState.value = newState;
+	}
+);
+watch(() => [project.width, project.height, editor.zoom, editor.panX, editor.panY], updateVPT);
 </script>
 
 <template>
