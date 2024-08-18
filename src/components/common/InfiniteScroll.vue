@@ -19,6 +19,6 @@ const loadMore = debounce((e) => {
 <style scoped lang="scss">
 .infinite-scroll {
 	overflow-x: hidden;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 </style>

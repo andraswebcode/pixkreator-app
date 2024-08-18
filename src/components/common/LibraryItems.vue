@@ -5,16 +5,21 @@ const props = defineProps<{
 	count: number;
 }>();
 const emit = defineEmits(['load']);
+const onLoad = () => {
+	if (props.itemsLength >= props.count) {
+		emit('load');
+	}
+};
 </script>
 
 <template>
-	<InfiniteScroll v-if="props.itemsLength" @load="emit('load')">
+	<InfiniteScroll v-if="props.itemsLength" @load="onLoad">
 		<VContainer>
 			<VRow>
 				<slot />
 			</VRow>
 		</VContainer>
-		<VProgressLinear indeterminate :height="12" />
+		<VProgressLinear v-if="props.itemsLength >= props.count" indeterminate :height="12" />
 	</InfiniteScroll>
 	<VContainer v-else>
 		<VRow>

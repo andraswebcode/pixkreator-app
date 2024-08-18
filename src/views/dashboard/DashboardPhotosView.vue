@@ -5,7 +5,7 @@ import useRequest from '../../hooks/request';
 
 const router = useRouter();
 const route = useRoute();
-const search = ref('');
+const search = ref(route.query.search);
 const page = ref(2);
 const items = ref<any>([]);
 const { list } = useRequest();

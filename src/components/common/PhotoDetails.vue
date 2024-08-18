@@ -10,10 +10,10 @@ const props = defineProps<{
 <template>
 	<VContainer>
 		<VRow>
-			<VCol cols="6" align-self="center">
-				<VImg color="primary" :src="props.medium" />
+			<VCol cols="8" align-self="center">
+				<VImg aspect-ratio="1" :src="props.medium" />
 			</VCol>
-			<VCol cols="6">
+			<VCol cols="4">
 				<h3 class="mb-2">{{ props.title }}</h3>
 				<p class="mb-4">Original size: {{ props.width }}x{{ props.height }}</p>
 				<slot />

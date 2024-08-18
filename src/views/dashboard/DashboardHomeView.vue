@@ -64,7 +64,13 @@ onMounted(() => {
 							<h2>Recent Projects</h2>
 						</VCol>
 						<VCol cols="auto">
-							<VBtn variant="plain" to="dashboard/projects">View All</VBtn>
+							<VBtn
+								variant="plain"
+								to="dashboard/projects"
+								:disabled="!recentProjects.length"
+							>
+								View All
+							</VBtn>
 						</VCol>
 					</VRow>
 				</VCol>
@@ -97,7 +103,12 @@ onMounted(() => {
 						</VCol>
 					</VRow>
 				</VCol>
-				<GridItem v-for="tmpl of item.templates" :key="tmpl.id" cols="2" />
+				<GridItem
+					v-for="tmpl of item.templates"
+					:key="tmpl.id"
+					cols="2"
+					:src="tmpl.thumbnail"
+				/>
 			</VRow>
 			<VRow v-else v-for="i in 3" :key="i">
 				<VCol cols="12">

@@ -9,7 +9,7 @@ const emit = defineEmits(['click']);
 <template>
 	<VCol :cols="props.cols">
 		<VCard hover link @click.prevent="emit('click')">
-			<VImg aspect-ratio="1" color="primary" cover :src="props.src" />
+			<VImg aspect-ratio="1" color="primary" :src="props.src" />
 		</VCard>
 	</VCol>
 </template>

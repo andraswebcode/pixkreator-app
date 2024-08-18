@@ -60,7 +60,7 @@ onMounted(filter);
 			@update:model-value="filter"
 		/>
 		<LibraryItems :items-length="items.length" :count="24" :cols="6" @load="loadMore">
-			<GridItem v-for="item of items" :key="item.id" cols="6" />
+			<GridItem v-for="item of items" :key="item.id" cols="6" :src="item.thumbnail" />
 		</LibraryItems>
 	</LibraryWrapper>
 </template>

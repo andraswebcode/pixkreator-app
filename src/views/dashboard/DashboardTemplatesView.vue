@@ -2,23 +2,34 @@
 import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
-import categories from './../../utils/template-categories';
+import templateCategories from './../../utils/template-categories';
 
 const router = useRouter();
 const route = useRoute();
-const search = ref('');
-const category = ref('');
+const search = ref(route.query.search);
+const category = ref(route.params.category);
 const page = ref(2);
 const items = ref<any>([]);
 const { list } = useRequest();
+const categories = [
+	{
+		label: 'All',
+		value: ''
+	},
+	...templateCategories
+];
 const filter = () => {
 	const query: any = {};
+	const params: any = {};
 	if (search.value) {
 		query.search = search.value;
 	}
+	params.category = category.value;
+
 	items.value = [];
 	router.push({
-		query
+		query,
+		params
 	});
 };
 const loadMore = () => {
@@ -37,12 +48,12 @@ const loadMore = () => {
 };
 
 onMounted(() => {
-	list(route.query, 'templates', (data) => {
+	list({ ...route.query, ...route.params }, 'templates', (data) => {
 		items.value = data.items;
 	});
 });
 onBeforeRouteUpdate((to) => {
-	list(to.query, 'templates', (data) => {
+	list({ ...to.query, ...to.params }, 'templates', (data) => {
 		items.value = data.items;
 		page.value = 2;
 	});

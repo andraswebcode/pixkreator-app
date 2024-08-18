@@ -54,7 +54,7 @@ onMounted(filter);
 
 <template>
 	<LibraryWrapper>
-		<SearchInput label="Search Photos" v-model="search" @click:append-inner="filter" />
+		<SearchInput label="Search Photos" v-model="query" @click:append-inner="filter" />
 		<LibraryItems :items-length="items.length" :count="24" :cols="6" @load="loadMore">
 			<GridItem
 				v-for="(item, i) of items"

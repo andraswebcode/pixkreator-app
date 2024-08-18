@@ -1,16 +1,53 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import useRequest from '../../../hooks/request';
 import templateCategories from '../../../utils/template-categories';
 import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 
+const { list } = useRequest();
+const search = ref('');
+const category = ref('');
+const page = ref(2);
+const items = ref<any>([]);
+const index = ref(0);
 const showDetails = ref(false);
-const openDetails = (item: any) => {
-	showDetails.value = true;
+const filter = () => {
+	items.value = [];
+	list(
+		{
+			search: search.value,
+			category: category.value
+		},
+		'templates',
+		(data) => {
+			items.value = data.items;
+		}
+	);
 };
+const loadMore = () => {
+	list(
+		{
+			search: search.value,
+			category: category.value,
+			page: page.value
+		},
+		'templates',
+		(data) => {
+			items.value.push(...data.items);
+			page.value++;
+		}
+	);
+};
+const openDetails = (i: number) => {
+	showDetails.value = true;
+	index.value = i;
+};
+
+onMounted(filter);
 </script>
 
 <template>
-	<VContainer>
+	<VContainer class="wrapper">
 		<VRow>
 			<VCol class="sidebar" cols="auto">
 				<SearchInput label="Search Templates" />
@@ -27,10 +64,23 @@ const openDetails = (item: any) => {
 					</VListItem>
 				</VList>
 			</VCol>
-			<VCol class="overflow-x-hidden overflow-y-auto">
-				<VRow>
-					<GridItem v-for="i of 24" :key="i" cols="2" @click="openDetails({})" />
-				</VRow>
+			<VCol>
+				<LibraryWrapper>
+					<LibraryItems
+						:items-length="items.length"
+						:count="24"
+						:cols="2"
+						@load="loadMore"
+					>
+						<GridItem
+							v-for="(item, i) of items"
+							:key="item.id"
+							cols="2"
+							:src="item.thumbnail"
+							@click="openDetails(i)"
+						/>
+					</LibraryItems>
+				</LibraryWrapper>
 			</VCol>
 		</VRow>
 	</VContainer>
@@ -39,9 +89,9 @@ const openDetails = (item: any) => {
 		@close="showDetails = false"
 		:max-width="DETAILS_DIALOG_WIDTH"
 	>
-		<DetailsCarousel>
-			<VCarouselItem v-for="i of 12" :key="i">
-				<TemplateDetails />
+		<DetailsCarousel v-model="index">
+			<VCarouselItem v-for="item of items" :key="item.id">
+				<TemplateDetails v-bind="item" />
 			</VCarouselItem>
 		</DetailsCarousel>
 		<template v-slot:actions>
@@ -51,6 +101,15 @@ const openDetails = (item: any) => {
 </template>
 
 <style scoped lang="scss">
+.wrapper {
+	height: 90vh;
+}
+.v-row {
+	height: 100%;
+	.v-col {
+		height: 100%;
+	}
+}
 .sidebar {
 	width: 256px;
 }
