@@ -8,4 +8,14 @@
 	</VMain>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.v-main {
+	height: 100vh;
+}
+.v-container {
+	display: flex;
+	flex-direction: column;
+	flex-flow: column;
+	height: 100%;
+}
+</style>

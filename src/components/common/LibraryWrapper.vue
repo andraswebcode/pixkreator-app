@@ -12,12 +12,12 @@ div {
 	flex-flow: column;
 	flex-direction: column;
 	height: 100%;
-	overflow-x: hidden;
+	overflow: hidden;
 	& > * {
 		flex: 0 0 auto;
 	}
 }
-:deep(.v-infinite-scroll) {
+:deep(.infinite-scroll) {
 	flex: 1 1 auto;
 	overflow-x: hidden;
 }

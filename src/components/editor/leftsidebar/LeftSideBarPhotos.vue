@@ -9,6 +9,7 @@ const { list } = useRequest();
 const project = useProject();
 const query = ref('');
 const items = ref<any[]>([]);
+const page = ref(2);
 const showDetails = ref(false);
 const index = ref(0);
 const filter = () => {
@@ -20,6 +21,19 @@ const filter = () => {
 		'photos',
 		(data) => {
 			items.value = data.items;
+		}
+	);
+};
+const loadMore = () => {
+	list(
+		{
+			query: query.value,
+			page: page.value
+		},
+		'photos',
+		(data) => {
+			items.value.push(...data.items);
+			page.value++;
 		}
 	);
 };
@@ -50,24 +64,15 @@ onMounted(filter);
 			v-model="query"
 			@click:append-inner="filter"
 		/>
-		<VInfiniteScroll>
-			<VContainer v-if="items.length">
-				<VRow>
-					<GridItem
-						v-for="(item, i) of items"
-						:key="item.id"
-						cols="6"
-						:src="item.thumbnail"
-						@click="openDetails(i)"
-					/>
-				</VRow>
-			</VContainer>
-			<VContainer v-else>
-				<VRow>
-					<GridLoader :cols="6" :count="24" />
-				</VRow>
-			</VContainer>
-		</VInfiniteScroll>
+		<LibraryItems :items-length="items.length" :count="24" :cols="6" @load="loadMore">
+			<GridItem
+				v-for="(item, i) of items"
+				:key="item.id"
+				cols="6"
+				:src="item.thumbnail"
+				@click="openDetails(i)"
+			/>
+		</LibraryItems>
 	</LibraryWrapper>
 	<PersistentHeaderDialog v-model="showDetails" @close="showDetails = false" max-width="800">
 		<DetailsCarousel v-model="index">
