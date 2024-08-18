@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiMagnify } from '@mdi/js';
 import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
 import { useProject } from '../../../store';
@@ -12,6 +11,7 @@ const items = ref<any[]>([]);
 const page = ref(2);
 const showDetails = ref(false);
 const index = ref(0);
+const size = ref('src');
 const filter = () => {
 	items.value = [];
 	list(
@@ -45,8 +45,9 @@ const addPhoto = () => {
 	const item = items.value[index.value];
 	project.addLayer({
 		type: 'image',
-		src: item.large
+		src: item.proxy[size.value]
 	});
+	showDetails.value = false;
 };
 
 onMounted(filter);
@@ -73,7 +74,7 @@ onMounted(filter);
 		<DetailsCarousel v-model="index">
 			<VCarouselItem v-for="item of items" :key="item.id">
 				<PhotoDetails v-bind="item">
-					<VSelect label="Select a Size" :items="PHOTO_SIZES" />
+					<VSelect label="Select a Size" :items="PHOTO_SIZES" v-model="size" />
 					<VSwitch label="Resize Canvas to Image Size" />
 				</PhotoDetails>
 			</VCarouselItem>

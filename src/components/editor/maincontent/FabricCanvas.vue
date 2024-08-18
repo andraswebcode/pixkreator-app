@@ -61,6 +61,8 @@ onMounted(() => {
 			originY: 'top'
 		})
 	});
+	// @ts-ignore
+	window._fc = fabricCanvas;
 	editor.width = clientWidth;
 	editor.height = clientHeight;
 	updateVPT();
@@ -93,9 +95,8 @@ watch(
 			} else {
 				// This is an easier way to update object list, and keep order as well.
 				fabricCanvas.clear();
-				util.enlivenObjects(
-					project.ids.map((id) => project.byIds[id]),
-					(objects) => {
+				util.enlivenObjects(project.ids.map((id) => project.byIds[id])).then(
+					(objects: any) => {
 						fabricCanvas.add(...objects);
 					}
 				);
@@ -111,7 +112,8 @@ watch(
 		fabricCanvas.requestRenderAll();
 
 		previousState.value = newState;
-	}
+	},
+	{ deep: true }
 );
 watch(() => [project.width, project.height, editor.zoom, editor.panX, editor.panY], updateVPT);
 </script>

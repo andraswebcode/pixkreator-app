@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 import { createLayerObject } from '../utils/layer-object';
+import { util } from 'fabric';
+import { uniqueId } from '../utils/functions';
 
 export type IDList = string[];
 
@@ -44,8 +46,16 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 	getters: {},
 	actions: {
 		addLayer(props) {
-			const layer = createLayerObject(props);
-			console.log(layer);
+			util.enlivenObjects([props]).then((objects) => {
+				const layer = objects[0].toObject();
+				const { type } = layer;
+				const id = layer.id || uniqueId(type);
+				this.ids.push(id);
+				this.byIds[id] = {
+					...layer,
+					id
+				};
+			});
 		},
 		removeLayer() {},
 		updateProps() {}
