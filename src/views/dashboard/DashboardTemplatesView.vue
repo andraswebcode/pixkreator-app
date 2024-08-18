@@ -44,6 +44,7 @@ onMounted(() => {
 onBeforeRouteUpdate((to) => {
 	list(to.query, 'templates', (data) => {
 		items.value = data.items;
+		page.value = 2;
 	});
 });
 </script>
@@ -71,7 +72,7 @@ onBeforeRouteUpdate((to) => {
 			</VCol>
 		</VRow>
 		<LibraryItems :items-length="items.length" :count="24" :cols="2" @load="loadMore">
-			<GridItem v-for="item of items" :key="item.id" cols="2" />
+			<GridItem v-for="item of items" :key="item.id" cols="2" :src="item.thumbnail" />
 		</LibraryItems>
 	</LibraryWrapper>
 </template>

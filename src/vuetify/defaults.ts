@@ -63,6 +63,8 @@ const defaults = {
 	SearchInput: {
 		variant: 'solo',
 		hideDetails: true,
+		singleLine: true,
+		flat: true,
 		appendInnerIcon: mdiMagnify
 	},
 	DetailsCarousel: {
@@ -71,7 +73,14 @@ const defaults = {
 		prevIcon: mdiChevronLeft,
 		nextIcon: mdiChevronRight,
 		hideDelimiters: true,
-		hideDelimiterBackground: true
+		hideDelimiterBackground: true,
+		VCarouselItem: {
+			class: 'mx-10'
+		},
+		VBtn: {
+			density: 'comfortable',
+			size: 'small'
+		}
 	}
 };
 

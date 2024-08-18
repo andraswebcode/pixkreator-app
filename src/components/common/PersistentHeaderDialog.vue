@@ -37,6 +37,7 @@ const model = defineModel<boolean | undefined>();
 
 .v-card-subtitle {
 	flex: 1;
-	overflow: auto;
+	height: 100%;
+	overflow: hidden;
 }
 </style>

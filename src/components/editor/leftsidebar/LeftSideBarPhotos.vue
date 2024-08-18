@@ -3,7 +3,7 @@ import { mdiMagnify } from '@mdi/js';
 import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
 import { useProject } from '../../../store';
-import { PHOTO_SIZES } from '../../../utils/constants';
+import { PHOTO_SIZES, DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 
 const { list } = useRequest();
 const project = useProject();
@@ -54,16 +54,7 @@ onMounted(filter);
 
 <template>
 	<LibraryWrapper>
-		<VTextField
-			label="Search Photos"
-			variant="solo"
-			hide-details
-			single-line
-			flat
-			:append-inner-icon="mdiMagnify"
-			v-model="query"
-			@click:append-inner="filter"
-		/>
+		<SearchInput label="Search Photos" v-model="search" @click:append-inner="filter" />
 		<LibraryItems :items-length="items.length" :count="24" :cols="6" @load="loadMore">
 			<GridItem
 				v-for="(item, i) of items"
@@ -74,7 +65,11 @@ onMounted(filter);
 			/>
 		</LibraryItems>
 	</LibraryWrapper>
-	<PersistentHeaderDialog v-model="showDetails" @close="showDetails = false" max-width="800">
+	<PersistentHeaderDialog
+		v-model="showDetails"
+		@close="showDetails = false"
+		:max-width="DETAILS_DIALOG_WIDTH"
+	>
 		<DetailsCarousel v-model="index">
 			<VCarouselItem v-for="item of items" :key="item.id">
 				<PhotoDetails v-bind="item">

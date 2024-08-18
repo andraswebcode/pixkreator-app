@@ -3,6 +3,7 @@ import { mdiMagnify } from '@mdi/js';
 import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
 import templateCategories from '../../../utils/template-categories';
+import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 
 const { list } = useRequest();
 const search = ref('');
@@ -49,16 +50,7 @@ onMounted(filter);
 
 <template>
 	<LibraryWrapper>
-		<VTextField
-			label="Search Templates"
-			variant="solo"
-			hide-details
-			single-line
-			flat
-			:append-inner-icon="mdiMagnify"
-			:model-value="search"
-			@click:append-inner="filter"
-		/>
+		<SearchInput label="Search Templates" v-model="search" @click:append-inner="filter" />
 		<VSelect
 			:items="categories"
 			v-model="category"

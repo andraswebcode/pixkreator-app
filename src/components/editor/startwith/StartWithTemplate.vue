@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import templateCategories from '../../../utils/template-categories';
+import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 
 const showDetails = ref(false);
 const openDetails = (item: any) => {
@@ -33,7 +34,11 @@ const openDetails = (item: any) => {
 			</VCol>
 		</VRow>
 	</VContainer>
-	<PersistentHeaderDialog v-model="showDetails" @close="showDetails = false" max-width="800">
+	<PersistentHeaderDialog
+		v-model="showDetails"
+		@close="showDetails = false"
+		:max-width="DETAILS_DIALOG_WIDTH"
+	>
 		<DetailsCarousel>
 			<VCarouselItem v-for="i of 12" :key="i">
 				<TemplateDetails />
