@@ -7,7 +7,7 @@ const useRequest = () => {
 	const userData = useUser();
 	const { bearerToken } = userData;
 
-	const get = (id: string, path: string, then: ThenFn) => {
+	const get = (id: string, path: string, then: ThenFn, catchFn?: ThenFn) => {
 		const _id = parseInt(id);
 
 		if (!_id) {
@@ -34,11 +34,9 @@ const useRequest = () => {
 				};
 			})
 			.then(then)
-			.catch((error) => {
-				console.error(error);
-			});
+			.catch(catchFn);
 	};
-	const list = (params: any, path: string, then: ThenFn) => {
+	const list = (params: any, path: string, then: ThenFn, catchFn?: ThenFn) => {
 		axios
 			.get(path, {
 				params,
@@ -48,11 +46,9 @@ const useRequest = () => {
 			})
 			.then(({ data }) => data)
 			.then(then)
-			.catch((error) => {
-				console.error(error);
-			});
+			.catch(catchFn);
 	};
-	const save = (id: string, data: any, then: ThenFn) => {
+	const save = (id: string, data: any, then: ThenFn, catchFn?: ThenFn) => {
 		const _id = parseInt(id);
 		const url = _id ? 'designs/' + _id : 'designs';
 
@@ -63,9 +59,7 @@ const useRequest = () => {
 		})
 			.then(({ data }) => data)
 			.then(then)
-			.catch((error) => {
-				console.log(error);
-			});
+			.catch(catchFn);
 	};
 
 	return {

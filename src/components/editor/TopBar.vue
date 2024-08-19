@@ -2,16 +2,19 @@
 import { mdiRedo, mdiUndo } from '@mdi/js';
 import { useRequest } from '../../hooks';
 import { useRoute, useRouter } from 'vue-router';
-import { useProject } from '../../store';
+import { useEditor, useNotice, useProject } from '../../store';
 import { toRaw } from 'vue';
 
 const { save } = useRequest();
 const route = useRoute();
 const router = useRouter();
 const project = useProject();
+const editor = useEditor();
+const notice = useNotice();
 const saveDesign = () => {
 	const { title, description, status, width, height, byIds, ids } = project;
 
+	editor.loading = true;
 	save(
 		route.params.id as string,
 		{
@@ -27,6 +30,12 @@ const saveDesign = () => {
 			router.push({
 				params: { id }
 			});
+			editor.loading = false;
+			notice.send('Design Saved Successfully', 'success');
+		},
+		(error) => {
+			editor.loading = false;
+			notice.send(error.message, 'error');
 		}
 	);
 };

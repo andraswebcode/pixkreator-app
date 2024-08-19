@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import axios from '../axios';
-import { useUser } from '../store';
+import { useNotice, useUser } from '../store';
 import { useRouter } from 'vue-router';
-import { useNotice } from '../hooks';
 
 const email = ref('');
 const password = ref('');

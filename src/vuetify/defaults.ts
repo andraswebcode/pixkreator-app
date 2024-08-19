@@ -15,16 +15,6 @@ const defaults = {
 	VBtn: {
 		// density: 'default'
 	},
-	VTextField: {
-		flat: true,
-		variant: 'underlined',
-		density: 'compact'
-	},
-	VTextarea: {
-		flat: true,
-		variant: 'underlined',
-		density: 'compact'
-	},
 	VSlider: {
 		thumbSize: 18,
 		hideDetails: true
@@ -62,6 +52,23 @@ const defaults = {
 		flat: true,
 		variant: 'accordion',
 		multiple: true
+	},
+	VExpansionPanel: {
+		VTextField: {
+			flat: true,
+			variant: 'underlined',
+			density: 'compact'
+		},
+		VTextarea: {
+			flat: true,
+			variant: 'underlined',
+			density: 'compact'
+		},
+		VSelect: {
+			flat: true,
+			variant: 'underlined',
+			density: 'compact'
+		}
 	},
 	// Custom components.
 	ToolBarList: {

@@ -16,6 +16,7 @@ type Mode = 'select' | 'pan' | 'draw';
 export interface EditorState {
 	// UI
 	tool: Tool;
+	loading: boolean;
 	// Canvas
 	mode: Mode;
 	zoom: number;
@@ -35,6 +36,7 @@ export type EditorGetters = {};
 export default defineStore<string, EditorState, EditorGetters>('editor', {
 	state: () => ({
 		tool: '',
+		loading: false,
 		mode: 'select',
 		zoom: 1,
 		panX: 0,

@@ -10,6 +10,10 @@ const editor = useEditor();
 const { get } = useRequest();
 
 onMounted(() => {
+	if (!route.params.id) {
+		return;
+	}
+	editor.loading = true;
 	get(route.params.id as string, 'designs', (state) => {
 		editor.$reset();
 		project.$reset();
@@ -22,6 +26,7 @@ onBeforeRouteUpdate((to, from) => {
 	if (to.path !== '/' && from.path === '/') {
 		return;
 	}
+	editor.loading = true;
 	get(to.params.id as string, 'designs', (state) => {
 		editor.$reset();
 		project.$reset();
@@ -40,6 +45,7 @@ onBeforeRouteUpdate((to, from) => {
 	<RightSideBar />
 	<FooterBar />
 	<StartDialog />
+	<FullScreenLoader />
 </template>
 
 <style scoped lang="scss"></style>

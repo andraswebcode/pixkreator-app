@@ -4,6 +4,7 @@
 	<VResponsive>
 		<VApp theme="dark">
 			<RouterView />
+			<NotificationBar />
 		</VApp>
 	</VResponsive>
 </template>
