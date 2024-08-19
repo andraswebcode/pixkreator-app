@@ -3,7 +3,7 @@ import { ref, onMounted, watch } from 'vue';
 import { useEditor, useProject } from './../../../store';
 import Canvas from '../../../canvas/canvas';
 import { Rect, util } from 'fabric';
-import { isEqual } from '../../../utils/functions';
+import { isEqual, toFixed } from '../../../utils/functions';
 
 let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -13,11 +13,16 @@ const previousState = ref<any>({});
 const startPan = ref<{ x: number; y: number }>({ x: 0, y: 0 });
 const isPanning = ref(false);
 
-const updateVPT = () => {
+const updateCanvas = () => {
 	if (fabricCanvas) {
 		const panX = editor.width / 2 - (project.width / 2) * editor.zoom + editor.panX;
 		const panY = editor.height / 2 - (project.height / 2) * editor.zoom + editor.panY;
 		fabricCanvas.setViewportTransform([editor.zoom, 0, 0, editor.zoom, panX, panY]);
+		fabricCanvas.clipPath?.set({
+			width: project.width,
+			height: project.height
+		});
+		fabricCanvas.set('backgroundColor', project.background);
 	}
 };
 const onResize = ({ width, height }: { width: number; height: number }) => {
@@ -27,7 +32,7 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
 		fabricCanvas.setWidth(width);
 		fabricCanvas.setHeight(height);
 	}
-	updateVPT();
+	updateCanvas();
 };
 const onPanStart = (e) => {
 	startPan.value = {
@@ -45,6 +50,28 @@ const onPanMove = (e) => {
 const onPanEnd = () => {
 	isPanning.value = false;
 };
+const onObjectSelection = () => {
+	editor.activeLayerIds = fabricCanvas.getActiveObjects().map((obj) => obj.id);
+};
+const onObjectModified = ({ target }) => {
+	if (target?.type === 'activeSelection') {
+		// Coming soon...
+		return;
+	}
+
+	const { id, left, top, scaleX, scaleY, skewX, skewY, angle } = target;
+	const newProps = {
+		left: toFixed(left, 0),
+		top: toFixed(top, 0),
+		scaleX: toFixed(scaleX, 2),
+		scaleY: toFixed(scaleY, 2),
+		skewX: toFixed(skewX, 0),
+		skewY: toFixed(skewY, 0),
+		angle: toFixed(angle, 0)
+	};
+
+	project.updateProps(id, newProps);
+};
 
 onMounted(() => {
 	const { clientWidth = 0, clientHeight = 0 } = document.getElementById('canvas') || {};
@@ -61,11 +88,15 @@ onMounted(() => {
 			originY: 'top'
 		})
 	});
+	fabricCanvas.on('selection:created', onObjectSelection);
+	fabricCanvas.on('selection:updated', onObjectSelection);
+	fabricCanvas.on('selection:cleared', onObjectSelection);
+	fabricCanvas.on('object:modified', onObjectModified);
 	// @ts-ignore
 	window._fc = fabricCanvas;
 	editor.width = clientWidth;
 	editor.height = clientHeight;
-	updateVPT();
+	updateCanvas();
 });
 
 watch(
@@ -115,7 +146,17 @@ watch(
 	},
 	{ deep: true }
 );
-watch(() => [project.width, project.height, editor.zoom, editor.panX, editor.panY], updateVPT);
+watch(
+	() => [
+		project.width,
+		project.height,
+		project.background,
+		editor.zoom,
+		editor.panX,
+		editor.panY
+	],
+	updateCanvas
+);
 </script>
 
 <template>

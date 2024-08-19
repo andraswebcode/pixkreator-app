@@ -1,4 +1,12 @@
-import { mdiChevronLeft, mdiChevronRight, mdiClose, mdiMagnify, mdiMenuDown } from '@mdi/js';
+import {
+	mdiChevronDown,
+	mdiChevronLeft,
+	mdiChevronRight,
+	mdiChevronUp,
+	mdiClose,
+	mdiMagnify,
+	mdiMenuDown
+} from '@mdi/js';
 
 const defaults = {
 	global: {
@@ -6,6 +14,16 @@ const defaults = {
 	},
 	VBtn: {
 		// density: 'default'
+	},
+	VTextField: {
+		flat: true,
+		variant: 'underlined',
+		density: 'compact'
+	},
+	VTextarea: {
+		flat: true,
+		variant: 'underlined',
+		density: 'compact'
 	},
 	VSlider: {
 		thumbSize: 18,
@@ -37,6 +55,13 @@ const defaults = {
 	VTabs: {
 		prevIcon: mdiChevronLeft,
 		nextIcon: mdiChevronRight
+	},
+	VExpansionPanels: {
+		collapseIcon: mdiChevronUp,
+		expandIcon: mdiChevronDown,
+		flat: true,
+		variant: 'accordion',
+		multiple: true
 	},
 	// Custom components.
 	ToolBarList: {

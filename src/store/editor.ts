@@ -26,9 +26,11 @@ export interface EditorState {
 	// Pencil
 	penWidth: number;
 	penColor: string;
+	// Layers
+	activeLayerIds: string[];
 }
 
-export interface EditorGetters {}
+export type EditorGetters = {};
 
 export default defineStore<string, EditorState, EditorGetters>('editor', {
 	state: () => ({
@@ -38,7 +40,10 @@ export default defineStore<string, EditorState, EditorGetters>('editor', {
 		panX: 0,
 		panY: 0,
 		width: 0,
-		height: 0
+		height: 0,
+		penWidth: 2,
+		penColor: '#000000',
+		activeLayerIds: []
 	}),
 	getters: {}
 });

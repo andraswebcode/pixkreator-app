@@ -20,11 +20,12 @@ export interface ProjectState {
 	status: 'public' | 'private' | 'deleted';
 	width: number;
 	height: number;
+	background: string;
 	byIds: ByIDs;
 	ids: IDList;
 }
 
-export interface ProjectGetters {}
+export type ProjectGetters = {};
 
 export interface ProjectActions {
 	addLayer: (props: Partial<ByID>) => void;
@@ -39,6 +40,7 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 		status: 'private',
 		width: 400,
 		height: 400,
+		background: '#FFFFFF',
 		byIds: {},
 		ids: []
 	}),
@@ -57,6 +59,19 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 			});
 		},
 		removeLayer() {},
-		updateProps() {}
+		updateProps(id, props) {
+			if (typeof id === 'string') {
+				if (this.byIds[id] && props) {
+					this.byIds[id] = {
+						...this.byIds[id],
+						...props
+					};
+				}
+			} else {
+				for (let _id in id) {
+					this.updateProps(_id, id[_id]);
+				}
+			}
+		}
 	}
 });
