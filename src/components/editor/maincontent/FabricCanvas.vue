@@ -42,7 +42,7 @@ const onPanMove = (e) => {
 		editor.panY = e.clientY - startPan.value.y;
 	}
 };
-const onPanEnd = (e) => {
+const onPanEnd = () => {
 	isPanning.value = false;
 };
 
@@ -94,7 +94,7 @@ watch(
 				fabricCanvas.requestRenderAll();
 			} else {
 				// This is an easier way to update object list, and keep order as well.
-				fabricCanvas.clear();
+				fabricCanvas.remove(...fabricCanvas.getObjects());
 				util.enlivenObjects(project.ids.map((id) => project.byIds[id])).then(
 					(objects: any) => {
 						fabricCanvas.add(...objects);

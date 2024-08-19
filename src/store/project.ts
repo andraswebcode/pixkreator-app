@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
-import { createLayerObject } from '../utils/layer-object';
-import { util } from 'fabric';
 import { uniqueId } from '../utils/functions';
+import { util } from 'fabric';
 
 export type IDList = string[];
 

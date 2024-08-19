@@ -1,4 +1,4 @@
-import { Canvas as FabricCanvas, ModifierKey } from 'fabric';
+import { Canvas as FabricCanvas, ModifierKey, PencilBrush } from 'fabric';
 
 class Canvas extends FabricCanvas {
 	selectionColor = 'rgba(16, 187, 229, 0.1)';
@@ -13,6 +13,11 @@ class Canvas extends FabricCanvas {
 	selectionKey: ModifierKey = 'ctrlKey';
 	altActionKey: ModifierKey = 'ctrlKey';
 	uniScaleKey = null;
+
+	constructor(el, options) {
+		super(el, options);
+		this.freeDrawingBrush = new PencilBrush(this);
+	}
 
 	getObjectById(id = '') {
 		// @ts-ignore

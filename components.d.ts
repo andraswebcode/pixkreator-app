@@ -17,6 +17,7 @@ declare module 'vue' {
     GridLoader: typeof import('./src/components/common/GridLoader.vue')['default']
     InfiniteScroll: typeof import('./src/components/common/InfiniteScroll.vue')['default']
     LeftSideBar: typeof import('./src/components/editor/LeftSideBar.vue')['default']
+    LeftSideBarGraphics: typeof import('./src/components/editor/leftsidebar/LeftSideBarGraphics.vue')['default']
     LeftSideBarPhotos: typeof import('./src/components/editor/leftsidebar/LeftSideBarPhotos.vue')['default']
     LeftSideBarTemplates: typeof import('./src/components/editor/leftsidebar/LeftSideBarTemplates.vue')['default']
     LeftSideBarUploads: typeof import('./src/components/editor/leftsidebar/LeftSideBarUploads.vue')['default']

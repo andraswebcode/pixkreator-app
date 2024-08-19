@@ -5,6 +5,7 @@ import router from './router';
 import store from './store';
 import domResize from './directives/dom-resize';
 
+import './canvas/register';
 import './style.scss';
 
 createApp(App).directive('dom-resize', domResize).use(router).use(vuetify).use(store).mount('#app');

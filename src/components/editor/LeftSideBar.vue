@@ -15,6 +15,7 @@ const onClick = () => {
 		<LeftSideBarTemplates v-if="editor.tool === 'templates'" />
 		<LeftSideBarUploads v-else-if="editor.tool === 'uploads'" />
 		<LeftSideBarPhotos v-else-if="editor.tool === 'photos'" />
+		<LeftSideBarGraphics v-else-if="editor.tool === 'graphics'" />
 		<template v-slot:append>
 			<SideBarToggler @click="onClick" :icon="show ? mdiChevronLeft : mdiChevronRight" />
 		</template>
