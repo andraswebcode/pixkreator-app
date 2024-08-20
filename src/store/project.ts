@@ -31,6 +31,8 @@ export interface ProjectActions {
 	addLayer: (props: Partial<ByID>) => void;
 	removeLayer: (id: string) => void;
 	updateProps: (id: string | ChangedProps, props?: Partial<ByID>) => void;
+	undo?: () => void;
+	redo?: () => void;
 }
 
 export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>('project', {

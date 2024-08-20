@@ -22,7 +22,15 @@ const useRequest = () => {
 				}
 			})
 			.then(({ data }) => {
-				const { title, description, status, width, height, layers, layer_ids } = data;
+				const {
+					title,
+					description,
+					status = 'private',
+					width,
+					height,
+					layers,
+					layer_ids
+				} = data;
 				return {
 					title,
 					description,

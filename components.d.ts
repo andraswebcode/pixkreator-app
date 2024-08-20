@@ -8,11 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppBar: typeof import('./src/components/common/AppBar.vue')['default']
-    CanvasSettings: typeof import('./src/components/editor/rightsidebar/CanvasSettings.vue')['default']
     ColorPicker: typeof import('./src/components/common/ColorPicker.vue')['default']
     DashboardContent: typeof import('./src/components/dashboard/DashboardContent.vue')['default']
     DashboardSideBar: typeof import('./src/components/dashboard/DashboardSideBar.vue')['default']
-    EditorLoader: typeof import('./src/components/editor/EditorLoader.vue')['default']
     FabricCanvas: typeof import('./src/components/editor/maincontent/FabricCanvas.vue')['default']
     FooterBar: typeof import('./src/components/editor/FooterBar.vue')['default']
     FormContainer: typeof import('./src/components/common/FormContainer.vue')['default']
@@ -45,6 +43,5 @@ declare module 'vue' {
     ToolBar: typeof import('./src/components/editor/ToolBar.vue')['default']
     TopBar: typeof import('./src/components/editor/TopBar.vue')['default']
     UserMenu: typeof import('./src/components/common/UserMenu.vue')['default']
-    VNumberInput: typeof import('vuetify/lib')['VNumberInput']
   }
 }

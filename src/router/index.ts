@@ -118,7 +118,7 @@ const routes: RouteRecordRaw[] = [
 
 const router = createRouter({
 	routes,
-	history: createWebHistory()
+	history: createWebHistory('/app')
 });
 
 router.beforeEach((to) => {

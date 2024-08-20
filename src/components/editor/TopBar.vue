@@ -44,8 +44,8 @@ const saveDesign = () => {
 <template>
 	<VAppBar>
 		<template v-slot:prepend></template>
-		<VBtn :icon="mdiUndo" v-tooltip="'Undo'" />
-		<VBtn :icon="mdiRedo" v-tooltip="'Redo'" />
+		<VBtn :icon="mdiUndo" v-tooltip="'Undo'" @click="project.undo" />
+		<VBtn :icon="mdiRedo" v-tooltip="'Redo'" @click="project.redo" />
 		<template v-slot:append>
 			<VBtn color="primary" variant="flat" @click="saveDesign">Save</VBtn>
 			<UserMenu />

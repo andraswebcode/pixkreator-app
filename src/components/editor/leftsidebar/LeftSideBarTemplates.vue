@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { mdiMagnify } from '@mdi/js';
 import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
 import templateCategories from '../../../utils/template-categories';
 import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
+import { useRouter } from 'vue-router';
 
 const { list } = useRequest();
+const router = useRouter();
 const search = ref('');
 const category = ref('');
 const page = ref(2);
+const showDetails = ref(false);
+const index = ref(0);
 const items = ref<any>([]);
 const categories = [
 	{
@@ -44,6 +47,21 @@ const loadMore = () => {
 		}
 	);
 };
+const openDetails = (i: number) => {
+	showDetails.value = true;
+	index.value = i;
+};
+const addTemplate = () => {
+	const id = items.value[index.value]?.id;
+	router.replace({
+		query: {
+			template: id
+		},
+		params: {
+			id: ''
+		}
+	});
+};
 
 onMounted(filter);
 </script>
@@ -60,9 +78,29 @@ onMounted(filter);
 			@update:model-value="filter"
 		/>
 		<LibraryItems :items-length="items.length" :count="24" :cols="6" @load="loadMore">
-			<GridItem v-for="item of items" :key="item.id" cols="6" :src="item.thumbnail" />
+			<GridItem
+				v-for="(item, i) of items"
+				:key="item.id"
+				cols="6"
+				:src="item.thumbnail"
+				@click="openDetails(i)"
+			/>
 		</LibraryItems>
 	</LibraryWrapper>
+	<PersistentHeaderDialog
+		v-model="showDetails"
+		@close="showDetails = false"
+		:max-width="DETAILS_DIALOG_WIDTH"
+	>
+		<DetailsCarousel v-model="index">
+			<VCarouselItem v-for="item of items" :key="item.id">
+				<TemplateDetails v-bind="item" />
+			</VCarouselItem>
+		</DetailsCarousel>
+		<template v-slot:actions>
+			<VBtn @click="addTemplate">Add Template</VBtn>
+		</template>
+	</PersistentHeaderDialog>
 </template>
 
 <style scoped lang="scss"></style>

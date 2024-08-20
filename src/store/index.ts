@@ -3,6 +3,11 @@ import useEditor from './editor';
 import useProject from './project';
 import useUser from './user';
 import useNotice from './notification';
+import { PiniaUndo } from 'pinia-undo';
 
-export default createPinia();
+const store = createPinia();
+
+store.use(PiniaUndo);
+
+export default store;
 export { useEditor, useProject, useUser, useNotice };

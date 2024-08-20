@@ -3,6 +3,8 @@ import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
 import { useProject } from '../../../store';
 import { PHOTO_SIZES, DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
+import { getCroppedImageDimensions } from '../../../utils/functions';
+import { PhotoSize } from '../../../types/common';
 
 const { list } = useRequest();
 const project = useProject();
@@ -11,7 +13,8 @@ const items = ref<any[]>([]);
 const page = ref(2);
 const showDetails = ref(false);
 const index = ref(0);
-const size = ref('src');
+const size = ref<PhotoSize>('src');
+const resize = ref(false);
 const filter = () => {
 	items.value = [];
 	list(
@@ -43,9 +46,18 @@ const openDetails = (i: number) => {
 };
 const addPhoto = () => {
 	const item = items.value[index.value];
+	const { width, height } = getCroppedImageDimensions(item.width, item.height, size.value);
+
+	if (resize.value) {
+		project.width = width;
+		project.height = height;
+	}
+
 	project.addLayer({
 		type: 'image',
-		src: item.proxy[size.value]
+		src: item.proxy[size.value],
+		left: project.width / 2,
+		top: project.height / 2
 	});
 	showDetails.value = false;
 };
@@ -75,7 +87,7 @@ onMounted(filter);
 			<VCarouselItem v-for="item of items" :key="item.id">
 				<PhotoDetails v-bind="item">
 					<VSelect label="Select a Size" :items="PHOTO_SIZES" v-model="size" />
-					<VSwitch label="Resize Canvas to Image Size" />
+					<VSwitch label="Resize Canvas to Image Size" v-model="resize" />
 				</PhotoDetails>
 			</VCarouselItem>
 		</DetailsCarousel>

@@ -9,31 +9,36 @@ const project = useProject();
 const editor = useEditor();
 const { get } = useRequest();
 
-onMounted(() => {
-	if (!route.params.id) {
-		return;
+const fetchProject = (obj: any) => {
+	if (obj.params.id) {
+		editor.loading = true;
+		get(obj.params.id as string, 'designs', (state) => {
+			editor.$reset();
+			project.$reset();
+			if (state) {
+				project.$patch(state);
+			}
+		});
+	} else if (obj.query.template) {
+		editor.loading = true;
+		get(obj.query.template as string, 'templates', (state) => {
+			editor.$reset();
+			project.$reset();
+			if (state) {
+				project.$patch(state);
+			}
+		});
 	}
-	editor.loading = true;
-	get(route.params.id as string, 'designs', (state) => {
-		editor.$reset();
-		project.$reset();
-		if (state) {
-			project.$patch(state);
-		}
-	});
+};
+
+onMounted(() => {
+	fetchProject(route);
 });
 onBeforeRouteUpdate((to, from) => {
 	if (to.path !== '/' && from.path === '/') {
 		return;
 	}
-	editor.loading = true;
-	get(to.params.id as string, 'designs', (state) => {
-		editor.$reset();
-		project.$reset();
-		if (state) {
-			project.$patch(state);
-		}
-	});
+	fetchProject(to);
 });
 </script>
 

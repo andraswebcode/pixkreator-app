@@ -2,13 +2,20 @@
 import { ref, onMounted } from 'vue';
 import useRequest from '../../../hooks/request';
 import { DETAILS_DIALOG_WIDTH, PHOTO_SIZES } from '../../../utils/constants';
+import { getCroppedImageDimensions } from '../../../utils/functions';
+import { useProject } from '../../../store';
+import { useRouter } from 'vue-router';
+import { PhotoSize } from '../../../types/common';
 
 const { list } = useRequest();
+const project = useProject();
+const router = useRouter();
 const query = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
 const showDetails = ref(false);
 const index = ref(0);
+const size = ref<PhotoSize>('src');
 const filter = () => {
 	items.value = [];
 	list(
@@ -37,6 +44,21 @@ const loadMore = () => {
 const openDetails = (i: number) => {
 	showDetails.value = true;
 	index.value = i;
+};
+const addPhoto = () => {
+	const item = items.value[index.value];
+	const { width, height } = getCroppedImageDimensions(item.width, item.height, size.value);
+
+	project.width = width;
+	project.height = height;
+
+	project.addLayer({
+		type: 'image',
+		src: item.proxy[size.value],
+		left: project.width / 2,
+		top: project.height / 2
+	});
+	router.replace({ query: {} });
 };
 
 onMounted(filter);
@@ -76,12 +98,12 @@ onMounted(filter);
 		<DetailsCarousel v-model="index">
 			<VCarouselItem v-for="item of items" :key="item.id">
 				<PhotoDetails v-bind="item">
-					<VSelect label="Select a Size" :items="PHOTO_SIZES" />
+					<VSelect label="Select a Size" :items="PHOTO_SIZES" v-model="size" />
 				</PhotoDetails>
 			</VCarouselItem>
 		</DetailsCarousel>
 		<template v-slot:actions>
-			<VBtn>Edit This Photo</VBtn>
+			<VBtn @click="addPhoto">Edit This Photo</VBtn>
 		</template>
 	</PersistentHeaderDialog>
 </template>

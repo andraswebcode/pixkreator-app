@@ -1,3 +1,5 @@
+import { PhotoSize } from '../types/common';
+
 const clamp = (value: number, min: number, max: number): number =>
 	Math.min(Math.max(value, min), max);
 
@@ -109,4 +111,33 @@ const isEqual = (value1: any, value2: any, visited = new Set()): boolean => {
 
 const unique = (array: any[]): any[] => Array.from(new Set(array));
 
-export { clamp, toFixed, randInt, uniqueId, debounce, isEqual, unique };
+const getCroppedImageDimensions = (
+	originalWidth: number,
+	originalHeight: number,
+	sizeKey: PhotoSize
+): { width: number; height: number } => {
+	if (sizeKey === 'src') {
+		return { width: originalWidth, height: originalHeight };
+	} else if (sizeKey === 'thumbnail') {
+		return { width: 280, height: 280 };
+	}
+
+	const maxDimensions: { [key: string]: number } = {
+		large: 1280,
+		medium: 640
+	};
+
+	const maxDimension = maxDimensions[sizeKey];
+
+	if (originalWidth > originalHeight) {
+		const newWidth = maxDimension;
+		const newHeight = Math.round((originalHeight / originalWidth) * maxDimension);
+		return { width: newWidth, height: newHeight };
+	} else {
+		const newHeight = maxDimension;
+		const newWidth = Math.round((originalWidth / originalHeight) * maxDimension);
+		return { width: newWidth, height: newHeight };
+	}
+};
+
+export { clamp, toFixed, randInt, uniqueId, debounce, isEqual, unique, getCroppedImageDimensions };
