@@ -31,6 +31,9 @@ export default defineStore<string, NotificationState, NotificationGetters, Notif
 					show: true
 				});
 			}
+		},
+		undo: {
+			disable: true
 		}
 	}
 );

@@ -2,7 +2,19 @@
 const props = defineProps<{
 	title: string;
 	description: string;
+	slug: string;
+	width: number;
+	height: number;
+	layers: any;
+	layer_ids: string[];
+	colors: string[];
+	fonts: string[];
+	keywords: string[];
 	preview: string;
+	thumbnail: string;
+	category: string;
+	category_name: string;
+	category_url: string;
 }>();
 </script>
 

@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { mdiFitToScreen, mdiHandBackLeft, mdiMagnifyMinus, mdiMagnifyPlus } from '@mdi/js';
-import { useEditor, useProject } from '../../store';
+import { useEditor } from '../../store';
 import { MAX_ZOOM, MIN_ZOOM } from '../../utils/constants';
-import { util } from 'fabric';
-import { toFixed } from '../../utils/functions';
+import useFitToScreen from '../../hooks/fittoscreen';
 
 const editor = useEditor();
-const project = useProject();
+const fitToScreen = useFitToScreen();
 const switchPan = () => {
 	editor.mode = editor.mode === 'pan' ? 'select' : 'pan';
 };
@@ -16,21 +15,6 @@ const zoom = (dir: string) => {
 	} else {
 		editor.zoom -= 0.1;
 	}
-};
-const fitToScreen = () => {
-	const zoom = util.findScaleToFit(
-		{
-			width: project.width,
-			height: project.height
-		},
-		{
-			width: editor.width,
-			height: editor.height
-		}
-	);
-	editor.zoom = toFixed(zoom);
-	editor.panX = 0;
-	editor.panY = 0;
 };
 </script>
 

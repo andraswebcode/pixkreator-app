@@ -1,10 +1,44 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import useRequest from '../../hooks/request';
+import { useRouter } from 'vue-router';
+import { DETAILS_DIALOG_WIDTH } from '../../utils/constants';
 
-const recentProjects = ref([]);
-const editorsChoice = ref([]);
 const { list } = useRequest();
+const router = useRouter();
+const recentProjects = ref<any[]>([]);
+const editorsChoice = ref<any[]>([]);
+const showDetails = ref(false);
+const index = ref(0);
+const category = ref('');
+const items = computed(
+	() => editorsChoice.value.find((cat) => cat.value === category.value)?.templates
+);
+
+const editProject = (i: number) => {
+	router.push({
+		name: 'editor',
+		params: {
+			id: recentProjects.value[i].id
+		}
+	});
+};
+const openDetails = (i: number, c: string) => {
+	showDetails.value = true;
+	index.value = i;
+	category.value = c;
+};
+const addTemplate = () => {
+	const id = editorsChoice.value.find((cat) => cat.value === category.value)?.templates[
+		index.value
+	]?.id;
+	router.push({
+		name: 'editor',
+		query: {
+			template: id
+		}
+	});
+};
 
 onMounted(() => {
 	list(
@@ -18,7 +52,6 @@ onMounted(() => {
 	);
 	list({}, 'templates/editorschoice', (data) => {
 		editorsChoice.value = data;
-		console.log(data);
 	});
 });
 </script>
@@ -74,7 +107,13 @@ onMounted(() => {
 						</VCol>
 					</VRow>
 				</VCol>
-				<GridItem v-if="recentProjects.length" v-for="item of recentProjects" cols="2" />
+				<GridItem
+					v-if="recentProjects.length"
+					v-for="(item, i) of recentProjects"
+					:key="item.id"
+					cols="2"
+					@click="editProject(i)"
+				/>
 				<GridLoader v-else :cols="2" :count="6" />
 			</VRow>
 			<VRow>
@@ -104,10 +143,11 @@ onMounted(() => {
 					</VRow>
 				</VCol>
 				<GridItem
-					v-for="tmpl of item.templates"
+					v-for="(tmpl, i) of item.templates"
 					:key="tmpl.id"
 					cols="2"
 					:src="tmpl.thumbnail"
+					@click="openDetails(i, tmpl.category)"
 				/>
 			</VRow>
 			<VRow v-else v-for="i in 3" :key="i">
@@ -125,6 +165,20 @@ onMounted(() => {
 			</VRow>
 		</VContainer>
 	</div>
+	<PersistentHeaderDialog
+		v-model="showDetails"
+		@close="showDetails = false"
+		:max-width="DETAILS_DIALOG_WIDTH"
+	>
+		<DetailsCarousel v-model="index">
+			<VCarouselItem v-for="item of items" :key="item.id">
+				<TemplateDetails v-bind="item" />
+			</VCarouselItem>
+		</DetailsCarousel>
+		<template v-slot:actions>
+			<VBtn @click="addTemplate">Customize This Template</VBtn>
+		</template>
+	</PersistentHeaderDialog>
 </template>
 
 <style scoped lang="scss">

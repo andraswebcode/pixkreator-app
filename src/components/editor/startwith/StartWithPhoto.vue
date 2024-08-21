@@ -3,13 +3,16 @@ import { ref, onMounted } from 'vue';
 import useRequest from '../../../hooks/request';
 import { DETAILS_DIALOG_WIDTH, PHOTO_SIZES } from '../../../utils/constants';
 import { getCroppedImageDimensions } from '../../../utils/functions';
-import { useProject } from '../../../store';
+import { useEditor, useProject } from '../../../store';
 import { useRouter } from 'vue-router';
 import { PhotoSize } from '../../../types/common';
+import useFitToScreen from '../../../hooks/fittoscreen';
 
 const { list } = useRequest();
 const project = useProject();
+const editor = useEditor();
 const router = useRouter();
+const fitToScreen = useFitToScreen();
 const query = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
@@ -58,7 +61,14 @@ const addPhoto = () => {
 		left: project.width / 2,
 		top: project.height / 2
 	});
-	router.replace({ query: {} });
+	router.replace({
+		query: {},
+		params: {
+			id: ''
+		}
+	});
+	editor.openStartDialog = false;
+	fitToScreen();
 };
 
 onMounted(filter);

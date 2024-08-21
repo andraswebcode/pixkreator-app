@@ -5,9 +5,11 @@ import { useProject } from '../../../store';
 import { PHOTO_SIZES, DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 import { getCroppedImageDimensions } from '../../../utils/functions';
 import { PhotoSize } from '../../../types/common';
+import useFitToScreen from '../../../hooks/fittoscreen';
 
 const { list } = useRequest();
 const project = useProject();
+const fitToScreen = useFitToScreen();
 const query = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
@@ -60,6 +62,7 @@ const addPhoto = () => {
 		top: project.height / 2
 	});
 	showDetails.value = false;
+	fitToScreen();
 };
 
 onMounted(filter);

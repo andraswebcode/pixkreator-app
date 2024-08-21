@@ -34,5 +34,8 @@ export default defineStore<string, UserState, UserGetters, UserActions>('user', 
 		loggedIn: ({ user: { id, token } }) => !!(id && token),
 		bearerToken: ({ user: { token } }) => 'Bearer ' + token
 	},
-	actions: {}
+	actions: {},
+	undo: {
+		disable: true
+	}
 });

@@ -17,6 +17,7 @@ export interface EditorState {
 	// UI
 	tool: Tool;
 	loading: boolean;
+	openStartDialog: boolean;
 	// Canvas
 	mode: Mode;
 	zoom: number;
@@ -37,6 +38,7 @@ export default defineStore<string, EditorState, EditorGetters>('editor', {
 	state: () => ({
 		tool: '',
 		loading: false,
+		openStartDialog: false,
 		mode: 'select',
 		zoom: 1,
 		panX: 0,
@@ -47,5 +49,8 @@ export default defineStore<string, EditorState, EditorGetters>('editor', {
 		penColor: '#000000',
 		activeLayerIds: []
 	}),
-	getters: {}
+	getters: {},
+	undo: {
+		disable: true
+	}
 });

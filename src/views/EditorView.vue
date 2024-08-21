@@ -15,8 +15,10 @@ const fetchProject = (obj: any) => {
 		get(obj.params.id as string, 'designs', (state) => {
 			editor.$reset();
 			project.$reset();
+
 			if (state) {
 				project.$patch(state);
+				project.resetStack();
 			}
 		});
 	} else if (obj.query.template) {
@@ -26,8 +28,11 @@ const fetchProject = (obj: any) => {
 			project.$reset();
 			if (state) {
 				project.$patch(state);
+				project.resetStack();
 			}
 		});
+	} else {
+		project.resetStack();
 	}
 };
 

@@ -3,8 +3,14 @@ import { ref, onMounted } from 'vue';
 import useRequest from '../../../hooks/request';
 import templateCategories from '../../../utils/template-categories';
 import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
+import { useRouter } from 'vue-router';
+import { useEditor } from '../../../store';
+import useFitToScreen from '../../../hooks/fittoscreen';
 
 const { list } = useRequest();
+const router = useRouter();
+const editor = useEditor();
+const fitToScreen = useFitToScreen();
 const search = ref('');
 const category = ref('');
 const page = ref(2);
@@ -41,6 +47,19 @@ const loadMore = () => {
 const openDetails = (i: number) => {
 	showDetails.value = true;
 	index.value = i;
+};
+const addTemplate = () => {
+	const id = items.value[index.value]?.id;
+	router.replace({
+		query: {
+			template: id
+		},
+		params: {
+			id: ''
+		}
+	});
+	editor.openStartDialog = false;
+	fitToScreen();
 };
 
 onMounted(filter);
@@ -95,7 +114,7 @@ onMounted(filter);
 			</VCarouselItem>
 		</DetailsCarousel>
 		<template v-slot:actions>
-			<VBtn>Customize This Template</VBtn>
+			<VBtn @click="addTemplate">Customize This Template</VBtn>
 		</template>
 	</PersistentHeaderDialog>
 </template>

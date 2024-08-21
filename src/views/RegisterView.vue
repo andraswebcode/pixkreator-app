@@ -19,10 +19,22 @@ const register = () => {
 			Already have an account?
 			<RouterLink to="/login">Login</RouterLink>
 		</template>
-		<VTextField label="Name" required v-model="name" />
-		<VTextField label="Email" type="email" required v-model="email" />
-		<VTextField label="Password" type="password" required v-model="password" />
-		<VTextField label="Confirm Password" type="password" required v-model="passwordConfirm" />
+		<VTextField label="Name" required v-model="name" autocomplete="off" />
+		<VTextField label="Email" type="email" required v-model="email" autocomplete="off" />
+		<VTextField
+			label="Password"
+			type="password"
+			required
+			v-model="password"
+			autocomplete="new-password"
+		/>
+		<VTextField
+			label="Confirm Password"
+			type="password"
+			required
+			v-model="passwordConfirm"
+			autocomplete="new-password"
+		/>
 	</FormContainer>
 </template>
 

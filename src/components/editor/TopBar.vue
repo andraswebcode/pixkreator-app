@@ -35,7 +35,7 @@ const saveDesign = () => {
 		},
 		(error) => {
 			editor.loading = false;
-			notice.send(error.message, 'error');
+			notice.send(error.response?.data?.message || error.message, 'error');
 		}
 	);
 };
