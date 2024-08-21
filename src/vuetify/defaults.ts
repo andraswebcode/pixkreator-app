@@ -28,8 +28,15 @@ const defaults = {
 		tag: 'aside'
 	},
 	VAppBar: {
+		density: 'comfortable',
 		VBtn: {
-			size: 'small'
+			size: 'small',
+			variant: 'flat'
+		},
+		VDivider: {
+			class: 'mx-2',
+			inset: true,
+			vertical: true
 		}
 	},
 	VFooter: {

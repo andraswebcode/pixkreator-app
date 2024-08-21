@@ -11,7 +11,7 @@ const useProps = (props: string[]): any => {
 				const id = editor.activeLayerIds[0];
 				return project.byIds[id][prop];
 			},
-			set: (value: number) => {
+			set: (value: any) => {
 				const id = editor.activeLayerIds[0];
 				project.updateProps(id, {
 					[prop]: value

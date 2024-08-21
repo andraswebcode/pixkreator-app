@@ -51,11 +51,16 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 				const layer = objects[0].toObject();
 				const { type } = layer;
 				const id = layer.id || uniqueId(type);
-				this.ids.push(id);
-				this.byIds[id] = {
-					...layer,
-					id
-				};
+				this.$patch({
+					ids: [...this.ids, id],
+					byIds: {
+						...this.byIds,
+						[id]: {
+							...layer,
+							id
+						}
+					}
+				});
 			});
 		},
 		removeLayer() {},
@@ -73,5 +78,8 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 				}
 			}
 		}
+	},
+	undo: {
+		omit: ['title', 'description', 'status']
 	}
 });

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiRedo, mdiUndo } from '@mdi/js';
+import { mdiContentSave, mdiDownload, mdiRedo, mdiShare, mdiUndo } from '@mdi/js';
 import { useRequest } from '../../hooks';
 import { useRoute, useRouter } from 'vue-router';
 import { useEditor, useNotice, useProject } from '../../store';
@@ -12,7 +12,7 @@ const project = useProject();
 const editor = useEditor();
 const notice = useNotice();
 const saveDesign = () => {
-	const { title, description, status, width, height, byIds, ids } = project;
+	const { title, description, status, width, height, background, byIds, ids } = project;
 
 	editor.loading = true;
 	save(
@@ -23,6 +23,7 @@ const saveDesign = () => {
 			status,
 			width,
 			height,
+			background,
 			layers: toRaw(byIds),
 			layer_ids: toRaw(ids)
 		},
@@ -47,7 +48,10 @@ const saveDesign = () => {
 		<VBtn :icon="mdiUndo" v-tooltip="'Undo'" @click="project.undo" />
 		<VBtn :icon="mdiRedo" v-tooltip="'Redo'" @click="project.redo" />
 		<template v-slot:append>
-			<VBtn color="primary" variant="flat" @click="saveDesign">Save</VBtn>
+			<VBtn :icon="mdiShare" v-tooltip="'Share'" />
+			<VBtn :icon="mdiDownload" v-tooltip="'Export'" />
+			<VBtn :icon="mdiContentSave" v-tooltip="'Save'" @click="saveDesign"></VBtn>
+			<VDivider />
 			<UserMenu />
 		</template>
 	</VAppBar>

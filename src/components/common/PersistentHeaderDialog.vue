@@ -8,7 +8,7 @@ const model = defineModel<boolean | undefined>();
 </script>
 
 <template>
-	<VDialog v-model="model" @after-leave="emit('close')" :max-width="props.maxWidth">
+	<VDialog v-model="model" :max-width="props.maxWidth" persistent>
 		<VCard>
 			<VCardTitle class="d-flex justify-space-between align-center">
 				<span class="text-h5 text-medium-emphasis ps-2">{{ props.title }}</span>

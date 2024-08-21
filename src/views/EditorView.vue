@@ -39,10 +39,7 @@ const fetchProject = (obj: any) => {
 onMounted(() => {
 	fetchProject(route);
 });
-onBeforeRouteUpdate((to, from) => {
-	if (to.path !== '/' && from.path === '/') {
-		return;
-	}
+onBeforeRouteUpdate((to) => {
 	fetchProject(to);
 });
 </script>

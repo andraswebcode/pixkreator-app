@@ -28,6 +28,7 @@ const useRequest = () => {
 					status = 'private',
 					width,
 					height,
+					background,
 					layers,
 					layer_ids
 				} = data;
@@ -37,6 +38,7 @@ const useRequest = () => {
 					status,
 					width,
 					height,
+					background,
 					byIds: Array.isArray(layers) && !layers.length ? {} : layers,
 					ids: layer_ids
 				};
