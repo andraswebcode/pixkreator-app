@@ -4,6 +4,7 @@ import { useEditor, useProject } from './../../../store';
 import Canvas from '../../../canvas/canvas';
 import { Rect, util } from 'fabric';
 import { isEqual, toFixed } from '../../../utils/functions';
+import { EditorModeType, EditorPencilType } from '../../../store/editor';
 
 let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -29,8 +30,7 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
 	editor.width = width;
 	editor.height = height;
 	if (fabricCanvas) {
-		fabricCanvas.setWidth(width);
-		fabricCanvas.setHeight(height);
+		fabricCanvas.set({ width, height });
 	}
 	updateCanvas();
 };
@@ -54,8 +54,23 @@ const onObjectSelection = () => {
 	editor.activeLayerIds = fabricCanvas.getActiveObjects().map((obj) => obj.id);
 };
 const onObjectModified = ({ target }) => {
-	if (target?.type === 'activeSelection') {
-		// Coming soon...
+	if (target?.type === 'activeselection') {
+		const newProps = target.getObjects().reduce((memo, obj) => {
+			const matrix = obj.calcTransformMatrix();
+			const { angle, scaleX, scaleY, skewX, skewY, translateX, translateY } =
+				util.qrDecompose(matrix);
+			memo[obj.id] = {
+				left: toFixed(translateX, 0),
+				top: toFixed(translateY, 0),
+				scaleX: toFixed(scaleX, 2),
+				scaleY: toFixed(scaleY, 2),
+				skewX: toFixed(skewX, 0),
+				skewY: toFixed(skewY, 0),
+				angle: toFixed(angle, 0)
+			};
+			return memo;
+		}, {});
+		project.updateProps(newProps);
 		return;
 	}
 
@@ -71,6 +86,9 @@ const onObjectModified = ({ target }) => {
 	};
 
 	project.updateProps(id, newProps);
+};
+const onPathCreated = ({ path }) => {
+	project.addLayer(path.toObject());
 };
 
 onMounted(() => {
@@ -92,6 +110,7 @@ onMounted(() => {
 	fabricCanvas.on('selection:updated', onObjectSelection);
 	fabricCanvas.on('selection:cleared', onObjectSelection);
 	fabricCanvas.on('object:modified', onObjectModified);
+	fabricCanvas.on('path:created', onPathCreated);
 	// @ts-ignore
 	window._fc = fabricCanvas;
 	editor.width = clientWidth;
@@ -156,6 +175,19 @@ watch(
 		editor.panY
 	],
 	updateCanvas
+);
+watch(
+	(): [EditorModeType, EditorPencilType, number, string] => [
+		editor.mode,
+		editor.pencil,
+		editor.penWidth,
+		editor.penColor
+	],
+	([newMode, newPencil, newWidth, newColor]) => {
+		fabricCanvas.isDrawingMode = newMode === 'draw';
+		fabricCanvas.freeDrawingBrush!.width = newWidth;
+		fabricCanvas.freeDrawingBrush!.color = newColor;
+	}
 );
 </script>
 

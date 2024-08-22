@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { mdiFitToScreen, mdiHandBackLeft, mdiMagnifyMinus, mdiMagnifyPlus } from '@mdi/js';
+import {
+	mdiCog,
+	mdiFitToScreen,
+	mdiHandBackLeft,
+	mdiHelpCircle,
+	mdiMagnifyMinus,
+	mdiMagnifyPlus,
+	mdiMessageText
+} from '@mdi/js';
 import { useEditor } from '../../store';
 import { MAX_ZOOM, MIN_ZOOM } from '../../utils/constants';
 import useFitToScreen from '../../hooks/fittoscreen';
@@ -21,51 +29,75 @@ const zoom = (dir: string) => {
 <template>
 	<VFooter app height="56px">
 		<VContainer>
-			<VRow no-gutters justify="center" align="center">
+			<VRow justify="space-between" align="center">
 				<VCol cols="auto">
-					<VBtn
-						:color="editor.mode === 'pan' ? 'primary' : ''"
-						:icon="mdiHandBackLeft"
-						v-tooltip:top="'Pan Mode'"
-						@click="switchPan"
-					/>
+					<VRow no-gutters justify="center" align="center">
+						<VCol cols="auto">
+							<LayersList />
+						</VCol>
+						<VCol cols="auto">
+							<VBtn :icon="mdiCog" v-tooltip:top="'Settings'" />
+						</VCol>
+					</VRow>
 				</VCol>
 				<VCol cols="auto">
-					<VBtn
-						:icon="mdiFitToScreen"
-						v-tooltip:top="'Fit to Screen'"
-						@click="fitToScreen"
-					/>
+					<VRow no-gutters justify="center" align="center">
+						<VCol cols="auto">
+							<VBtn
+								:color="editor.mode === 'pan' ? 'primary' : ''"
+								:icon="mdiHandBackLeft"
+								v-tooltip:top="'Pan Mode'"
+								@click="switchPan"
+							/>
+						</VCol>
+						<VCol cols="auto">
+							<VBtn
+								:icon="mdiFitToScreen"
+								v-tooltip:top="'Fit to Screen'"
+								@click="fitToScreen"
+							/>
+						</VCol>
+						<VCol cols="auto">
+							<VSlider
+								v-model="editor.zoom"
+								:min="MIN_ZOOM"
+								:max="MAX_ZOOM"
+								:step="0.1"
+								width="400px"
+								thumb-label
+							>
+								<template v-slot:prepend>
+									<VBtn
+										:icon="mdiMagnifyMinus"
+										v-tooltip:top="'Zoom Out'"
+										:disabled="editor.zoom === MIN_ZOOM"
+										@click="zoom('out')"
+									/>
+								</template>
+								<template v-slot:append>
+									<VBtn
+										:icon="mdiMagnifyPlus"
+										v-tooltip:top="'Zoom in'"
+										:disabled="editor.zoom === MAX_ZOOM"
+										@click="zoom('in')"
+									/>
+								</template>
+								<template v-slot:thumb-label="{ modelValue }">
+									{{ parseInt(modelValue * 100) + '%' }}
+								</template>
+							</VSlider>
+						</VCol>
+					</VRow>
 				</VCol>
 				<VCol cols="auto">
-					<VSlider
-						v-model="editor.zoom"
-						:min="MIN_ZOOM"
-						:max="MAX_ZOOM"
-						:step="0.1"
-						width="400px"
-						thumb-label
-					>
-						<template v-slot:prepend>
-							<VBtn
-								:icon="mdiMagnifyMinus"
-								v-tooltip:top="'Zoom Out'"
-								:disabled="editor.zoom === MIN_ZOOM"
-								@click="zoom('out')"
-							/>
-						</template>
-						<template v-slot:append>
-							<VBtn
-								:icon="mdiMagnifyPlus"
-								v-tooltip:top="'Zoom in'"
-								:disabled="editor.zoom === MAX_ZOOM"
-								@click="zoom('in')"
-							/>
-						</template>
-						<template v-slot:thumb-label="{ modelValue }">
-							{{ parseInt(modelValue * 100) + '%' }}
-						</template>
-					</VSlider>
+					<VRow no-gutters justify="center" align="center">
+						<VCol cols="auto">
+							<VBtn :icon="mdiMessageText" v-tooltip:top="'Feedback'" />
+						</VCol>
+						<VCol cols="auto">
+							<VBtn :icon="mdiHelpCircle" v-tooltip:top="'Help'" />
+						</VCol>
+					</VRow>
 				</VCol>
 			</VRow>
 		</VContainer>

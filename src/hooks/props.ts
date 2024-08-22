@@ -1,5 +1,6 @@
 import { computed } from 'vue';
 import { useEditor, useProject } from '../store';
+import { sanitize } from '../utils/sanitizer';
 
 const useProps = (props: string[]): any => {
 	const editor = useEditor();
@@ -14,7 +15,7 @@ const useProps = (props: string[]): any => {
 			set: (value: any) => {
 				const id = editor.activeLayerIds[0];
 				project.updateProps(id, {
-					[prop]: value
+					[prop]: sanitize(prop, value)
 				});
 			}
 		});

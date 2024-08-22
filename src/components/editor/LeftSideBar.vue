@@ -16,6 +16,10 @@ const onClick = () => {
 		<LeftSideBarUploads v-else-if="editor.tool === 'uploads'" />
 		<LeftSideBarPhotos v-else-if="editor.tool === 'photos'" />
 		<LeftSideBarGraphics v-else-if="editor.tool === 'graphics'" />
+		<LeftSideBarTexts v-else-if="editor.tool === 'texts'" />
+		<LeftSideBarAI v-else-if="editor.tool === 'ai'" />
+		<LeftSideBarDraw v-else-if="editor.tool === 'draw'" />
+		<LeftSideBarBrand v-else-if="editor.tool === 'brand'" />
 		<template v-slot:append>
 			<SideBarToggler @click="onClick" :icon="show ? mdiChevronLeft : mdiChevronRight" />
 		</template>

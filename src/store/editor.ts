@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-type Tool =
+export type EditorToolType =
 	| ''
 	| 'templates'
 	| 'uploads'
@@ -11,21 +11,24 @@ type Tool =
 	| 'draw'
 	| 'brand';
 
-type Mode = 'select' | 'pan' | 'draw';
+export type EditorModeType = 'select' | 'pan' | 'draw';
+
+export type EditorPencilType = 'brush' | 'rect' | 'ellipse' | 'circle' | 'triangle' | 'arrow';
 
 export interface EditorState {
 	// UI
-	tool: Tool;
+	tool: EditorToolType;
 	loading: boolean;
 	openStartDialog: boolean;
 	// Canvas
-	mode: Mode;
+	mode: EditorModeType;
 	zoom: number;
 	panX: number;
 	panY: number;
 	width: number;
 	height: number;
 	// Pencil
+	pencil: EditorPencilType;
 	penWidth: number;
 	penColor: string;
 	// Layers
@@ -45,6 +48,7 @@ export default defineStore<string, EditorState, EditorGetters>('editor', {
 		panY: 0,
 		width: 0,
 		height: 0,
+		pencil: 'brush',
 		penWidth: 2,
 		penColor: '#000000',
 		activeLayerIds: []

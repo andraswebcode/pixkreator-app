@@ -24,8 +24,8 @@ const editor = useEditor();
 			<ToolBarItem value="uploads" v-tooltip:end="'Uploads'" :icon="mdiCloudUpload" />
 			<ToolBarItem value="photos" v-tooltip:end="'Photos'" :icon="mdiImageMultiple" />
 			<ToolBarItem value="graphics" v-tooltip:end="'Graphics'" :icon="mdiShape" />
-			<ToolBarItem value="ai" v-tooltip:end="'Generate With AI'" :icon="mdiCreation" />
 			<ToolBarItem value="texts" v-tooltip:end="'Texts'" :icon="mdiFormatText" />
+			<ToolBarItem value="ai" v-tooltip:end="'Generate With AI'" :icon="mdiCreation" />
 			<ToolBarItem value="draw" v-tooltip:end="'Draw'" :icon="mdiBrush" />
 			<ToolBarItem value="brand" v-tooltip:end="'Brand'" :icon="mdiPaletteSwatchVariant" />
 		</ToolBarList>

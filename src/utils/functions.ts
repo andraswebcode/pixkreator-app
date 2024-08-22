@@ -109,7 +109,7 @@ const isEqual = (value1: any, value2: any, visited = new Set()): boolean => {
 	return false;
 };
 
-const unique = (array: any[]): any[] => Array.from(new Set(array));
+const unique = <T = any>(array: T[]): T[] => Array.from(new Set(array));
 
 const getCroppedImageDimensions = (
 	originalWidth: number,

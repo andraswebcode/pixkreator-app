@@ -35,6 +35,7 @@ const saveDesign = () => {
 			notice.send('Design Saved Successfully', 'success');
 		},
 		(error) => {
+			console.log(error);
 			editor.loading = false;
 			notice.send(error.response?.data?.message || error.message, 'error');
 		}
@@ -49,8 +50,8 @@ const saveDesign = () => {
 		<VBtn :icon="mdiRedo" v-tooltip="'Redo'" @click="project.redo" />
 		<template v-slot:append>
 			<VBtn :icon="mdiShare" v-tooltip="'Share'" />
-			<VBtn :icon="mdiDownload" v-tooltip="'Export'" />
-			<VBtn :icon="mdiContentSave" v-tooltip="'Save'" @click="saveDesign"></VBtn>
+			<VBtn :icon="mdiDownload" v-tooltip="'Download'" />
+			<VBtn :icon="mdiContentSave" v-tooltip="'Save'" @click="saveDesign" />
 			<VDivider />
 			<UserMenu />
 		</template>

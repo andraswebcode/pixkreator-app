@@ -17,6 +17,7 @@ const defaults = {
 	},
 	VSlider: {
 		thumbSize: 18,
+		thumbLabel: true,
 		hideDetails: true
 	},
 	VSelect: {

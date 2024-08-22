@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiAccount, mdiInformation, mdiInvoice } from '@mdi/js';
+import { mdiAccount, mdiInformation, mdiInvoice, mdiLifebuoy } from '@mdi/js';
 </script>
 
 <template>
@@ -20,7 +20,7 @@ import { mdiAccount, mdiInformation, mdiInvoice } from '@mdi/js';
 					Subscription
 				</VTab>
 				<VTab to="/account/support">
-					<VIcon :icon="mdiAccount" />
+					<VIcon :icon="mdiLifebuoy" />
 					Support
 				</VTab>
 			</VTabs>

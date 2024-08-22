@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { uniqueId } from '../utils/functions';
+import { unique, uniqueId } from '../utils/functions';
 import { util } from 'fabric';
 
 export type IDList = string[];
@@ -52,7 +52,7 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 				const { type } = layer;
 				const id = layer.id || uniqueId(type);
 				this.$patch({
-					ids: [...this.ids, id],
+					ids: unique<string>([...this.ids, id]),
 					byIds: {
 						...this.byIds,
 						[id]: {

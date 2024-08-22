@@ -1,8 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import useProps from '../../../hooks/props';
+
+const { shadow } = useProps(['shadow']);
+</script>
 
 <template>
 	<VExpansionPanel title="Shadow" value="shadow">
-		<VExpansionPanelText> shadow </VExpansionPanelText>
+		<VExpansionPanelText>
+			<ShadowPicker v-model="shadow" />
+		</VExpansionPanelText>
 	</VExpansionPanel>
 </template>
 

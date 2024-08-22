@@ -5,7 +5,7 @@ const props = defineProps<{
 </script>
 
 <template>
-	<VTextField :label="label"></VTextField>
+	<VTextField :label="props.label"></VTextField>
 </template>
 
 <style scoped lang="scss"></style>
