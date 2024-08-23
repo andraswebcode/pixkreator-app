@@ -112,6 +112,10 @@ onMounted(() => {
 					v-for="(item, i) of recentProjects"
 					:key="item.id"
 					cols="2"
+					:json="{
+						...item,
+						layers: item.layer_ids.map((id) => item.layers[id])
+					}"
 					@click="editProject(i)"
 				/>
 				<GridLoader v-else :cols="2" :count="6" />

@@ -1,15 +1,39 @@
 <script setup lang="ts">
+import { ref, toRaw, watch } from 'vue';
+import { jsonToImage } from '../../utils/json-to-image';
+
 const props = defineProps<{
 	cols: string | number;
 	src?: string;
+	json?: any;
 }>();
 const emit = defineEmits(['click']);
+const srcFromJson = ref(''); // base64 string
+
+watch(
+	() => props.json,
+	(newJson) => {
+		if (!newJson) {
+			return;
+		}
+		jsonToImage({
+			width: newJson.width,
+			height: newJson.height,
+			objects: toRaw(newJson.layers)
+		}).then((response) => {
+			srcFromJson.value = response;
+		});
+	},
+	{
+		immediate: true
+	}
+);
 </script>
 
 <template>
 	<VCol :cols="props.cols">
 		<VCard hover link @click.prevent="emit('click')">
-			<VImg aspect-ratio="1" color="primary" :src="props.src" />
+			<VImg aspect-ratio="1" color="blue-grey-darken-4" :src="props.src || srcFromJson" />
 		</VCard>
 	</VCol>
 </template>
