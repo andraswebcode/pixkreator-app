@@ -32,6 +32,8 @@ const fetchProject = (obj: any) => {
 			}
 		});
 	} else {
+		editor.$reset();
+		project.$reset();
 		project.resetStack();
 	}
 };
