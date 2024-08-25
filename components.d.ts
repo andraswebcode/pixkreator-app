@@ -37,6 +37,7 @@ declare module 'vue' {
     PhotoDetails: typeof import('./src/components/common/PhotoDetails.vue')['default']
     RightSideBar: typeof import('./src/components/editor/RightSideBar.vue')['default']
     RightSideBarCanvasSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarCanvasSettings.vue')['default']
+    RightSideBarLayerGroupSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarLayerGroupSettings.vue')['default']
     RightSideBarLayerImageSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarLayerImageSettings.vue')['default']
     RightSideBarLayerPathSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarLayerPathSettings.vue')['default']
     RightSideBarLayerRectSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarLayerRectSettings.vue')['default']

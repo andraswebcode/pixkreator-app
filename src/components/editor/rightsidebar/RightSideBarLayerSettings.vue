@@ -14,6 +14,7 @@ const { type } = useProps(['type']);
 		<RightSideBarLayerPathSettings v-else-if="type === 'Path'" />
 		<RightSideBarLayerPathSettings v-else-if="type === 'Polygon'" />
 		<RightSideBarLayerPathSettings v-else-if="type === 'Polyline'" />
+		<RightSideBarLayerGroupSettings v-else-if="type === 'Group'" />
 	</VExpansionPanels>
 </template>
 
