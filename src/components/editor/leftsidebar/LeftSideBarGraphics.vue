@@ -35,7 +35,7 @@ const loadMore = () => {
 			search: search.value,
 			page: page.value
 		},
-		'photos',
+		'graphics',
 		(data) => {
 			items.value.push(...data.items);
 			page.value++;

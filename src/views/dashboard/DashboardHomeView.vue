@@ -48,6 +48,7 @@ onMounted(() => {
 		'designs',
 		(data) => {
 			recentProjects.value = data.items;
+			console.log(data);
 		}
 	);
 	list({}, 'templates/editorschoice', (data) => {

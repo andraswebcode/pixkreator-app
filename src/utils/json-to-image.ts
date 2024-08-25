@@ -8,7 +8,8 @@ const jsonToImage = (
 	}
 ): Promise<string> => {
 	return new StaticCanvas()
-		.loadFromJSON(json, (_json, obj) => {
+		.loadFromJSON(
+			json /*, (_json, obj) => {
 			// @ts-ignore
 			obj.set({
 				originX: 'left',
@@ -16,7 +17,8 @@ const jsonToImage = (
 				left: _json.left + json.width / 2,
 				top: _json.top + json.height / 2
 			});
-		})
+		}*/
+		)
 		.then((response) => response.toDataURL());
 };
 

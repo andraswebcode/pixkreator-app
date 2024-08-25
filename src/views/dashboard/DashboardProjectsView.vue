@@ -71,7 +71,10 @@ onBeforeRouteUpdate((to) => {
 				v-for="(item, i) of items"
 				:key="item.id"
 				cols="2"
-				:src="item.thumbnail"
+				:json="{
+					...item,
+					layers: item.layer_ids.map((id) => item.layers[id])
+				}"
 				@click="editProject(i)"
 			/>
 		</LibraryItems>

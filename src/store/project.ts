@@ -1,10 +1,14 @@
 import { defineStore } from 'pinia';
 import { unique, uniqueId } from '../utils/functions';
-import { util } from 'fabric';
+import { FabricObjectProps, util } from 'fabric';
 
 export type IDList = string[];
 
-export interface ByID {}
+export interface ByID extends FabricObjectProps {
+	id: string;
+	name: string;
+	type: string;
+}
 
 export type ByIDs = {
 	[key: string]: ByID;

@@ -35,6 +35,9 @@ const fetchProject = (obj: any) => {
 		editor.$reset();
 		project.$reset();
 		project.resetStack();
+		if (obj.query.start) {
+			editor.openStartDialog = true;
+		}
 	}
 };
 

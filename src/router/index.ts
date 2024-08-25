@@ -102,17 +102,26 @@ const routes: RouteRecordRaw[] = [
 	{
 		name: 'login',
 		path: '/login',
-		component: LoginView
+		component: LoginView,
+		meta: {
+			hideOnLoggedIn: true
+		}
 	},
 	{
 		name: 'register',
 		path: '/register',
-		component: RegisterView
+		component: RegisterView,
+		meta: {
+			hideOnLoggedIn: true
+		}
 	},
 	{
 		name: 'pwreset',
 		path: '/pwreset',
-		component: PWResetView
+		component: PWResetView,
+		meta: {
+			hideOnLoggedIn: true
+		}
 	}
 ];
 
@@ -126,7 +135,7 @@ router.beforeEach((to) => {
 	if (to.meta.requiresAuth && !userData.user.id) {
 		return '/login';
 	} else if (userData.user.id && to.meta.hideOnLoggedIn) {
-		return '/';
+		return '/dashboard';
 	}
 });
 

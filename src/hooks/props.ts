@@ -20,7 +20,7 @@ const useProps = (props: string[]): any => {
 			}
 		});
 		return memo;
-	}, []);
+	}, {});
 };
 
 export default useProps;

@@ -7,6 +7,7 @@ import { isEqual, toFixed } from '../../../utils/functions';
 import { EditorModeType, EditorPencilType } from '../../../store/editor';
 
 let fabricCanvas: Canvas;
+let isSettingProgramatically = true;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const project = useProject();
 const editor = useEditor();
@@ -20,8 +21,8 @@ const updateCanvas = () => {
 		const panY = editor.height / 2 - (project.height / 2) * editor.zoom + editor.panY;
 		fabricCanvas.setViewportTransform([editor.zoom, 0, 0, editor.zoom, panX, panY]);
 		fabricCanvas.clipPath?.set({
-			width: project.width,
-			height: project.height
+			width: toFixed(project.width),
+			height: toFixed(project.height)
 		});
 		fabricCanvas.set('backgroundColor', project.background);
 	}
@@ -51,7 +52,9 @@ const onPanEnd = () => {
 	isPanning.value = false;
 };
 const onObjectSelection = () => {
-	editor.activeLayerIds = fabricCanvas.getActiveObjects().map((obj) => obj.id);
+	if (!isSettingProgramatically) {
+		editor.activeLayerIds = fabricCanvas.getActiveObjects().map((obj) => obj.id);
+	}
 };
 const onObjectModified = ({ target }) => {
 	if (target?.type === 'activeselection') {
@@ -187,6 +190,14 @@ watch(
 		fabricCanvas.isDrawingMode = newMode === 'draw';
 		fabricCanvas.freeDrawingBrush!.width = newWidth;
 		fabricCanvas.freeDrawingBrush!.color = newColor;
+	}
+);
+watch(
+	() => editor.activeLayerIds,
+	(ids) => {
+		isSettingProgramatically = true;
+		fabricCanvas.setActiveObjectsByIds(ids);
+		isSettingProgramatically = false;
 	}
 );
 </script>
