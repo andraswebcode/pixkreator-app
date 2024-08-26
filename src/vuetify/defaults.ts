@@ -15,6 +15,10 @@ const defaults = {
 	VBtn: {
 		// density: 'default'
 	},
+	VTextField: {
+		class: 'mb-5',
+		hideDetails: true
+	},
 	VSlider: {
 		thumbSize: 18,
 		thumbLabel: true,

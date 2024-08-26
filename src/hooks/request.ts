@@ -30,7 +30,8 @@ const useRequest = () => {
 					height,
 					background,
 					layers,
-					layer_ids
+					layer_ids,
+					link
 				} = data;
 				return {
 					title,
@@ -40,7 +41,8 @@ const useRequest = () => {
 					height,
 					background,
 					byIds: Array.isArray(layers) && !layers.length ? {} : layers,
-					ids: layer_ids
+					ids: layer_ids,
+					link
 				};
 			})
 			.then(then)
@@ -72,10 +74,29 @@ const useRequest = () => {
 			.catch(catchFn);
 	};
 
+	const patch = (id: string, data: any, then: ThenFn, catchFn?: ThenFn) => {
+		const _id = parseInt(id);
+
+		if (!_id) {
+			return;
+		}
+
+		axios
+			.patch('designs/' + _id, data, {
+				headers: {
+					Authorization: bearerToken
+				}
+			})
+			.then(({ data }) => data)
+			.then(then)
+			.catch(catchFn);
+	};
+
 	return {
 		get,
 		list,
-		save
+		save,
+		patch
 	};
 };
 

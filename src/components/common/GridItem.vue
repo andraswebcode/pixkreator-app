@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, toRaw, watch } from 'vue';
-import { jsonToImage } from '../../utils/json-to-image';
+import { jsonToBlob } from '../../utils/json-to-blob';
 
 const props = defineProps<{
 	cols: string | number;
@@ -16,12 +16,12 @@ watch(
 		if (!newJson) {
 			return;
 		}
-		jsonToImage({
+		jsonToBlob({
 			width: newJson.width,
 			height: newJson.height,
 			objects: toRaw(newJson.layers)
-		}).then((response) => {
-			srcFromJson.value = response;
+		}).then((blob) => {
+			srcFromJson.value = URL.createObjectURL(blob);
 		});
 	},
 	{

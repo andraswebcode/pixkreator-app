@@ -11,10 +11,13 @@ const { get } = useRequest();
 
 const fetchProject = (obj: any) => {
 	if (obj.params.id) {
+		const open = editor.openShareDialog;
 		editor.loading = true;
 		get(obj.params.id as string, 'designs', (state) => {
 			editor.$reset();
 			project.$reset();
+
+			editor.openShareDialog = open;
 
 			if (state) {
 				project.$patch(state);
@@ -44,7 +47,10 @@ const fetchProject = (obj: any) => {
 onMounted(() => {
 	fetchProject(route);
 });
-onBeforeRouteUpdate((to) => {
+onBeforeRouteUpdate((to, from) => {
+	if (to.path !== '/' && from.path === '/') {
+		return;
+	}
 	fetchProject(to);
 });
 </script>

@@ -49,13 +49,19 @@ const saveDesign = () => {
 		<VBtn :icon="mdiUndo" v-tooltip="'Undo'" @click="project.undo" />
 		<VBtn :icon="mdiRedo" v-tooltip="'Redo'" @click="project.redo" />
 		<template v-slot:append>
-			<VBtn :icon="mdiShare" v-tooltip="'Share'" />
-			<VBtn :icon="mdiDownload" v-tooltip="'Download'" />
+			<VBtn :icon="mdiShare" v-tooltip="'Share'" @click="editor.openShareDialog = true" />
+			<VBtn
+				:icon="mdiDownload"
+				v-tooltip="'Download'"
+				@click="editor.openDownloadDialog = true"
+			/>
 			<VBtn :icon="mdiContentSave" v-tooltip="'Save'" @click="saveDesign" />
 			<VDivider />
 			<UserMenu />
 		</template>
 	</VAppBar>
+	<ShareDialog />
+	<DownloadDialog />
 </template>
 
 <style scoped lang="scss"></style>

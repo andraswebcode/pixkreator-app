@@ -15,7 +15,7 @@ class Canvas extends FabricCanvas {
 	altActionKey: ModifierKey = 'ctrlKey';
 	uniScaleKey = null;
 
-	constructor(el, options) {
+	constructor(el?, options?) {
 		super(el, options);
 		this.freeDrawingBrush = new PencilBrush(this);
 	}

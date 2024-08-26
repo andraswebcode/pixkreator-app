@@ -8,6 +8,7 @@ export interface ByID extends FabricObjectProps {
 	id: string;
 	name: string;
 	type: string;
+	src?: string;
 }
 
 export type ByIDs = {
@@ -22,6 +23,7 @@ export interface ProjectState {
 	title: string;
 	description: string;
 	status: 'public' | 'private' | 'deleted';
+	link: string;
 	width: number;
 	height: number;
 	background: string;
@@ -42,6 +44,7 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 		title: '',
 		description: '',
 		status: 'private',
+		link: '',
 		width: 400,
 		height: 400,
 		background: '#FFFFFF',
@@ -84,6 +87,6 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 		}
 	},
 	undo: {
-		omit: ['title', 'description', 'status']
+		omit: ['title', 'description', 'status', 'link']
 	}
 });
