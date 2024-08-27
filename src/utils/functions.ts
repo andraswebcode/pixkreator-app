@@ -1,4 +1,4 @@
-import { PhotoSize } from '../types/common';
+import { Extension, MimeType, PhotoSize } from '../types/common';
 
 const clamp = (value: number, min: number, max: number): number =>
 	Math.min(Math.max(value, min), max);
@@ -150,6 +150,18 @@ const formatBlobSize = (bytes: number): string => {
 	return `${size.toFixed(2)} ${sizes[i]}`;
 };
 
+const mimeToExtension = (type: MimeType): Extension => {
+	const map: {
+		[key in MimeType]: Extension;
+	} = {
+		'image/png': 'png',
+		'image/jpeg': 'jpg',
+		'image/webp': 'webp'
+	};
+
+	return map[type];
+};
+
 export {
 	clamp,
 	toFixed,
@@ -159,5 +171,6 @@ export {
 	isEqual,
 	unique,
 	getCroppedImageDimensions,
-	formatBlobSize
+	formatBlobSize,
+	mimeToExtension
 };

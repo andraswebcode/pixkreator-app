@@ -3,7 +3,7 @@ import { ref, toRaw, watch } from 'vue';
 import { useEditor, useProject } from '../../../store';
 import { jsonToBlob } from '../../../utils/json-to-blob';
 import { MimeType } from '../../../types/common';
-import { formatBlobSize } from '../../../utils/functions';
+import { formatBlobSize, mimeToExtension } from '../../../utils/functions';
 
 const editor = useEditor();
 const project = useProject();
@@ -12,6 +12,17 @@ const type = ref<MimeType>('image/png');
 const name = ref('');
 const quality = ref(0.98);
 const size = ref('');
+const downloadImage = () => {
+	const a = document.createElement('a');
+
+	a.style.display = 'none';
+	a.href = src.value;
+	a.download = (name.value || 'image') + '.' + mimeToExtension(type.value);
+
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
+};
 
 watch<[boolean, MimeType, number]>(
 	() => [editor.openDownloadDialog, type.value, quality.value],
@@ -74,7 +85,7 @@ watch<[boolean, MimeType, number]>(
 			</VRow>
 		</VContainer>
 		<template v-slot:actions>
-			<VBtn>Download</VBtn>
+			<VBtn @click="downloadImage">Download</VBtn>
 		</template>
 	</PersistentHeaderDialog>
 </template>

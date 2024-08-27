@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, toRaw, watch } from 'vue';
-import { useEditor, useProject } from '../../../store';
+import { useEditor, useNotice, useProject } from '../../../store';
 import { jsonToBlob } from '../../../utils/json-to-blob';
 import {
 	mdiContentCopy,
@@ -20,6 +20,7 @@ const router = useRouter();
 const editor = useEditor();
 const project = useProject();
 const { save, patch } = useRequest();
+const notice = useNotice();
 const src = ref('');
 const loading = ref(false);
 const socialMedia = ref<SocialMedia>('pinterest');
@@ -67,6 +68,17 @@ const createLink = () => {
 		);
 	}
 };
+const copyLink = () => {
+	navigator.clipboard
+		.writeText(project.link)
+		.then(() => {
+			notice.send('Link copied to clipboard!', 'success');
+		})
+		.catch(() => {
+			notice.send('Failed to copy link!', 'error');
+		});
+};
+const shareImage = () => {};
 
 watch(
 	() => editor.openShareDialog,
@@ -121,7 +133,8 @@ watch(
 						v-else
 						readonly
 						:model-value="project.link"
-						:append-icon="mdiContentCopy"
+						:append-inner-icon="mdiContentCopy"
+						@click:append-inner="copyLink"
 					/>
 					<VDivider class="my-8" />
 					<VRow class="mb-5">
@@ -176,7 +189,7 @@ watch(
 			</VRow>
 		</VContainer>
 		<template v-slot:actions>
-			<VBtn :disabled="disabled">Share</VBtn>
+			<VBtn :disabled="disabled" @click="shareImage">Share</VBtn>
 		</template>
 	</PersistentHeaderDialog>
 </template>
