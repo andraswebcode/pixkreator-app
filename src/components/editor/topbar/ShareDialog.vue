@@ -21,6 +21,7 @@ const editor = useEditor();
 const project = useProject();
 const { save, patch } = useRequest();
 const notice = useNotice();
+const blob = ref<Blob>();
 const src = ref('');
 const loading = ref(false);
 const socialMedia = ref<SocialMedia>('pinterest');
@@ -33,39 +34,71 @@ const createLink = () => {
 
 	const { id } = route.params;
 
-	if (id) {
-		patch(
-			id as string,
-			{
-				status: project.status === 'public' ? 'private' : 'public'
-			},
-			({ link, status }) => {
-				project.$patch({ link, status });
-				loading.value = false;
-			}
-		);
+	if (project.status === 'public') {
+		if (id) {
+			patch(
+				id as string,
+				'designs',
+				{
+					status: 'private'
+				},
+				({ link, status }) => {
+					project.$patch({ link, status });
+					loading.value = false;
+					console.log(link, status);
+				}
+			);
+		}
 	} else {
-		const { title, description, width, height, background, byIds, ids } = project;
-		save(
-			'',
-			{
-				title,
-				description,
-				status: 'public',
-				width,
-				height,
-				background,
-				layers: toRaw(byIds),
-				layer_ids: toRaw(ids)
-			},
-			({ id, link, status }) => {
-				router.push({
-					params: { id }
-				});
-				project.$patch({ link, status });
-				loading.value = false;
+		const data = new FormData();
+
+		data.append('file', blob.value as Blob);
+		data.append('source', 'design');
+
+		save('', 'uploads', data, (response) => {
+			console.log(response);
+
+			if (id) {
+				patch(
+					id as string,
+					'designs',
+					{
+						status: 'public',
+						upload_id: response.id
+					},
+					({ link, status, ...resp }) => {
+						project.$patch({ link, status });
+						loading.value = false;
+						console.log(link, status, resp);
+					}
+				);
+			} else {
+				const { title, description, width, height, background, byIds, ids } = project;
+				save(
+					'',
+					'designs',
+					{
+						title,
+						description,
+						status: 'public',
+						width,
+						height,
+						background,
+						layers: toRaw(byIds),
+						layer_ids: toRaw(ids),
+						upload_id: response.id
+					},
+					({ id, link, status, ...resp }) => {
+						router.push({
+							params: { id }
+						});
+						project.$patch({ link, status });
+						loading.value = false;
+						console.log(link, status, resp);
+					}
+				);
 			}
-		);
+		});
 	}
 };
 const copyLink = () => {
@@ -87,13 +120,18 @@ watch(
 			return;
 		}
 
-		jsonToBlob({
-			width: project.width,
-			height: project.height,
-			background: project.background,
-			objects: project.ids.map((id) => toRaw(project.byIds[id]))
-		}).then((blob) => {
-			src.value = URL.createObjectURL(blob);
+		jsonToBlob(
+			{
+				width: project.width,
+				height: project.height,
+				background: project.background,
+				objects: project.ids.map((id) => toRaw(project.byIds[id]))
+			},
+			'image/webp',
+			1
+		).then((response) => {
+			blob.value = response;
+			src.value = URL.createObjectURL(response);
 		});
 	}
 );

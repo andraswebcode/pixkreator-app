@@ -60,32 +60,43 @@ const useRequest = () => {
 			.then(then)
 			.catch(catchFn);
 	};
-	const save = (id: string, data: any, then: ThenFn, catchFn?: ThenFn) => {
+	const save = (id: string, path: string, data: any, then: ThenFn, catchFn?: ThenFn) => {
 		const _id = parseInt(id);
-		const url = _id ? 'designs/' + _id : 'designs';
+		const url = _id ? path + '/' + _id : path;
+		const headers = {
+			Authorization: bearerToken
+		};
+
+		if (data instanceof FormData) {
+			headers['Content-Type'] = 'multipart/form-data';
+		}
 
 		axios[_id ? 'put' : 'post'](url, data, {
-			headers: {
-				Authorization: bearerToken
-			}
+			headers
 		})
 			.then(({ data }) => data)
 			.then(then)
 			.catch(catchFn);
 	};
 
-	const patch = (id: string, data: any, then: ThenFn, catchFn?: ThenFn) => {
+	const patch = (id: string, path: string, data: any, then: ThenFn, catchFn?: ThenFn) => {
 		const _id = parseInt(id);
 
 		if (!_id) {
 			return;
 		}
 
+		const headers = {
+			Authorization: bearerToken
+		};
+
+		if (data instanceof FormData) {
+			headers['Content-Type'] = 'multipart/form-data';
+		}
+
 		axios
-			.patch('designs/' + _id, data, {
-				headers: {
-					Authorization: bearerToken
-				}
+			.patch(path + '/' + _id, data, {
+				headers
 			})
 			.then(({ data }) => data)
 			.then(then)

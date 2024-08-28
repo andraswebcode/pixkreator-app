@@ -29,9 +29,6 @@ import {
 			<VListItem to="/dashboard/photos" v-tooltip:end="'Photos'">
 				<VIcon :icon="mdiImageMultiple" />
 			</VListItem>
-			<VListItem to="/dashboard/ai-images" v-tooltip:end="'AI Images'">
-				<VIcon :icon="mdiCreation" />
-			</VListItem>
 			<VListItem to="/dashboard/brand" v-tooltip:end="'Brand'">
 				<VIcon :icon="mdiPaletteSwatchVariant" />
 			</VListItem>

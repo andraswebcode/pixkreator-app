@@ -17,6 +17,7 @@ const saveDesign = () => {
 	editor.loading = true;
 	save(
 		route.params.id as string,
+		'designs',
 		{
 			title,
 			description,
