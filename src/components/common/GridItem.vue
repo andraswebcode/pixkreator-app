@@ -19,6 +19,7 @@ watch(
 		jsonToBlob({
 			width: newJson.width,
 			height: newJson.height,
+			background: newJson.background,
 			objects: toRaw(newJson.layers)
 		}).then((blob) => {
 			srcFromJson.value = URL.createObjectURL(blob);

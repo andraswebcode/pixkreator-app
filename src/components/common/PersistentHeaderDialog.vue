@@ -39,5 +39,6 @@ const model = defineModel<boolean | undefined>();
 	flex: 1;
 	height: 100%;
 	overflow: hidden;
+	opacity: 1;
 }
 </style>

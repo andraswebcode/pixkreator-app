@@ -1,46 +1,63 @@
 <script setup lang="ts">
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
-import { useEditor, useProject } from '../store';
+import { useEditor, useNotice, useProject } from '../store';
 import { useRequest } from '../hooks';
 import { onMounted } from 'vue';
+import useFitToScreen from '../hooks/fittoscreen';
 
 const route = useRoute();
 const project = useProject();
 const editor = useEditor();
+const notice = useNotice();
+const fitToScreen = useFitToScreen();
 const { get } = useRequest();
 
 const fetchProject = (obj: any) => {
 	if (obj.params.id) {
 		const open = editor.openShareDialog;
 		editor.loading = true;
-		get(obj.params.id as string, 'designs', (state) => {
-			editor.$reset();
-			project.$reset();
+		get(
+			obj.params.id as string,
+			'designs',
+			(state) => {
+				project.$reset();
 
-			editor.openShareDialog = open;
+				editor.loading = false;
+				editor.openShareDialog = open;
 
-			if (state) {
-				project.$patch(state);
-				project.resetStack();
+				if (state) {
+					project.$patch(state);
+					project.resetStack();
+					fitToScreen();
+				}
+			},
+			(error) => {
+				notice.send(error.response?.data?.message || error.message, 'error');
+				editor.loading = false;
 			}
-		});
+		);
 	} else if (obj.query.template) {
 		editor.loading = true;
-		get(obj.query.template as string, 'templates', (state) => {
-			editor.$reset();
-			project.$reset();
-			if (state) {
-				project.$patch(state);
-				project.resetStack();
+		get(
+			obj.query.template as string,
+			'templates',
+			(state) => {
+				project.$reset();
+				if (state) {
+					project.$patch(state);
+					project.resetStack();
+					fitToScreen();
+				}
+			},
+			(error) => {
+				notice.send(error.response?.data?.message || error.message, 'error');
+				editor.loading = false;
 			}
-		});
+		);
 	} else {
-		editor.$reset();
 		project.$reset();
 		project.resetStack();
-		if (obj.query.start) {
-			editor.openStartDialog = true;
-		}
+		editor.openStartDialog = !!obj.query.start;
 	}
 };
 

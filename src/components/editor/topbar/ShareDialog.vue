@@ -46,6 +46,10 @@ const createLink = () => {
 					project.$patch({ link, status });
 					loading.value = false;
 					console.log(link, status);
+				},
+				(error) => {
+					notice.send(error.response?.data?.message || error.message, 'error');
+					loading.value = false;
 				}
 			);
 		}
@@ -55,50 +59,65 @@ const createLink = () => {
 		data.append('file', blob.value as Blob);
 		data.append('source', 'design');
 
-		save('', 'uploads', data, (response) => {
-			console.log(response);
-
-			if (id) {
-				patch(
-					id as string,
-					'designs',
-					{
-						status: 'public',
-						upload_id: response.id
-					},
-					({ link, status, ...resp }) => {
-						project.$patch({ link, status });
-						loading.value = false;
-						console.log(link, status, resp);
-					}
-				);
-			} else {
-				const { title, description, width, height, background, byIds, ids } = project;
-				save(
-					'',
-					'designs',
-					{
-						title,
-						description,
-						status: 'public',
-						width,
-						height,
-						background,
-						layers: toRaw(byIds),
-						layer_ids: toRaw(ids),
-						upload_id: response.id
-					},
-					({ id, link, status, ...resp }) => {
-						router.push({
-							params: { id }
-						});
-						project.$patch({ link, status });
-						loading.value = false;
-						console.log(link, status, resp);
-					}
-				);
+		save(
+			'',
+			'uploads',
+			data,
+			(response) => {
+				if (id) {
+					patch(
+						id as string,
+						'designs',
+						{
+							status: 'public',
+							upload_id: response.id
+						},
+						({ link, status, ...resp }) => {
+							project.$patch({ link, status });
+							loading.value = false;
+							console.log(link, status, resp);
+						},
+						(error) => {
+							notice.send(error.response?.data?.message || error.message, 'error');
+							loading.value = false;
+						}
+					);
+				} else {
+					const { title, description, width, height, background, byIds, ids } = project;
+					save(
+						'',
+						'designs',
+						{
+							title,
+							description,
+							status: 'public',
+							width,
+							height,
+							background,
+							layers: toRaw(byIds),
+							layer_ids: toRaw(ids),
+							upload_id: response.id
+						},
+						({ id, link, status, ...resp }) => {
+							router.push({
+								params: { id }
+							});
+							project.$patch({ link, status });
+							loading.value = false;
+							console.log(link, status, resp);
+						},
+						(error) => {
+							notice.send(error.response?.data?.message || error.message, 'error');
+							loading.value = false;
+						}
+					);
+				}
+			},
+			(error) => {
+				notice.send(error.response?.data?.message || error.message, 'error');
+				loading.value = false;
 			}
-		});
+		);
 	}
 };
 const copyLink = () => {
@@ -129,10 +148,14 @@ watch(
 			},
 			'image/webp',
 			1
-		).then((response) => {
-			blob.value = response;
-			src.value = URL.createObjectURL(response);
-		});
+		)
+			.then((response) => {
+				blob.value = response;
+				src.value = URL.createObjectURL(response);
+			})
+			.catch(() => {
+				notice.send('Can not create image file.', 'error');
+			});
 	}
 );
 </script>

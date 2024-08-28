@@ -52,23 +52,24 @@ const addPhoto = () => {
 	const item = items.value[index.value];
 	const { width, height } = getCroppedImageDimensions(item.width, item.height, size.value);
 
-	project.width = width;
-	project.height = height;
-
-	project.addLayer({
-		type: 'image',
-		src: item.proxy[size.value],
-		left: project.width / 2,
-		top: project.height / 2
-	});
-	router.replace({
-		query: {},
-		params: {
-			id: ''
-		}
-	});
-	editor.openStartDialog = false;
-	fitToScreen();
+	router
+		.replace({
+			query: {},
+			params: {
+				id: ''
+			}
+		})
+		.then(() => {
+			project.width = width;
+			project.height = height;
+			project.addLayer({
+				type: 'image',
+				src: item.proxy[size.value],
+				left: project.width / 2,
+				top: project.height / 2
+			});
+			fitToScreen();
+		});
 };
 
 onMounted(filter);

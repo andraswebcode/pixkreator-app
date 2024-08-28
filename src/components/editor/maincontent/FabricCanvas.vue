@@ -7,7 +7,6 @@ import { isEqual, toFixed } from '../../../utils/functions';
 import { EditorModeType, EditorPencilType } from '../../../store/editor';
 
 let fabricCanvas: Canvas;
-let isSettingProgramatically = true;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const project = useProject();
 const editor = useEditor();
@@ -52,9 +51,7 @@ const onPanEnd = () => {
 	isPanning.value = false;
 };
 const onObjectSelection = () => {
-	if (!isSettingProgramatically) {
-		editor.activeLayerIds = fabricCanvas.getActiveObjects().map((obj) => obj.id);
-	}
+	editor.activeLayerIds = fabricCanvas.getActiveObjects().map((obj) => obj.id);
 };
 const onObjectModified = ({ target }) => {
 	if (target?.type === 'activeselection') {
@@ -91,7 +88,13 @@ const onObjectModified = ({ target }) => {
 	project.updateProps(id, newProps);
 };
 const onPathCreated = ({ path }) => {
-	project.addLayer(path.toObject());
+	const layer = path.toObject();
+	const sw2 = layer.strokeWidth / 2;
+	project.addLayer({
+		...layer,
+		left: layer.left + layer.width / 2 + sw2,
+		top: layer.top + layer.height / 2 + sw2
+	});
 };
 
 onMounted(() => {
@@ -195,9 +198,7 @@ watch(
 watch(
 	() => editor.activeLayerIds,
 	(ids) => {
-		isSettingProgramatically = true;
 		fabricCanvas.setActiveObjectsByIds(ids);
-		isSettingProgramatically = false;
 	}
 );
 </script>

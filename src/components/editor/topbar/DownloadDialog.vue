@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ref, toRaw, watch } from 'vue';
-import { useEditor, useProject } from '../../../store';
+import { useEditor, useNotice, useProject } from '../../../store';
 import { jsonToBlob } from '../../../utils/json-to-blob';
 import { MimeType } from '../../../types/common';
 import { formatBlobSize, mimeToExtension } from '../../../utils/functions';
 
 const editor = useEditor();
 const project = useProject();
+const notice = useNotice();
 const src = ref('');
 const type = ref<MimeType>('image/png');
 const name = ref('');
@@ -40,10 +41,14 @@ watch<[boolean, MimeType, number]>(
 			},
 			type,
 			quality
-		).then((blob) => {
-			src.value = URL.createObjectURL(blob);
-			size.value = formatBlobSize(blob.size);
-		});
+		)
+			.then((blob) => {
+				src.value = URL.createObjectURL(blob);
+				size.value = formatBlobSize(blob.size);
+			})
+			.catch(() => {
+				notice.send('Can not create image file.', 'error');
+			});
 	}
 );
 </script>

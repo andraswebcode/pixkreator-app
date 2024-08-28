@@ -50,16 +50,18 @@ const openDetails = (i: number) => {
 };
 const addTemplate = () => {
 	const id = items.value[index.value]?.id;
-	router.replace({
-		query: {
-			template: id
-		},
-		params: {
-			id: ''
-		}
-	});
-	editor.openStartDialog = false;
-	fitToScreen();
+	router
+		.replace({
+			query: {
+				template: id
+			},
+			params: {
+				id: ''
+			}
+		})
+		.then(() => {
+			fitToScreen();
+		});
 };
 
 onMounted(filter);

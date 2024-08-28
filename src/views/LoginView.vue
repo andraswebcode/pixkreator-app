@@ -39,8 +39,20 @@ const login = () => {
 			New to Image Designer Pro?
 			<RouterLink to="/register">Create an account</RouterLink>
 		</template>
-		<VTextField label="Email" type="email" :rules="emailRules" v-model="email" />
-		<VTextField label="Password" type="password" :rules="passwordRules" v-model="password" />
+		<VTextField
+			label="Email"
+			type="email"
+			:rules="emailRules"
+			:hide-details="false"
+			v-model="email"
+		/>
+		<VTextField
+			label="Password"
+			type="password"
+			:rules="passwordRules"
+			:hide-details="false"
+			v-model="password"
+		/>
 		<small class="d-block mb-2">
 			<RouterLink to="/pwreset">Forgot your password?</RouterLink>
 		</small>

@@ -5,6 +5,7 @@ import { useProject } from '../../../store';
 
 const project = useProject();
 const { list } = useRequest();
+const tab = ref('search');
 const search = ref('');
 const category = ref('');
 const items = ref<any[]>([]);
@@ -61,26 +62,38 @@ onMounted(filter);
 </script>
 
 <template>
-	<LibraryWrapper>
-		<SearchInput label="Search Texts" v-model="search" @click:append-inner="filter" />
-		<VSelect
-			:items="categories"
-			v-model="category"
-			flat
-			single-line
-			hide-details
-			@update:model-value="filter"
-		/>
-		<LibraryItems :items-length="items.length" :count="24" :cols="6" @load="loadMore">
-			<GridItem
-				v-for="item of items"
-				:key="item.id"
-				cols="6"
-				:json="item"
-				@click="addText(item)"
-			/>
-		</LibraryItems>
-	</LibraryWrapper>
+	<VTabs v-model="tab" fixed-tabs>
+		<VTab value="search">Search</VTab>
+		<VTab value="create">Create</VTab>
+	</VTabs>
+	<VTabsWindow v-model="tab">
+		<VTabsWindowItem value="search">
+			<LibraryWrapper>
+				<SearchInput label="Search Texts" v-model="search" @click:append-inner="filter" />
+				<VSelect
+					:items="categories"
+					v-model="category"
+					flat
+					single-line
+					hide-details
+					@update:model-value="filter"
+				/>
+				<LibraryItems :items-length="items.length" :count="24" :cols="6" @load="loadMore">
+					<GridItem
+						v-for="item of items"
+						:key="item.id"
+						cols="6"
+						:json="item"
+						@click="addText(item)"
+					/>
+				</LibraryItems>
+			</LibraryWrapper>
+		</VTabsWindowItem>
+		<VTabsWindowItem value="create">
+			<VTextarea label="Text" />
+			<VBtn block>Add Text</VBtn>
+		</VTabsWindowItem>
+	</VTabsWindow>
 </template>
 
 <style scoped lang="scss"></style>

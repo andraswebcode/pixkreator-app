@@ -1,5 +1,6 @@
-import { ActiveSelection, Canvas as FabricCanvas, ModifierKey, PencilBrush } from 'fabric';
+import { ActiveSelection, Canvas as FabricCanvas, ModifierKey } from 'fabric';
 import { unique } from '../utils/functions';
+import { PROPencilBrush } from './brushes/pencil';
 
 class Canvas extends FabricCanvas {
 	selectionColor = 'rgba(16, 187, 229, 0.1)';
@@ -17,7 +18,7 @@ class Canvas extends FabricCanvas {
 
 	constructor(el?, options?) {
 		super(el, options);
-		this.freeDrawingBrush = new PencilBrush(this);
+		this.freeDrawingBrush = new PROPencilBrush(this);
 	}
 
 	getObjectById(id = '') {

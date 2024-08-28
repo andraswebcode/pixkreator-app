@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 const props = defineProps<{
 	loading: boolean;
 	label: string;
 }>();
 defineEmits(['submit']);
+
+const isValid = ref(false);
 </script>
 
 <template>
@@ -21,13 +25,13 @@ defineEmits(['submit']);
 							</VCardSubtitle>
 						</VCardItem>
 						<VDivider />
-						<VForm @submit.prevent="$emit('submit')">
+						<VForm v-model="isValid" @submit.prevent="$emit('submit')">
 							<VCardText>
 								<slot />
 							</VCardText>
 							<VDivider />
 							<VCardActions>
-								<VBtn type="submit" :loading="props.loading">
+								<VBtn type="submit" :disabled="!isValid" :loading="props.loading">
 									{{ props.label }}
 								</VBtn>
 							</VCardActions>
