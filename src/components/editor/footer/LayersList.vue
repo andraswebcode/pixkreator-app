@@ -44,6 +44,9 @@ const items = computed<any[]>(() =>
 		};
 	})
 );
+const sortLayers = (ids: string[]) => {
+	project.ids = ids;
+};
 const selectLayer = (item: any) => {
 	if (!item.selectable) {
 		return;
@@ -78,10 +81,15 @@ const toggleLayer = (id: string) => {
 			<VBtn :icon="mdiLayers" v-tooltip:top="'Layers'" v-bind="props" />
 		</template>
 		<VCard width="300" max-height="500">
-			<VList>
-				<VListItem v-for="item of items" :key="item.id" :active="item.selected">
+			<VList v-sortable="sortLayers">
+				<VListItem
+					v-for="item of items"
+					:key="item.id"
+					:active="item.selected"
+					:data-id="item.id"
+				>
 					<template v-slot:prepend>
-						<VIcon :icon="mdiDragVertical" />
+						<VIcon :icon="mdiDragVertical" class="handle" />
 						<VIcon :icon="item.icon" :disabled="item.lock" @click="selectLayer(item)" />
 					</template>
 					<VListItemTitle>{{ item.label }}</VListItemTitle>
@@ -110,4 +118,8 @@ const toggleLayer = (id: string) => {
 	</VMenu>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.handle {
+	cursor: grab;
+}
+</style>
