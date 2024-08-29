@@ -10,7 +10,7 @@ const { type } = useProps(['type']);
 	<VExpansionPanels v-model="panels">
 		<RightSideBarLayerImageSettings v-if="type === 'Image'" />
 		<RightSideBarLayerRectSettings v-else-if="type === 'Rect'" />
-		<RightSideBarLayerTextSettings v-else-if="type === 'Text'" />
+		<RightSideBarLayerTextSettings v-else-if="type === 'IText'" />
 		<RightSideBarLayerPathSettings v-else-if="type === 'Path'" />
 		<RightSideBarLayerPathSettings v-else-if="type === 'Polygon'" />
 		<RightSideBarLayerPathSettings v-else-if="type === 'Polyline'" />

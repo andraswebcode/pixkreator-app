@@ -6,6 +6,7 @@ import { useProject } from '../../../store';
 const project = useProject();
 const { list } = useRequest();
 const tab = ref('search');
+const text = ref('');
 const search = ref('');
 const category = ref('');
 const items = ref<any[]>([]);
@@ -41,7 +42,7 @@ const loadMore = () => {
 		}
 	);
 };
-const addText = (item: any) => {
+const addTextDesign = (item: any) => {
 	const _layer = item.layers[0];
 	const layer = {
 		..._layer,
@@ -56,6 +57,14 @@ const addText = (item: any) => {
 	};
 
 	project.addLayer(item.layers.length === 1 ? layer : group);
+};
+const addText = () => {
+	project.addLayer({
+		type: 'i-text',
+		text: text.value,
+		left: project.width / 2,
+		top: project.height / 2
+	});
 };
 
 onMounted(filter);
@@ -95,14 +104,14 @@ onMounted(filter);
 							:key="item.id"
 							cols="6"
 							:json="item"
-							@click="addText(item)"
+							@click="addTextDesign(item)"
 						/>
 					</LibraryItems>
 				</LibraryWrapper>
 			</VTabsWindowItem>
 			<VTabsWindowItem value="create">
-				<VTextarea label="Text" />
-				<VBtn block>Add Text</VBtn>
+				<VTextarea label="Text" v-model="text" />
+				<VBtn block @click="addText">Add Text</VBtn>
 			</VTabsWindowItem>
 		</VTabsWindow>
 	</TabsWrapper>

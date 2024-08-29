@@ -10,6 +10,7 @@ import {
 	mdiHeartOutline,
 	mdiDiamondOutline,
 	mdiImageOutline,
+	mdiFormatText,
 	mdiTrashCan,
 	mdiLockOpenVariant,
 	mdiEyeOff,
@@ -26,7 +27,19 @@ const ICON_MAP = {
 	ellipse: mdiEllipseOutline,
 	path: mdiHeartOutline,
 	polyline: mdiDiamondOutline,
-	polygon: mdiDiamondOutline
+	polygon: mdiDiamondOutline,
+	itext: mdiFormatText
+};
+const NAME_MAP = {
+	group: 'Group',
+	image: 'Image',
+	rect: 'Rect',
+	circle: 'Circle',
+	ellipse: 'Ellipse',
+	path: 'Path',
+	polyline: 'Polyline',
+	polygon: 'Polygon',
+	itext: 'Text'
 };
 const project = useProject();
 const editor = useEditor();
@@ -36,7 +49,7 @@ const items = computed<any[]>(() =>
 		const item = project.byIds[id] || {};
 		return {
 			id: item.id,
-			label: item.name || item.type,
+			label: item.name || NAME_MAP[item.type.toLowerCase()],
 			icon: ICON_MAP[item.type.toLowerCase()],
 			selected: editor.activeLayerIds.includes(id),
 			lock: !item.selectable,
@@ -48,7 +61,7 @@ const sortLayers = (ids: string[]) => {
 	project.ids = ids;
 };
 const selectLayer = (item: any) => {
-	if (!item.selectable) {
+	if (item.lock) {
 		return;
 	}
 
@@ -59,6 +72,8 @@ const selectLayer = (item: any) => {
 		editor.activeLayerIds = [item.id];
 		// editor.activeLayerIds = unique(editor.activeLayerIds.concat([id]));
 	}
+
+	editor.mode = 'select';
 };
 const lockLayer = (id: string) => {
 	const { selectable } = project.byIds[id] || {};
@@ -98,17 +113,20 @@ const toggleLayer = (id: string) => {
 							:icon="item.lock ? mdiLock : mdiLockOpenVariant"
 							class="mr-1"
 							size="x-small"
+							v-tooltip:top="item.lock ? 'Unlock' : 'Lock'"
 							@click="lockLayer(item.id)"
 						/>
 						<VBtn
 							:icon="item.hidden ? mdiEyeOff : mdiEye"
 							size="x-small"
+							v-tooltip:top="item.hidden ? 'Show' : 'Hide'"
 							@click="toggleLayer(item.id)"
 						/>
 						<VBtn
 							:icon="mdiTrashCan"
 							class="ml-1"
 							size="x-small"
+							v-tooltip:top="'Remove'"
 							@click="project.removeLayer(item.id)"
 						/>
 					</template>

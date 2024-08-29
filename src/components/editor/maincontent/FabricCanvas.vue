@@ -90,6 +90,7 @@ const onObjectModified = ({ target }) => {
 const onPathCreated = ({ path }) => {
 	const layer = path.toObject();
 	const sw2 = layer.strokeWidth / 2;
+	fabricCanvas.remove(path);
 	project.addLayer({
 		...layer,
 		left: layer.left + layer.width / 2 + sw2,
@@ -131,7 +132,8 @@ watch(
 			const object = fabricCanvas.getObjectById(id);
 			const layer = project.byIds[id];
 			if (object) {
-				object.set(layer);
+				const { id: _id, type: _type, ..._layer } = layer;
+				object.set(_layer);
 			} else {
 				newLayers.push(layer);
 			}

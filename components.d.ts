@@ -50,6 +50,7 @@ declare module 'vue' {
     RightSideBarPanelDimensionsSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelDimensionsSettings.vue')['default']
     RightSideBarPanelFiltersSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelFiltersSettings.vue')['default']
     RightSideBarPanelShadowSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelShadowSettings.vue')['default']
+    RightSideBarPanelTextSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelTextSettings.vue')['default']
     RightSideBarPanelTransformSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelTransformSettings.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

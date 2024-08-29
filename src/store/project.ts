@@ -63,6 +63,8 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 					byIds: {
 						...this.byIds,
 						[id]: {
+							visible: true,
+							selectable: true,
 							...layer,
 							id
 						}
@@ -70,7 +72,13 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 				});
 			});
 		},
-		removeLayer() {},
+		removeLayer(id) {
+			const { [id]: _, ...restLayers } = this.byIds;
+			this.$patch({
+				byIds: restLayers,
+				ids: this.ids.filter((_id) => _id !== id)
+			});
+		},
 		updateProps(id, props) {
 			if (typeof id === 'string') {
 				if (this.byIds[id] && props) {
