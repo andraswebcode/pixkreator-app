@@ -6,7 +6,7 @@
 			<VCol class="sidebar" cols="auto"></VCol>
 			<VCol class="overflow-x-hidden overflow-y-auto">
 				<VRow>
-					<GridItem v-for="i of 24" cols="2" />
+					<GridItem v-for="i of 24" :key="i" cols="2" />
 				</VRow>
 			</VCol>
 		</VRow>

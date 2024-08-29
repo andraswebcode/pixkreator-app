@@ -4,12 +4,10 @@ import useRequest from '../../../hooks/request';
 import templateCategories from '../../../utils/template-categories';
 import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 import { useRouter } from 'vue-router';
-import { useEditor } from '../../../store';
 import useFitToScreen from '../../../hooks/fittoscreen';
 
 const { list } = useRequest();
 const router = useRouter();
-const editor = useEditor();
 const fitToScreen = useFitToScreen();
 const search = ref('');
 const category = ref('');

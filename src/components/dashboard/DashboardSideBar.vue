@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {
-	mdiChevronLeft,
 	mdiCloudUpload,
-	mdiCreation,
 	mdiFolderMultiple,
 	mdiHome,
 	mdiImageMultiple,

@@ -51,7 +51,7 @@ const onPanEnd = () => {
 	isPanning.value = false;
 };
 const onObjectSelection = () => {
-	editor.activeLayerIds = fabricCanvas.getActiveObjects().map((obj) => obj.id);
+	editor.activeLayerIds = fabricCanvas.getActiveObjects().map((obj: any) => obj.id);
 };
 const onObjectModified = ({ target }) => {
 	if (target?.type === 'activeselection') {
@@ -176,7 +176,7 @@ watch(
 		editor.penWidth,
 		editor.penColor
 	],
-	([newMode, newPencil, newWidth, newColor]) => {
+	([newMode, _newPencil, newWidth, newColor]) => {
 		fabricCanvas.isDrawingMode = newMode === 'draw';
 		fabricCanvas.freeDrawingBrush!.width = newWidth;
 		fabricCanvas.freeDrawingBrush!.color = newColor;

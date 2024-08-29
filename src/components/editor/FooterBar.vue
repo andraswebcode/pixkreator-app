@@ -83,7 +83,10 @@ const zoom = (dir: string) => {
 									/>
 								</template>
 								<template v-slot:thumb-label="{ modelValue }">
-									{{ parseInt(modelValue * 100) + '%' }}
+									{{
+										// @ts-ignore
+										parseInt(modelValue * 100) + '%'
+									}}
 								</template>
 							</VSlider>
 						</VCol>

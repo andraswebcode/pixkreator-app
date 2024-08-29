@@ -29,6 +29,7 @@ class Sanitizer {
 		return fn(value);
 	}
 
+	// @ts-ignore
 	private _number(value: any): number {
 		return toFixed(value);
 	}

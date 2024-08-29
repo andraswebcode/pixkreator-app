@@ -9,6 +9,7 @@ export interface ByID extends FabricObjectProps {
 	name: string;
 	type: string;
 	src?: string;
+	text?: string;
 }
 
 export type ByIDs = {
@@ -74,6 +75,7 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 		},
 		removeLayer(id) {
 			const { [id]: _, ...restLayers } = this.byIds;
+			// @ts-ignore
 			this.$patch({
 				byIds: restLayers,
 				ids: this.ids.filter((_id) => _id !== id)

@@ -5,6 +5,7 @@ const props = defineProps<{
 </script>
 
 <template>
+	{{ props.label }}
 	<VSlider label="Offset X" :min="-100" :max="100" />
 	<VSlider label="Offset Y" :min="-100" :max="100" />
 	<VSlider label="Blur" :min="0" :max="40" />
