@@ -59,6 +59,7 @@ declare module 'vue' {
     StartWithBlank: typeof import('./src/components/editor/startwith/StartWithBlank.vue')['default']
     StartWithPhoto: typeof import('./src/components/editor/startwith/StartWithPhoto.vue')['default']
     StartWithTemplate: typeof import('./src/components/editor/startwith/StartWithTemplate.vue')['default']
+    TabsWrapper: typeof import('./src/components/common/TabsWrapper.vue')['default']
     TemplateDetails: typeof import('./src/components/common/TemplateDetails.vue')['default']
     ToolBar: typeof import('./src/components/editor/ToolBar.vue')['default']
     TopBar: typeof import('./src/components/editor/TopBar.vue')['default']

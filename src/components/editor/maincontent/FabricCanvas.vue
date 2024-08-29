@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, toRaw } from 'vue';
 import { useEditor, useProject } from './../../../store';
 import Canvas from '../../../canvas/canvas';
 import { Rect, util } from 'fabric';
-import { isEqual, toFixed } from '../../../utils/functions';
+import { toFixed } from '../../../utils/functions';
 import { EditorModeType, EditorPencilType } from '../../../store/editor';
+import { ByID } from '../../../store/project';
 
 let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const project = useProject();
 const editor = useEditor();
-const previousState = ref<any>({});
 const startPan = ref<{ x: number; y: number }>({ x: 0, y: 0 });
 const isPanning = ref(false);
 
@@ -107,9 +107,7 @@ onMounted(() => {
 			top: 0,
 			left: 0,
 			width: project.width,
-			height: project.height,
-			originX: 'left',
-			originY: 'top'
+			height: project.height
 		})
 	});
 	fabricCanvas.on('selection:created', onObjectSelection);
@@ -125,49 +123,36 @@ onMounted(() => {
 });
 
 watch(
-	() => project.byIds,
-	(newLayers) => {
-		const canvasObjects = fabricCanvas.getObjects();
-		const newState = Object.keys(newLayers).reduce((acc, key) => {
-			acc[key] = {
-				id: key,
-				...newLayers[key]
-			};
-			return acc;
-		}, {});
-		const modifiedObjects = Object.keys(newState)
-			.filter((id) => {
-				const previousObj = previousState.value[id];
-				return !previousObj || !isEqual(previousObj, newState[id]);
-			})
-			.map((id) => newState[id]);
+	(): [string[], any] => [toRaw(project.ids), project.byIds],
+	([newIds], [oldIds]) => {
+		const newLayers: ByID[] = [];
 
-		modifiedObjects.forEach((modifiedObj) => {
-			const existingObject = canvasObjects.find((obj: any) => obj.id === modifiedObj.id);
-
-			if (existingObject) {
-				existingObject.set(modifiedObj);
-				fabricCanvas.requestRenderAll();
+		newIds.forEach((id) => {
+			const object = fabricCanvas.getObjectById(id);
+			const layer = project.byIds[id];
+			if (object) {
+				object.set(layer);
 			} else {
-				// This is an easier way to update object list, and keep order as well.
-				fabricCanvas.remove(...fabricCanvas.getObjects());
-				util.enlivenObjects(project.ids.map((id) => project.byIds[id])).then(
-					(objects: any) => {
-						fabricCanvas.add(...objects);
-					}
-				);
+				newLayers.push(layer);
 			}
 		});
 
-		canvasObjects.forEach((obj: any) => {
-			if (!newState[obj.id]) {
-				fabricCanvas.remove(obj);
+		if (newLayers.length) {
+			util.enlivenObjects(newLayers).then((objects: any) => {
+				fabricCanvas.add(...objects);
+			});
+		}
+
+		oldIds.forEach((id) => {
+			if (!newIds.includes(id)) {
+				const object = fabricCanvas.getObjectById(id);
+				if (object) {
+					fabricCanvas.remove(object);
+				}
 			}
 		});
 
 		fabricCanvas.requestRenderAll();
-
-		previousState.value = newState;
 	},
 	{ deep: true }
 );
@@ -197,8 +182,8 @@ watch(
 );
 watch(
 	() => editor.activeLayerIds,
-	(ids) => {
-		fabricCanvas.setActiveObjectsByIds(ids);
+	(newIds) => {
+		fabricCanvas.setActiveObjectsByIds(newIds);
 	}
 );
 </script>

@@ -9,11 +9,14 @@ import {
 	mdiLayersOutline,
 	mdiHeartOutline,
 	mdiDiamondOutline,
-	mdiImageOutline
+	mdiImageOutline,
+	mdiTrashCan,
+	mdiLockOpenVariant,
+	mdiEyeOff,
+	mdiDragVertical
 } from '@mdi/js';
 import { useEditor, useProject } from '../../../store';
 import { computed, ref } from 'vue';
-import { unique } from '../../../utils/functions';
 
 const ICON_MAP = {
 	group: mdiLayersOutline,
@@ -35,18 +38,37 @@ const items = computed<any[]>(() =>
 			id: item.id,
 			label: item.name || item.type,
 			icon: ICON_MAP[item.type.toLowerCase()],
-			selected: editor.activeLayerIds.includes(id)
+			selected: editor.activeLayerIds.includes(id),
+			lock: !item.selectable,
+			hidden: !item.visible
 		};
 	})
 );
-const selectLayer = (id: string) => {
-	if (editor.activeLayerIds.includes(id)) {
+const selectLayer = (item: any) => {
+	if (!item.selectable) {
+		return;
+	}
+
+	if (editor.activeLayerIds.includes(item.id)) {
 		editor.activeLayerIds = [];
 		// editor.activeLayerIds = editor.activeLayerIds.filter((_id) => _id !== id);
 	} else {
-		editor.activeLayerIds = [id];
+		editor.activeLayerIds = [item.id];
 		// editor.activeLayerIds = unique(editor.activeLayerIds.concat([id]));
 	}
+};
+const lockLayer = (id: string) => {
+	const { selectable } = project.byIds[id] || {};
+	project.updateProps(id, {
+		selectable: !selectable
+	});
+	editor.activeLayerIds = editor.activeLayerIds.filter((_id) => _id !== id);
+};
+const toggleLayer = (id: string) => {
+	const { visible } = project.byIds[id] || {};
+	project.updateProps(id, {
+		visible: !visible
+	});
 };
 </script>
 
@@ -57,19 +79,30 @@ const selectLayer = (id: string) => {
 		</template>
 		<VCard width="300" max-height="500">
 			<VList>
-				<VListItem
-					v-for="item of items"
-					:key="item.id"
-					:active="item.selected"
-					@click="selectLayer(item.id)"
-				>
+				<VListItem v-for="item of items" :key="item.id" :active="item.selected">
 					<template v-slot:prepend>
-						<VIcon :icon="item.icon" />
+						<VIcon :icon="mdiDragVertical" />
+						<VIcon :icon="item.icon" :disabled="item.lock" @click="selectLayer(item)" />
 					</template>
 					<VListItemTitle>{{ item.label }}</VListItemTitle>
 					<template v-slot:append>
-						<VBtn :icon="mdiLock" />
-						<VBtn :icon="mdiEye" />
+						<VBtn
+							:icon="item.lock ? mdiLock : mdiLockOpenVariant"
+							class="mr-1"
+							size="x-small"
+							@click="lockLayer(item.id)"
+						/>
+						<VBtn
+							:icon="item.hidden ? mdiEyeOff : mdiEye"
+							size="x-small"
+							@click="toggleLayer(item.id)"
+						/>
+						<VBtn
+							:icon="mdiTrashCan"
+							class="ml-1"
+							size="x-small"
+							@click="project.removeLayer(item.id)"
+						/>
 					</template>
 				</VListItem>
 			</VList>
