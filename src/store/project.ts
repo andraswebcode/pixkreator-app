@@ -24,6 +24,7 @@ export interface ProjectState {
 	title: string;
 	description: string;
 	status: 'public' | 'private' | 'deleted';
+	upload_id: number | null;
 	link: string;
 	width: number;
 	height: number;
@@ -45,6 +46,7 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 		title: '',
 		description: '',
 		status: 'private',
+		upload_id: null,
 		link: '',
 		width: 400,
 		height: 400,

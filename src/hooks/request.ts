@@ -22,10 +22,13 @@ const useRequest = () => {
 				}
 			})
 			.then(({ data }) => {
+				console.log(data);
+
 				const {
 					title,
 					description,
 					status = 'private',
+					upload_id,
 					width,
 					height,
 					background,
@@ -37,6 +40,7 @@ const useRequest = () => {
 					title,
 					description,
 					status,
+					upload_id,
 					width,
 					height,
 					background,
@@ -86,17 +90,30 @@ const useRequest = () => {
 			return;
 		}
 
-		const headers = {
-			Authorization: bearerToken
-		};
+		axios
+			.patch(path + '/' + _id, data, {
+				headers: {
+					Authorization: bearerToken
+				}
+			})
+			.then(({ data }) => data)
+			.then(then)
+			.catch(catchFn);
+	};
 
-		if (data instanceof FormData) {
-			headers['Content-Type'] = 'multipart/form-data';
+	const updateFile = (id: string, data: any, then: ThenFn, catchFn?: ThenFn) => {
+		const _id = parseInt(id);
+
+		if (!_id) {
+			return;
 		}
 
 		axios
-			.patch(path + '/' + _id, data, {
-				headers
+			.post('uploads/' + _id + '/file', data, {
+				headers: {
+					Authorization: bearerToken,
+					'Content-Type': 'multipart/form-data'
+				}
 			})
 			.then(({ data }) => data)
 			.then(then)
@@ -107,7 +124,8 @@ const useRequest = () => {
 		get,
 		list,
 		save,
-		patch
+		patch,
+		updateFile
 	};
 };
 

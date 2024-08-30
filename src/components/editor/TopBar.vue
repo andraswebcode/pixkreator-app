@@ -4,43 +4,80 @@ import { useRequest } from '../../hooks';
 import { useRoute, useRouter } from 'vue-router';
 import { useEditor, useNotice, useProject } from '../../store';
 import { toRaw } from 'vue';
+import { jsonToBlob } from '../../utils/json-to-blob';
 
-const { save } = useRequest();
+const { save, updateFile } = useRequest();
 const route = useRoute();
 const router = useRouter();
 const project = useProject();
 const editor = useEditor();
 const notice = useNotice();
 const saveDesign = () => {
-	const { title, description, status, width, height, background, byIds, ids } = project;
+	const { title, description, status, upload_id, width, height, background, byIds, ids } =
+		project;
+	const _save = () => {
+		save(
+			route.params.id as string,
+			'designs',
+			{
+				title,
+				description,
+				status,
+				upload_id,
+				width,
+				height,
+				background,
+				layers: toRaw(byIds),
+				layer_ids: toRaw(ids)
+			},
+			({ id }) => {
+				router.push({
+					params: { id }
+				});
+				editor.loading = false;
+				notice.send('Design Saved Successfully', 'success');
+			},
+			(error) => {
+				editor.loading = false;
+				notice.send(error.response?.data?.message || error.message, 'error');
+			}
+		);
+	};
 
 	editor.loading = true;
-	save(
-		route.params.id as string,
-		'designs',
-		{
-			title,
-			description,
-			status,
-			width,
-			height,
-			background,
-			layers: toRaw(byIds),
-			layer_ids: toRaw(ids)
-		},
-		({ id }) => {
-			router.push({
-				params: { id }
+	if (status === 'public' && upload_id) {
+		jsonToBlob(
+			{
+				width,
+				height,
+				background,
+				objects: ids.map((id) => toRaw(byIds[id]))
+			},
+			'image/webp',
+			0.98
+		)
+			.then((blob) => {
+				const data = new FormData();
+				data.append('file', blob);
+
+				updateFile(
+					upload_id as any,
+					data,
+					() => {
+						_save();
+					},
+					(error) => {
+						editor.loading = false;
+						notice.send(error.response?.data?.message || error.message, 'error');
+					}
+				);
+			})
+			.catch(() => {
+				notice.send('Can not create image file.', 'error');
 			});
-			editor.loading = false;
-			notice.send('Design Saved Successfully', 'success');
-		},
-		(error) => {
-			console.log(error);
-			editor.loading = false;
-			notice.send(error.response?.data?.message || error.message, 'error');
-		}
-	);
+	} else {
+		_save();
+	}
 };
 </script>
 

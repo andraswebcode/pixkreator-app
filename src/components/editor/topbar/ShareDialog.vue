@@ -14,16 +14,22 @@ import {
 import { useRequest } from '../../../hooks';
 import { useRoute, useRouter } from 'vue-router';
 import { SocialMedia } from '../../../types/common';
+import { debounce } from '../../../utils/functions';
 
+const TEXTS_MAP = {
+	title: 'Title',
+	description: 'Caption'
+};
 const route = useRoute();
 const router = useRouter();
 const editor = useEditor();
 const project = useProject();
-const { save, patch } = useRequest();
+const { save, patch, updateFile } = useRequest();
 const notice = useNotice();
 const blob = ref<Blob>();
 const src = ref('');
 const loading = ref(false);
+const loadingTextField = ref<'title' | 'description' | false>(false);
 const socialMedia = ref<SocialMedia>('pinterest');
 const linkBtnLabel = computed(() =>
 	project.status === 'public' ? 'Remove Public View Link' : 'Create Public View Link'
@@ -45,7 +51,6 @@ const createLink = () => {
 				({ link, status }) => {
 					project.$patch({ link, status });
 					loading.value = false;
-					console.log(link, status);
 				},
 				(error) => {
 					notice.send(error.response?.data?.message || error.message, 'error');
@@ -55,69 +60,67 @@ const createLink = () => {
 		}
 	} else {
 		const data = new FormData();
+		const then = (response) => {
+			if (id) {
+				patch(
+					id as string,
+					'designs',
+					{
+						status: 'public',
+						upload_id: response.id
+					},
+					({ link, status, upload_id }) => {
+						project.$patch({ link, status, upload_id });
+						loading.value = false;
+					},
+					(error) => {
+						notice.send(error.response?.data?.message || error.message, 'error');
+						loading.value = false;
+					}
+				);
+			} else {
+				const { title, description, width, height, background, byIds, ids } = project;
+				save(
+					'',
+					'designs',
+					{
+						title,
+						description,
+						status: 'public',
+						upload_id: response.id,
+						width,
+						height,
+						background,
+						layers: toRaw(byIds),
+						layer_ids: toRaw(ids)
+					},
+					({ id, link, status, upload_id }) => {
+						router.push({
+							params: { id }
+						});
+						project.$patch({ link, status, upload_id });
+						loading.value = false;
+					},
+					(error) => {
+						notice.send(error.response?.data?.message || error.message, 'error');
+						loading.value = false;
+					}
+				);
+			}
+		};
+		const catchFn = (error) => {
+			notice.send(error.response?.data?.message || error.message, 'error');
+			loading.value = false;
+		};
 
 		data.append('file', blob.value as Blob);
-		data.append('source', 'design');
 
-		save(
-			'',
-			'uploads',
-			data,
-			(response) => {
-				if (id) {
-					patch(
-						id as string,
-						'designs',
-						{
-							status: 'public',
-							upload_id: response.id
-						},
-						({ link, status, ...resp }) => {
-							project.$patch({ link, status });
-							loading.value = false;
-							console.log(link, status, resp);
-						},
-						(error) => {
-							notice.send(error.response?.data?.message || error.message, 'error');
-							loading.value = false;
-						}
-					);
-				} else {
-					const { title, description, width, height, background, byIds, ids } = project;
-					save(
-						'',
-						'designs',
-						{
-							title,
-							description,
-							status: 'public',
-							width,
-							height,
-							background,
-							layers: toRaw(byIds),
-							layer_ids: toRaw(ids),
-							upload_id: response.id
-						},
-						({ id, link, status, ...resp }) => {
-							router.push({
-								params: { id }
-							});
-							project.$patch({ link, status });
-							loading.value = false;
-							console.log(link, status, resp);
-						},
-						(error) => {
-							notice.send(error.response?.data?.message || error.message, 'error');
-							loading.value = false;
-						}
-					);
-				}
-			},
-			(error) => {
-				notice.send(error.response?.data?.message || error.message, 'error');
-				loading.value = false;
-			}
-		);
+		if (project.upload_id) {
+			updateFile(project.upload_id as any, data, then, catchFn);
+		} else {
+			data.append('source', 'design');
+			save('', 'uploads', data, then, catchFn);
+		}
 	}
 };
 const copyLink = () => {
@@ -130,6 +133,43 @@ const copyLink = () => {
 			notice.send('Failed to copy link!', 'error');
 		});
 };
+const saveTexts = debounce((prop: 'title' | 'description') => {
+	const data = new FormData();
+	const { id } = route.params;
+
+	data.append('file', blob.value as Blob);
+
+	loadingTextField.value = prop;
+
+	updateFile(
+		project.upload_id as any,
+		data,
+		() => {
+			if (id) {
+				patch(
+					id as string,
+					'designs',
+					{
+						[prop]: project[prop],
+						status: 'public'
+					},
+					() => {
+						loadingTextField.value = false;
+						notice.send(TEXTS_MAP[prop] + ' updated succesfully.', 'success');
+					},
+					(error) => {
+						notice.send(error.response?.data?.message || error.message, 'error');
+						loadingTextField.value = false;
+					}
+				);
+			}
+		},
+		(error) => {
+			notice.send(error.response?.data?.message || error.message, 'error');
+			loadingTextField.value = false;
+		}
+	);
+}, 800);
 const shareImage = () => {};
 
 watch(
@@ -147,7 +187,7 @@ watch(
 				objects: project.ids.map((id) => toRaw(project.byIds[id]))
 			},
 			'image/webp',
-			1
+			0.98
 		)
 			.then((response) => {
 				blob.value = response;
@@ -240,11 +280,19 @@ watch(
 							/>
 						</VCol>
 					</VRow>
-					<VTextField label="Title" v-model="project.title" :disabled="disabled" />
+					<VTextField
+						label="Title"
+						v-model="project.title"
+						:disabled="disabled"
+						:loading="loadingTextField === 'title'"
+						@update:model-value="saveTexts('title')"
+					/>
 					<VTextarea
 						label="Caption (Description)"
 						v-model="project.description"
 						:disabled="disabled"
+						:loading="loadingTextField === 'description'"
+						@update:model-value="saveTexts('description')"
 					/>
 				</VCol>
 			</VRow>
