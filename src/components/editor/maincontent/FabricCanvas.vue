@@ -50,8 +50,10 @@ const onPanMove = (e) => {
 const onPanEnd = () => {
 	isPanning.value = false;
 };
-const onObjectSelection = () => {
-	editor.activeLayerIds = fabricCanvas.getActiveObjects().map((obj: any) => obj.id);
+const onObjectSelection = ({ e, selected = [] }) => {
+	if (e) {
+		editor.activeLayerIds = selected.map(({ id }) => id);
+	}
 };
 const onObjectModified = ({ target }) => {
 	if (target?.type === 'activeselection') {

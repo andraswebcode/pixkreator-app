@@ -25,14 +25,13 @@ const testAddRect = () => {
 </script>
 
 <template>
-	<VBtn @click="testAddRect">Test Add Rect</VBtn>
-	<VSelect label="Draw" v-model="editor.pencil" />
-	<VSlider label="Pencil Width" v-model="editor.penWidth" />
-	<ColorPicker label="Pencil Color" v-model="editor.penColor" />
-	<div class="px-4">
-		<VBtn block :color="editor.mode === 'draw' ? 'primary' : ''" @click="switchDrawing">{{
-			btnLabel
-		}}</VBtn>
+	<div class="pa-4">
+		<VSelect label="Draw" v-model="editor.pencil" density="compact" />
+		<RangeSlider label="Pencil Width" v-model="editor.penWidth" />
+		<ColorPicker label="Pencil Color" v-model="editor.penColor" />
+		<VBtn block :color="editor.mode === 'draw' ? 'primary' : ''" @click="switchDrawing">
+			{{ btnLabel }}
+		</VBtn>
 	</div>
 </template>
 

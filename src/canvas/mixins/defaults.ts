@@ -1,6 +1,6 @@
-import { Constructor, FabricObjectProps, TOriginX, TOriginY } from 'fabric';
+import { Constructor, FabricObject, FabricObjectProps, TOriginX, TOriginY } from 'fabric';
 
-function Defaults<TBase extends Constructor>(Base: TBase) {
+function Defaults<TBase extends Constructor<FabricObject>>(Base: TBase) {
 	return class Defaults extends Base implements Partial<FabricObjectProps> {
 		cornerStyle: 'rect' | 'circle' = 'circle';
 		cornerSize = 10;
@@ -12,6 +12,10 @@ function Defaults<TBase extends Constructor>(Base: TBase) {
 		borderOpacityWhenMoving = 0.8;
 		originX: TOriginX = 'center';
 		originY: TOriginY = 'center';
+
+		toObject(propertiesToInclude: string[] = []) {
+			return super.toObject(propertiesToInclude.concat(['id', 'name', 'selectable']));
+		}
 	};
 }
 

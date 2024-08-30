@@ -22,12 +22,16 @@ const defaults = {
 	VSlider: {
 		thumbSize: 18,
 		thumbLabel: true,
-		hideDetails: true
+		hideDetails: true,
+		step: 1
 	},
 	VSelect: {
 		menuIcon: mdiMenuDown,
 		itemTitle: 'label',
-		itemValue: 'value'
+		itemValue: 'value',
+		flat: true,
+		hideDetails: true,
+		variant: 'solo'
 	},
 	VNavigationDrawer: {
 		tag: 'aside'
@@ -69,15 +73,16 @@ const defaults = {
 		VTextField: {
 			flat: true,
 			variant: 'underlined',
-			density: 'compact'
+			density: 'compact',
+			dirty: true
 		},
 		VTextarea: {
 			flat: true,
 			variant: 'underlined',
-			density: 'compact'
+			density: 'compact',
+			dirty: true
 		},
 		VSelect: {
-			flat: true,
 			variant: 'underlined',
 			density: 'compact'
 		}

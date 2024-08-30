@@ -17,7 +17,7 @@ div {
 		flex: 0 0 auto;
 	}
 }
-.v-window {
+:deep(.v-window) {
 	flex: 1 1 auto;
 }
 :deep(.v-window__container),

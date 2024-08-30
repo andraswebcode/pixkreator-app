@@ -22,8 +22,6 @@ const useRequest = () => {
 				}
 			})
 			.then(({ data }) => {
-				console.log(data);
-
 				const {
 					title,
 					description,

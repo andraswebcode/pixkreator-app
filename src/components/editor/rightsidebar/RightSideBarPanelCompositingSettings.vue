@@ -8,7 +8,7 @@ const { opacity, globalCompositeOperation } = useProps(['opacity', 'globalCompos
 <template>
 	<VExpansionPanel title="Compositing" value="compositing">
 		<VExpansionPanelText>
-			<VSlider label="Opacity" v-model="opacity" :min="0" :max="1" :step="0.01" />
+			<RangeSlider label="Opacity" v-model="opacity" :min="0" :max="1" :step="0.01" />
 			<VSelect
 				label="Blending Mode"
 				v-model="globalCompositeOperation"

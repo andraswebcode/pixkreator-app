@@ -8,7 +8,7 @@ const { text, fontSize } = useProps(['text', 'fontSize']);
 	<VExpansionPanel title="Text" value="text">
 		<VExpansionPanelText>
 			<VTextarea label="Text" v-model="text" />
-			<VSlider label="Font Size" v-model="fontSize" />
+			<RangeSlider label="Font Size" v-model="fontSize" :min="16" :max="400" />
 		</VExpansionPanelText>
 	</VExpansionPanel>
 </template>

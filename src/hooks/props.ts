@@ -10,7 +10,7 @@ const useProps = (props: string[]): any => {
 		memo[prop] = computed({
 			get: () => {
 				const id = editor.activeLayerIds[0];
-				return project.byIds[id][prop];
+				return project.byIds[id]?.[prop];
 			},
 			set: (value: any) => {
 				const id = editor.activeLayerIds[0];

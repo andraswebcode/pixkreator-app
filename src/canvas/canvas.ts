@@ -1,6 +1,7 @@
-import { ActiveSelection, Canvas as FabricCanvas, ModifierKey } from 'fabric';
+import { Canvas as FabricCanvas, ModifierKey } from 'fabric';
 import { unique } from '../utils/functions';
 import { PROPencilBrush } from './brushes/pencil';
+import { PROActiveSelection } from './objects/active-selection';
 
 class Canvas extends FabricCanvas {
 	selectionColor = 'rgba(16, 187, 229, 0.1)';
@@ -43,7 +44,7 @@ class Canvas extends FabricCanvas {
 			return;
 		}
 
-		const activeSelection = new ActiveSelection(objects, {
+		const activeSelection = new PROActiveSelection(objects, {
 			canvas: this
 		});
 

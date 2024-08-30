@@ -43,6 +43,9 @@ const fetchProject = (obj: any) => {
 			'templates',
 			(state) => {
 				project.$reset();
+
+				editor.loading = false;
+
 				if (state) {
 					project.$patch(state);
 					project.resetStack();
