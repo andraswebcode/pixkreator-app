@@ -36,7 +36,6 @@ declare module 'vue' {
     LeftSideBarTemplates: typeof import('./src/components/editor/leftsidebar/LeftSideBarTemplates.vue')['default']
     LeftSideBarTexts: typeof import('./src/components/editor/leftsidebar/LeftSideBarTexts.vue')['default']
     LeftSideBarUploads: typeof import('./src/components/editor/leftsidebar/LeftSideBarUploads.vue')['default']
-    LeftSideBarUploadStorage: typeof import('./src/components/editor/leftsidebar/LeftSideBarUploadStorage.vue')['default']
     LibraryItems: typeof import('./src/components/common/LibraryItems.vue')['default']
     LibraryWrapper: typeof import('./src/components/common/LibraryWrapper.vue')['default']
     MainContent: typeof import('./src/components/editor/MainContent.vue')['default']

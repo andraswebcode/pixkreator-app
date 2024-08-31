@@ -121,8 +121,11 @@ onMounted(() => {
 			height: project.height
 		})
 	});
+	// @ts-ignore
 	fabricCanvas.on('selection:created', onObjectSelection);
+	// @ts-ignore
 	fabricCanvas.on('selection:updated', onObjectSelection);
+	// @ts-ignore
 	fabricCanvas.on('selection:cleared', onObjectSelection);
 	fabricCanvas.on('object:modified', onObjectModified);
 	fabricCanvas.on('path:created', onPathCreated);

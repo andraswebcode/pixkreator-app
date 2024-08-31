@@ -41,7 +41,17 @@ const openDetails = (i: number) => {
 	showDetails.value = true;
 	index.value = i;
 };
-const addPhoto = () => {};
+const addPhoto = () => {
+	const id = items.value[index.value]?.id;
+
+	router.push({
+		name: 'editor',
+		query: {
+			photo: id,
+			size: size.value
+		}
+	});
+};
 
 onMounted(() => {
 	const { search, ...query } = route.query;

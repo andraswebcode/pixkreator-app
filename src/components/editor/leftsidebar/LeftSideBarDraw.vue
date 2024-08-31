@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useEditor, useProject } from '../../../store';
+import { useEditor } from '../../../store';
 
 const editor = useEditor();
-const project = useProject();
 const btnLabel = computed(() => (editor.mode === 'draw' ? 'Stop Drawing' : 'Start Drawing'));
 const switchDrawing = () => {
 	if (editor.mode === 'draw') {
@@ -11,16 +10,6 @@ const switchDrawing = () => {
 	} else {
 		editor.mode = 'draw';
 	}
-};
-const testAddRect = () => {
-	project.addLayer({
-		type: 'rect',
-		width: 200,
-		height: 200,
-		fill: 'rgba(0, 0, 0, 0)',
-		stroke: 'black',
-		strokeWidth: 12
-	});
 };
 </script>
 
