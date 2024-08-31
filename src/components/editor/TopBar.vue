@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { mdiContentSave, mdiDownload, mdiRedo, mdiShare, mdiUndo } from '@mdi/js';
-import { useRequest } from '../../hooks';
+import useRequest from '../../hooks/request';
 import { useRoute, useRouter } from 'vue-router';
 import { useEditor, useNotice, useProject } from '../../store';
 import { toRaw } from 'vue';

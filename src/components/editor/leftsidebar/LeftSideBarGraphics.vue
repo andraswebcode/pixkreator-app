@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRequest } from '../../../hooks';
+import useRequest from '../../../hooks/request';
 import { useProject } from '../../../store';
 import graphicCategories from '../../../utils/graphic-categories';
 

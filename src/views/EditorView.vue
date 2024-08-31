@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { useEditor, useNotice, useProject } from '../store';
-import { useRequest } from '../hooks';
 import { onMounted } from 'vue';
+import useRequest from '../hooks/request';
 import useFitToScreen from '../hooks/fittoscreen';
+import { PhotoSize } from '../types/common';
+import { getCroppedImageDimensions } from '../utils/functions';
 
 const route = useRoute();
 const project = useProject();
@@ -22,7 +24,7 @@ const fetchProject = (obj: any) => {
 			(state) => {
 				project.$reset();
 
-				editor.loading = false;
+				// editor.loading = false;
 				editor.openShareDialog = open;
 
 				if (state) {
@@ -44,12 +46,52 @@ const fetchProject = (obj: any) => {
 			(state) => {
 				project.$reset();
 
-				editor.loading = false;
+				// editor.loading = false;
 
 				if (state) {
 					project.$patch(state);
 					project.resetStack();
 					fitToScreen();
+				}
+			},
+			(error) => {
+				notice.send(error.response?.data?.message || error.message, 'error');
+				editor.loading = false;
+			}
+		);
+	} else if (obj.query.photo) {
+		editor.loading = true;
+		get(
+			obj.query.photo as string,
+			'photos',
+			(state) => {
+				project.$reset();
+
+				// editor.loading = false;
+
+				if (state) {
+					const size: PhotoSize = obj.query.size || 'src';
+					const src = state.proxy[size];
+					const { width, height } = getCroppedImageDimensions(
+						state.width,
+						state.height,
+						size
+					);
+					if (src) {
+						project.$patch({
+							title: state.title,
+							width,
+							height
+						});
+						project.addLayer({
+							type: 'image',
+							src,
+							left: width / 2,
+							top: height / 2
+						});
+						project.resetStack();
+						fitToScreen();
+					}
 				}
 			},
 			(error) => {

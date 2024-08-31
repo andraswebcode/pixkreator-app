@@ -33,6 +33,14 @@ const defaults = {
 		hideDetails: true,
 		variant: 'solo'
 	},
+	VAutocomplete: {
+		menuIcon: mdiMenuDown,
+		itemTitle: 'label',
+		itemValue: 'value',
+		flat: true,
+		hideDetails: true,
+		variant: 'solo'
+	},
 	VNavigationDrawer: {
 		tag: 'aside'
 	},
@@ -85,6 +93,19 @@ const defaults = {
 		VSelect: {
 			variant: 'underlined',
 			density: 'compact'
+		},
+		VAutocomplete: {
+			variant: 'underlined'
+		},
+		VBtnToggle: {
+			mandatory: 'force',
+			density: 'comfortable',
+			divided: true,
+			border: 'sm',
+			rounded: false,
+			VBtn: {
+				// size: 'small'
+			}
 		}
 	},
 	// Custom components.

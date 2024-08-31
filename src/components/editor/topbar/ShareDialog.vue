@@ -11,7 +11,7 @@ import {
 	mdiPinterest,
 	mdiTwitter
 } from '@mdi/js';
-import { useRequest } from '../../../hooks';
+import useRequest from '../../../hooks/request';
 import { useRoute, useRouter } from 'vue-router';
 import { SocialMedia } from '../../../types/common';
 import { debounce } from '../../../utils/functions';

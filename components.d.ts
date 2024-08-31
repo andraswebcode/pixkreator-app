@@ -8,11 +8,13 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppBar: typeof import('./src/components/common/AppBar.vue')['default']
+    ButtonToggle: typeof import('./src/components/common/ButtonToggle.vue')['default']
     ColorPicker: typeof import('./src/components/common/ColorPicker.vue')['default']
     DashboardContent: typeof import('./src/components/dashboard/DashboardContent.vue')['default']
     DashboardSideBar: typeof import('./src/components/dashboard/DashboardSideBar.vue')['default']
     DownloadDialog: typeof import('./src/components/editor/topbar/DownloadDialog.vue')['default']
     FabricCanvas: typeof import('./src/components/editor/maincontent/FabricCanvas.vue')['default']
+    FontSelect: typeof import('./src/components/common/FontSelect.vue')['default']
     FooterBar: typeof import('./src/components/editor/FooterBar.vue')['default']
     FormContainer: typeof import('./src/components/common/FormContainer.vue')['default']
     FullScreenLoader: typeof import('./src/components/editor/FullScreenLoader.vue')['default']

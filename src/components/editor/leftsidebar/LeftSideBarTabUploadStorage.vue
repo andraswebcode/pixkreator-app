@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useProject } from '../../../store';
-import { useRequest } from '../../../hooks';
+import useRequest from '../../../hooks/request';
 
 const project = useProject();
 const { list } = useRequest();

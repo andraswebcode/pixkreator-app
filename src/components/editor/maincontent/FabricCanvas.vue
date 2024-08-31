@@ -99,6 +99,14 @@ const onPathCreated = ({ path }) => {
 		top: layer.top + layer.height / 2 + sw2
 	});
 };
+const onTextChanged = ({ target }) => {
+	const { id, text, width, height } = target;
+	project.updateProps(id, {
+		text,
+		width,
+		height
+	});
+};
 
 onMounted(() => {
 	const { clientWidth = 0, clientHeight = 0 } = document.getElementById('canvas') || {};
@@ -118,6 +126,7 @@ onMounted(() => {
 	fabricCanvas.on('selection:cleared', onObjectSelection);
 	fabricCanvas.on('object:modified', onObjectModified);
 	fabricCanvas.on('path:created', onPathCreated);
+	fabricCanvas.on('text:changed', onTextChanged);
 	// @ts-ignore
 	window._fc = fabricCanvas;
 	editor.width = clientWidth;
@@ -144,6 +153,7 @@ watch(
 		if (newLayers.length) {
 			util.enlivenObjects(newLayers).then((objects: any) => {
 				fabricCanvas.add(...objects);
+				editor.loading = false;
 			});
 		}
 

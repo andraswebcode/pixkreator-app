@@ -10,13 +10,14 @@ const model = defineModel<number>();
 
 <template>
 	<div class="range-slider mb-5">
-		<span class="v-label v-field-label--floating">{{ props.label }}</span>
+		<VLabel class="v-field-label--floating">{{ props.label }}</VLabel>
 		<VSlider v-model="model" :min="props.min" :max="props.max" :step="props.step" />
 	</div>
 </template>
 
 <style scoped lang="scss">
 .v-label {
+	display: block;
 	visibility: visible;
 	position: static;
 }

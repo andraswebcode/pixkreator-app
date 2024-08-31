@@ -10,6 +10,7 @@ export interface ByID extends FabricObjectProps {
 	type: string;
 	src?: string;
 	text?: string;
+	fontFamily?: string;
 }
 
 export type ByIDs = {

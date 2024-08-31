@@ -22,29 +22,12 @@ const useRequest = () => {
 				}
 			})
 			.then(({ data }) => {
-				const {
-					title,
-					description,
-					status = 'private',
-					upload_id,
-					width,
-					height,
-					background,
-					layers,
-					layer_ids,
-					link
-				} = data;
+				const { status = 'private', layers, layer_ids } = data;
 				return {
-					title,
-					description,
 					status,
-					upload_id,
-					width,
-					height,
-					background,
 					byIds: Array.isArray(layers) && !layers.length ? {} : layers,
 					ids: layer_ids,
-					link
+					...data
 				};
 			})
 			.then(then)
