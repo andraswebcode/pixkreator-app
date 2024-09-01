@@ -12,11 +12,13 @@ const fitToScreen = useFitToScreen();
 const search = ref('');
 const category = ref('');
 const page = ref(2);
+const loading = ref(true);
 const items = ref<any>([]);
 const index = ref(0);
 const showDetails = ref(false);
 const filter = () => {
 	items.value = [];
+	loading.value = true;
 	list(
 		{
 			search: search.value,
@@ -25,6 +27,7 @@ const filter = () => {
 		'templates',
 		(data) => {
 			items.value = data.items;
+			loading.value = false;
 		}
 	);
 };
@@ -89,6 +92,7 @@ onMounted(filter);
 						:items-length="items.length"
 						:count="24"
 						:cols="2"
+						:loading="loading"
 						@load="loadMore"
 					>
 						<GridItem

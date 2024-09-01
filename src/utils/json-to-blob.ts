@@ -8,10 +8,11 @@ const jsonToBlob = (
 		objects: []
 	},
 	type: MimeType = 'image/webp',
-	quality = 0.98
+	quality = 0.98,
+	multiplier = 1
 ): Promise<Blob> => {
 	return new StaticCanvas().loadFromJSON(json).then((response) => {
-		const canvas = response.toCanvasElement();
+		const canvas = response.toCanvasElement(multiplier);
 
 		return new Promise((resolve, reject) => {
 			canvas.toBlob(

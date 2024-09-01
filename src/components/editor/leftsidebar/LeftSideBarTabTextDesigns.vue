@@ -18,6 +18,7 @@ const categories = [
 ];
 const filter = () => {
 	items.value = [];
+	loading.value = true;
 	list(
 		{
 			search: search.value

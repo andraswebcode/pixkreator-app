@@ -5,6 +5,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { useEditor, useNotice, useProject } from '../../store';
 import { toRaw } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
+import { util } from 'fabric';
+import { SHARE_IMAGE_MAX_SIZE } from '../../utils/constants';
 
 const { save, updateFile } = useRequest();
 const route = useRoute();
@@ -46,6 +48,17 @@ const saveDesign = () => {
 
 	editor.loading = true;
 	if (status === 'public' && upload_id) {
+		const multiplier = util.findScaleToFit(
+			{
+				width: project.width,
+				height: project.height
+			},
+			{
+				width: SHARE_IMAGE_MAX_SIZE,
+				height: SHARE_IMAGE_MAX_SIZE
+			}
+		);
+
 		jsonToBlob(
 			{
 				width,
@@ -54,7 +67,8 @@ const saveDesign = () => {
 				objects: ids.map((id) => toRaw(byIds[id]))
 			},
 			'image/webp',
-			0.98
+			0.98,
+			Math.min(multiplier, 1)
 		)
 			.then((blob) => {
 				const data = new FormData();

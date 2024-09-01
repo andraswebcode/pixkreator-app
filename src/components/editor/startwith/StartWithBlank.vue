@@ -26,29 +26,41 @@ const setSize = ({ width, height }) => {
 </script>
 
 <template>
-	<VContainer>
+	<VContainer class="wrapper">
 		<VRow>
 			<VCol class="sidebar" cols="auto"></VCol>
-			<VCol class="overflow-x-hidden overflow-y-auto">
-				<VRow>
-					<GridItem
-						v-for="(item, i) of sizePresets"
-						:key="i"
-						cols="2"
-						:json="{
-							width: item.width,
-							height: item.height,
-							background: '#888'
-						}"
-						@click="setSize(item)"
-					/>
-				</VRow>
+			<VCol>
+				<LibraryWrapper>
+					<LibraryItems :items-length="1" :count="24" :cols="2">
+						<GridItem
+							v-for="(item, i) of sizePresets"
+							:key="i"
+							:label="item.label"
+							cols="2"
+							:json="{
+								width: item.width,
+								height: item.height,
+								background: '#888'
+							}"
+							@click="setSize(item)"
+						/>
+					</LibraryItems>
+				</LibraryWrapper>
 			</VCol>
 		</VRow>
 	</VContainer>
 </template>
 
 <style scoped lang="scss">
+.wrapper {
+	height: 90vh;
+}
+.v-row {
+	height: 100%;
+	.v-col {
+		height: 100%;
+	}
+}
 .sidebar {
 	width: 256px;
 }

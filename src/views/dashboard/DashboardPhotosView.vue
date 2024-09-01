@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
-import { DETAILS_DIALOG_WIDTH, PHOTO_SIZES } from '../../utils/constants';
+import { DETAILS_DIALOG_WIDTH, PHOTO_ORIENTATIONS, PHOTO_SIZES } from '../../utils/constants';
 import { PhotoSize } from '../../types/common';
 
 const router = useRouter();
@@ -14,24 +14,6 @@ const showDetails = ref(false);
 const index = ref(0);
 const size = ref<PhotoSize>('src');
 const items = ref<any>([]);
-const orientations = [
-	{
-		label: 'All',
-		value: ''
-	},
-	{
-		label: 'Landscape',
-		value: 'landscape'
-	},
-	{
-		label: 'Portrait',
-		value: 'portrait'
-	},
-	{
-		label: 'Square',
-		value: 'square'
-	}
-];
 const { list } = useRequest();
 const filter = () => {
 	const query: any = {};
@@ -114,7 +96,7 @@ onBeforeRouteUpdate((to) => {
 			<VCol cols="4">
 				<VRow>
 					<VCol>
-						<VSelect label="Orientation" :items="orientations" />
+						<VSelect label="Orientation" :items="PHOTO_ORIENTATIONS" />
 					</VCol>
 					<VCol>
 						<ColorPicker label="Color" />

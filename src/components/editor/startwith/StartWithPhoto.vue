@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import useRequest from '../../../hooks/request';
-import { DETAILS_DIALOG_WIDTH, PHOTO_SIZES } from '../../../utils/constants';
+import { DETAILS_DIALOG_WIDTH, PHOTO_ORIENTATIONS, PHOTO_SIZES } from '../../../utils/constants';
 import { useRouter } from 'vue-router';
 import { PhotoSize } from '../../../types/common';
 import useFitToScreen from '../../../hooks/fittoscreen';
@@ -12,11 +12,13 @@ const fitToScreen = useFitToScreen();
 const query = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
+const loading = ref(true);
 const showDetails = ref(false);
 const index = ref(0);
 const size = ref<PhotoSize>('src');
 const filter = () => {
 	items.value = [];
+	loading.value = true;
 	list(
 		{
 			query: query.value
@@ -24,6 +26,7 @@ const filter = () => {
 		'photos',
 		(data) => {
 			items.value = data.items;
+			loading.value = false;
 		}
 	);
 };
@@ -70,6 +73,8 @@ onMounted(filter);
 		<VRow>
 			<VCol class="sidebar" cols="auto">
 				<SearchInput label="Search Photos" v-model="query" @click:append-inner="filter" />
+				<VSelect label="Orientation" :items="PHOTO_ORIENTATIONS" />
+				<ColorPicker label="Color" />
 			</VCol>
 			<VCol>
 				<LibraryWrapper>
@@ -77,6 +82,7 @@ onMounted(filter);
 						:items-length="items.length"
 						:count="24"
 						:cols="2"
+						:loading="loading"
 						@load="loadMore"
 					>
 						<GridItem

@@ -15,6 +15,8 @@ import useRequest from '../../../hooks/request';
 import { useRoute, useRouter } from 'vue-router';
 import { SocialMedia } from '../../../types/common';
 import { debounce } from '../../../utils/functions';
+import { util } from 'fabric';
+import { SHARE_IMAGE_MAX_SIZE } from '../../../utils/constants';
 
 const TEXTS_MAP = {
 	title: 'Title',
@@ -179,6 +181,17 @@ watch(
 			return;
 		}
 
+		const multiplier = util.findScaleToFit(
+			{
+				width: project.width,
+				height: project.height
+			},
+			{
+				width: SHARE_IMAGE_MAX_SIZE,
+				height: SHARE_IMAGE_MAX_SIZE
+			}
+		);
+
 		jsonToBlob(
 			{
 				width: project.width,
@@ -187,7 +200,8 @@ watch(
 				objects: project.ids.map((id) => toRaw(project.byIds[id]))
 			},
 			'image/webp',
-			0.98
+			0.98,
+			Math.min(multiplier, 1)
 		)
 			.then((response) => {
 				blob.value = response;
