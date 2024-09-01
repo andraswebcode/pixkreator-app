@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { mdiAlertCircle } from '@mdi/js';
+
 const props = defineProps<{
 	itemsLength: number;
 	cols: number;
 	count: number;
+	loading: boolean;
 }>();
 const emit = defineEmits(['load']);
 const onLoad = () => {
@@ -13,19 +16,22 @@ const onLoad = () => {
 </script>
 
 <template>
-	<InfiniteScroll v-if="props.itemsLength" @load="onLoad">
-		<VContainer>
-			<VRow>
-				<slot />
-			</VRow>
-		</VContainer>
-		<VProgressLinear v-if="props.itemsLength >= props.count" indeterminate :height="12" />
-	</InfiniteScroll>
-	<VContainer v-else>
+	<VContainer v-if="props.loading">
 		<VRow>
 			<GridLoader :cols="props.cols" :count="props.count" />
 		</VRow>
 	</VContainer>
+	<InfiniteScroll v-else @load="onLoad">
+		<VContainer>
+			<VRow>
+				<slot v-if="props.itemsLength" />
+				<VAlert v-else class="mx-3 mt-3" type="warning" :icon="mdiAlertCircle">
+					No items found
+				</VAlert>
+			</VRow>
+		</VContainer>
+		<VProgressLinear v-if="props.itemsLength >= props.count" indeterminate :height="12" />
+	</InfiniteScroll>
 </template>
 
 <style scoped lang="scss"></style>

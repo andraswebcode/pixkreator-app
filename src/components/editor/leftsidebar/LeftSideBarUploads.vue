@@ -11,14 +11,8 @@ const tab = ref('storage');
 			<VTab value="upload">Upload</VTab>
 		</VTabs>
 		<VDivider />
-		<VTabsWindow v-model="tab">
-			<VTabsWindowItem value="storage">
-				<LeftSideBarTabUploadStorage />
-			</VTabsWindowItem>
-			<VTabsWindowItem value="upload">
-				<LeftSideBarTabUpload />
-			</VTabsWindowItem>
-		</VTabsWindow>
+		<LeftSideBarTabUploadStorage v-if="tab === 'storage'" />
+		<LeftSideBarTabUpload v-else-if="tab === 'upload'" />
 	</TabsWrapper>
 </template>
 

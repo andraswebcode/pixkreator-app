@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, toRaw } from 'vue';
-import { useEditor, useProject } from './../../../store';
+import { useEditor, useNotice, useProject } from './../../../store';
 import Canvas from '../../../canvas/canvas';
 import { Rect, util } from 'fabric';
 import { toFixed } from '../../../utils/functions';
@@ -11,6 +11,7 @@ let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const project = useProject();
 const editor = useEditor();
+const notice = useNotice();
 const startPan = ref<{ x: number; y: number }>({ x: 0, y: 0 });
 const isPanning = ref(false);
 
@@ -154,10 +155,18 @@ watch(
 		});
 
 		if (newLayers.length) {
-			util.enlivenObjects(newLayers).then((objects: any) => {
-				fabricCanvas.add(...objects);
-				editor.loading = false;
-			});
+			util.enlivenObjects(newLayers)
+				.then((objects: any) => {
+					fabricCanvas.add(...objects);
+					editor.loading = false;
+					console.log('loaded');
+				})
+				.catch(() => {
+					notice.send('Can not loading some layers.', 'error');
+					editor.loading = false;
+				});
+		} else {
+			editor.loading = false;
 		}
 
 		oldIds.forEach((id) => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-	mdiCloudUpload,
+	mdiFileDocumentMultiple,
 	mdiFolderMultiple,
 	mdiHome,
 	mdiImageMultiple,
@@ -15,11 +15,11 @@ import {
 			<VListItem to="/dashboard" v-tooltip:end="'Home'">
 				<VIcon :icon="mdiHome" />
 			</VListItem>
-			<VListItem to="/dashboard/projects" v-tooltip:end="'All Projects'">
+			<VListItem to="/dashboard/projects" v-tooltip:end="'Projects'">
 				<VIcon :icon="mdiFolderMultiple" />
 			</VListItem>
-			<VListItem to="/dashboard/uploads" v-tooltip:end="'Uploads'">
-				<VIcon :icon="mdiCloudUpload" />
+			<VListItem to="/dashboard/files" v-tooltip:end="'Files'">
+				<VIcon :icon="mdiFileDocumentMultiple" />
 			</VListItem>
 			<VListItem to="/dashboard/templates" v-tooltip:end="'Templates'">
 				<VIcon :icon="mdiViewDashboardEdit" />

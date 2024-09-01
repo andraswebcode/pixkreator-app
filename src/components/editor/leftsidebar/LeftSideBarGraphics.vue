@@ -10,6 +10,7 @@ const search = ref('');
 const category = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
+const loading = ref(true);
 const categories = [
 	{
 		label: 'All',
@@ -19,6 +20,7 @@ const categories = [
 ];
 const filter = () => {
 	items.value = [];
+	loading.value = true;
 	list(
 		{
 			search: search.value
@@ -26,6 +28,7 @@ const filter = () => {
 		'graphics',
 		(data) => {
 			items.value = data.items;
+			loading.value = false;
 		}
 	);
 };
@@ -73,7 +76,13 @@ onMounted(filter);
 			hide-details
 			@update:model-value="filter"
 		/>
-		<LibraryItems :items-length="items.length" :count="24" :cols="6" @load="loadMore">
+		<LibraryItems
+			:items-length="items.length"
+			:count="24"
+			:cols="6"
+			:loading="loading"
+			@load="loadMore"
+		>
 			<GridItem
 				v-for="item of items"
 				:key="item.id"

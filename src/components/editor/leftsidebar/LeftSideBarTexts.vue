@@ -11,14 +11,8 @@ const tab = ref('search');
 			<VTab value="create">Create</VTab>
 		</VTabs>
 		<VDivider />
-		<VTabsWindow v-model="tab">
-			<VTabsWindowItem value="search">
-				<LeftSideBarTabTextDesigns />
-			</VTabsWindowItem>
-			<VTabsWindowItem value="create">
-				<LeftSideBarTabAddText />
-			</VTabsWindowItem>
-		</VTabsWindow>
+		<LeftSideBarTabTextDesigns v-if="tab === 'search'" />
+		<LeftSideBarTabAddText v-if="tab === 'create'" />
 	</TabsWrapper>
 </template>
 

@@ -9,10 +9,29 @@ const router = useRouter();
 const route = useRoute();
 const search = ref(route.query.search);
 const page = ref(2);
+const loading = ref(true);
 const showDetails = ref(false);
 const index = ref(0);
 const size = ref<PhotoSize>('src');
 const items = ref<any>([]);
+const orientations = [
+	{
+		label: 'All',
+		value: ''
+	},
+	{
+		label: 'Landscape',
+		value: 'landscape'
+	},
+	{
+		label: 'Portrait',
+		value: 'portrait'
+	},
+	{
+		label: 'Square',
+		value: 'square'
+	}
+];
 const { list } = useRequest();
 const filter = () => {
 	const query: any = {};
@@ -20,6 +39,7 @@ const filter = () => {
 		query.search = search.value;
 	}
 	items.value = [];
+	loading.value = true;
 	router.push({
 		query
 	});
@@ -63,6 +83,7 @@ onMounted(() => {
 		'photos',
 		(data) => {
 			items.value = data.items;
+			loading.value = false;
 		}
 	);
 });
@@ -76,6 +97,7 @@ onBeforeRouteUpdate((to) => {
 		'photos',
 		(data) => {
 			items.value = data.items;
+			loading.value = false;
 		}
 	);
 });
@@ -88,7 +110,25 @@ onBeforeRouteUpdate((to) => {
 				<SearchInput label="Search Photos" v-model="search" @click:append-inner="filter" />
 			</VCol>
 		</VRow>
-		<LibraryItems :items-length="items.length" :count="24" :cols="2" @load="loadMore">
+		<VRow justify="center">
+			<VCol cols="4">
+				<VRow>
+					<VCol>
+						<VSelect label="Orientation" :items="orientations" />
+					</VCol>
+					<VCol>
+						<ColorPicker label="Color" />
+					</VCol>
+				</VRow>
+			</VCol>
+		</VRow>
+		<LibraryItems
+			:items-length="items.length"
+			:count="24"
+			:cols="2"
+			:loading="loading"
+			@load="loadMore"
+		>
 			<GridItem
 				v-for="(item, i) of items"
 				:key="item.id"

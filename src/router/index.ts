@@ -43,8 +43,8 @@ const routes: RouteRecordRaw[] = [
 				component: DashboardProjectsView
 			},
 			{
-				name: 'uploads',
-				path: 'uploads',
+				name: 'files',
+				path: 'files/:source?',
 				component: DashboardUploadsView
 			},
 			{

@@ -112,6 +112,7 @@ onMounted(() => {
 					v-if="recentProjects.length"
 					v-for="(item, i) of recentProjects"
 					:key="item.id"
+					:label="item.title"
 					cols="2"
 					:json="{
 						...item,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRaw, watch } from 'vue';
+import { onUnmounted, ref, toRaw, watch } from 'vue';
 import { useEditor, useNotice, useProject } from '../../../store';
 import { jsonToBlob } from '../../../utils/json-to-blob';
 import { MimeType } from '../../../types/common';
@@ -51,6 +51,10 @@ watch<[boolean, MimeType, number]>(
 			});
 	}
 );
+
+onUnmounted(() => {
+	URL.revokeObjectURL(src.value);
+});
 </script>
 
 <template>

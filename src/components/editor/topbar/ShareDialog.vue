@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, toRaw, watch } from 'vue';
+import { computed, onUnmounted, ref, toRaw, watch } from 'vue';
 import { useEditor, useNotice, useProject } from '../../../store';
 import { jsonToBlob } from '../../../utils/json-to-blob';
 import {
@@ -118,7 +118,7 @@ const createLink = () => {
 		if (project.upload_id) {
 			updateFile(project.upload_id as any, data, then, catchFn);
 		} else {
-			data.append('source', 'design');
+			data.append('source', 'designs');
 			save('', 'uploads', data, then, catchFn);
 		}
 	}
@@ -198,6 +198,10 @@ watch(
 			});
 	}
 );
+
+onUnmounted(() => {
+	URL.revokeObjectURL(src.value);
+});
 </script>
 
 <template>

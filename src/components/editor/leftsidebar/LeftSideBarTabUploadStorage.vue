@@ -6,16 +6,19 @@ const { list } = useRequest();
 const search = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
+const loading = ref(true);
 const filter = () => {
 	items.value = [];
+	loading.value = true;
 	list(
 		{
 			search: search.value,
-			source: 'upload'
+			source: 'uploads'
 		},
 		'uploads',
 		(data) => {
 			items.value = data.items;
+			loading.value = false;
 		}
 	);
 };
@@ -39,7 +42,13 @@ onMounted(filter);
 <template>
 	<LibraryWrapper>
 		<SearchInput label="Search" v-model="search" @click:append-inner="filter" />
-		<LibraryItems :items-length="items.length" :count="24" :cols="6" @load="loadMore">
+		<LibraryItems
+			:items-length="items.length"
+			:count="24"
+			:cols="6"
+			:loading="loading"
+			@load="loadMore"
+		>
 			<GridItem v-for="item of items" :key="item.id" cols="6" :src="item.image" />
 		</LibraryItems>
 	</LibraryWrapper>

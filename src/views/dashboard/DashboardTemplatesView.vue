@@ -10,6 +10,7 @@ const route = useRoute();
 const search = ref(route.query.search);
 const category = ref(route.params.category);
 const page = ref(2);
+const loading = ref(true);
 const showDetails = ref(false);
 const index = ref(0);
 const items = ref<any>([]);
@@ -30,6 +31,7 @@ const filter = () => {
 	params.category = category.value;
 
 	items.value = [];
+	loading.value = true;
 	router.push({
 		query,
 		params
@@ -66,12 +68,14 @@ const addTemplate = () => {
 onMounted(() => {
 	list({ ...route.query, ...route.params }, 'templates', (data) => {
 		items.value = data.items;
+		loading.value = false;
 	});
 });
 onBeforeRouteUpdate((to) => {
 	list({ ...to.query, ...to.params }, 'templates', (data) => {
 		items.value = data.items;
 		page.value = 2;
+		loading.value = false;
 	});
 });
 </script>
@@ -98,7 +102,13 @@ onBeforeRouteUpdate((to) => {
 				</VCard>
 			</VCol>
 		</VRow>
-		<LibraryItems :items-length="items.length" :count="24" :cols="2" @load="loadMore">
+		<LibraryItems
+			:items-length="items.length"
+			:count="24"
+			:cols="2"
+			:loading="loading"
+			@load="loadMore"
+		>
 			<GridItem
 				v-for="(item, i) of items"
 				:key="item.id"

@@ -30,6 +30,8 @@ declare module 'vue' {
     LeftSideBarGraphics: typeof import('./src/components/editor/leftsidebar/LeftSideBarGraphics.vue')['default']
     LeftSideBarPhotos: typeof import('./src/components/editor/leftsidebar/LeftSideBarPhotos.vue')['default']
     LeftSideBarTabAddText: typeof import('./src/components/editor/leftsidebar/LeftSideBarTabAddText.vue')['default']
+    LeftSideBarTabAIArchive: typeof import('./src/components/editor/leftsidebar/LeftSideBarTabAIArchive.vue')['default']
+    LeftSideBarTabAIGenerate: typeof import('./src/components/editor/leftsidebar/LeftSideBarTabAIGenerate.vue')['default']
     LeftSideBarTabTextDesigns: typeof import('./src/components/editor/leftsidebar/LeftSideBarTabTextDesigns.vue')['default']
     LeftSideBarTabUpload: typeof import('./src/components/editor/leftsidebar/LeftSideBarTabUpload.vue')['default']
     LeftSideBarTabUploadStorage: typeof import('./src/components/editor/leftsidebar/LeftSideBarTabUploadStorage.vue')['default']

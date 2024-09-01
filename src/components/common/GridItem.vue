@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import { ref, toRaw, watch } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
+import { mdiDotsVertical } from '@mdi/js';
 
-const props = defineProps<{
+const properties = defineProps<{
+	id?: number;
+	label?: string;
 	cols: string | number;
 	src?: string;
 	json?: any;
+	actions?: any;
+	selectable?: boolean;
 }>();
+const select = defineModel('select');
 const emit = defineEmits(['click']);
-const srcFromJson = ref(''); // base64 string
-
+const srcFromJson = ref('');
 watch(
-	() => props.json,
+	() => properties.json,
 	(newJson) => {
 		if (!newJson) {
 			return;
@@ -32,11 +37,63 @@ watch(
 </script>
 
 <template>
-	<VCol :cols="props.cols">
+	<VCol :cols="properties.cols">
 		<VCard hover link @click.prevent="emit('click')">
-			<VImg aspect-ratio="1" color="blue-grey-darken-4" :src="props.src || srcFromJson" />
+			<VImg
+				:class="properties.label ? 'align-end' : ''"
+				aspect-ratio="1"
+				color="blue-grey-darken-4"
+				:src="properties.src || srcFromJson"
+			>
+				<VCardSubtitle v-if="properties.label" class="mb-2">
+					{{ properties.label }}
+				</VCardSubtitle>
+			</VImg>
+			<VRow class="actions" no-gutters justify="space-between" align="center">
+				<VCol cols="auto" @click.stop>
+					<VCheckbox
+						v-if="properties.selectable"
+						:value="properties.id"
+						v-model="select"
+					/>
+				</VCol>
+				<VCol cols="auto" @click.stop>
+					<VMenu v-if="properties.actions" max-width="200">
+						<template v-slot:activator="{ props }">
+							<VBtn
+								:icon="mdiDotsVertical"
+								:class="['mr-2', { 'mt-3': !properties.selectable }]"
+								density="comfortable"
+								size="small"
+								v-bind="props"
+							/>
+						</template>
+						<VList density="compact">
+							<VListItem
+								v-for="(action, i) of properties.actions"
+								:key="i"
+								link
+								v-bind="action"
+								density="compact"
+							>
+								<VListItemTitle>
+									{{ action.label }}
+								</VListItemTitle>
+							</VListItem>
+						</VList>
+					</VMenu>
+				</VCol>
+			</VRow>
 		</VCard>
 	</VCol>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.actions {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+}
+</style>

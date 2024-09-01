@@ -16,12 +16,12 @@ div {
 	& > * {
 		flex: 0 0 auto;
 	}
-}
+} /*
 :deep(.v-window) {
 	flex: 1 1 auto;
 }
 :deep(.v-window__container),
 :deep(.v-window-item) {
 	height: 100%;
-}
+}*/
 </style>

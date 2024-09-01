@@ -13,12 +13,14 @@ const fitToScreen = useFitToScreen();
 const query = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
+const loading = ref(true);
 const showDetails = ref(false);
 const index = ref(0);
 const size = ref<PhotoSize>('src');
 const resize = ref(false);
 const filter = () => {
 	items.value = [];
+	loading.value = true;
 	list(
 		{
 			query: query.value
@@ -26,6 +28,7 @@ const filter = () => {
 		'photos',
 		(data) => {
 			items.value = data.items;
+			loading.value = false;
 		}
 	);
 };
@@ -71,7 +74,13 @@ onMounted(filter);
 <template>
 	<LibraryWrapper>
 		<SearchInput label="Search Photos" v-model="query" @click:append-inner="filter" />
-		<LibraryItems :items-length="items.length" :count="24" :cols="6" @load="loadMore">
+		<LibraryItems
+			:items-length="items.length"
+			:count="24"
+			:cols="6"
+			:loading="loading"
+			@load="loadMore"
+		>
 			<GridItem
 				v-for="(item, i) of items"
 				:key="item.id"

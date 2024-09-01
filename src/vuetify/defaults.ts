@@ -1,8 +1,10 @@
 import {
+	mdiCheckCircleOutline,
 	mdiChevronDown,
 	mdiChevronLeft,
 	mdiChevronRight,
 	mdiChevronUp,
+	mdiCircleOutline,
 	mdiClose,
 	mdiMagnify,
 	mdiMenuDown
@@ -40,6 +42,11 @@ const defaults = {
 		flat: true,
 		hideDetails: true,
 		variant: 'solo'
+	},
+	VCheckbox: {
+		trueIcon: mdiCheckCircleOutline,
+		falseIcon: mdiCircleOutline,
+		hideDetails: true
 	},
 	VNavigationDrawer: {
 		tag: 'aside'

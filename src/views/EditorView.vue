@@ -102,8 +102,8 @@ const fetchProject = (obj: any) => {
 	} else {
 		project.$reset();
 		project.resetStack();
-		editor.openStartDialog = !!obj.query.start;
 	}
+	editor.openStartDialog = !!obj.query.start;
 };
 
 onMounted(() => {
