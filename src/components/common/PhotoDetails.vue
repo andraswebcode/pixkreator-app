@@ -3,6 +3,7 @@ const props = defineProps<{
 	title: string;
 	photographer: string;
 	photographer_url: string;
+	src: string;
 	large: string;
 	medium: string;
 	thumbnail: string;

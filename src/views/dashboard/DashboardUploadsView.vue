@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
+import { mdiRename, mdiTrashCan } from '@mdi/js';
 
 const fileSources: { label: string; value: string }[] = [
 	{
@@ -103,7 +104,23 @@ onBeforeRouteUpdate((to) => {
 			:loading="loading"
 			@load="loadMore"
 		>
-			<GridItem v-for="item of items" :key="item.id" cols="2" :src="item.image" />
+			<GridItem
+				v-for="item of items"
+				:key="item.id"
+				cols="2"
+				selectable
+				:actions="[
+					{
+						label: 'Rename',
+						prependIcon: mdiRename
+					},
+					{
+						label: 'Delete',
+						prependIcon: mdiTrashCan
+					}
+				]"
+				:src="item.image"
+			/>
 		</LibraryItems>
 	</LibraryWrapper>
 </template>

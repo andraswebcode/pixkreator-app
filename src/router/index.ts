@@ -10,7 +10,6 @@ import DashboardHomeView from '../views/dashboard/DashboardHomeView.vue';
 import DashboardTemplatesView from '../views/dashboard/DashboardTemplatesView.vue';
 import DashboardProjectsView from '../views/dashboard/DashboardProjectsView.vue';
 import DashboardUploadsView from '../views/dashboard/DashboardUploadsView.vue';
-import DashboardAIImagesView from '../views/dashboard/DashboardAIImagesView.vue';
 import DashboardBrandView from '../views/dashboard/DashboardBrandView.vue';
 import DashboardPhotosView from '../views/dashboard/DashboardPhotosView.vue';
 import AccountProfileView from '../views/account/AccountProfileView.vue';
@@ -56,11 +55,6 @@ const routes: RouteRecordRaw[] = [
 				name: 'photos',
 				path: 'photos',
 				component: DashboardPhotosView
-			},
-			{
-				name: 'ai-images',
-				path: 'ai-images',
-				component: DashboardAIImagesView
 			},
 			{
 				name: 'brand',
