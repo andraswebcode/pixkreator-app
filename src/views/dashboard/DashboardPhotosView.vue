@@ -96,10 +96,14 @@ onBeforeRouteUpdate((to) => {
 			<VCol cols="4">
 				<VRow>
 					<VCol>
-						<VSelect label="Orientation" :items="PHOTO_ORIENTATIONS" />
+						<VSelect
+							label="Orientation"
+							:items="PHOTO_ORIENTATIONS"
+							:disabled="!search"
+						/>
 					</VCol>
 					<VCol>
-						<ColorPicker label="Color" />
+						<ColorPicker label="Color" :disabled="!search" />
 					</VCol>
 				</VRow>
 			</VCol>

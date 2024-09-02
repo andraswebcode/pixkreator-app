@@ -73,7 +73,12 @@ onMounted(filter);
 
 <template>
 	<LibraryWrapper>
-		<SearchFilter label="Search Photos" v-model="query" @search="filter">
+		<SearchFilter
+			label="Search Photos"
+			:filter-disabled="!query"
+			v-model="query"
+			@search="filter"
+		>
 			<VList min-width="331">
 				<VListItem>
 					<VSelect label="Orientation" :items="PHOTO_ORIENTATIONS" />

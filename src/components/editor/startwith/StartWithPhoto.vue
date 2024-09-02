@@ -73,8 +73,8 @@ onMounted(filter);
 		<VRow>
 			<VCol class="sidebar" cols="auto">
 				<SearchInput label="Search Photos" v-model="query" @click:append-inner="filter" />
-				<VSelect label="Orientation" :items="PHOTO_ORIENTATIONS" />
-				<ColorPicker label="Color" />
+				<VSelect label="Orientation" :items="PHOTO_ORIENTATIONS" :disabled="!query" />
+				<ColorPicker label="Color" :disabled="!query" />
 			</VCol>
 			<VCol>
 				<LibraryWrapper>

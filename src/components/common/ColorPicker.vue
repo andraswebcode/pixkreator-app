@@ -4,6 +4,7 @@ import { ref } from 'vue';
 
 const properties = defineProps<{
 	label: string;
+	disabled: boolean;
 }>();
 const model = defineModel<string>();
 
@@ -31,6 +32,7 @@ const swatches = [
 				readonly
 				clearable
 				:clear-icon="mdiCloseCircle"
+				:disabled="properties.disabled"
 				v-model="model"
 				v-bind="props"
 			>

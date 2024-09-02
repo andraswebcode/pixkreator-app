@@ -3,6 +3,7 @@ import { mdiTune } from '@mdi/js';
 
 const properties = defineProps<{
 	label: string;
+	filterDisabled: boolean;
 }>();
 const search = defineModel();
 const emit = defineEmits(['search']);
@@ -13,7 +14,12 @@ const emit = defineEmits(['search']);
 		<template v-slot:prepend-inner>
 			<VMenu :close-on-content-click="false">
 				<template v-slot:activator="{ props }">
-					<VIcon :icon="mdiTune" v-bind="props" />
+					<VIcon
+						:icon="mdiTune"
+						:style="{ opacity: properties.filterDisabled ? 0.4 : 1 }"
+						v-bind="props"
+						:disabled="properties.filterDisabled"
+					/>
 				</template>
 				<slot />
 			</VMenu>
