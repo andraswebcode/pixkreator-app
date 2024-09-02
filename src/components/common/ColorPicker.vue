@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { mdiSquare } from '@mdi/js';
+import { mdiSquare, mdiCloseCircle } from '@mdi/js';
 import { ref } from 'vue';
 
-const props = defineProps<{
+const properties = defineProps<{
 	label: string;
 }>();
 const model = defineModel<string>();
@@ -23,38 +23,46 @@ const swatches = [
 </script>
 
 <template>
-	<VTextField :label="props.label" dirty readonly variant="plain" v-model="model">
-		<template v-slot:prepend-inner>
-			<VMenu :close-on-content-click="false">
-				<template v-slot:activator="{ props }">
-					<VIcon :icon="mdiSquare" :color="model" v-bind="props" />
+	<VMenu :close-on-content-click="false">
+		<template v-slot:activator="{ props }">
+			<VTextField
+				:label="properties.label"
+				dirty
+				readonly
+				clearable
+				:clear-icon="mdiCloseCircle"
+				v-model="model"
+				v-bind="props"
+			>
+				<template v-slot:prepend-inner>
+					<VIcon :icon="mdiSquare" :color="model" />
 				</template>
-				<VCard>
-					<VTabs v-model="tab" fixed-tabs density="compact">
-						<VTab value="palette">Palette</VTab>
-						<VTab value="picker">Picker</VTab>
-					</VTabs>
-					<VDivider />
-					<VTabsWindow v-model="tab">
-						<VTabsWindowItem value="palette">
-							<VColorPicker
-								hide-canvas
-								hide-sliders
-								hide-inputs
-								show-swatches
-								:swatches="swatches"
-								swatches-max-height="328px"
-								v-model="model"
-							/>
-						</VTabsWindowItem>
-						<VTabsWindowItem value="picker">
-							<VColorPicker v-model="model" />
-						</VTabsWindowItem>
-					</VTabsWindow>
-				</VCard>
-			</VMenu>
+			</VTextField>
 		</template>
-	</VTextField>
+		<VCard>
+			<VTabs v-model="tab" fixed-tabs density="compact">
+				<VTab value="palette">Palette</VTab>
+				<VTab value="picker">Picker</VTab>
+			</VTabs>
+			<VDivider />
+			<VTabsWindow v-model="tab">
+				<VTabsWindowItem value="palette">
+					<VColorPicker
+						hide-canvas
+						hide-sliders
+						hide-inputs
+						show-swatches
+						:swatches="swatches"
+						swatches-max-height="328px"
+						v-model="model"
+					/>
+				</VTabsWindowItem>
+				<VTabsWindowItem value="picker">
+					<VColorPicker v-model="model" />
+				</VTabsWindowItem>
+			</VTabsWindow>
+		</VCard>
+	</VMenu>
 </template>
 
 <style scoped lang="scss"></style>

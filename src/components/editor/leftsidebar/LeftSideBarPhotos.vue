@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
 import { useProject } from '../../../store';
-import { PHOTO_SIZES, DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
+import { PHOTO_SIZES, PHOTO_ORIENTATIONS, DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 import { getCroppedImageDimensions } from '../../../utils/functions';
 import { PhotoSize } from '../../../types/common';
 import useFitToScreen from '../../../hooks/fittoscreen';
@@ -73,7 +73,17 @@ onMounted(filter);
 
 <template>
 	<LibraryWrapper>
-		<SearchInput label="Search Photos" v-model="query" @click:append-inner="filter" />
+		<SearchFilter label="Search Photos" v-model="query" @search="filter">
+			<VList min-width="331">
+				<VListItem>
+					<VSelect label="Orientation" :items="PHOTO_ORIENTATIONS" />
+				</VListItem>
+				<VListItem>
+					<ColorPicker label="Color" />
+				</VListItem>
+			</VList>
+		</SearchFilter>
+
 		<LibraryItems
 			:items-length="items.length"
 			:count="24"

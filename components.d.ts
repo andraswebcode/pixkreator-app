@@ -63,6 +63,7 @@ declare module 'vue' {
     RightSideBarPanelTransformSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelTransformSettings.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchFilter: typeof import('./src/components/common/SearchFilter.vue')['default']
     ShadowPicker: typeof import('./src/components/common/ShadowPicker.vue')['default']
     ShareDialog: typeof import('./src/components/editor/topbar/ShareDialog.vue')['default']
     StartDialog: typeof import('./src/components/editor/StartDialog.vue')['default']
