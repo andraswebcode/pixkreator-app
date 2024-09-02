@@ -3,11 +3,13 @@ import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
 import { DETAILS_DIALOG_WIDTH, PHOTO_ORIENTATIONS, PHOTO_SIZES } from '../../utils/constants';
-import { PhotoSize } from '../../types/common';
+import { Orientation, PhotoSize } from '../../types/common';
 
 const router = useRouter();
 const route = useRoute();
 const search = ref(route.query.search);
+const orientation = ref<Orientation | ''>('');
+const color = ref('');
 const page = ref(2);
 const loading = ref(true);
 const showDetails = ref(false);
@@ -20,6 +22,12 @@ const filter = () => {
 	if (search.value) {
 		query.search = search.value;
 	}
+	if (orientation.value) {
+		query.orientation = orientation.value;
+	}
+	if (color.value) {
+		query.color = color.value;
+	}
 	items.value = [];
 	loading.value = true;
 	router.push({
@@ -30,6 +38,8 @@ const loadMore = () => {
 	list(
 		{
 			query: search.value,
+			orientation: orientation.value,
+			color: color.value,
 			page: page.value
 		},
 		'photos',
@@ -100,10 +110,11 @@ onBeforeRouteUpdate((to) => {
 							label="Orientation"
 							:items="PHOTO_ORIENTATIONS"
 							:disabled="!search"
+							v-model="orientation"
 						/>
 					</VCol>
 					<VCol>
-						<ColorPicker label="Color" :disabled="!search" />
+						<ColorPicker label="Color" :disabled="!search" v-model="color" />
 					</VCol>
 				</VRow>
 			</VCol>

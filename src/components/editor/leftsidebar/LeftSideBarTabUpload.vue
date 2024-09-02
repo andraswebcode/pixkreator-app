@@ -23,31 +23,39 @@ const upload = () => {
 				return;
 			}
 
+			const img = new Image();
+			const url = URL.createObjectURL(blob);
+
 			loading.value = true;
-			src.value = URL.createObjectURL(blob);
+			src.value = url;
+			img.src = url;
 
-			const data = new FormData();
+			img.onload = () => {
+				const data = new FormData();
 
-			data.append('file', blob);
-			data.append('source', 'uploads');
+				data.append('file', blob);
+				data.append('source', 'uploads');
+				data.append('width', img.width as any);
+				data.append('height', img.height as any);
 
-			save(
-				'',
-				'uploads',
-				data,
-				(state) => {
-					imgUrl.value = state.image;
-					notice.send('Image saved successfully', 'success');
-					loading.value = false;
-				},
-				(error) => {
-					console.warn(error);
-					notice.send(error.response?.data?.message || error.message, 'error');
-					URL.revokeObjectURL(src.value);
-					src.value = '';
-					loading.value = false;
-				}
-			);
+				save(
+					'',
+					'uploads',
+					data,
+					(state) => {
+						imgUrl.value = state.image;
+						notice.send('Image saved successfully', 'success');
+						loading.value = false;
+					},
+					(error) => {
+						console.warn(error);
+						notice.send(error.response?.data?.message || error.message, 'error');
+						URL.revokeObjectURL(src.value);
+						src.value = '';
+						loading.value = false;
+					}
+				);
+			};
 		})
 		.catch((error) => {
 			console.error(error);

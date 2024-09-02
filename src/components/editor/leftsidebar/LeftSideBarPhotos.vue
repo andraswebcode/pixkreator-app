@@ -4,13 +4,15 @@ import useRequest from '../../../hooks/request';
 import { useProject } from '../../../store';
 import { PHOTO_SIZES, PHOTO_ORIENTATIONS, DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 import { getCroppedImageDimensions } from '../../../utils/functions';
-import { PhotoSize } from '../../../types/common';
+import { Orientation, PhotoSize } from '../../../types/common';
 import useFitToScreen from '../../../hooks/fittoscreen';
 
 const { list } = useRequest();
 const project = useProject();
 const fitToScreen = useFitToScreen();
 const query = ref('');
+const orientation = ref<Orientation | ''>('');
+const color = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
 const loading = ref(true);
@@ -23,7 +25,9 @@ const filter = () => {
 	loading.value = true;
 	list(
 		{
-			query: query.value
+			query: query.value,
+			orientation: orientation.value,
+			color: color.value
 		},
 		'photos',
 		(data) => {
@@ -36,6 +40,8 @@ const loadMore = () => {
 	list(
 		{
 			query: query.value,
+			orientation: orientation.value,
+			color: color.value,
 			page: page.value
 		},
 		'photos',
@@ -81,10 +87,14 @@ onMounted(filter);
 		>
 			<VList min-width="331">
 				<VListItem>
-					<VSelect label="Orientation" :items="PHOTO_ORIENTATIONS" />
+					<VSelect
+						label="Orientation"
+						:items="PHOTO_ORIENTATIONS"
+						v-model="orientation"
+					/>
 				</VListItem>
 				<VListItem>
-					<ColorPicker label="Color" />
+					<ColorPicker label="Color" v-model="color" />
 				</VListItem>
 			</VList>
 		</SearchFilter>

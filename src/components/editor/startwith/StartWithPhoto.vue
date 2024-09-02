@@ -3,13 +3,15 @@ import { ref, onMounted } from 'vue';
 import useRequest from '../../../hooks/request';
 import { DETAILS_DIALOG_WIDTH, PHOTO_ORIENTATIONS, PHOTO_SIZES } from '../../../utils/constants';
 import { useRouter } from 'vue-router';
-import { PhotoSize } from '../../../types/common';
+import { Orientation, PhotoSize } from '../../../types/common';
 import useFitToScreen from '../../../hooks/fittoscreen';
 
 const { list } = useRequest();
 const router = useRouter();
 const fitToScreen = useFitToScreen();
 const query = ref('');
+const orientation = ref<Orientation | ''>('');
+const color = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
 const loading = ref(true);
@@ -21,7 +23,9 @@ const filter = () => {
 	loading.value = true;
 	list(
 		{
-			query: query.value
+			query: query.value,
+			orientation: orientation.value,
+			color: color.value
 		},
 		'photos',
 		(data) => {
@@ -34,6 +38,8 @@ const loadMore = () => {
 	list(
 		{
 			query: query.value,
+			orientation: orientation.value,
+			color: color.value,
 			page: page.value
 		},
 		'photos',
@@ -73,8 +79,13 @@ onMounted(filter);
 		<VRow>
 			<VCol class="sidebar" cols="auto">
 				<SearchInput label="Search Photos" v-model="query" @click:append-inner="filter" />
-				<VSelect label="Orientation" :items="PHOTO_ORIENTATIONS" :disabled="!query" />
-				<ColorPicker label="Color" :disabled="!query" />
+				<VSelect
+					label="Orientation"
+					:items="PHOTO_ORIENTATIONS"
+					:disabled="!query"
+					v-model="orientation"
+				/>
+				<ColorPicker label="Color" :disabled="!query" v-model="color" />
 			</VCol>
 			<VCol>
 				<LibraryWrapper>

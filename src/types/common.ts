@@ -5,3 +5,5 @@ export type SocialMedia = 'pinterest' | 'instagram' | 'facebook' | 'x' | 'linked
 export type MimeType = 'image/png' | 'image/jpeg' | 'image/webp';
 
 export type Extension = 'png' | 'jpg' | 'webp';
+
+export type Orientation = 'landscape' | 'portrait' | 'square';

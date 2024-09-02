@@ -30,6 +30,12 @@ const login = () => {
 			notice.send(error.response?.data?.message || error.message, 'error');
 		});
 };
+const socialLogin = (provider: 'google') => {
+	axios
+		.get('oauth/' + provider)
+		.then(console.log)
+		.catch(console.warn);
+};
 </script>
 
 <template>
@@ -56,6 +62,8 @@ const login = () => {
 		<small class="d-block mb-2">
 			<RouterLink to="/pwreset">Forgot your password?</RouterLink>
 		</small>
+		<VDivider />
+		<VBtn @click="socialLogin('google')">Login With Google</VBtn>
 	</FormContainer>
 </template>
 
