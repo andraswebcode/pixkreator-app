@@ -24,10 +24,24 @@ const socialLogin = (provider: SocialLoginProvider) => {
 <template>
 	<VRow justify="center">
 		<VCol cols="auto">
-			<VBtn :prepend-icon="mdiGoogle" @click="socialLogin('google')">Google</VBtn>
+			<VBtn
+				:prepend-icon="mdiGoogle"
+				variant="tonal"
+				size="large"
+				@click="socialLogin('google')"
+			>
+				Google
+			</VBtn>
 		</VCol>
 		<VCol cols="auto">
-			<VBtn :prepend-icon="mdiFacebook" @click="socialLogin('facebook')">Facebook</VBtn>
+			<VBtn
+				:prepend-icon="mdiFacebook"
+				variant="tonal"
+				size="large"
+				@click="socialLogin('facebook')"
+			>
+				Facebook
+			</VBtn>
 		</VCol>
 	</VRow>
 </template>

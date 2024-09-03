@@ -6,6 +6,12 @@ import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 import { useRouter } from 'vue-router';
 import useFitToScreen from '../../../hooks/fittoscreen';
 
+const categories = [
+	{
+		label: 'All Templates',
+		value: ''
+	}
+].concat(templateCategories);
 const { list } = useRequest();
 const router = useRouter();
 const fitToScreen = useFitToScreen();
@@ -30,6 +36,10 @@ const filter = () => {
 			loading.value = false;
 		}
 	);
+};
+const filterCategory = (value: string) => {
+	category.value = value;
+	filter();
 };
 const loadMore = () => {
 	list(
@@ -72,16 +82,18 @@ onMounted(filter);
 	<VContainer class="wrapper">
 		<VRow>
 			<VCol class="sidebar" cols="auto">
-				<SearchInput label="Search Templates" />
+				<SearchInput
+					label="Search Templates"
+					v-model="search"
+					@click:append-inner="filter"
+				/>
 				<VList>
-					<VListItem link>
-						<VListItemTitle>Editor's Choice</VListItemTitle>
-					</VListItem>
-					<VListItem link>
-						<VListItemTitle>All Templates</VListItemTitle>
-					</VListItem>
-					<VDivider />
-					<VListItem v-for="cat of templateCategories" link>
+					<VListItem
+						v-for="cat of categories"
+						link
+						:active="cat.value === category"
+						@click="filterCategory(cat.value)"
+					>
 						<VListItemTitle>{{ cat.label }}</VListItemTitle>
 					</VListItem>
 				</VList>
@@ -134,6 +146,15 @@ onMounted(filter);
 	}
 }
 .sidebar {
+	display: flex;
+	flex-direction: column;
+	flex-flow: column;
 	width: 256px;
+	& > * {
+		flex: 0 0 auto;
+	}
+	.v-list {
+		flex: 0 1 auto;
+	}
 }
 </style>

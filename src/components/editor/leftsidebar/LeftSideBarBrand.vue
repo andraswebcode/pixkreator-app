@@ -1,5 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useUser } from '../../../store';
 
-<template></template>
+const userData = useUser();
+</script>
+
+<template>
+	<LoginNotice v-if="!userData.loggedIn" />
+</template>
 
 <style scoped lang="scss"></style>

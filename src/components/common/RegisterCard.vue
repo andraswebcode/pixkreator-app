@@ -54,11 +54,11 @@ const register = () => {
 				<slot name="subtitle" />
 			</VCardSubtitle>
 		</VCardItem>
-		<VDivider v-if="$slots.title || $slots.subtitle" />
+		<VDivider v-if="$slots.title || $slots.subtitle" class="mb-5" />
 		<VCardItem>
 			<SocialLogin />
 		</VCardItem>
-		<VDivider />
+		<VDivider class="my-5" />
 		<VForm v-model="isValid" @submit.prevent="register">
 			<VCardItem>
 				<VTextField
@@ -97,6 +97,7 @@ const register = () => {
 					autocomplete="new-password"
 				/>
 			</VCardItem>
+			<VDivider />
 			<VCardActions>
 				<VBtn type="submit" :disabled="!isValid" :loading="loading">Register</VBtn>
 			</VCardActions>

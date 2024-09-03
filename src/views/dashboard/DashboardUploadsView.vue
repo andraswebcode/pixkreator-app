@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
-import { mdiRename, mdiTrashCan } from '@mdi/js';
+import { mdiDownload, mdiRename, mdiTrashCan } from '@mdi/js';
 
 const fileSources: { label: string; value: string }[] = [
 	{
@@ -113,6 +113,10 @@ onBeforeRouteUpdate((to) => {
 					{
 						label: 'Rename',
 						prependIcon: mdiRename
+					},
+					{
+						label: 'Download',
+						prependIcon: mdiDownload
 					},
 					{
 						label: 'Delete',

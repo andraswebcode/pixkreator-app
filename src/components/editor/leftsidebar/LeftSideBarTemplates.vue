@@ -64,6 +64,7 @@ const addTemplate = () => {
 			id: ''
 		}
 	});
+	showDetails.value = false;
 };
 
 onMounted(filter);

@@ -70,12 +70,12 @@ onUnmounted(() => {
 				</VCol>
 				<VCol cols="4">
 					<VTextField label="File Name" v-model="name" />
-					<VBtnToggle color="primary" v-model="type">
+					<VBtnToggle class="mb-8" color="primary" v-model="type">
 						<VBtn value="image/png">PNG</VBtn>
 						<VBtn value="image/jpeg">JPEG</VBtn>
 						<VBtn value="image/webp">WEBP</VBtn>
 					</VBtnToggle>
-					<VSlider
+					<RangeSlider
 						v-if="type !== 'image/png'"
 						label="Quality"
 						min="0"
@@ -83,7 +83,7 @@ onUnmounted(() => {
 						step="0.01"
 						v-model="quality"
 					/>
-					<VDivider class="my-8" />
+					<VDivider class="mb-8" />
 					<div>
 						Size:
 						<VChip>

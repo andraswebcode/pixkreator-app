@@ -3,9 +3,12 @@ import { useRouter } from 'vue-router';
 import { useProject } from '../../../store';
 import sizePresets from './../../../utils/size-presets';
 import useFitToScreen from '../../../hooks/fittoscreen';
+import { ref } from 'vue';
 
 const router = useRouter();
 const project = useProject();
+const width = ref(1280);
+const height = ref(720);
 const fitToScreen = useFitToScreen();
 const setSize = ({ width, height }) => {
 	router
@@ -23,12 +26,37 @@ const setSize = ({ width, height }) => {
 			fitToScreen();
 		});
 };
+const setCustomSize = () => {
+	setSize({
+		width: width.value,
+		height: height.value
+	});
+};
 </script>
 
 <template>
 	<VContainer class="wrapper">
 		<VRow>
-			<VCol class="sidebar" cols="auto"></VCol>
+			<VCol class="sidebar" cols="auto">
+				<p class="mb-2">Custom Size</p>
+				<InputGroup>
+					<VTextField
+						type="number"
+						label="Width"
+						flat
+						variant="underlined"
+						v-model="width"
+					/>
+					<VTextField
+						type="number"
+						label="Height"
+						flat
+						variant="underlined"
+						v-model="height"
+					/>
+				</InputGroup>
+				<VBtn block @click="setCustomSize">Create Canvas</VBtn>
+			</VCol>
 			<VCol>
 				<LibraryWrapper>
 					<LibraryItems :items-length="1" :count="24" :cols="2">

@@ -11,7 +11,9 @@ const email = ref('');
 const password = ref('');
 const loading = ref(false);
 const isValid = ref(false);
-const emailRules = [(value: string) => !!value || 'Email is required.'];
+const emailRules = [
+	(value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'Please provide a valid email address.'
+];
 const passwordRules = [(value: string) => !!value || 'Password is required.'];
 const login = () => {
 	loading.value = true;
@@ -44,11 +46,11 @@ const login = () => {
 				<slot name="subtitle" />
 			</VCardSubtitle>
 		</VCardItem>
-		<VDivider v-if="$slots.title || $slots.subtitle" />
+		<VDivider v-if="$slots.title || $slots.subtitle" class="mb-5" />
 		<VCardItem>
 			<SocialLogin />
 		</VCardItem>
-		<VDivider />
+		<VDivider class="my-5" />
 		<VForm v-model="isValid" @submit.prevent="login">
 			<VCardItem>
 				<VTextField
