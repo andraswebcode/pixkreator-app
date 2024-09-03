@@ -2,19 +2,38 @@
 import { mdiContentSave, mdiDownload, mdiRedo, mdiShare, mdiUndo } from '@mdi/js';
 import useRequest from '../../hooks/request';
 import { useRoute, useRouter } from 'vue-router';
-import { useEditor, useNotice, useProject } from '../../store';
+import { useEditor, useNotice, useProject, useUser } from '../../store';
 import { toRaw } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
 import { util } from 'fabric';
 import { SHARE_IMAGE_MAX_SIZE } from '../../utils/constants';
 
 const { save, updateFile } = useRequest();
+const userData = useUser();
 const route = useRoute();
 const router = useRouter();
 const project = useProject();
 const editor = useEditor();
 const notice = useNotice();
+const shareDesign = () => {
+	if (userData.loggedIn) {
+		editor.openShareDialog = true;
+	} else {
+		editor.openLoginDialog = true;
+	}
+};
+const downloadDesign = () => {
+	if (userData.loggedIn) {
+		editor.openDownloadDialog = true;
+	} else {
+		editor.openLoginDialog = true;
+	}
+};
 const saveDesign = () => {
+	if (!userData.loggedIn) {
+		editor.openLoginDialog = true;
+		return;
+	}
 	const { title, description, status, upload_id, width, height, background, byIds, ids } =
 		project;
 	const _save = () => {
@@ -101,12 +120,8 @@ const saveDesign = () => {
 		<VBtn :icon="mdiUndo" v-tooltip="'Undo'" @click="project.undo" />
 		<VBtn :icon="mdiRedo" v-tooltip="'Redo'" @click="project.redo" />
 		<template v-slot:append>
-			<VBtn :icon="mdiShare" v-tooltip="'Share'" @click="editor.openShareDialog = true" />
-			<VBtn
-				:icon="mdiDownload"
-				v-tooltip="'Download'"
-				@click="editor.openDownloadDialog = true"
-			/>
+			<VBtn :icon="mdiShare" v-tooltip="'Share'" @click="shareDesign" />
+			<VBtn :icon="mdiDownload" v-tooltip="'Download'" @click="downloadDesign" />
 			<VBtn :icon="mdiContentSave" v-tooltip="'Save'" @click="saveDesign" />
 			<VDivider />
 			<UserMenu />
@@ -114,6 +129,7 @@ const saveDesign = () => {
 	</VAppBar>
 	<ShareDialog />
 	<DownloadDialog />
+	<LoginDialog />
 </template>
 
 <style scoped lang="scss"></style>

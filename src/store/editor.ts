@@ -22,6 +22,7 @@ export interface EditorState {
 	openStartDialog: boolean;
 	openDownloadDialog: boolean;
 	openShareDialog: boolean;
+	openLoginDialog: boolean;
 	// Canvas
 	mode: EditorModeType;
 	zoom: number;
@@ -46,6 +47,7 @@ export default defineStore<string, EditorState, EditorGetters>('editor', {
 		openStartDialog: false,
 		openDownloadDialog: false,
 		openShareDialog: false,
+		openLoginDialog: false,
 		mode: 'select',
 		zoom: 1,
 		panX: 0,

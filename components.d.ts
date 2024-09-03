@@ -41,6 +41,7 @@ declare module 'vue' {
     LibraryItems: typeof import('./src/components/common/LibraryItems.vue')['default']
     LibraryWrapper: typeof import('./src/components/common/LibraryWrapper.vue')['default']
     LoginCard: typeof import('./src/components/common/LoginCard.vue')['default']
+    LoginDialog: typeof import('./src/components/editor/topbar/LoginDialog.vue')['default']
     LoginNotice: typeof import('./src/components/common/LoginNotice.vue')['default']
     MainContent: typeof import('./src/components/editor/MainContent.vue')['default']
     NotificationBar: typeof import('./src/components/common/NotificationBar.vue')['default']

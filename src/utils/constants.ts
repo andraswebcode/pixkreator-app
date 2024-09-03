@@ -4,6 +4,8 @@ export const MAX_ZOOM = 10;
 
 export const DETAILS_DIALOG_WIDTH = 1200;
 
+export const LOGIN_DIALOG_WIDTH = 500;
+
 export const SHARE_IMAGE_MAX_SIZE = 2000;
 
 export const PHOTO_SIZES = [
