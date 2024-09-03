@@ -1,17 +1,18 @@
 import { defineStore } from 'pinia';
 
-type UserData = {
+export type UserData = {
 	id?: number;
 	name?: string;
 	email?: string;
+	avatar?: string;
 	token?: string;
 };
 
-type UserState = {
+export type UserState = {
 	user: UserData;
 };
 
-type UserGetters = {
+export type UserGetters = {
 	loggedIn: (state: UserState) => boolean;
 	bearerToken: (state: UserState) => string;
 };

@@ -3,6 +3,9 @@ import { ref } from 'vue';
 import axios from '../axios';
 import { useNotice, useUser } from '../store';
 import { useRouter } from 'vue-router';
+import { oauthLogin } from '../utils/oauth-login';
+import { mdiFacebook, mdiGoogle } from '@mdi/js';
+import { SocialLoginProvider } from '../types/common';
 
 const email = ref('');
 const password = ref('');
@@ -30,11 +33,17 @@ const login = () => {
 			notice.send(error.response?.data?.message || error.message, 'error');
 		});
 };
-const socialLogin = (provider: 'google') => {
-	axios
-		.get('oauth/' + provider)
-		.then(console.log)
-		.catch(console.warn);
+const socialLogin = (provider: SocialLoginProvider) => {
+	oauthLogin(provider)
+		.then(({ user }) => {
+			userData.user = user;
+			localStorage.setItem('userData', JSON.stringify(userData.user));
+			router.push('/dashboard');
+		})
+		.catch((error) => {
+			loading.value = false;
+			notice.send(error.response?.data?.message || error.message, 'error');
+		});
 };
 </script>
 
@@ -45,6 +54,15 @@ const socialLogin = (provider: 'google') => {
 			New to Image Designer Pro?
 			<RouterLink to="/register">Create an account</RouterLink>
 		</template>
+		<VRow justify="center">
+			<VCol cols="auto">
+				<VBtn :prepend-icon="mdiGoogle" @click="socialLogin('google')">Google</VBtn>
+			</VCol>
+			<VCol cols="auto">
+				<VBtn :prepend-icon="mdiFacebook" @click="socialLogin('facebook')">Facebook</VBtn>
+			</VCol>
+		</VRow>
+		<VDivider class="my-5" />
 		<VTextField
 			label="Email"
 			type="email"
@@ -62,8 +80,6 @@ const socialLogin = (provider: 'google') => {
 		<small class="d-block mb-2">
 			<RouterLink to="/pwreset">Forgot your password?</RouterLink>
 		</small>
-		<VDivider />
-		<VBtn @click="socialLogin('google')">Login With Google</VBtn>
 	</FormContainer>
 </template>
 

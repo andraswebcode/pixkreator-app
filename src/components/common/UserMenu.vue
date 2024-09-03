@@ -36,7 +36,10 @@ const logout = () => {
 		<VList>
 			<VListItem>
 				<template v-slot:prepend>
-					<VIcon :icon="mdiAccount" />
+					<VAvatar>
+						<VImg v-if="userData.user.avatar" :src="userData.user.avatar" />
+						<VIcon v-else :icon="mdiAccount" />
+					</VAvatar>
 				</template>
 				<VListItemTitle>{{ userData.user.name }}</VListItemTitle>
 				<VListItemSubtitle>{{ userData.user.email }}</VListItemSubtitle>
