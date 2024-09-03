@@ -40,6 +40,7 @@ declare module 'vue' {
     LeftSideBarUploads: typeof import('./src/components/editor/leftsidebar/LeftSideBarUploads.vue')['default']
     LibraryItems: typeof import('./src/components/common/LibraryItems.vue')['default']
     LibraryWrapper: typeof import('./src/components/common/LibraryWrapper.vue')['default']
+    LoginNotice: typeof import('./src/components/common/LoginNotice.vue')['default']
     MainContent: typeof import('./src/components/editor/MainContent.vue')['default']
     NotificationBar: typeof import('./src/components/common/NotificationBar.vue')['default']
     PersistentHeaderDialog: typeof import('./src/components/common/PersistentHeaderDialog.vue')['default']

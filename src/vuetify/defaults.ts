@@ -32,16 +32,16 @@ const defaults = {
 		itemTitle: 'label',
 		itemValue: 'value',
 		flat: true,
-		hideDetails: true,
-		variant: 'solo'
+		hideDetails: true
+		// variant: 'solo'
 	},
 	VAutocomplete: {
 		menuIcon: mdiMenuDown,
 		itemTitle: 'label',
 		itemValue: 'value',
 		flat: true,
-		hideDetails: true,
-		variant: 'solo'
+		hideDetails: true
+		// variant: 'solo'
 	},
 	VCheckbox: {
 		trueIcon: mdiCheckCircleOutline,

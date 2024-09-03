@@ -8,7 +8,7 @@ const { fill, strokeWidth, stroke } = useProps(['fill', 'strokeWidth', 'stroke']
 	<VExpansionPanel title="Appearance" value="appearance">
 		<VExpansionPanelText>
 			<ColorPicker label="Fill Color" v-model="fill" />
-			<VDivider />
+			<VDivider class="mb-4" />
 			<RangeSlider label="Stroke Width" v-model="strokeWidth" />
 			<ColorPicker label="Stroke Color" v-model="stroke" />
 		</VExpansionPanelText>
