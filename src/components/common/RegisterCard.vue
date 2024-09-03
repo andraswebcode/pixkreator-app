@@ -3,9 +3,6 @@ import { ref } from 'vue';
 import axios from '../../axios';
 import { useNotice, useUser } from '../../store';
 import { useRouter } from 'vue-router';
-import { mdiFacebook, mdiGoogle } from '@mdi/js';
-import { oauthLogin } from '../../utils/oauth-login';
-import { SocialLoginProvider } from '../../types/common';
 
 const userData = useUser();
 const router = useRouter();
@@ -45,34 +42,21 @@ const register = () => {
 			notice.send(error.response?.data?.message || error.message, 'error');
 		});
 };
-const socialRegister = (provider: SocialLoginProvider) => {
-	oauthLogin(provider).then(console.log).catch(console.warn);
-};
 </script>
 
 <template>
 	<VCard>
-		<VCardItem>
-			<VCardTitle>Create an Account</VCardTitle>
-			<VCardSubtitle>
-				Already have an account?
-				<RouterLink to="/login">Login</RouterLink>
+		<VCardItem v-if="$slots.title || $slots.subtitle">
+			<VCardTitle v-if="$slots.title">
+				<slot name="title" />
+			</VCardTitle>
+			<VCardSubtitle v-if="$slots.subtitle">
+				<slot name="subtitle" />
 			</VCardSubtitle>
 		</VCardItem>
-		<VDivider />
+		<VDivider v-if="$slots.title || $slots.subtitle" />
 		<VCardItem>
-			<VRow justify="center">
-				<VCol cols="auto">
-					<VBtn :prepend-icon="mdiGoogle" @click="socialRegister('google')">
-						Google
-					</VBtn>
-				</VCol>
-				<VCol cols="auto">
-					<VBtn :prepend-icon="mdiFacebook" @click="socialRegister('facebook')">
-						Facebook
-					</VBtn>
-				</VCol>
-			</VRow>
+			<SocialLogin />
 		</VCardItem>
 		<VDivider />
 		<VForm v-model="isValid" @submit.prevent="register">

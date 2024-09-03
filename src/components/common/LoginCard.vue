@@ -3,9 +3,6 @@ import { ref } from 'vue';
 import axios from '../../axios';
 import { useNotice, useUser } from '../../store';
 import { useRouter } from 'vue-router';
-import { oauthLogin } from '../../utils/oauth-login';
-import { mdiFacebook, mdiGoogle } from '@mdi/js';
-import { SocialLoginProvider } from '../../types/common';
 
 const userData = useUser();
 const router = useRouter();
@@ -26,6 +23,7 @@ const login = () => {
 		.then(({ data }) => {
 			userData.user = data.user;
 			localStorage.setItem('userData', JSON.stringify(userData.user));
+			loading.value = false;
 			router.push('/dashboard');
 		})
 		.catch((error) => {
@@ -34,41 +32,21 @@ const login = () => {
 			notice.send(error.response?.data?.message || error.message, 'error');
 		});
 };
-const socialLogin = (provider: SocialLoginProvider) => {
-	oauthLogin(provider)
-		.then(({ user }) => {
-			userData.user = user;
-			localStorage.setItem('userData', JSON.stringify(userData.user));
-			router.push('/dashboard');
-		})
-		.catch((error) => {
-			loading.value = false;
-			notice.send(error.response?.data?.message || error.message, 'error');
-		});
-};
 </script>
 
 <template>
 	<VCard>
-		<VCardItem>
-			<VCardTitle>Login</VCardTitle>
-			<VCardSubtitle>
-				New to Image Designer Pro?
-				<RouterLink to="/register">Create an account</RouterLink>
+		<VCardItem v-if="$slots.title || $slots.subtitle">
+			<VCardTitle v-if="$slots.title">
+				<slot name="title" />
+			</VCardTitle>
+			<VCardSubtitle v-if="$slots.subtitle">
+				<slot name="subtitle" />
 			</VCardSubtitle>
 		</VCardItem>
-		<VDivider />
+		<VDivider v-if="$slots.title || $slots.subtitle" />
 		<VCardItem>
-			<VRow justify="center">
-				<VCol cols="auto">
-					<VBtn :prepend-icon="mdiGoogle" @click="socialLogin('google')">Google</VBtn>
-				</VCol>
-				<VCol cols="auto">
-					<VBtn :prepend-icon="mdiFacebook" @click="socialLogin('facebook')"
-						>Facebook</VBtn
-					>
-				</VCol>
-			</VRow>
+			<SocialLogin />
 		</VCardItem>
 		<VDivider />
 		<VForm v-model="isValid" @submit.prevent="login">
@@ -87,9 +65,7 @@ const socialLogin = (provider: SocialLoginProvider) => {
 					:hide-details="false"
 					v-model="password"
 				/>
-				<small class="d-block mb-2">
-					<RouterLink to="/pwreset">Forgot your password?</RouterLink>
-				</small>
+				<slot />
 			</VCardItem>
 			<VDivider />
 			<VCardActions>

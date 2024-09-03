@@ -5,7 +5,13 @@
 		<VContainer>
 			<VRow justify="center" align="center">
 				<VCol cols="4">
-					<RegisterCard />
+					<RegisterCard>
+						<template v-slot:title>Create an Account</template>
+						<template v-slot:subtitle>
+							Already have an account?
+							<RouterLink to="/login">Login</RouterLink>
+						</template>
+					</RegisterCard>
 				</VCol>
 			</VRow>
 		</VContainer>

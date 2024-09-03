@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useEditor } from '../../../store';
 import { LOGIN_DIALOG_WIDTH } from '../../../utils/constants';
 
 const editor = useEditor();
+const form = ref<'login' | 'register' | 'pwreset'>('login');
 </script>
 
 <template>
@@ -12,7 +14,29 @@ const editor = useEditor();
 		v-model="editor.openLoginDialog"
 		@close="editor.openLoginDialog = false"
 	>
-		<LoginCard />
+		<LoginCard v-if="form === 'login'">
+			<template v-slot:subtitle>
+				New to Image Designer Pro?
+				<a href="#" @click.prevent="form = 'register'">Create an account</a>
+			</template>
+			<small class="d-block mb-2">
+				<a href="#" @click.prevent="form = 'pwreset'">Forgot your password?</a>
+			</small>
+		</LoginCard>
+		<RegisterCard v-else-if="form === 'register'">
+			<template v-slot:subtitle>
+				Already have an account?
+				<a href="#" @click.prevent="form = 'login'">Login</a>
+			</template>
+		</RegisterCard>
+		<PWResetCard v-else-if="form === 'pwreset'">
+			<template v-slot:subtitle>
+				Enter your email, and we'll send a link to reset your password.
+			</template>
+			<small class="d-block mb-2">
+				<a href="#" @click.prevent="form = 'login'">&larr; Back to Login</a>
+			</small>
+		</PWResetCard>
 	</PersistentHeaderDialog>
 </template>
 

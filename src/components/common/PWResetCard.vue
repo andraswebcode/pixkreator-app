@@ -7,19 +7,19 @@ const isValid = ref(false);
 
 <template>
 	<VCard>
-		<VCardItem>
-			<VCardTitle>Forgot Your Password?</VCardTitle>
-			<VCardSubtitle>
-				Enter your email, and we'll send a link to reset your password.
+		<VCardItem v-if="$slots.title || $slots.subtitle">
+			<VCardTitle v-if="$slots.title">
+				<slot name="title" />
+			</VCardTitle>
+			<VCardSubtitle v-if="$slots.subtitle">
+				<slot name="subtitle" />
 			</VCardSubtitle>
 		</VCardItem>
-		<VDivider />
+		<VDivider v-if="$slots.title || $slots.subtitle" />
 		<VForm v-model="isValid">
 			<VCardItem>
 				<VTextField label="Email" type="email" required />
-				<small class="d-block mb-2">
-					<RouterLink to="/login">&larr; Back to Login</RouterLink>
-				</small>
+				<slot />
 			</VCardItem>
 			<VDivider />
 			<VCardActions>

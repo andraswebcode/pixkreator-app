@@ -71,6 +71,7 @@ declare module 'vue' {
     SearchFilter: typeof import('./src/components/common/SearchFilter.vue')['default']
     ShadowPicker: typeof import('./src/components/common/ShadowPicker.vue')['default']
     ShareDialog: typeof import('./src/components/editor/topbar/ShareDialog.vue')['default']
+    SocialLogin: typeof import('./src/components/common/SocialLogin.vue')['default']
     StartDialog: typeof import('./src/components/editor/StartDialog.vue')['default']
     StartWithBlank: typeof import('./src/components/editor/startwith/StartWithBlank.vue')['default']
     StartWithPhoto: typeof import('./src/components/editor/startwith/StartWithPhoto.vue')['default']
