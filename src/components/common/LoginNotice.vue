@@ -8,7 +8,7 @@ const editor = useEditor();
 <template>
 	<VEmptyState
 		:icon="mdiLogin"
-		title="Unlock This Features!"
+		title="Unlock This Feature!"
 		text="Sign in now to access all editing tools."
 		action-text="Sign in"
 		@click:action="editor.openLoginDialog = true"

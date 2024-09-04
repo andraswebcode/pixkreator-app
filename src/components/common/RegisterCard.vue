@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import axios from '../../axios';
 import { useNotice, useUser } from '../../store';
 
+const emit = defineEmits(['success']);
 const userData = useUser();
 const notice = useNotice();
 const name = ref('');
@@ -34,6 +35,7 @@ const register = () => {
 			loading.value = false;
 			userData.user = data.user;
 			localStorage.setItem('userData', JSON.stringify(userData.user));
+			emit('success');
 		})
 		.catch((error) => {
 			loading.value = false;
@@ -43,14 +45,7 @@ const register = () => {
 </script>
 
 <template>
-	<VEmptyState
-		v-if="userData.loggedIn"
-		headline="Almost There!"
-		title="Check Your Inbox"
-		text="We’ve sent you a confirmation email. Please click the link to verify your account."
-		action-text="Resend Verification Email"
-	/>
-	<VCard v-else>
+	<VCard>
 		<VCardItem v-if="$slots.title || $slots.subtitle">
 			<VCardTitle v-if="$slots.title">
 				<slot name="title" />
@@ -61,7 +56,7 @@ const register = () => {
 		</VCardItem>
 		<VDivider v-if="$slots.title || $slots.subtitle" class="mb-5" />
 		<VCardItem>
-			<SocialLogin />
+			<SocialLogin @success="emit('success')" />
 		</VCardItem>
 		<VDivider class="my-5" />
 		<VForm v-model="isValid" @submit.prevent="register">

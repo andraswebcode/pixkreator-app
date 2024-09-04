@@ -129,7 +129,7 @@ const saveDesign = () => {
 	</VAppBar>
 	<ShareDialog />
 	<DownloadDialog />
-	<LoginDialog v-if="!userData.loggedIn" />
+	<LoginDialog />
 </template>
 
 <style scoped lang="scss"></style>

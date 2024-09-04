@@ -1,11 +1,18 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const success = () => {
+	router.push('/dashboard');
+};
+</script>
 
 <template>
 	<VMain>
 		<VContainer>
 			<VRow justify="center" align="center">
 				<VCol cols="4">
-					<LoginCard>
+					<LoginCard @success="success">
 						<template v-slot:title>Login</template>
 						<template v-slot:subtitle>
 							New to Image Designer Pro?

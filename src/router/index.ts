@@ -17,6 +17,7 @@ import AccountNotificationView from '../views/account/AccountNotificationView.vu
 import AccountSubscriptionView from '../views/account/AccountSubscriptionView.vue';
 import AccountSupportView from '../views/account/AccountSupportView.vue';
 import VerifyEmailView from '../views/VerifyEmailView.vue';
+import VerifiedEmailView from '../views/VerifiedEmailView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -121,6 +122,11 @@ const routes: RouteRecordRaw[] = [
 	{
 		name: 'verified',
 		path: '/verified/:status?',
+		component: VerifiedEmailView
+	},
+	{
+		name: 'verify',
+		path: '/verify',
 		component: VerifyEmailView
 	}
 ];

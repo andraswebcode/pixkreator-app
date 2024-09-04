@@ -4,7 +4,7 @@ import { useEditor } from '../../../store';
 import { LOGIN_DIALOG_WIDTH } from '../../../utils/constants';
 
 const editor = useEditor();
-const form = ref<'login' | 'register' | 'pwreset'>('login');
+const form = ref<'login' | 'register' | 'pwreset' | 'verify'>('login');
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const form = ref<'login' | 'register' | 'pwreset'>('login');
 		v-model="editor.openLoginDialog"
 		@close="editor.openLoginDialog = false"
 	>
-		<LoginCard v-if="form === 'login'">
+		<LoginCard v-if="form === 'login'" @success="editor.openLoginDialog = false">
 			<template v-slot:subtitle>
 				New to Image Designer Pro?
 				<a href="#" @click.prevent="form = 'register'">Create an account</a>
@@ -23,7 +23,7 @@ const form = ref<'login' | 'register' | 'pwreset'>('login');
 				<a href="#" @click.prevent="form = 'pwreset'">Forgot your password?</a>
 			</small>
 		</LoginCard>
-		<RegisterCard v-else-if="form === 'register'">
+		<RegisterCard v-else-if="form === 'register'" @success="form = 'verify'">
 			<template v-slot:subtitle>
 				Already have an account?
 				<a href="#" @click.prevent="form = 'login'">Login</a>
@@ -37,6 +37,11 @@ const form = ref<'login' | 'register' | 'pwreset'>('login');
 				<a href="#" @click.prevent="form = 'login'">&larr; Back to Login</a>
 			</small>
 		</PWResetCard>
+		<VCard v-else-if="form === 'verify'">
+			<VCardItem>
+				<VerifyEmail />
+			</VCardItem>
+		</VCard>
 	</PersistentHeaderDialog>
 </template>
 

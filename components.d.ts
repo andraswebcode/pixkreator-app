@@ -81,5 +81,6 @@ declare module 'vue' {
     TopBar: typeof import('./src/components/editor/TopBar.vue')['default']
     UploadDetails: typeof import('./src/components/common/UploadDetails.vue')['default']
     UserMenu: typeof import('./src/components/common/UserMenu.vue')['default']
+    VerifyEmail: typeof import('./src/components/common/VerifyEmail.vue')['default']
   }
 }

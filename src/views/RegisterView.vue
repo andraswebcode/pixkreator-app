@@ -1,11 +1,18 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const success = () => {
+	router.push('/verify');
+};
+</script>
 
 <template>
 	<VMain>
 		<VContainer>
 			<VRow justify="center" align="center">
 				<VCol cols="4">
-					<RegisterCard>
+					<RegisterCard @success="success">
 						<template v-slot:title>Create an Account</template>
 						<template v-slot:subtitle>
 							Already have an account?

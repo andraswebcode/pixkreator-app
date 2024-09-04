@@ -5,7 +5,6 @@ type ThenFn = (value?: any) => void;
 
 const useRequest = () => {
 	const userData = useUser();
-	const { bearerToken } = userData;
 
 	const get = (id: string, path: string, then: ThenFn, catchFn?: ThenFn) => {
 		const _id = parseInt(id);
@@ -18,7 +17,7 @@ const useRequest = () => {
 		axios
 			.get(path + '/' + _id, {
 				headers: {
-					Authorization: bearerToken
+					Authorization: userData.bearerToken
 				}
 			})
 			.then(({ data }) => {
@@ -38,7 +37,7 @@ const useRequest = () => {
 			.get(path, {
 				params,
 				headers: {
-					Authorization: bearerToken
+					Authorization: userData.bearerToken
 				}
 			})
 			.then(({ data }) => data)
@@ -49,7 +48,7 @@ const useRequest = () => {
 		const _id = parseInt(id);
 		const url = _id ? path + '/' + _id : path;
 		const headers = {
-			Authorization: bearerToken
+			Authorization: userData.bearerToken
 		};
 
 		if (data instanceof FormData) {
@@ -74,7 +73,7 @@ const useRequest = () => {
 		axios
 			.patch(path + '/' + _id, data, {
 				headers: {
-					Authorization: bearerToken
+					Authorization: userData.bearerToken
 				}
 			})
 			.then(({ data }) => data)
@@ -92,7 +91,7 @@ const useRequest = () => {
 		axios
 			.post('uploads/' + _id + '/file', data, {
 				headers: {
-					Authorization: bearerToken,
+					Authorization: userData.bearerToken,
 					'Content-Type': 'multipart/form-data'
 				}
 			})

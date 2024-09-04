@@ -2,10 +2,9 @@
 import { ref } from 'vue';
 import axios from '../../axios';
 import { useNotice, useUser } from '../../store';
-import { useRouter } from 'vue-router';
 
+const emit = defineEmits(['success']);
 const userData = useUser();
-const router = useRouter();
 const notice = useNotice();
 const email = ref('');
 const password = ref('');
@@ -26,7 +25,7 @@ const login = () => {
 			userData.user = data.user;
 			localStorage.setItem('userData', JSON.stringify(userData.user));
 			loading.value = false;
-			router.push('/dashboard');
+			emit('success');
 		})
 		.catch((error) => {
 			console.log(error);
@@ -48,7 +47,7 @@ const login = () => {
 		</VCardItem>
 		<VDivider v-if="$slots.title || $slots.subtitle" class="mb-5" />
 		<VCardItem>
-			<SocialLogin />
+			<SocialLogin @success="emit('success')" />
 		</VCardItem>
 		<VDivider class="my-5" />
 		<VForm v-model="isValid" @submit.prevent="login">
