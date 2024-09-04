@@ -15,7 +15,8 @@ const fitToScreen = useFitToScreen();
 const { get } = useRequest();
 
 const fetchProject = (obj: any) => {
-	if (obj.params.id) {
+	const id = parseInt(obj.params.id) || 0;
+	if (id) {
 		const open = editor.openShareDialog;
 		editor.loading = true;
 		get(

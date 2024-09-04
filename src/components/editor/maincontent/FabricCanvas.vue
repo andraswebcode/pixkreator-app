@@ -159,7 +159,6 @@ watch(
 				.then((objects: any) => {
 					fabricCanvas.add(...objects);
 					editor.loading = false;
-					console.log('loaded');
 				})
 				.catch(() => {
 					notice.send('Can not loading some layers.', 'error');

@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
-import { mdiDownload, mdiRename, mdiTrashCan } from '@mdi/js';
+import { mdiDownload, mdiRename, mdiTrashCan, mdiUpload } from '@mdi/js';
 
 const fileSources: { label: string; value: string }[] = [
 	{
@@ -81,9 +81,17 @@ onBeforeRouteUpdate((to) => {
 
 <template>
 	<LibraryWrapper>
-		<VRow justify="center" align="center">
+		<VRow justify="space-between" align="center">
+			<VCol cols="4"></VCol>
 			<VCol cols="4">
 				<SearchInput label="Search Files" v-model="search" @click:append-inner="filter" />
+			</VCol>
+			<VCol cols="4">
+				<VRow justify="end">
+					<VCol cols="auto" class="mr-4">
+						<VBtn :prepend-icon="mdiUpload">Upload</VBtn>
+					</VCol>
+				</VRow>
 			</VCol>
 		</VRow>
 		<VRow justify="center">
