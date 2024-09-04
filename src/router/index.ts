@@ -16,6 +16,7 @@ import AccountProfileView from '../views/account/AccountProfileView.vue';
 import AccountNotificationView from '../views/account/AccountNotificationView.vue';
 import AccountSubscriptionView from '../views/account/AccountSubscriptionView.vue';
 import AccountSupportView from '../views/account/AccountSupportView.vue';
+import VerifyEmailView from '../views/VerifyEmailView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -116,6 +117,11 @@ const routes: RouteRecordRaw[] = [
 		meta: {
 			hideOnLoggedIn: true
 		}
+	},
+	{
+		name: 'verified',
+		path: '/verified/:status?',
+		component: VerifyEmailView
 	}
 ];
 
