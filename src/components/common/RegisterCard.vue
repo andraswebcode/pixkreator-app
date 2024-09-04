@@ -2,10 +2,8 @@
 import { ref } from 'vue';
 import axios from '../../axios';
 import { useNotice, useUser } from '../../store';
-import { useRouter } from 'vue-router';
 
 const userData = useUser();
-const router = useRouter();
 const notice = useNotice();
 const name = ref('');
 const email = ref('');
@@ -33,9 +31,9 @@ const register = () => {
 			password_confirmation: passwordConfirm.value
 		})
 		.then(({ data }) => {
+			loading.value = false;
 			userData.user = data.user;
 			localStorage.setItem('userData', JSON.stringify(userData.user));
-			router.push('/dashboard');
 		})
 		.catch((error) => {
 			loading.value = false;
@@ -45,7 +43,14 @@ const register = () => {
 </script>
 
 <template>
-	<VCard>
+	<VEmptyState
+		v-if="userData.loggedIn"
+		headline="Almost There!"
+		title="Check Your Inbox"
+		text="We’ve sent you a confirmation email. Please click the link to verify your account."
+		action-text="Resend Verification Email"
+	/>
+	<VCard v-else>
 		<VCardItem v-if="$slots.title || $slots.subtitle">
 			<VCardTitle v-if="$slots.title">
 				<slot name="title" />

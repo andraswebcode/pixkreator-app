@@ -16,7 +16,6 @@ declare module 'vue' {
     FabricCanvas: typeof import('./src/components/editor/maincontent/FabricCanvas.vue')['default']
     FontSelect: typeof import('./src/components/common/FontSelect.vue')['default']
     FooterBar: typeof import('./src/components/editor/FooterBar.vue')['default']
-    FormContainer: typeof import('./src/components/common/FormContainer.vue')['default']
     FullScreenLoader: typeof import('./src/components/editor/FullScreenLoader.vue')['default']
     GridItem: typeof import('./src/components/common/GridItem.vue')['default']
     GridLoader: typeof import('./src/components/common/GridLoader.vue')['default']

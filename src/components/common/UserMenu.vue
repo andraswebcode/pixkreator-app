@@ -34,7 +34,7 @@ const logout = () => {
 	<VBtn v-else :icon="mdiLogin" to="/login" v-tooltip="'Login'" />
 	<VMenu v-if="userData.loggedIn" activator="#user-menu">
 		<VList>
-			<VListItem>
+			<VListItem class="mb-2">
 				<template v-slot:prepend>
 					<VAvatar>
 						<VImg v-if="userData.user.avatar" :src="userData.user.avatar" />
@@ -44,7 +44,7 @@ const logout = () => {
 				<VListItemTitle>{{ userData.user.name }}</VListItemTitle>
 				<VListItemSubtitle>{{ userData.user.email }}</VListItemSubtitle>
 			</VListItem>
-			<VDivider />
+			<VDivider :vertical="false" />
 			<VListItem to="/">
 				<template v-slot:prepend>
 					<VIcon :icon="mdiDraw" />
@@ -74,4 +74,8 @@ const logout = () => {
 	</VMenu>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-divider {
+	max-width: 100%;
+}
+</style>
