@@ -122,9 +122,11 @@ const routes: RouteRecordRaw[] = [
 	},
 	{
 		name: 'pwreset',
-		path: '/pwreset',
+		path: '/pwreset/:token',
 		component: PWResetView,
-		meta: {}
+		meta: {
+			hideOnLoggedIn: true
+		}
 	},
 	{
 		name: 'verified',

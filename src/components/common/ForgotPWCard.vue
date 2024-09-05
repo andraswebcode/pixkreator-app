@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import axios from '../../axios';
+import { useNotice } from '../../store';
 
+const notice = useNotice();
 const email = ref('');
 const loading = ref(false);
 const isValid = ref(false);
@@ -9,6 +12,19 @@ const emailRules = [
 ];
 const sendEmail = () => {
 	loading.value = true;
+	axios
+		.post('password/email', {
+			email: email.value
+		})
+		.then((response: any) => {
+			notice.send(response.data?.message, 'success');
+			loading.value = false;
+		})
+		.catch((error) => {
+			console.log(error);
+			loading.value = false;
+			notice.send(error.response?.data?.message || error.message, 'error');
+		});
 };
 </script>
 
