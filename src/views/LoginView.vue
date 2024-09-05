@@ -19,7 +19,7 @@ const success = () => {
 							<RouterLink to="/register">Create an account</RouterLink>
 						</template>
 						<small class="d-block mb-2">
-							<RouterLink to="/pwreset">Forgot your password?</RouterLink>
+							<RouterLink to="/forgotpw">Forgot your password?</RouterLink>
 						</small>
 					</LoginCard>
 				</VCol>

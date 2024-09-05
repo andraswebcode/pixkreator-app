@@ -18,6 +18,7 @@ import AccountSubscriptionView from '../views/account/AccountSubscriptionView.vu
 import AccountSupportView from '../views/account/AccountSupportView.vue';
 import VerifyEmailView from '../views/VerifyEmailView.vue';
 import VerifiedEmailView from '../views/VerifiedEmailView.vue';
+import ForgotPWView from '../views/ForgotPWView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -112,12 +113,18 @@ const routes: RouteRecordRaw[] = [
 		}
 	},
 	{
-		name: 'pwreset',
-		path: '/pwreset',
-		component: PWResetView,
+		name: 'forgotpw',
+		path: '/forgotpw',
+		component: ForgotPWView,
 		meta: {
 			hideOnLoggedIn: true
 		}
+	},
+	{
+		name: 'pwreset',
+		path: '/pwreset',
+		component: PWResetView,
+		meta: {}
 	},
 	{
 		name: 'verified',

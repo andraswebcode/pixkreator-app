@@ -29,14 +29,14 @@ const form = ref<'login' | 'register' | 'pwreset' | 'verify'>('login');
 				<a href="#" @click.prevent="form = 'login'">Login</a>
 			</template>
 		</RegisterCard>
-		<PWResetCard v-else-if="form === 'pwreset'">
+		<ForgotPWCard v-else-if="form === 'pwreset'">
 			<template v-slot:subtitle>
 				Enter your email, and we'll send a link to reset your password.
 			</template>
 			<small class="d-block mb-2">
 				<a href="#" @click.prevent="form = 'login'">&larr; Back to Login</a>
 			</small>
-		</PWResetCard>
+		</ForgotPWCard>
 		<VCard v-else-if="form === 'verify'">
 			<VCardItem>
 				<VerifyEmail />
