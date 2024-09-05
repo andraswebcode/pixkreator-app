@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
-import { useEditor, useNotice, useProject } from '../store';
-import { onMounted } from 'vue';
+import { useEditor, useNotice, useProject, useUser } from '../store';
+import { onBeforeUnmount, onMounted } from 'vue';
 import useRequest from '../hooks/request';
 import useFitToScreen from '../hooks/fittoscreen';
 import { PhotoSize } from '../types/common';
 import { getCroppedImageDimensions } from '../utils/functions';
 
 const route = useRoute();
+const userData = useUser();
 const project = useProject();
 const editor = useEditor();
 const notice = useNotice();
@@ -103,18 +104,36 @@ const fetchProject = (obj: any) => {
 	} else {
 		project.$reset();
 		project.resetStack();
+		if (!userData.loggedIn) {
+			const design = localStorage.getItem('design');
+			if (design) {
+				setTimeout(() => {
+					project.$patch(JSON.parse(design));
+					fitToScreen();
+				}, 20);
+			}
+		}
 	}
 	editor.openStartDialog = !!obj.query.start;
+};
+const onBeforeUnload = () => {
+	localStorage.setItem('design', JSON.stringify(project.$state));
 };
 
 onMounted(() => {
 	fetchProject(route);
+	if (!userData.loggedIn) {
+		window.addEventListener('beforeunload', onBeforeUnload);
+	}
 });
 onBeforeRouteUpdate((to, from) => {
 	if (to.path !== '/' && from.path === '/') {
 		return;
 	}
 	fetchProject(to);
+});
+onBeforeUnmount(() => {
+	window.removeEventListener('beforeunload', onBeforeUnload);
 });
 </script>
 

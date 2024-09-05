@@ -1,8 +1,34 @@
 <script setup lang="ts">
 import { mdiAlertCircle, mdiCheckCircle, mdiInformation } from '@mdi/js';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import { useNotice, useUser } from '../store';
+import { ref } from 'vue';
+import axios from '../axios';
 
 const route = useRoute();
+const router = useRouter();
+const userData = useUser();
+const notice = useNotice();
+const loading = ref(false);
+const getStarted = () => {
+	router.push('/');
+};
+const resend = () => {
+	loading.value = true;
+	axios
+		.post('verifyemail/resend', {
+			email: userData.user.email
+		})
+		.then((response: any) => {
+			notice.send(response.data?.message, 'success');
+			loading.value = false;
+		})
+		.catch((error) => {
+			console.log(error);
+			loading.value = false;
+			notice.send(error.response?.data?.message || error.message, 'error');
+		});
+};
 </script>
 
 <template>
@@ -16,7 +42,7 @@ const route = useRoute();
 				title="Verification Failed"
 				text="Something went wrong. Please try verifying your email again."
 				action-text="Resend Verification Email"
-				@click:action=""
+				@click:action="resend"
 			/>
 			<VEmptyState
 				v-if="route.params.status === 'has'"
@@ -25,7 +51,7 @@ const route = useRoute();
 				title="Email Already Verified"
 				text="This email has already been verified. You're all set to explore all the features."
 				action-text="Create Something"
-				@click:action=""
+				@click:action="getStarted"
 			/>
 			<VEmptyState
 				v-else
@@ -33,8 +59,8 @@ const route = useRoute();
 				headline="You're All Set!"
 				title="Email Verified Successfully!"
 				text="Your email has been confirmed. You're now ready to explore all the features."
-				action-text="Getting Started"
-				@click:action=""
+				action-text="Get Started"
+				@click:action="getStarted"
 			/>
 		</VContainer>
 	</VMain>
