@@ -100,12 +100,33 @@ const useRequest = () => {
 			.catch(catchFn);
 	};
 
+	const destroy = (id: string, path: string, force: boolean, then: ThenFn, catchFn?: ThenFn) => {
+		const _id = parseInt(id);
+		const _force = force ? '/force' : '';
+
+		if (!_id) {
+			then();
+			return;
+		}
+
+		axios
+			.delete(path + '/' + _id + _force, {
+				headers: {
+					Authorization: userData.bearerToken
+				}
+			})
+			.then(({ data }) => data)
+			.then(then)
+			.catch(catchFn);
+	};
+
 	return {
 		get,
 		list,
 		save,
 		patch,
-		updateFile
+		updateFile,
+		destroy
 	};
 };
 

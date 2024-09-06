@@ -2,16 +2,25 @@
 import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
-import { mdiContentCopy, mdiRename, mdiTrashCan, mdiViewList } from '@mdi/js';
+import {
+	mdiContentCopy,
+	mdiDeleteForever,
+	mdiRename,
+	mdiRestore,
+	mdiTrashCan,
+	mdiViewList
+} from '@mdi/js';
+import { useNotice } from '../../store';
 
 const router = useRouter();
 const route = useRoute();
+const notice = useNotice();
 const search = ref(route.query.search);
 const page = ref(2);
 const loading = ref(true);
 const items = ref<any[]>([]);
 const selections = ref<any[]>([]);
-const { list } = useRequest();
+const { list, destroy } = useRequest();
 const filter = () => {
 	const query: any = {};
 	if (search.value) {
@@ -38,21 +47,46 @@ const loadMore = () => {
 	);
 };
 const editProject = (i: number) => {
+	const item = items.value[i];
+	if (item.deleted_at) {
+		return;
+	}
 	router.push({
 		name: 'editor',
 		params: {
-			id: items.value[i].id
+			id: item.id
 		}
 	});
 };
+const renameProject = (i: number) => () => {};
+const cloneProject = (i: number) => () => {};
+const deleteProject = (i: number) => () => {
+	const item = items.value[i];
+	const id = item.id;
+	const force = item.deleted_at;
+	destroy(
+		id,
+		'designs',
+		force,
+		(data) => {
+			notice.send(data.message, 'success');
+			items.value = items.value.filter((item) => item.id !== id);
+		},
+		(error) => {
+			notice.send(error.response?.data?.message || error.message, 'error');
+		}
+	);
+};
 
 onMounted(() => {
+	loading.value = true;
 	list({ ...route.query, ...route.params }, 'designs', (data) => {
 		items.value = data.items;
 		loading.value = false;
 	});
 });
 onBeforeRouteUpdate((to) => {
+	loading.value = true;
 	list({ ...to.query, ...to.params }, 'designs', (data) => {
 		items.value = data.items;
 		page.value = 2;
@@ -85,8 +119,27 @@ onBeforeRouteUpdate((to) => {
 				<VRow justify="end">
 					<VCol cols="auto" class="mr-4">
 						<VBtnGroup>
-							<VBtn :prepend-icon="mdiViewList">All</VBtn>
-							<VBtn :prepend-icon="mdiTrashCan">Trash</VBtn>
+							<VBtn
+								:prepend-icon="mdiViewList"
+								:to="{
+									query: {
+										search
+									}
+								}"
+							>
+								All
+							</VBtn>
+							<VBtn
+								:prepend-icon="mdiTrashCan"
+								:to="{
+									query: {
+										search,
+										trashed: 'true'
+									}
+								}"
+							>
+								Trash
+							</VBtn>
 						</VBtnGroup>
 					</VCol>
 				</VRow>
@@ -106,20 +159,36 @@ onBeforeRouteUpdate((to) => {
 				:label="item.title"
 				cols="2"
 				selectable
-				:actions="[
-					{
-						label: 'Rename',
-						prependIcon: mdiRename
-					},
-					{
-						label: 'Clone',
-						prependIcon: mdiContentCopy
-					},
-					{
-						label: 'Delete',
-						prependIcon: mdiTrashCan
-					}
-				]"
+				:actions="
+					item.deleted_at
+						? [
+								{
+									label: 'Restore',
+									prependIcon: mdiRestore
+								},
+								{
+									label: 'Delete Permanently',
+									prependIcon: mdiDeleteForever
+								}
+						  ]
+						: [
+								{
+									label: 'Rename',
+									prependIcon: mdiRename,
+									onClick: renameProject(i)
+								},
+								{
+									label: 'Clone',
+									prependIcon: mdiContentCopy,
+									onClick: cloneProject(i)
+								},
+								{
+									label: 'Delete',
+									prependIcon: mdiTrashCan,
+									onClick: deleteProject(i)
+								}
+						  ]
+				"
 				:json="{
 					...item,
 					layers: item.layer_ids.map((id) => item.layers[id])

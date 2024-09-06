@@ -72,9 +72,9 @@ watch(
 							<VListItem
 								v-for="(action, i) of properties.actions"
 								:key="i"
-								link
 								v-bind="action"
 								density="compact"
+								@click="action.onClick"
 							>
 								<VListItemTitle>
 									{{ action.label }}
