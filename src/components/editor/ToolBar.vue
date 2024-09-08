@@ -28,7 +28,7 @@ const editor = useEditor();
 			<ToolBarItem value="texts" v-tooltip:end="'Texts'" :icon="mdiFormatText" />
 			<ToolBarItem value="ai" v-tooltip:end="'Generate With AI'" :icon="mdiCreation" />
 			<ToolBarItem
-				value="filter"
+				value="filters"
 				v-tooltip:end="'Photo Effects'"
 				:icon="mdiImageAutoAdjust"
 			/>

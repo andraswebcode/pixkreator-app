@@ -27,6 +27,7 @@ declare module 'vue' {
     LeftSideBarAI: typeof import('./src/components/editor/leftsidebar/LeftSideBarAI.vue')['default']
     LeftSideBarBrand: typeof import('./src/components/editor/leftsidebar/LeftSideBarBrand.vue')['default']
     LeftSideBarDraw: typeof import('./src/components/editor/leftsidebar/LeftSideBarDraw.vue')['default']
+    LeftSideBarFilters: typeof import('./src/components/editor/leftsidebar/LeftSideBarFilters.vue')['default']
     LeftSideBarGraphics: typeof import('./src/components/editor/leftsidebar/LeftSideBarGraphics.vue')['default']
     LeftSideBarPhotos: typeof import('./src/components/editor/leftsidebar/LeftSideBarPhotos.vue')['default']
     LeftSideBarTabAddText: typeof import('./src/components/editor/leftsidebar/LeftSideBarTabAddText.vue')['default']

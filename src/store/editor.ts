@@ -7,7 +7,7 @@ export type EditorToolType =
 	| 'photos'
 	| 'graphics'
 	| 'ai'
-	| 'filter'
+	| 'filters'
 	| 'texts'
 	| 'draw'
 	| 'brand';

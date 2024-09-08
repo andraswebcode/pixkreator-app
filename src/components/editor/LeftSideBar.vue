@@ -14,6 +14,7 @@ const show = computed(() => !!editor.tool);
 		<LeftSideBarGraphics v-else-if="editor.tool === 'graphics'" />
 		<LeftSideBarTexts v-else-if="editor.tool === 'texts'" />
 		<LeftSideBarAI v-else-if="editor.tool === 'ai'" />
+		<LeftSideBarFilters v-else-if="editor.tool === 'filters'" />
 		<LeftSideBarDraw v-else-if="editor.tool === 'draw'" />
 		<LeftSideBarBrand v-else-if="editor.tool === 'brand'" />
 	</VNavigationDrawer>

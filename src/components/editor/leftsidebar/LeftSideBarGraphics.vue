@@ -23,9 +23,10 @@ const filter = () => {
 	loading.value = true;
 	list(
 		{
+			resource: 'graphic',
 			search: search.value
 		},
-		'graphics',
+		'assets',
 		(data) => {
 			items.value = data.items;
 			loading.value = false;
@@ -35,10 +36,11 @@ const filter = () => {
 const loadMore = () => {
 	list(
 		{
+			resource: 'graphic',
 			search: search.value,
 			page: page.value
 		},
-		'graphics',
+		'assets',
 		(data) => {
 			items.value.push(...data.items);
 			page.value++;

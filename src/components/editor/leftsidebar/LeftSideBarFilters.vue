@@ -1,27 +1,20 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import useRequest from '../../../hooks/request';
 import { useProject } from '../../../store';
+import useRequest from '../../../hooks/request';
 
 const project = useProject();
 const { list } = useRequest();
 const search = ref('');
-const category = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
 const loading = ref(true);
-const categories = [
-	{
-		label: 'All',
-		value: ''
-	}
-];
 const filter = () => {
 	items.value = [];
 	loading.value = true;
 	list(
 		{
-			resource: 'text',
+			resource: 'filter',
 			search: search.value
 		},
 		'assets',
@@ -34,7 +27,7 @@ const filter = () => {
 const loadMore = () => {
 	list(
 		{
-			resource: 'text',
+			resource: 'filter',
 			search: search.value,
 			page: page.value
 		},
@@ -45,21 +38,8 @@ const loadMore = () => {
 		}
 	);
 };
-const addText = (item: any) => {
-	const _layer = item.layers[0];
-	const layer = {
-		..._layer,
-		left: _layer.left + item.width / 2 + project.width / 2,
-		top: _layer.top + item.height / 2 + project.height / 2
-	};
-	const group = {
-		type: 'group',
-		left: project.width / 2,
-		top: project.height / 2,
-		objects: item.layers
-	};
-
-	project.addLayer(item.layers.length === 1 ? layer : group);
+const applyFilter = (item: any) => {
+	console.log(item, project);
 };
 
 onMounted(filter);
@@ -67,15 +47,7 @@ onMounted(filter);
 
 <template>
 	<LibraryWrapper>
-		<SearchInput label="Search Texts" v-model="search" @click:append-inner="filter" />
-		<VSelect
-			:items="categories"
-			v-model="category"
-			flat
-			single-line
-			hide-details
-			@update:model-value="filter"
-		/>
+		<SearchInput label="Search Filters" v-model="search" @click:append-inner="filter" />
 		<LibraryItems
 			:items-length="items.length"
 			:count="24"
@@ -88,7 +60,7 @@ onMounted(filter);
 				:key="item.id"
 				cols="6"
 				:json="item"
-				@click="addText(item)"
+				@click="applyFilter(item)"
 			/>
 		</LibraryItems>
 	</LibraryWrapper>
