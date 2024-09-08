@@ -58,8 +58,12 @@ const editProject = (i: number) => {
 		}
 	});
 };
-const renameProject = (i: number) => () => {};
-const cloneProject = (i: number) => () => {};
+const renameProject = (i: number) => () => {
+	console.log(i);
+};
+const cloneProject = (i: number) => () => {
+	console.log(i);
+};
 const deleteProject = (i: number) => () => {
 	const item = items.value[i];
 	const id = item.id;

@@ -4,6 +4,7 @@ import {
 	mdiCloudUpload,
 	mdiCreation,
 	mdiFormatText,
+	mdiImageAutoAdjust,
 	mdiImageMultiple,
 	mdiPaletteSwatchVariant,
 	mdiShape,
@@ -26,6 +27,11 @@ const editor = useEditor();
 			<ToolBarItem value="graphics" v-tooltip:end="'Graphics'" :icon="mdiShape" />
 			<ToolBarItem value="texts" v-tooltip:end="'Texts'" :icon="mdiFormatText" />
 			<ToolBarItem value="ai" v-tooltip:end="'Generate With AI'" :icon="mdiCreation" />
+			<ToolBarItem
+				value="filter"
+				v-tooltip:end="'Photo Effects'"
+				:icon="mdiImageAutoAdjust"
+			/>
 			<ToolBarItem value="draw" v-tooltip:end="'Draw'" :icon="mdiBrush" />
 			<ToolBarItem value="brand" v-tooltip:end="'Brand'" :icon="mdiPaletteSwatchVariant" />
 		</ToolBarList>

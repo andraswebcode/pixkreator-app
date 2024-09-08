@@ -57,6 +57,7 @@ const saveDesign = () => {
 				});
 				editor.loading = false;
 				notice.send('Design Saved Successfully', 'success');
+				localStorage.removeItem('design');
 			},
 			(error) => {
 				editor.loading = false;

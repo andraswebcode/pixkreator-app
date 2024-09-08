@@ -103,15 +103,14 @@ const fetchProject = (obj: any) => {
 		);
 	} else {
 		project.$reset();
-		project.resetStack();
-		if (!userData.loggedIn) {
-			const design = localStorage.getItem('design');
-			if (design) {
-				setTimeout(() => {
-					project.$patch(JSON.parse(design));
-					fitToScreen();
-				}, 20);
-			}
+
+		const design = localStorage.getItem('design');
+		if (design) {
+			setTimeout(() => {
+				project.$patch(JSON.parse(design));
+				project.resetStack();
+				fitToScreen();
+			}, 20);
 		}
 	}
 	editor.openStartDialog = !!obj.query.start;
