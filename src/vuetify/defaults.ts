@@ -115,6 +115,14 @@ const defaults = {
 			}
 		}
 	},
+	VMenu: {
+		VTextField: {
+			flat: true,
+			variant: 'underlined',
+			density: 'compact',
+			dirty: true
+		}
+	},
 	// Custom components.
 	ToolBarList: {
 		style: {

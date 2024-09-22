@@ -14,6 +14,7 @@ declare module 'vue' {
     DashboardSideBar: typeof import('./src/components/dashboard/DashboardSideBar.vue')['default']
     DownloadDialog: typeof import('./src/components/editor/topbar/DownloadDialog.vue')['default']
     FabricCanvas: typeof import('./src/components/editor/maincontent/FabricCanvas.vue')['default']
+    FilterDetails: typeof import('./src/components/common/FilterDetails.vue')['default']
     FontSelect: typeof import('./src/components/common/FontSelect.vue')['default']
     FooterBar: typeof import('./src/components/editor/FooterBar.vue')['default']
     ForgotPWCard: typeof import('./src/components/common/ForgotPWCard.vue')['default']

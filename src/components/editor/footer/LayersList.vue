@@ -88,6 +88,10 @@ const toggleLayer = (id: string) => {
 		visible: !visible
 	});
 };
+const deleteLayer = (id: string) => {
+	project.removeLayer(id);
+	editor.activeLayerIds = [];
+};
 </script>
 
 <template>
@@ -127,7 +131,7 @@ const toggleLayer = (id: string) => {
 							class="ml-1"
 							size="x-small"
 							v-tooltip:top="'Remove'"
-							@click="project.removeLayer(item.id)"
+							@click="deleteLayer(item.id)"
 						/>
 					</template>
 				</VListItem>

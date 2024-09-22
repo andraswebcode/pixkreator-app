@@ -5,7 +5,8 @@ const props = defineProps<{
 	itemsLength: number;
 	cols: number;
 	count: number;
-	loading: boolean;
+	loading?: boolean;
+	noItemsWarning?: string;
 }>();
 const emit = defineEmits(['load']);
 const onLoad = () => {
@@ -26,7 +27,7 @@ const onLoad = () => {
 			<VRow>
 				<slot v-if="props.itemsLength" />
 				<VAlert v-else class="mx-3 mt-3" type="warning" :icon="mdiAlertCircle">
-					No items found
+					{{ props.noItemsWarning || 'No items found' }}
 				</VAlert>
 			</VRow>
 		</VContainer>

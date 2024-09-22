@@ -4,7 +4,6 @@
 	<RightSideBarPanelTransformSettings />
 	<RightSideBarPanelTextSettings />
 	<RightSideBarPanelAppearanceSettings />
-	<RightSideBarPanelShadowSettings />
 	<RightSideBarPanelCompositingSettings />
 </template>
 

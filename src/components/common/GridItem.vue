@@ -2,6 +2,8 @@
 import { ref, toRaw, watch } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
 import { mdiDotsVertical } from '@mdi/js';
+import { util } from 'fabric';
+import { THUMBNAIL_MAX_SIZE } from '../../utils/constants';
 
 const properties = defineProps<{
 	id?: number;
@@ -21,12 +23,27 @@ watch(
 		if (!newJson) {
 			return;
 		}
-		jsonToBlob({
-			width: newJson.width,
-			height: newJson.height,
-			background: newJson.background,
-			objects: toRaw(newJson.layers)
-		}).then((blob) => {
+		const multiplier = util.findScaleToFit(
+			{
+				width: newJson.width,
+				height: newJson.height
+			},
+			{
+				width: THUMBNAIL_MAX_SIZE,
+				height: THUMBNAIL_MAX_SIZE
+			}
+		);
+		jsonToBlob(
+			{
+				width: newJson.width,
+				height: newJson.height,
+				background: newJson.background,
+				objects: toRaw(newJson.layers)
+			},
+			'image/webp',
+			0.98,
+			multiplier
+		).then((blob) => {
 			srcFromJson.value = URL.createObjectURL(blob);
 		});
 	},

@@ -4,7 +4,7 @@ import { ref } from 'vue';
 
 const properties = defineProps<{
 	label: string;
-	disabled: boolean;
+	disabled?: boolean;
 }>();
 const model = defineModel<string>();
 
@@ -67,4 +67,8 @@ const swatches = [
 	</VMenu>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.v-text-field * {
+	cursor: pointer;
+}
+</style>

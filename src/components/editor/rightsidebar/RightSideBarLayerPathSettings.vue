@@ -3,7 +3,6 @@
 <template>
 	<RightSideBarPanelTransformSettings />
 	<RightSideBarPanelAppearanceSettings />
-	<RightSideBarPanelShadowSettings />
 	<RightSideBarPanelCompositingSettings />
 </template>
 

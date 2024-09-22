@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { unique, uniqueId } from '../utils/functions';
 import { FabricObjectProps, util } from 'fabric';
+import { ImageFilter } from '../types/image-filter';
 
 export type IDList = string[];
 
@@ -40,6 +41,7 @@ export interface ProjectActions {
 	addLayer: (props: Partial<ByID>) => void;
 	removeLayer: (id: string) => void;
 	updateProps: (id: string | ChangedProps, props?: Partial<ByID>) => void;
+	applyFilter: (id: string, filter: ImageFilter) => void;
 }
 
 export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>('project', {
@@ -97,6 +99,9 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 					this.updateProps(_id, id[_id]);
 				}
 			}
+		},
+		applyFilter(id, filter) {
+			console.log(id, filter);
 		}
 	},
 	undo: {

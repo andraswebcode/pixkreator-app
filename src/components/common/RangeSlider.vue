@@ -4,6 +4,7 @@ const props = defineProps<{
 	min?: number;
 	max?: number;
 	step?: number;
+	disabled?: boolean;
 }>();
 const model = defineModel<number>();
 </script>
@@ -11,7 +12,13 @@ const model = defineModel<number>();
 <template>
 	<div class="range-slider mb-5">
 		<VLabel class="v-field-label--floating">{{ props.label }}</VLabel>
-		<VSlider v-model="model" :min="props.min" :max="props.max" :step="props.step" />
+		<VSlider
+			v-model="model"
+			:min="props.min"
+			:max="props.max"
+			:step="props.step"
+			:disabled="props.disabled"
+		/>
 	</div>
 </template>
 
