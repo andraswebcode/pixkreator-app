@@ -50,7 +50,11 @@ const openDetails = (i: number) => {
 };
 const applyFilter = () => {
 	const item = items.value[index.value];
-	console.log(item);
+	const obj = image.value;
+	if (!obj) {
+		return;
+	}
+	project.applyFilter(obj.id, item.filter);
 };
 
 watch(

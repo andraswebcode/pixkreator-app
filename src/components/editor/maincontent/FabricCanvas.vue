@@ -147,7 +147,7 @@ watch(
 			const object = fabricCanvas.getObjectById(id);
 			const layer = project.byIds[id];
 			if (object) {
-				const { id: _id, type: _type, ..._layer } = layer;
+				const { id: _id, type: _type, filters, ..._layer } = layer;
 				object.set(_layer);
 			} else {
 				newLayers.push(layer);
@@ -160,9 +160,10 @@ watch(
 					fabricCanvas.add(...objects);
 					editor.loading = false;
 				})
-				.catch(() => {
+				.catch((error) => {
 					notice.send('Can not loading some layers.', 'error');
 					editor.loading = false;
+					console.warn(error);
 				});
 		} else {
 			editor.loading = false;

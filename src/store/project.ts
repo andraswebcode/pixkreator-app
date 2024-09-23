@@ -10,6 +10,7 @@ export interface ByID extends FabricObjectProps {
 	name: string;
 	type: string;
 	src?: string;
+	filters?: ImageFilter[];
 	text?: string;
 	fontFamily?: string;
 }
@@ -101,7 +102,19 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 			}
 		},
 		applyFilter(id, filter) {
-			console.log(id, filter);
+			const layer = this.byIds[id];
+			if (!layer) {
+				return;
+			}
+			if (!layer.filters) {
+				layer.filters = [];
+			}
+			const index = layer.filters.findIndex((f) => f.type === filter.type);
+			if (index !== -1) {
+				layer.filters[index] = filter;
+			} else {
+				layer.filters.push(filter);
+			}
 		}
 	},
 	undo: {

@@ -7,6 +7,12 @@ import { PROImage } from './objects/image';
 import { PROPath } from './objects/path';
 import { PRORect } from './objects/rect';
 import { PROIText } from './objects/itext';
+import { PRODuotone } from './filters/duotone';
+import { PROGamma } from './filters/gamma';
+import { PROEmboss } from './filters/emboss';
+import { PROSharpen } from './filters/sharpen';
+
+// Shapes
 
 classRegistry.setClass(PROActiveSelection);
 classRegistry.setClass(PROCircle);
@@ -16,3 +22,10 @@ classRegistry.setClass(PROImage);
 classRegistry.setClass(PROPath);
 classRegistry.setClass(PRORect);
 classRegistry.setClass(PROIText);
+
+// Filters
+
+classRegistry.setClass(PRODuotone);
+classRegistry.setClass(PROGamma);
+classRegistry.setClass(PROEmboss);
+classRegistry.setClass(PROSharpen);
