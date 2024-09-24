@@ -7,6 +7,7 @@ import domResize from './directives/dom-resize';
 import draggable from './directives/draggable';
 import sortable from './directives/sortable';
 
+import './canvas/config';
 import './canvas/register';
 import './style.scss';
 

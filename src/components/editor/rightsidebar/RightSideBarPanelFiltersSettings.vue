@@ -2,12 +2,13 @@
 import useProps from '../../../hooks/props';
 
 const { filters } = useProps(['filters']);
-console.log(filters);
 </script>
 
 <template>
 	<VExpansionPanel title="Filters" value="filters">
-		<VExpansionPanelText> {{ filters }} </VExpansionPanelText>
+		<VExpansionPanelText>
+			<FilterSettings v-for="filter of filters" :key="filter.type" v-bind="filter" />
+		</VExpansionPanelText>
 	</VExpansionPanel>
 </template>
 

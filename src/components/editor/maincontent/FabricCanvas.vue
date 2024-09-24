@@ -148,7 +148,21 @@ watch(
 			const layer = project.byIds[id];
 			if (object) {
 				const { id: _id, type: _type, filters, ..._layer } = layer;
-				object.set(_layer);
+				object.set(_layer).setCoords();
+				if (_type === 'Image') {
+					if (filters?.length) {
+						util.enlivenObjects(toRaw(filters))
+							.then((response) => {
+								// @ts-ignore
+								object.applyFilters(response);
+							})
+							.catch(console.warn);
+					} else {
+						object.set({
+							filters: null
+						});
+					}
+				}
 			} else {
 				newLayers.push(layer);
 			}

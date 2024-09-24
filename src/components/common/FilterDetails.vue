@@ -16,6 +16,9 @@ watch(
 		jsonToBlob(newJson).then((blob) => {
 			src.value = URL.createObjectURL(blob);
 		});
+	},
+	{
+		immediate: true
 	}
 );
 </script>

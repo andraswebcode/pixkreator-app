@@ -55,6 +55,7 @@ const applyFilter = () => {
 		return;
 	}
 	project.applyFilter(obj.id, item.filter);
+	showDetails.value = false;
 };
 
 watch(
