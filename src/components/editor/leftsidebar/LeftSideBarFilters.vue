@@ -10,7 +10,7 @@ const editor = useEditor();
 const showDetails = ref(false);
 const image = ref<ByID | undefined>();
 const index = ref(0);
-const items = computed(() => {
+const items = computed<any>(() => {
 	const obj = image.value;
 	if (!obj) {
 		return [];
