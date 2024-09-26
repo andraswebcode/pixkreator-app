@@ -13,7 +13,11 @@ const src = ref('');
 watch(
 	() => props.json,
 	(newJson) => {
-		jsonToBlob(newJson).then((blob) => {
+		jsonToBlob({
+			width: newJson.width,
+			height: newJson.height,
+			objects: newJson.layers
+		}).then((blob) => {
 			src.value = URL.createObjectURL(blob);
 		});
 	},

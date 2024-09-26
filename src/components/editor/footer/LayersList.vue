@@ -14,7 +14,8 @@ import {
 	mdiTrashCan,
 	mdiLockOpenVariant,
 	mdiEyeOff,
-	mdiDragVertical
+	mdiDragVertical,
+	mdiAlertCircle
 } from '@mdi/js';
 import { useEditor, useProject } from '../../../store';
 import { computed, ref } from 'vue';
@@ -100,7 +101,7 @@ const deleteLayer = (id: string) => {
 			<VBtn :icon="mdiLayers" v-tooltip:top="'Layers'" v-bind="props" />
 		</template>
 		<VCard width="300" max-height="500">
-			<VList v-sortable="sortLayers">
+			<VList v-if="items.length" v-sortable="sortLayers">
 				<VListItem
 					v-for="item of items"
 					:key="item.id"
@@ -136,6 +137,9 @@ const deleteLayer = (id: string) => {
 					</template>
 				</VListItem>
 			</VList>
+			<VAlert v-else type="warning" :icon="mdiAlertCircle">
+				There are no layers on the canvas.
+			</VAlert>
 		</VCard>
 	</VMenu>
 </template>

@@ -18,7 +18,7 @@ const page = ref(2);
 const loading = ref(true);
 const showDetails = ref(false);
 const index = ref(0);
-const size = ref<PhotoSize>('src');
+const size = ref<PhotoSize>('large');
 const resize = ref(false);
 const filter = () => {
 	items.value = [];

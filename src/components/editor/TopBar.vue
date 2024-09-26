@@ -6,7 +6,7 @@ import { useEditor, useNotice, useProject, useUser } from '../../store';
 import { toRaw } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
 import { util } from 'fabric';
-import { SHARE_IMAGE_MAX_SIZE } from '../../utils/constants';
+import { LOGO_SRC, SHARE_IMAGE_MAX_SIZE } from '../../utils/constants';
 
 const { save, updateFile } = useRequest();
 const userData = useUser();
@@ -117,7 +117,9 @@ const saveDesign = () => {
 
 <template>
 	<VAppBar>
-		<template v-slot:prepend></template>
+		<template v-slot:prepend>
+			<VImg :src="LOGO_SRC" class="logo ml-3" />
+		</template>
 		<VBtn :icon="mdiUndo" v-tooltip="'Undo'" @click="project.undo" />
 		<VBtn :icon="mdiRedo" v-tooltip="'Redo'" @click="project.redo" />
 		<template v-slot:append>
@@ -133,4 +135,8 @@ const saveDesign = () => {
 	<LoginDialog />
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.logo {
+	width: 80px;
+}
+</style>

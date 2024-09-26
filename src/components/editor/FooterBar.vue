@@ -9,7 +9,7 @@ import {
 	mdiMessageText
 } from '@mdi/js';
 import { useEditor } from '../../store';
-import { MAX_ZOOM, MIN_ZOOM } from '../../utils/constants';
+import { MAX_ZOOM, MIN_ZOOM, ZOOM_STEP } from '../../utils/constants';
 import useFitToScreen from '../../hooks/fittoscreen';
 
 const editor = useEditor();
@@ -62,7 +62,7 @@ const zoom = (dir: string) => {
 								v-model="editor.zoom"
 								:min="MIN_ZOOM"
 								:max="MAX_ZOOM"
-								:step="0.1"
+								:step="ZOOM_STEP"
 								width="400px"
 								thumb-label
 							>
