@@ -16,10 +16,10 @@ const props = defineProps<{
 <template>
 	<VContainer>
 		<VRow>
-			<VCol cols="8" align-self="center">
+			<VCol cols="12" md="8" align-self="center">
 				<VImg aspect-ratio="1" :src="props.medium" />
 			</VCol>
-			<VCol cols="4">
+			<VCol cols="12" md="4">
 				<h3 class="mb-2">
 					{{ props.title || 'Photo' }} - by
 					<a :href="props.photographer_url" target="_blank">{{ props.photographer }}</a>
@@ -36,8 +36,5 @@ const props = defineProps<{
 .v-row {
 	width: 100%;
 	height: 100%;
-}
-h3 {
-	white-space: normal;
 }
 </style>

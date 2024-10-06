@@ -82,12 +82,12 @@ onBeforeRouteUpdate((to) => {
 <template>
 	<LibraryWrapper>
 		<VRow justify="space-between" align="center">
-			<VCol cols="4"></VCol>
-			<VCol cols="4">
+			<VCol cols="12" md="4"></VCol>
+			<VCol cols="12" md="4">
 				<SearchInput label="Search Files" v-model="search" @click:append-inner="filter" />
 			</VCol>
-			<VCol cols="4">
-				<VRow justify="end">
+			<VCol cols="12" md="4">
+				<VRow justify="center" justify-md="end">
 					<VCol cols="auto" class="mr-4">
 						<VBtn :prepend-icon="mdiUpload">Upload</VBtn>
 					</VCol>
@@ -95,7 +95,7 @@ onBeforeRouteUpdate((to) => {
 			</VCol>
 		</VRow>
 		<VRow justify="center">
-			<VCol cols="4">
+			<VCol cols="12" md="6" lg="4">
 				<VCard>
 					<VTabs center-active v-model="source" @update:model-value="filter">
 						<VTab v-for="type of fileSources" :key="type.value" :value="type.value">
@@ -110,6 +110,7 @@ onBeforeRouteUpdate((to) => {
 			:count="24"
 			:cols="2"
 			:loading="loading"
+			responsive
 			@load="loadMore"
 		>
 			<GridItem
@@ -132,6 +133,7 @@ onBeforeRouteUpdate((to) => {
 					}
 				]"
 				:src="item.image"
+				responsive
 			/>
 		</LibraryItems>
 	</LibraryWrapper>

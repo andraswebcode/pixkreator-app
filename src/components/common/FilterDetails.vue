@@ -30,10 +30,10 @@ watch(
 <template>
 	<VContainer>
 		<VRow>
-			<VCol cols="8" align-self="center">
+			<VCol cols="12" md="8" align-self="center">
 				<VImg aspect-ratio="1" :src="src" />
 			</VCol>
-			<VCol cols="4">
+			<VCol cols="12" md="4">
 				<h3 class="mb-2">{{ props.label }}</h3>
 				<div v-for="c of props.controls" :key="c.name">
 					<VSelect v-if="c.type === 'select'" :label="c.label" :items="c.options" />

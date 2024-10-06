@@ -4,7 +4,7 @@
 	<VMain>
 		<VContainer>
 			<VRow justify="center" align="center">
-				<VCol cols="4">
+				<VCol cols="12" sm="8" md="6" lg="4">
 					<ForgotPWCard>
 						<template v-slot:title>Forgot Your Password?</template>
 						<template v-slot:subtitle>

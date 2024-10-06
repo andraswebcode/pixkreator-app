@@ -60,18 +60,17 @@ onMounted(() => {
 <template>
 	<VContainer>
 		<VRow class="header">
-			<VCol>
+			<VCol cols="12" md="4">
 				<VCard :to="{ name: 'editor', query: { start: 'blank' } }">
 					<VCardItem>
 						<VCardTitle>Blank Canvas</VCardTitle>
-						<VCardSubtitle
-							>Create a black canvas, and start design images from
-							scratch.</VCardSubtitle
-						>
+						<VCardSubtitle>
+							Create a black canvas, and start design images from scratch.
+						</VCardSubtitle>
 					</VCardItem>
 				</VCard>
 			</VCol>
-			<VCol>
+			<VCol cols="12" md="4">
 				<VCard :to="{ name: 'editor', query: { start: 'template' } }">
 					<VCardItem>
 						<VCardTitle>Templates</VCardTitle>
@@ -79,7 +78,7 @@ onMounted(() => {
 					</VCardItem>
 				</VCard>
 			</VCol>
-			<VCol>
+			<VCol cols="12" md="4">
 				<VCard :to="{ name: 'editor', query: { start: 'photo' } }">
 					<VCardItem>
 						<VCardTitle>Photos</VCardTitle>
@@ -118,9 +117,10 @@ onMounted(() => {
 						...item,
 						layers: item.layer_ids.map((id) => item.layers[id])
 					}"
+					responsive
 					@click="editProject(i)"
 				/>
-				<GridLoader v-else :cols="2" :count="6" />
+				<GridLoader v-else :cols="2" :count="6" responsive />
 			</VRow>
 			<VRow>
 				<VCol>
@@ -153,6 +153,7 @@ onMounted(() => {
 					:key="tmpl.id"
 					cols="2"
 					:src="tmpl.thumbnail"
+					responsive
 					@click="openDetails(i, tmpl.category)"
 				/>
 			</VRow>
@@ -167,7 +168,7 @@ onMounted(() => {
 						</VCol>
 					</VRow>
 				</VCol>
-				<GridLoader :cols="2" :count="6" />
+				<GridLoader :cols="2" :count="6" responsive />
 			</VRow>
 		</VContainer>
 	</div>

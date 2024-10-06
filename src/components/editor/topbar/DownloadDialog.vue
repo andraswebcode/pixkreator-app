@@ -65,10 +65,10 @@ onUnmounted(() => {
 	>
 		<VContainer>
 			<VRow>
-				<VCol cols="8" align-self="center">
+				<VCol cols="12" md="8" align-self="center">
 					<VImg aspect-ratio="1.5" :src="src" />
 				</VCol>
-				<VCol cols="4">
+				<VCol cols="12" md="4">
 					<VTextField label="File Name" v-model="name" />
 					<VBtnToggle class="mb-8" color="primary" v-model="type">
 						<VBtn value="image/png">PNG</VBtn>

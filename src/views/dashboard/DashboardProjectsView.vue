@@ -102,8 +102,8 @@ onBeforeRouteUpdate((to) => {
 <template>
 	<LibraryWrapper>
 		<VRow justify="space-between" align="center">
-			<VCol cols="4">
-				<VRow v-if="selections.length" justify="start">
+			<VCol cols="12" md="4">
+				<VRow v-if="selections.length" justify="center" justify-md="start">
 					<VCol cols="auto" class="ml-4">
 						<VBtnGroup>
 							<VBtn :icon="mdiContentCopy" size="x-small" />
@@ -112,15 +112,15 @@ onBeforeRouteUpdate((to) => {
 					</VCol>
 				</VRow>
 			</VCol>
-			<VCol cols="4">
+			<VCol cols="12" md="4">
 				<SearchInput
 					label="Search Projects"
 					v-model="search"
 					@click:append-inner="filter"
 				/>
 			</VCol>
-			<VCol cols="4">
-				<VRow justify="end">
+			<VCol cols="12" md="4">
+				<VRow justify="center" justify-md="end">
 					<VCol cols="auto" class="mr-4">
 						<VBtnGroup>
 							<VBtn
@@ -154,6 +154,7 @@ onBeforeRouteUpdate((to) => {
 			:count="24"
 			:cols="2"
 			:loading="loading"
+			responsive
 			@load="loadMore"
 		>
 			<GridItem
@@ -197,6 +198,7 @@ onBeforeRouteUpdate((to) => {
 					...item,
 					layers: item.layer_ids.map((id) => item.layers[id])
 				}"
+				responsive
 				@click="editProject(i)"
 			/>
 		</LibraryItems>

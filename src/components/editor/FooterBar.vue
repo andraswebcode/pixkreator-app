@@ -11,7 +11,9 @@ import {
 import { useEditor } from '../../store';
 import { MAX_ZOOM, MIN_ZOOM, ZOOM_STEP } from '../../utils/constants';
 import useFitToScreen from '../../hooks/fittoscreen';
+import { useDisplay } from 'vuetify';
 
+const { smAndUp, mdAndUp } = useDisplay();
 const editor = useEditor();
 const fitToScreen = useFitToScreen();
 const switchPan = () => {
@@ -57,13 +59,13 @@ const zoom = (dir: string) => {
 								@click="fitToScreen"
 							/>
 						</VCol>
-						<VCol cols="auto">
+						<VCol v-if="smAndUp" cols="auto">
 							<VSlider
 								v-model="editor.zoom"
 								:min="MIN_ZOOM"
 								:max="MAX_ZOOM"
 								:step="ZOOM_STEP"
-								width="400px"
+								:width="mdAndUp ? 400 : 170"
 								thumb-label
 							>
 								<template v-slot:prepend>

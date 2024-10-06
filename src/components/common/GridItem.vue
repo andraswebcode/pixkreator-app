@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRaw, watch } from 'vue';
+import { computed, ref, toRaw, watch } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
 import { mdiDotsVertical } from '@mdi/js';
 import { util } from 'fabric';
@@ -13,10 +13,16 @@ const properties = defineProps<{
 	json?: any;
 	actions?: any;
 	selectable?: boolean;
+	responsive?: boolean;
 }>();
 const select = defineModel('select');
 const emit = defineEmits(['click']);
 const srcFromJson = ref('');
+const cols = computed(() => (properties.responsive ? 12 : properties.cols));
+const md = computed(() =>
+	properties.responsive ? parseInt(properties.cols as string) * 2 : properties.cols
+);
+
 watch(
 	() => properties.json,
 	(newJson) => {
@@ -54,7 +60,7 @@ watch(
 </script>
 
 <template>
-	<VCol :cols="properties.cols">
+	<VCol :cols="cols" :md="md" :lg="properties.cols">
 		<VCard hover link @click.prevent="emit('click')">
 			<VImg
 				:class="properties.label ? 'align-end' : ''"

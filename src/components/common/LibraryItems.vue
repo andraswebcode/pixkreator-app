@@ -7,6 +7,7 @@ const props = defineProps<{
 	count: number;
 	loading?: boolean;
 	noItemsWarning?: string;
+	responsive?: boolean;
 }>();
 const emit = defineEmits(['load']);
 const onLoad = () => {
@@ -19,7 +20,7 @@ const onLoad = () => {
 <template>
 	<VContainer v-if="props.loading">
 		<VRow>
-			<GridLoader :cols="props.cols" :count="props.count" />
+			<GridLoader :cols="props.cols" :count="props.count" :responsive="props.responsive" />
 		</VRow>
 	</VContainer>
 	<InfiniteScroll v-else @load="onLoad">

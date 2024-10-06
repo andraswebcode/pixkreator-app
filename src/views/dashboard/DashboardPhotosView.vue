@@ -98,12 +98,12 @@ onBeforeRouteUpdate((to) => {
 <template>
 	<LibraryWrapper>
 		<VRow justify="center">
-			<VCol cols="4">
+			<VCol cols="12" md="6" lg="4">
 				<SearchInput label="Search Photos" v-model="search" @click:append-inner="filter" />
 			</VCol>
 		</VRow>
 		<VRow justify="center">
-			<VCol cols="4">
+			<VCol cols="12" md="6" lg="4">
 				<VRow>
 					<VCol>
 						<VSelect
@@ -124,6 +124,7 @@ onBeforeRouteUpdate((to) => {
 			:count="24"
 			:cols="2"
 			:loading="loading"
+			responsive
 			@load="loadMore"
 		>
 			<GridItem
@@ -131,6 +132,7 @@ onBeforeRouteUpdate((to) => {
 				:key="item.id"
 				cols="2"
 				:src="item.thumbnail"
+				responsive
 				@click="openDetails(i)"
 			/>
 		</LibraryItems>

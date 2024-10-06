@@ -83,7 +83,7 @@ onBeforeRouteUpdate((to) => {
 <template>
 	<LibraryWrapper>
 		<VRow justify="center">
-			<VCol cols="4">
+			<VCol cols="12" md="6" lg="4">
 				<SearchInput
 					label="Search Templates"
 					v-model="search"
@@ -92,7 +92,7 @@ onBeforeRouteUpdate((to) => {
 			</VCol>
 		</VRow>
 		<VRow justify="center">
-			<VCol cols="4">
+			<VCol cols="12" md="6" lg="4">
 				<VCard>
 					<VTabs center-active v-model="category" @update:model-value="filter">
 						<VTab v-for="cat of categories" :key="cat.value" :value="cat.value">
@@ -107,6 +107,7 @@ onBeforeRouteUpdate((to) => {
 			:count="24"
 			:cols="2"
 			:loading="loading"
+			responsive
 			@load="loadMore"
 		>
 			<GridItem
@@ -114,6 +115,7 @@ onBeforeRouteUpdate((to) => {
 				:key="item.id"
 				cols="2"
 				:src="item.thumbnail"
+				responsive
 				@click="openDetails(i)"
 			/>
 		</LibraryItems>

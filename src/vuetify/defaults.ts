@@ -143,6 +143,7 @@ const defaults = {
 	},
 	CloseBtn: {
 		icon: mdiClose,
+		variant: 'flat',
 		size: 'small'
 	},
 	SearchInput: {
@@ -164,6 +165,7 @@ const defaults = {
 		},
 		VBtn: {
 			density: 'comfortable',
+			variant: 'flat',
 			size: 'small'
 		}
 	}
