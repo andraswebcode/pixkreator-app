@@ -19,6 +19,7 @@ import AccountSupportView from '../views/account/AccountSupportView.vue';
 import VerifyEmailView from '../views/VerifyEmailView.vue';
 import VerifiedEmailView from '../views/VerifiedEmailView.vue';
 import ForgotPWView from '../views/ForgotPWView.vue';
+import DashboardAdmin from '../views/dashboard/DashboardAdmin.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -63,6 +64,11 @@ const routes: RouteRecordRaw[] = [
 				name: 'brand',
 				path: 'brand',
 				component: DashboardBrandView
+			},
+			{
+				name: 'admin',
+				path: 'admin',
+				component: DashboardAdmin
 			}
 		]
 	},

@@ -2,11 +2,15 @@
 import {
 	mdiFileDocumentMultiple,
 	mdiFolderMultiple,
+	mdiHammerWrench,
 	mdiHome,
 	mdiImageMultiple,
 	mdiPaletteSwatchVariant,
 	mdiViewDashboardEdit
 } from '@mdi/js';
+import { useUser } from '../../store';
+
+const userData = useUser();
 </script>
 
 <template>
@@ -29,6 +33,14 @@ import {
 			</VListItem>
 			<VListItem to="/dashboard/brand" v-tooltip:end="'Brand'">
 				<VIcon :icon="mdiPaletteSwatchVariant" />
+			</VListItem>
+			<VDivider />
+			<VListItem
+				v-if="userData.user.admin"
+				to="/dashboard/admin"
+				v-tooltip:end="'Admin Tools'"
+			>
+				<VIcon :icon="mdiHammerWrench" />
 			</VListItem>
 		</VList>
 	</VNavigationDrawer>

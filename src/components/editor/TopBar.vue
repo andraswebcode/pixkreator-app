@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { mdiContentSave, mdiDownload, mdiRedo, mdiShare, mdiUndo } from '@mdi/js';
+import {
+	mdiContentSave,
+	mdiContentSaveCog,
+	mdiDownload,
+	mdiRedo,
+	mdiShare,
+	mdiUndo
+} from '@mdi/js';
 import useRequest from '../../hooks/request';
 import { useRoute, useRouter } from 'vue-router';
 import { useEditor, useNotice, useProject, useUser } from '../../store';
@@ -113,6 +120,31 @@ const saveDesign = () => {
 		_save();
 	}
 };
+const saveTemplate = () => {
+	const { width, height, background, ids, byIds } = project;
+	const multiplier = 1;
+	save(route.query.template as string, 'templates', {}, () => {
+		jsonToBlob(
+			{
+				width,
+				height,
+				background,
+				objects: ids.map((id) => toRaw(byIds[id]))
+			},
+			'image/webp',
+			0.98,
+			Math.min(multiplier, 1)
+		)
+			.then((blob) => {
+				const url = URL.createObjectURL(blob);
+				console.log(url);
+				URL.revokeObjectURL(url);
+			})
+			.catch(() => {
+				notice.send('Can not create image file.', 'error');
+			});
+	});
+};
 </script>
 
 <template>
@@ -126,6 +158,12 @@ const saveDesign = () => {
 			<VBtn :icon="mdiShare" v-tooltip="'Share'" @click="shareDesign" />
 			<VBtn :icon="mdiDownload" v-tooltip="'Download'" @click="downloadDesign" />
 			<VBtn :icon="mdiContentSave" v-tooltip="'Save'" @click="saveDesign" />
+			<VBtn
+				v-if="userData.user.admin"
+				:icon="mdiContentSaveCog"
+				v-tooltip="'Save as Template'"
+				@click="saveTemplate"
+			/>
 			<VDivider />
 			<UserMenu />
 		</template>
