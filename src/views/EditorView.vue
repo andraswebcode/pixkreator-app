@@ -51,7 +51,10 @@ const fetchProject = (obj: any) => {
 				// editor.loading = false;
 
 				if (state) {
-					project.$patch(state);
+					project.$patch({
+						...state,
+						keywords: state.keywords.join(', ')
+					});
 					project.resetStack();
 					fitToScreen();
 				}

@@ -164,7 +164,15 @@ const saveTexts = debounce((prop: 'title' | 'description') => {
 	);
 }, 800);
 const shareImage = (media: SocialMedia) => {
-	console.log(media);
+	const url = encodeURIComponent(project.link);
+	const image = '';
+	const text = '';
+	const linkMap: Record<SocialMedia, string> = {
+		facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+		pinterest: `http://pinterest.com/pin/create/button/?url=${url}&media=${image}&description=${text}`,
+		x: `https://twitter.com/intent/tweet?url=${url}&text=${text}`
+	};
+	window.open(linkMap[media]);
 };
 
 watch(

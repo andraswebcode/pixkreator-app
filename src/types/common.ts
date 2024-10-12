@@ -1,6 +1,6 @@
 export type PhotoSize = 'src' | 'large' | 'medium' | 'thumbnail';
 
-export type SocialMedia = 'pinterest' | 'instagram' | 'facebook' | 'x' | 'linkedin';
+export type SocialMedia = 'pinterest' | 'facebook' | 'x';
 
 export type SocialLoginProvider = 'google' | 'facebook';
 

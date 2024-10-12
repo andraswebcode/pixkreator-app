@@ -16,6 +16,7 @@ import { util } from 'fabric';
 import { LOGO_SRC, SHARE_IMAGE_MAX_SIZE } from '../../utils/constants';
 import { createSlug } from '../../utils/functions';
 import sizePresets from '../../utils/size-presets';
+import colorNames from '../../utils/color-names';
 
 const { save, updateFile } = useRequest();
 const userData = useUser();
@@ -126,12 +127,40 @@ const saveTemplate = () => {
 	const { title, description, keywords, width, height, background, ids, byIds } = project;
 	// const multiplier = 1;
 	const category = sizePresets.find((item) => item.width === width && item.height === height);
+	const layers = toRaw(byIds);
+	const layer_ids = toRaw(ids);
+	const colors: {
+		label: string;
+		value: string;
+	}[] = [];
+	const fonts: string[] = [];
 
 	if (!category?.slug) {
 		return;
 	}
 
 	editor.loading = true;
+
+	for (let id in layers) {
+		const layer = layers[id];
+		if (!layer) {
+			continue;
+		}
+		const stroke = layer.stroke;
+		const fill = layer.fill;
+		const family = layer.fontFamily;
+		const strokeItem = colorNames.find((item) => item.value === stroke);
+		const fillItem = colorNames.find((item) => item.value === fill);
+		if (stroke && strokeItem && !colors.find((item) => item.value === stroke)) {
+			colors.push(strokeItem);
+		}
+		if (fill && fillItem && !colors.find((item) => item.value === fill)) {
+			colors.push(fillItem);
+		}
+		if (family && !fonts.includes(family)) {
+			fonts.push(family);
+		}
+	}
 
 	save(
 		route.query.template as string,
@@ -141,14 +170,14 @@ const saveTemplate = () => {
 			slug: createSlug(title),
 			description,
 			category: category.slug,
-			keywords,
-			colors: '',
-			fonts: '',
+			keywords: keywords.split(', '),
+			colors,
+			fonts,
 			width,
 			height,
 			background,
-			layers: toRaw(byIds),
-			layer_ids: toRaw(ids)
+			layers,
+			layer_ids
 		},
 		(response) => {
 			console.log(response);
