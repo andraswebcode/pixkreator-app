@@ -17,7 +17,7 @@ const items = ref<any>([]);
 const categories = [
 	{
 		label: 'All',
-		value: ''
+		slug: ''
 	},
 	...templateCategories
 ];
@@ -72,15 +72,19 @@ onMounted(filter);
 
 <template>
 	<LibraryWrapper>
-		<SearchInput label="Search Templates" v-model="search" @click:append-inner="filter" />
-		<VSelect
-			:items="categories"
-			v-model="category"
-			flat
-			single-line
-			hide-details
-			@update:model-value="filter"
-		/>
+		<SearchFilter label="Search Templates" v-model="search" @click:append-inner="filter">
+			<VList min-width="331">
+				<VListItem>
+					<VSelect
+						label="Category"
+						:items="categories"
+						v-model="category"
+						item-value="slug"
+						@update:model-value="filter"
+					/>
+				</VListItem>
+			</VList>
+		</SearchFilter>
 		<LibraryItems
 			:items-length="items.length"
 			:count="24"

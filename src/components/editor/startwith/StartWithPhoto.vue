@@ -9,7 +9,7 @@ import useFitToScreen from '../../../hooks/fittoscreen';
 const { list } = useRequest();
 const router = useRouter();
 const fitToScreen = useFitToScreen();
-const query = ref('');
+const search = ref('');
 const orientation = ref<Orientation | ''>('');
 const color = ref('');
 const items = ref<any[]>([]);
@@ -17,13 +17,13 @@ const page = ref(2);
 const loading = ref(true);
 const showDetails = ref(false);
 const index = ref(0);
-const size = ref<PhotoSize>('src');
+const size = ref<PhotoSize>('large');
 const filter = () => {
 	items.value = [];
 	loading.value = true;
 	list(
 		{
-			query: query.value,
+			query: search.value,
 			orientation: orientation.value,
 			color: color.value
 		},
@@ -37,7 +37,7 @@ const filter = () => {
 const loadMore = () => {
 	list(
 		{
-			query: query.value,
+			query: search.value,
 			orientation: orientation.value,
 			color: color.value,
 			page: page.value
@@ -75,39 +75,48 @@ onMounted(filter);
 </script>
 
 <template>
-	<VContainer class="wrapper">
-		<VRow>
-			<VCol class="sidebar" cols="auto">
-				<SearchInput label="Search Photos" v-model="query" @click:append-inner="filter" />
-				<VSelect
-					label="Orientation"
-					:items="PHOTO_ORIENTATIONS"
-					:disabled="!query"
-					v-model="orientation"
-				/>
-				<ColorPicker label="Color" :disabled="!query" v-model="color" />
-			</VCol>
-			<VCol>
-				<LibraryWrapper>
-					<LibraryItems
-						:items-length="items.length"
-						:count="24"
-						:cols="2"
-						:loading="loading"
-						@load="loadMore"
-					>
-						<GridItem
-							v-for="(item, i) of items"
-							:key="item.id"
-							cols="2"
-							:src="item.thumbnail"
-							@click="openDetails(i)"
-						/>
-					</LibraryItems>
-				</LibraryWrapper>
+	<LibraryWrapper>
+		<VRow justify="center">
+			<VCol cols="12" md="6" lg="4">
+				<SearchFilter
+					label="Search Photos"
+					v-model="search"
+					:filter-disabled="!search"
+					@click:append-inner="filter"
+				>
+					<VList min-width="331">
+						<VListItem>
+							<VSelect
+								label="Orientation"
+								:items="PHOTO_ORIENTATIONS"
+								v-model="orientation"
+							/>
+						</VListItem>
+						<VListItem>
+							<ColorPicker label="Color" v-model="color" />
+						</VListItem>
+					</VList>
+				</SearchFilter>
 			</VCol>
 		</VRow>
-	</VContainer>
+		<LibraryItems
+			:items-length="items.length"
+			:count="24"
+			:cols="2"
+			responsive
+			:loading="loading"
+			@load="loadMore"
+		>
+			<GridItem
+				v-for="(item, i) of items"
+				:key="item.id"
+				cols="2"
+				responsive
+				:src="item.thumbnail"
+				@click="openDetails(i)"
+			/>
+		</LibraryItems>
+	</LibraryWrapper>
 	<PersistentHeaderDialog
 		v-model="showDetails"
 		@close="showDetails = false"
@@ -127,16 +136,7 @@ onMounted(filter);
 </template>
 
 <style scoped lang="scss">
-.wrapper {
+.library-wrapper {
 	height: 90vh;
-}
-.v-row {
-	height: 100%;
-	.v-col {
-		height: 100%;
-	}
-}
-.sidebar {
-	width: 256px;
 }
 </style>

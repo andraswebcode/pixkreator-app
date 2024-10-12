@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useProject } from '../../../store';
+import { useProject, useUser } from '../../../store';
 import { toFixed } from '../../../utils/functions';
 import sizePresets from '../../../utils/size-presets';
 
@@ -10,6 +10,7 @@ const sizes = [
 		value: ''
 	}
 ].concat(sizePresets);
+const userData = useUser();
 const project = useProject();
 const panels = ref(['size']);
 const width = computed({
@@ -62,6 +63,7 @@ const size = computed({
 			<VExpansionPanelText>
 				<VTextField label="Title" v-model="project.title" />
 				<VTextarea label="Description" v-model="project.description" />
+				<VTextarea v-if="userData.user.admin" label="Keywords" v-model="project.keywords" />
 			</VExpansionPanelText>
 		</VExpansionPanel>
 		<VExpansionPanel title="Background" value="background">

@@ -2,6 +2,7 @@
 
 <template>
 	<RightSideBarPanelTransformSettings />
+	<RightSideBarPanelImageSettings />
 	<RightSideBarPanelFiltersSettings />
 	<RightSideBarPanelClippingSettings />
 	<RightSideBarPanelShadowSettings />

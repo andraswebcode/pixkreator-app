@@ -17,7 +17,7 @@ const pencilTypes: PenType[] = [
 	{
 		label: 'Ellipse',
 		value: 'ellipse'
-	},
+	} /*
 	{
 		label: 'Circle',
 		value: 'circle'
@@ -29,7 +29,7 @@ const pencilTypes: PenType[] = [
 	{
 		label: 'Arrow',
 		value: 'arrow'
-	}
+	}*/
 ];
 
 export default pencilTypes;

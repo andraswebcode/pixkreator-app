@@ -18,7 +18,7 @@ const { list } = useRequest();
 const categories = [
 	{
 		label: 'All',
-		value: ''
+		slug: ''
 	},
 	...templateCategories
 ];
@@ -84,22 +84,23 @@ onBeforeRouteUpdate((to) => {
 	<LibraryWrapper>
 		<VRow justify="center">
 			<VCol cols="12" md="6" lg="4">
-				<SearchInput
+				<SearchFilter
 					label="Search Templates"
 					v-model="search"
 					@click:append-inner="filter"
-				/>
-			</VCol>
-		</VRow>
-		<VRow justify="center">
-			<VCol cols="12" md="6" lg="4">
-				<VCard>
-					<VTabs center-active v-model="category" @update:model-value="filter">
-						<VTab v-for="cat of categories" :key="cat.value" :value="cat.value">
-							{{ cat.label }}
-						</VTab>
-					</VTabs>
-				</VCard>
+				>
+					<VList min-width="331">
+						<VListItem>
+							<VSelect
+								label="Category"
+								:items="categories"
+								item-value="slug"
+								v-model="category"
+								@update:model-value="filter"
+							/>
+						</VListItem>
+					</VList>
+				</SearchFilter>
 			</VCol>
 		</VRow>
 		<LibraryItems

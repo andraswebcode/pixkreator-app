@@ -84,7 +84,18 @@ onBeforeRouteUpdate((to) => {
 		<VRow justify="space-between" align="center">
 			<VCol cols="12" md="4"></VCol>
 			<VCol cols="12" md="4">
-				<SearchInput label="Search Files" v-model="search" @click:append-inner="filter" />
+				<SearchFilter label="Search Files" v-model="search" @click:append-inner="filter">
+					<VList min-width="331">
+						<VListItem>
+							<VSelect
+								label="Category"
+								:items="fileSources"
+								v-model="source"
+								@update:model-value="filter"
+							/>
+						</VListItem>
+					</VList>
+				</SearchFilter>
 			</VCol>
 			<VCol cols="12" md="4">
 				<VRow justify="center" justify-md="end">
@@ -92,17 +103,6 @@ onBeforeRouteUpdate((to) => {
 						<VBtn :prepend-icon="mdiUpload">Upload</VBtn>
 					</VCol>
 				</VRow>
-			</VCol>
-		</VRow>
-		<VRow justify="center">
-			<VCol cols="12" md="6" lg="4">
-				<VCard>
-					<VTabs center-active v-model="source" @update:model-value="filter">
-						<VTab v-for="type of fileSources" :key="type.value" :value="type.value">
-							{{ type.label }}
-						</VTab>
-					</VTabs>
-				</VCard>
 			</VCol>
 		</VRow>
 		<LibraryItems

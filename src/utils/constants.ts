@@ -8,6 +8,8 @@ export const ZOOM_STEP = 0.01;
 
 export const DETAILS_DIALOG_WIDTH = 1200;
 
+export const SMALL_DIALOG_WIDTH = 400;
+
 export const LOGIN_DIALOG_WIDTH = 500;
 
 export const SHARE_IMAGE_MAX_SIZE = 2000;

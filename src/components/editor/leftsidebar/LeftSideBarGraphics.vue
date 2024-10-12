@@ -69,15 +69,13 @@ onMounted(filter);
 
 <template>
 	<LibraryWrapper>
-		<SearchInput label="Search Graphics" v-model="search" @click:append-inner="filter" />
-		<VSelect
-			:items="categories"
-			v-model="category"
-			flat
-			single-line
-			hide-details
-			@update:model-value="filter"
-		/>
+		<SearchFilter label="Search Graphics" v-model="search" @click:append-inner="filter">
+			<VList min-width="331">
+				<VListItem>
+					<VSelect label="Category" :items="categories" v-model="category" />
+				</VListItem>
+			</VList>
+		</SearchFilter>
 		<LibraryItems
 			:items-length="items.length"
 			:count="24"

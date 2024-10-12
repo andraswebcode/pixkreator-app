@@ -2,6 +2,9 @@ import { Canvas as FabricCanvas, ModifierKey } from 'fabric';
 import { unique } from '../utils/functions';
 import { PROPencilBrush } from './brushes/pencil';
 import { PROActiveSelection } from './objects/active-selection';
+import { EditorPencilType } from '../store/editor';
+import { PRORectBrush } from './brushes/rect';
+import { PROEllipseBrush } from './brushes/ellipse';
 
 class Canvas extends FabricCanvas {
 	selectionColor = 'rgba(16, 187, 229, 0.1)';
@@ -20,6 +23,20 @@ class Canvas extends FabricCanvas {
 	constructor(el?, options?) {
 		super(el, options);
 		this.freeDrawingBrush = new PROPencilBrush(this);
+	}
+
+	setPencil(pencil: EditorPencilType) {
+		switch (pencil) {
+			case 'rect':
+				this.freeDrawingBrush = new PRORectBrush(this);
+				break;
+			case 'ellipse':
+				this.freeDrawingBrush = new PROEllipseBrush(this);
+				break;
+			default:
+				this.freeDrawingBrush = new PROPencilBrush(this);
+				break;
+		}
 	}
 
 	getObjectById(id = '') {

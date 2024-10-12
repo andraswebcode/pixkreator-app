@@ -111,6 +111,14 @@ const isEqual = (value1: any, value2: any, visited = new Set()): boolean => {
 
 const unique = <T = any>(array: T[]): T[] => Array.from(new Set(array));
 
+const createSlug = (title: string) =>
+	title
+		.toLowerCase()
+		.trim()
+		.replace(/[^a-z0-9 -]/g, '')
+		.replace(/\s+/g, '-')
+		.replace(/-+/g, '-');
+
 const getCroppedImageDimensions = (
 	originalWidth: number,
 	originalHeight: number,
@@ -170,6 +178,7 @@ export {
 	debounce,
 	isEqual,
 	unique,
+	createSlug,
 	getCroppedImageDimensions,
 	formatBlobSize,
 	mimeToExtension

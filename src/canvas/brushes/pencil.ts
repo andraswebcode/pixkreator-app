@@ -2,7 +2,7 @@ import { PencilBrush, Shadow } from 'fabric';
 import { PROPath } from '../objects/path';
 
 class PROPencilBrush extends PencilBrush {
-	createPath(pathData) {
+	public createPath(pathData) {
 		const path = new PROPath(pathData, {
 			fill: null,
 			stroke: this.color,

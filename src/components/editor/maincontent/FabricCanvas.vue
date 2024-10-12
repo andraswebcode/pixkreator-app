@@ -12,8 +12,6 @@ const canvasRef = ref<HTMLCanvasElement | null>(null);
 const project = useProject();
 const editor = useEditor();
 const notice = useNotice();
-const startPan = ref<{ x: number; y: number }>({ x: 0, y: 0 });
-const isPanning = ref(false);
 
 const updateCanvas = () => {
 	if (fabricCanvas) {
@@ -34,23 +32,9 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
 		fabricCanvas.set({ width, height });
 	}
 	updateCanvas();
+	console.log('resize');
 };
-const onPanStart = (e) => {
-	startPan.value = {
-		x: e.clientX - editor.panX,
-		y: e.clientY - editor.panY
-	};
-	isPanning.value = true;
-};
-const onPanMove = (e) => {
-	if (isPanning.value) {
-		editor.panX = e.clientX - startPan.value.x;
-		editor.panY = e.clientY - startPan.value.y;
-	}
-};
-const onPanEnd = () => {
-	isPanning.value = false;
-};
+
 const onObjectSelection = ({ e, selected = [] }) => {
 	if (e) {
 		editor.activeLayerIds = selected.map(({ id }) => id);
@@ -144,12 +128,20 @@ watch(
 		const newLayers: ByID[] = [];
 
 		newIds.forEach((id) => {
-			const object = fabricCanvas.getObjectById(id);
+			const object: any = fabricCanvas.getObjectById(id);
 			const layer = project.byIds[id];
 			if (object) {
-				const { id: _id, type: _type, filters, ..._layer } = layer;
+				const { id: _id, type: _type, filters, src, ..._layer } = layer;
 				object.set(_layer).setCoords();
 				if (_type === 'Image') {
+					// Set src
+					if (object.src !== src) {
+						object.setSrc(src).then(() => {
+							object.setCoords();
+							fabricCanvas.requestRenderAll();
+						});
+					}
+					// Set filters
 					if (filters?.length) {
 						util.enlivenObjects(toRaw(filters))
 							.then((response) => {
@@ -159,7 +151,7 @@ watch(
 							.catch(console.warn);
 					} else {
 						object.set({
-							filters: null
+							filters: []
 						});
 					}
 				}
@@ -214,7 +206,8 @@ watch(
 		editor.penWidth,
 		editor.penColor
 	],
-	([newMode, _newPencil, newWidth, newColor]) => {
+	([newMode, newPencil, newWidth, newColor]) => {
+		fabricCanvas.setPencil(newPencil);
 		fabricCanvas.isDrawingMode = newMode === 'draw';
 		fabricCanvas.freeDrawingBrush!.width = newWidth;
 		fabricCanvas.freeDrawingBrush!.color = newColor;
@@ -229,31 +222,15 @@ watch(
 </script>
 
 <template>
-	<div id="canvas" class="canvas position-relative" v-dom-resize="onResize">
+	<div id="canvas" class="canvas" v-dom-resize="onResize">
 		<canvas ref="canvasRef" />
-		<div
-			v-if="editor.mode === 'pan'"
-			class="pan position-absolute"
-			@mousedown="onPanStart"
-			@mousemove="onPanMove"
-			@mouseup="onPanEnd"
-			@mouseleave="onPanEnd"
-		></div>
 	</div>
 </template>
 
 <style scoped lang="scss">
 .canvas {
+	position: relative;
 	width: 100%;
 	height: 100%;
-}
-.pan {
-	width: 100%;
-	height: 100%;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	cursor: grab;
 }
 </style>

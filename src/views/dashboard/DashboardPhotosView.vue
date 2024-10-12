@@ -14,7 +14,7 @@ const page = ref(2);
 const loading = ref(true);
 const showDetails = ref(false);
 const index = ref(0);
-const size = ref<PhotoSize>('src');
+const size = ref<PhotoSize>('large');
 const items = ref<any>([]);
 const { list } = useRequest();
 const filter = () => {
@@ -99,24 +99,25 @@ onBeforeRouteUpdate((to) => {
 	<LibraryWrapper>
 		<VRow justify="center">
 			<VCol cols="12" md="6" lg="4">
-				<SearchInput label="Search Photos" v-model="search" @click:append-inner="filter" />
-			</VCol>
-		</VRow>
-		<VRow justify="center">
-			<VCol cols="12" md="6" lg="4">
-				<VRow>
-					<VCol>
-						<VSelect
-							label="Orientation"
-							:items="PHOTO_ORIENTATIONS"
-							:disabled="!search"
-							v-model="orientation"
-						/>
-					</VCol>
-					<VCol>
-						<ColorPicker label="Color" :disabled="!search" v-model="color" />
-					</VCol>
-				</VRow>
+				<SearchFilter
+					label="Search Photos"
+					v-model="search"
+					:filter-disabled="!search"
+					@click:append-inner="filter"
+				>
+					<VList min-width="331">
+						<VListItem>
+							<VSelect
+								label="Orientation"
+								:items="PHOTO_ORIENTATIONS"
+								v-model="orientation"
+							/>
+						</VListItem>
+						<VListItem>
+							<ColorPicker label="Color" v-model="color" />
+						</VListItem>
+					</VList>
+				</SearchFilter>
 			</VCol>
 		</VRow>
 		<LibraryItems

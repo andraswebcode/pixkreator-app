@@ -2,21 +2,13 @@
 import { computed, onUnmounted, ref, toRaw, watch } from 'vue';
 import { useEditor, useNotice, useProject } from '../../../store';
 import { jsonToBlob } from '../../../utils/json-to-blob';
-import {
-	mdiContentCopy,
-	mdiFacebook,
-	mdiInformation,
-	mdiInstagram,
-	mdiLinkedin,
-	mdiPinterest,
-	mdiTwitter
-} from '@mdi/js';
+import { mdiContentCopy, mdiFacebook, mdiInformation, mdiPinterest, mdiTwitter } from '@mdi/js';
 import useRequest from '../../../hooks/request';
 import { useRoute, useRouter } from 'vue-router';
-import { SocialMedia } from '../../../types/common';
 import { debounce } from '../../../utils/functions';
 import { util } from 'fabric';
 import { SHARE_IMAGE_MAX_SIZE } from '../../../utils/constants';
+import { SocialMedia } from '../../../types/common';
 
 const TEXTS_MAP = {
 	title: 'Title',
@@ -32,7 +24,6 @@ const blob = ref<Blob>();
 const src = ref('');
 const loading = ref(false);
 const loadingTextField = ref<'title' | 'description' | false>(false);
-const socialMedia = ref<SocialMedia>('pinterest');
 const linkBtnLabel = computed(() =>
 	project.status === 'public' ? 'Remove Public View Link' : 'Create Public View Link'
 );
@@ -172,7 +163,9 @@ const saveTexts = debounce((prop: 'title' | 'description') => {
 		}
 	);
 }, 800);
-const shareImage = () => {};
+const shareImage = (media: SocialMedia) => {
+	console.log(media);
+};
 
 watch(
 	() => editor.openShareDialog,
@@ -255,49 +248,6 @@ onUnmounted(() => {
 						:append-inner-icon="mdiContentCopy"
 						@click:append-inner="copyLink"
 					/>
-					<VDivider class="my-8" />
-					<VRow class="mb-5">
-						<VCol>
-							<VBtn
-								:icon="mdiPinterest"
-								:color="!disabled && socialMedia === 'pinterest' ? 'primary' : ''"
-								:disabled="disabled"
-								@click="socialMedia = 'pinterest'"
-							/>
-						</VCol>
-						<VCol>
-							<VBtn
-								:icon="mdiInstagram"
-								:color="!disabled && socialMedia === 'instagram' ? 'primary' : ''"
-								:disabled="disabled"
-								@click="socialMedia = 'instagram'"
-							/>
-						</VCol>
-						<VCol>
-							<VBtn
-								:icon="mdiFacebook"
-								:color="!disabled && socialMedia === 'facebook' ? 'primary' : ''"
-								:disabled="disabled"
-								@click="socialMedia = 'facebook'"
-							/>
-						</VCol>
-						<VCol>
-							<VBtn
-								:icon="mdiTwitter"
-								:color="!disabled && socialMedia === 'x' ? 'primary' : ''"
-								:disabled="disabled"
-								@click="socialMedia = 'x'"
-							/>
-						</VCol>
-						<VCol>
-							<VBtn
-								:icon="mdiLinkedin"
-								:color="!disabled && socialMedia === 'linkedin' ? 'primary' : ''"
-								:disabled="disabled"
-								@click="socialMedia = 'linkedin'"
-							/>
-						</VCol>
-					</VRow>
 					<VTextField
 						label="Title"
 						v-model="project.title"
@@ -312,12 +262,33 @@ onUnmounted(() => {
 						:loading="loadingTextField === 'description'"
 						@update:model-value="saveTexts('description')"
 					/>
+					<VDivider class="my-8" />
+					<VRow class="mb-5">
+						<VCol cols="auto">
+							<VBtn
+								:icon="mdiPinterest"
+								:disabled="disabled"
+								@click="shareImage('pinterest')"
+							/>
+						</VCol>
+						<VCol cols="auto">
+							<VBtn
+								:icon="mdiFacebook"
+								:disabled="disabled"
+								@click="shareImage('facebook')"
+							/>
+						</VCol>
+						<VCol cols="auto">
+							<VBtn
+								:icon="mdiTwitter"
+								:disabled="disabled"
+								@click="shareImage('x')"
+							/>
+						</VCol>
+					</VRow>
 				</VCol>
 			</VRow>
 		</VContainer>
-		<template v-slot:actions>
-			<VBtn :disabled="disabled" @click="shareImage">Share</VBtn>
-		</template>
 	</PersistentHeaderDialog>
 </template>
 

@@ -14,6 +14,8 @@ import { toRaw } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
 import { util } from 'fabric';
 import { LOGO_SRC, SHARE_IMAGE_MAX_SIZE } from '../../utils/constants';
+import { createSlug } from '../../utils/functions';
+import sizePresets from '../../utils/size-presets';
 
 const { save, updateFile } = useRequest();
 const userData = useUser();
@@ -121,29 +123,65 @@ const saveDesign = () => {
 	}
 };
 const saveTemplate = () => {
-	const { width, height, background, ids, byIds } = project;
-	const multiplier = 1;
-	save(route.query.template as string, 'templates', {}, () => {
-		jsonToBlob(
-			{
-				width,
-				height,
-				background,
-				objects: ids.map((id) => toRaw(byIds[id]))
-			},
-			'image/webp',
-			0.98,
-			Math.min(multiplier, 1)
-		)
-			.then((blob) => {
-				const url = URL.createObjectURL(blob);
-				console.log(url);
-				URL.revokeObjectURL(url);
-			})
-			.catch(() => {
-				notice.send('Can not create image file.', 'error');
-			});
-	});
+	const { title, description, keywords, width, height, background, ids, byIds } = project;
+	// const multiplier = 1;
+	const category = sizePresets.find((item) => item.width === width && item.height === height);
+
+	if (!category?.slug) {
+		return;
+	}
+
+	editor.loading = true;
+
+	save(
+		route.query.template as string,
+		'templates',
+		{
+			title,
+			slug: createSlug(title),
+			description,
+			category: category.slug,
+			keywords,
+			colors: '',
+			fonts: '',
+			width,
+			height,
+			background,
+			layers: toRaw(byIds),
+			layer_ids: toRaw(ids)
+		},
+		(response) => {
+			console.log(response);
+			editor.loading = false;
+			/*
+			jsonToBlob(
+				{
+					width,
+					height,
+					background,
+					objects: ids.map((id) => toRaw(byIds[id]))
+				},
+				'image/webp',
+				0.98,
+				Math.min(multiplier, 1)
+			)
+				.then((blob) => {
+					const url = URL.createObjectURL(blob);
+					console.log(url);
+					URL.revokeObjectURL(url);
+					editor.loading = false;
+				})
+				.catch(() => {
+					notice.send('Can not create image file.', 'error');
+					editor.loading = false;
+				});
+			*/
+		},
+		(error) => {
+			console.warn(error);
+			editor.loading = false;
+		}
+	);
 };
 </script>
 

@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppBar: typeof import('./src/components/common/AppBar.vue')['default']
     ButtonToggle: typeof import('./src/components/common/ButtonToggle.vue')['default']
+    CanvasBackground: typeof import('./src/components/editor/maincontent/CanvasBackground.vue')['default']
+    CanvasPan: typeof import('./src/components/editor/maincontent/CanvasPan.vue')['default']
     ColorPicker: typeof import('./src/components/common/ColorPicker.vue')['default']
     DashboardContent: typeof import('./src/components/dashboard/DashboardContent.vue')['default']
     DashboardSideBar: typeof import('./src/components/dashboard/DashboardSideBar.vue')['default']
@@ -65,6 +67,7 @@ declare module 'vue' {
     RightSideBarPanelCompositingSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelCompositingSettings.vue')['default']
     RightSideBarPanelDimensionsSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelDimensionsSettings.vue')['default']
     RightSideBarPanelFiltersSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelFiltersSettings.vue')['default']
+    RightSideBarPanelImageSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelImageSettings.vue')['default']
     RightSideBarPanelShadowSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelShadowSettings.vue')['default']
     RightSideBarPanelTextSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelTextSettings.vue')['default']
     RightSideBarPanelTransformSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarPanelTransformSettings.vue')['default']

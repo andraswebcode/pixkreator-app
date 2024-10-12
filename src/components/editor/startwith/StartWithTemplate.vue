@@ -9,9 +9,10 @@ import useFitToScreen from '../../../hooks/fittoscreen';
 const categories = [
 	{
 		label: 'All Templates',
-		value: ''
-	}
-].concat(templateCategories);
+		slug: ''
+	},
+	...templateCategories
+];
 const { list } = useRequest();
 const router = useRouter();
 const fitToScreen = useFitToScreen();
@@ -36,10 +37,6 @@ const filter = () => {
 			loading.value = false;
 		}
 	);
-};
-const filterCategory = (value: string) => {
-	category.value = value;
-	filter();
 };
 const loadMore = () => {
 	list(
@@ -79,46 +76,46 @@ onMounted(filter);
 </script>
 
 <template>
-	<VContainer class="wrapper">
-		<VRow>
-			<VCol class="sidebar" cols="auto">
-				<SearchInput
+	<LibraryWrapper>
+		<VRow justify="center">
+			<VCol cols="12" md="6" lg="4">
+				<SearchFilter
 					label="Search Templates"
 					v-model="search"
 					@click:append-inner="filter"
-				/>
-				<VList>
-					<VListItem
-						v-for="cat of categories"
-						link
-						:active="cat.value === category"
-						@click="filterCategory(cat.value)"
-					>
-						<VListItemTitle>{{ cat.label }}</VListItemTitle>
-					</VListItem>
-				</VList>
-			</VCol>
-			<VCol>
-				<LibraryWrapper>
-					<LibraryItems
-						:items-length="items.length"
-						:count="24"
-						:cols="2"
-						:loading="loading"
-						@load="loadMore"
-					>
-						<GridItem
-							v-for="(item, i) of items"
-							:key="item.id"
-							cols="2"
-							:src="item.thumbnail"
-							@click="openDetails(i)"
-						/>
-					</LibraryItems>
-				</LibraryWrapper>
+				>
+					<VList min-width="331">
+						<VListItem>
+							<VSelect
+								label="Category"
+								:items="categories"
+								item-value="slug"
+								v-model="category"
+								@update:model-value="filter"
+							/>
+						</VListItem>
+					</VList>
+				</SearchFilter>
 			</VCol>
 		</VRow>
-	</VContainer>
+		<LibraryItems
+			:items-length="items.length"
+			:count="24"
+			:cols="2"
+			responsive
+			:loading="loading"
+			@load="loadMore"
+		>
+			<GridItem
+				v-for="(item, i) of items"
+				:key="item.id"
+				cols="2"
+				responsive
+				:src="item.thumbnail"
+				@click="openDetails(i)"
+			/>
+		</LibraryItems>
+	</LibraryWrapper>
 	<PersistentHeaderDialog
 		v-model="showDetails"
 		@close="showDetails = false"
@@ -136,25 +133,7 @@ onMounted(filter);
 </template>
 
 <style scoped lang="scss">
-.wrapper {
+.library-wrapper {
 	height: 90vh;
-}
-.v-row {
-	height: 100%;
-	.v-col {
-		height: 100%;
-	}
-}
-.sidebar {
-	display: flex;
-	flex-direction: column;
-	flex-flow: column;
-	width: 256px;
-	& > * {
-		flex: 0 0 auto;
-	}
-	.v-list {
-		flex: 0 1 auto;
-	}
 }
 </style>

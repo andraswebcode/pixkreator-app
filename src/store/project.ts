@@ -34,6 +34,8 @@ export interface ProjectState {
 	background: string;
 	byIds: ByIDs;
 	ids: IDList;
+	// for templates
+	keywords: string;
 }
 
 export type ProjectGetters = {};
@@ -57,7 +59,9 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 		height: 400,
 		background: '#FFFFFF',
 		byIds: {},
-		ids: []
+		ids: [],
+		// for templates
+		keywords: ''
 	}),
 	getters: {},
 	actions: {
