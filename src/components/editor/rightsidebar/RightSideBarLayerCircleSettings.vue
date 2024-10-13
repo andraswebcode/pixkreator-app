@@ -2,7 +2,7 @@
 
 <template>
 	<RightSideBarPanelTransformSettings />
-	<RightSideBarPanelRectDimensionsSettings />
+	<RightSideBarPanelCircleDimensionsSettings />
 	<RightSideBarPanelAppearanceSettings />
 	<RightSideBarPanelCompositingSettings />
 </template>
