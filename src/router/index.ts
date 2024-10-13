@@ -20,6 +20,7 @@ import VerifyEmailView from '../views/VerifyEmailView.vue';
 import VerifiedEmailView from '../views/VerifiedEmailView.vue';
 import ForgotPWView from '../views/ForgotPWView.vue';
 import DashboardAdmin from '../views/dashboard/DashboardAdmin.vue';
+import AccountSettingsView from '../views/account/AccountSettingsView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -84,6 +85,11 @@ const routes: RouteRecordRaw[] = [
 				name: 'profile',
 				path: '',
 				component: AccountProfileView
+			},
+			{
+				name: 'settings',
+				path: 'settings',
+				component: AccountSettingsView
 			},
 			{
 				name: 'notification',

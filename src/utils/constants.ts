@@ -1,3 +1,5 @@
+export const PRICING_URL = import.meta.env.VITE_WEBSITE_URL + 'pricing/';
+
 export const LOGO_SRC = import.meta.env.VITE_ASSETS_URL + 'images/logowhite.png';
 
 export const MIN_ZOOM = 0.01;

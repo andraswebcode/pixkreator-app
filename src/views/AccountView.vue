@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { mdiAccount, mdiInformation, mdiInvoice, mdiLifebuoy } from '@mdi/js';
+import { mdiAccount, mdiCogs, mdiInformation, mdiInvoice, mdiLifebuoy } from '@mdi/js';
 </script>
 
 <template>
 	<AppBar />
 	<VMain>
 		<VContainer>
-			<VTabs align-tabs="center" stacked>
+			<VTabs class="mb-5" align-tabs="center" stacked>
 				<VTab to="/account">
 					<VIcon :icon="mdiAccount" />
 					Profile
+				</VTab>
+				<VTab to="/account/settings">
+					<VIcon :icon="mdiCogs" />
+					Settings
 				</VTab>
 				<VTab to="/account/notification">
 					<VIcon :icon="mdiInformation" />

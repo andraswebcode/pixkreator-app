@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 
+export type UserPlan = 'free';
+
 export type UserData = {
 	id?: number;
 	admin?: boolean;
@@ -7,6 +9,9 @@ export type UserData = {
 	email?: string;
 	avatar?: string;
 	token?: string;
+	plan?: UserPlan;
+	has_stai_key?: boolean;
+	stai_credits?: number;
 };
 
 export type UserState = {

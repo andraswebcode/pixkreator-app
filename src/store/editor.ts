@@ -20,6 +20,7 @@ export interface EditorState {
 	// UI
 	tool: EditorToolType;
 	loading: boolean;
+	aiIsGenerating: boolean;
 	openStartDialog: boolean;
 	openDownloadDialog: boolean;
 	openShareDialog: boolean;
@@ -45,6 +46,7 @@ export default defineStore<string, EditorState, EditorGetters>('editor', {
 	state: () => ({
 		tool: '',
 		loading: false,
+		aiIsGenerating: false,
 		openStartDialog: false,
 		openDownloadDialog: false,
 		openShareDialog: false,

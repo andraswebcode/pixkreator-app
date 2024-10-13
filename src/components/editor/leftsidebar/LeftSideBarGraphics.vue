@@ -48,7 +48,7 @@ const loadMore = () => {
 	);
 };
 const addGraphic = (item: any) => {
-	const _layer = item.layers[0];
+	const _layer = item.data[0];
 	const layer = {
 		..._layer,
 		left: _layer.left + item.width / 2 + project.width / 2,
@@ -58,10 +58,10 @@ const addGraphic = (item: any) => {
 		type: 'group',
 		left: project.width / 2,
 		top: project.height / 2,
-		objects: item.layers
+		objects: item.data
 	};
 
-	project.addLayer(item.layers.length === 1 ? layer : group);
+	project.addLayer(item.data.length === 1 ? layer : group);
 };
 
 onMounted(filter);
@@ -87,7 +87,11 @@ onMounted(filter);
 				v-for="item of items"
 				:key="item.id"
 				cols="6"
-				:json="item"
+				:json="{
+					width: item.width,
+					height: item.height,
+					layers: item.data
+				}"
 				@click="addGraphic(item)"
 			/>
 		</LibraryItems>

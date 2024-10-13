@@ -89,11 +89,11 @@ onUnmounted(() => {
 <template>
 	<LibraryWrapper>
 		<div class="pa-4">
-			<VBtn class="mb-4" block @click="upload">Upload From Computer</VBtn>
-			<VImg ref="imgRef" :class="{ 'mb-4': !loading }" :src="src" />
+			<VImg v-if="src && !loading" ref="imgRef" :class="{ 'mb-4': !loading }" :src="src" />
 			<VProgressLinear v-if="loading" class="mb-4" indeterminate />
 			<VSwitch v-if="src && !loading" label="Resize Canvas to Image Size" v-model="resize" />
 			<VBtn v-if="src && !loading" block @click="addImage">Add Image to Canvas</VBtn>
+			<VBtn v-if="!src" class="mb-4" block @click="upload">Upload From Computer</VBtn>
 		</div>
 	</LibraryWrapper>
 </template>

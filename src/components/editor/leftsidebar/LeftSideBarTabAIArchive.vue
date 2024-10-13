@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
+import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
+import { useProject } from '../../../store';
+import useFitToScreen from '../../../hooks/fittoscreen';
 
+const project = useProject();
 const { list } = useRequest();
+const fitToScreen = useFitToScreen();
 const search = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
 const loading = ref(true);
+const showDetails = ref(false);
+const index = ref(0);
+const resize = ref(false);
 const filter = () => {
 	items.value = [];
 	loading.value = true;
@@ -36,6 +44,27 @@ const loadMore = () => {
 		}
 	);
 };
+const openDetails = (i: number) => {
+	showDetails.value = true;
+	index.value = i;
+};
+const addImage = () => {
+	const item = items.value[index.value];
+
+	if (resize.value) {
+		project.width = item.width;
+		project.height = item.height;
+	}
+
+	project.addLayer({
+		type: 'image',
+		src: item.image,
+		left: project.width / 2,
+		top: project.height / 2
+	});
+	showDetails.value = false;
+	fitToScreen();
+};
 
 onMounted(filter);
 </script>
@@ -50,9 +79,31 @@ onMounted(filter);
 			:loading="loading"
 			@load="loadMore"
 		>
-			<GridItem v-for="item of items" :key="item.id" cols="6" :src="item.image" />
+			<GridItem
+				v-for="(item, i) of items"
+				:key="item.id"
+				cols="6"
+				:src="item.image"
+				@click="openDetails(i)"
+			/>
 		</LibraryItems>
 	</LibraryWrapper>
+	<PersistentHeaderDialog
+		v-model="showDetails"
+		@close="showDetails = false"
+		:max-width="DETAILS_DIALOG_WIDTH"
+	>
+		<DetailsCarousel v-model="index">
+			<VCarouselItem v-for="item of items" :key="item.id">
+				<UploadDetails v-bind="item">
+					<VSwitch label="Resize Canvas to Image Size" v-model="resize" />
+				</UploadDetails>
+			</VCarouselItem>
+		</DetailsCarousel>
+		<template v-slot:actions>
+			<VBtn @click="addImage">Add Image</VBtn>
+		</template>
+	</PersistentHeaderDialog>
 </template>
 
 <style scoped lang="scss"></style>

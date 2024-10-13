@@ -34,7 +34,7 @@ const userData = useUser();
 			<VListItem to="/dashboard/brand" v-tooltip:end="'Brand'">
 				<VIcon :icon="mdiPaletteSwatchVariant" />
 			</VListItem>
-			<VDivider />
+			<VDivider v-if="userData.user.admin" />
 			<VListItem
 				v-if="userData.user.admin"
 				to="/dashboard/admin"
