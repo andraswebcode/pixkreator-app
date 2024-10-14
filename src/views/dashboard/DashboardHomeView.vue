@@ -74,7 +74,9 @@ onMounted(() => {
 				<VCard :to="{ name: 'editor', query: { start: 'template' } }">
 					<VCardItem>
 						<VCardTitle>Templates</VCardTitle>
-						<VCardSubtitle>SubTitle</VCardSubtitle>
+						<VCardSubtitle>
+							Explore a variety of pre-made design templates to kickstart your project.
+						</VCardSubtitle>
 					</VCardItem>
 				</VCard>
 			</VCol>
@@ -82,7 +84,9 @@ onMounted(() => {
 				<VCard :to="{ name: 'editor', query: { start: 'photo' } }">
 					<VCardItem>
 						<VCardTitle>Photos</VCardTitle>
-						<VCardSubtitle>SubTitle</VCardSubtitle>
+						<VCardSubtitle>
+							Browse a rich library of high-quality stock photos to enhance your designs.
+						</VCardSubtitle>
 					</VCardItem>
 				</VCard>
 			</VCol>
