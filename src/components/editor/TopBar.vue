@@ -182,6 +182,7 @@ const saveTemplate = () => {
 		(response) => {
 			console.log(response);
 			editor.loading = false;
+			notice.send('Template Saved Successfully', 'success');
 			/*
 			jsonToBlob(
 				{
@@ -209,6 +210,7 @@ const saveTemplate = () => {
 		(error) => {
 			console.warn(error);
 			editor.loading = false;
+			notice.send(error.response?.data?.message || error.message, 'error');
 		}
 	);
 };
@@ -242,6 +244,6 @@ const saveTemplate = () => {
 
 <style scoped lang="scss">
 .logo {
-	width: 80px;
+	width: 120px;
 }
 </style>

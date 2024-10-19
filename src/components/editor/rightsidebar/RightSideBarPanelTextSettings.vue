@@ -1,15 +1,60 @@
 <script setup lang="ts">
-import { mdiFormatAlignCenter, mdiFormatAlignLeft, mdiFormatAlignRight } from '@mdi/js';
+import {
+	mdiFormatAlignCenter,
+	mdiFormatAlignLeft,
+	mdiFormatAlignRight,
+	mdiFormatBold,
+	mdiFormatItalic,
+	mdiFormatUnderline
+} from '@mdi/js';
 import useProps from '../../../hooks/props';
+import { computed } from 'vue';
 
-const { text, fontFamily, fontSize, lineHeight, charSpacing, textAlign } = useProps([
+type Format = 'bold' | 'italic' | 'underline';
+
+const {
+	text,
+	fontFamily,
+	fontSize,
+	lineHeight,
+	charSpacing,
+	textAlign,
+	fontStyle,
+	fontWeight,
+	underline
+} = useProps([
 	'text',
 	'fontFamily',
 	'fontSize',
 	'lineHeight',
 	'charSpacing',
-	'textAlign'
+	'textAlign',
+	'fontStyle',
+	'fontWeight',
+	'underline'
 ]);
+const format = computed<Format[]>({
+	get() {
+		const value: Format[] = [];
+
+		if (fontWeight.value === 'bold') {
+			value.push('bold');
+		}
+		if (fontStyle.value === 'italic') {
+			value.push('italic');
+		}
+		if (underline.value) {
+			value.push('underline');
+		}
+
+		return value;
+	},
+	set(value: Format[]) {
+		fontWeight.value = value.includes('bold') ? 'bold' : 'normal';
+		fontStyle.value = value.includes('italic') ? 'italic' : 'normal';
+		underline.value = value.includes('underline');
+	}
+});
 </script>
 
 <template>
@@ -30,6 +75,11 @@ const { text, fontFamily, fontSize, lineHeight, charSpacing, textAlign } = usePr
 				<VBtn :icon="mdiFormatAlignLeft" value="left" v-tooltip="'Left'" />
 				<VBtn :icon="mdiFormatAlignCenter" value="center" v-tooltip="'Center'" />
 				<VBtn :icon="mdiFormatAlignRight" value="right" v-tooltip="'Right'" />
+			</ButtonToggle>
+			<ButtonToggle label="Format" v-model="format" multiple :mandatory="false">
+				<VBtn :icon="mdiFormatBold" value="bold" />
+				<VBtn :icon="mdiFormatItalic" value="italic" />
+				<VBtn :icon="mdiFormatUnderline" value="underline" />
 			</ButtonToggle>
 		</VExpansionPanelText>
 	</VExpansionPanel>
