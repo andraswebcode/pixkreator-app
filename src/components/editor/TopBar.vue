@@ -136,7 +136,11 @@ const saveTemplate = () => {
 	const fonts: string[] = [];
 
 	if (!category?.slug) {
-		return;
+		return notice.send('Choose a size preset.', 'warning');
+	}
+
+	if (!title || !description || !keywords) {
+		return notice.send('Fill meta out', 'warning');
 	}
 
 	editor.loading = true;

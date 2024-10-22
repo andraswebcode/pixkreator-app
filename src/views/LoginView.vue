@@ -15,7 +15,7 @@ const success = () => {
 					<LoginCard @success="success">
 						<template v-slot:title>Login</template>
 						<template v-slot:subtitle>
-							New to Image Designer Pro?
+							New to PixKreator?
 							<RouterLink to="/register">Create an account</RouterLink>
 						</template>
 						<small class="d-block mb-2">

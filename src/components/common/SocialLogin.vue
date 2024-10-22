@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { useDisplay } from 'vuetify';
 import { useNotice, useUser } from '../../store';
 import { SocialLoginProvider } from '../../types/common';
 import { oauthLogin } from '../../utils/oauth-login';
 import { mdiFacebook, mdiGoogle } from '@mdi/js';
+import { computed } from 'vue';
 
 const emit = defineEmits(['success']);
 const userData = useUser();
 const notice = useNotice();
+const { smAndUp } = useDisplay();
+const size = computed(() => (smAndUp.value ? 'large' : 'small'));
 const socialLogin = (provider: SocialLoginProvider) => {
 	oauthLogin(provider)
 		.then(({ user }) => {
@@ -26,7 +30,7 @@ const socialLogin = (provider: SocialLoginProvider) => {
 			<VBtn
 				:prepend-icon="mdiGoogle"
 				variant="tonal"
-				size="large"
+				:size="size"
 				@click="socialLogin('google')"
 			>
 				Google
@@ -36,7 +40,7 @@ const socialLogin = (provider: SocialLoginProvider) => {
 			<VBtn
 				:prepend-icon="mdiFacebook"
 				variant="tonal"
-				size="large"
+				:size="size"
 				@click="socialLogin('facebook')"
 			>
 				Facebook

@@ -16,7 +16,7 @@ const form = ref<'login' | 'register' | 'pwreset' | 'verify'>('login');
 	>
 		<LoginCard v-if="form === 'login'" @success="editor.openLoginDialog = false">
 			<template v-slot:subtitle>
-				New to Image Designer Pro?
+				New to PixKreator?
 				<a href="#" @click.prevent="form = 'register'">Create an account</a>
 			</template>
 			<small class="d-block mb-2">
