@@ -7,7 +7,7 @@ const { filters } = useProps(['filters']);
 <template>
 	<VExpansionPanel title="Filters" value="filters">
 		<VExpansionPanelText>
-			<FilterSettings v-model="filters" />
+			<FilterSettings show-header v-model="filters" />
 		</VExpansionPanelText>
 	</VExpansionPanel>
 </template>
