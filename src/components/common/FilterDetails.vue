@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, toRaw, watch } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
 
 const props = defineProps<{
@@ -15,15 +15,13 @@ const filters = ref<any[]>([props.filter]);
 watch(
 	() => [props.json, filters],
 	([newJson, newFilters]) => {
-		console.log(newFilters);
-
 		jsonToBlob({
 			width: newJson.width,
 			height: newJson.height,
 			objects: [
 				{
 					...newJson.layers[0],
-					filters: newFilters
+					filters: toRaw(newFilters.value)
 				}
 			]
 		}).then((blob) => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-	showHeader: boolean;
+	showHeader?: boolean;
 }>();
 const model = defineModel<any[]>();
 </script>
