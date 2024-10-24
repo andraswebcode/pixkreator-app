@@ -17,6 +17,7 @@ declare module 'vue' {
     DownloadDialog: typeof import('./src/components/editor/topbar/DownloadDialog.vue')['default']
     FabricCanvas: typeof import('./src/components/editor/maincontent/FabricCanvas.vue')['default']
     FilterDetails: typeof import('./src/components/common/FilterDetails.vue')['default']
+    FilterItemSettings: typeof import('./src/components/common/FilterItemSettings.vue')['default']
     FilterSettings: typeof import('./src/components/common/FilterSettings.vue')['default']
     FontSelect: typeof import('./src/components/common/FontSelect.vue')['default']
     FooterBar: typeof import('./src/components/editor/FooterBar.vue')['default']

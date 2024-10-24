@@ -5,23 +5,33 @@ import { jsonToBlob } from '../../utils/json-to-blob';
 const props = defineProps<{
 	name: string;
 	label: string;
+	filter: any;
 	controls: any[];
 	json: any;
 }>();
 const src = ref('');
+const filters = ref<any[]>([props.filter]);
 
 watch(
-	() => props.json,
-	(newJson) => {
+	() => [props.json, filters],
+	([newJson, newFilters]) => {
+		console.log(newFilters);
+
 		jsonToBlob({
 			width: newJson.width,
 			height: newJson.height,
-			objects: newJson.layers
+			objects: [
+				{
+					...newJson.layers[0],
+					filters: newFilters
+				}
+			]
 		}).then((blob) => {
 			src.value = URL.createObjectURL(blob);
 		});
 	},
 	{
+		deep: true,
 		immediate: true
 	}
 );
@@ -35,11 +45,7 @@ watch(
 			</VCol>
 			<VCol cols="12" md="4">
 				<h3 class="mb-2">{{ props.label }}</h3>
-				<div v-for="c of props.controls" :key="c.name">
-					<VSelect v-if="c.type === 'select'" :label="c.label" :items="c.options" />
-					<RangeSlider v-else-if="c.type === 'range'" :label="c.label" />
-					<ColorPicker v-else-if="c.type === 'color'" :label="c.label" />
-				</div>
+				<FilterSettings v-model="filters" />
 			</VCol>
 		</VRow>
 	</VContainer>
