@@ -26,6 +26,8 @@ const filter = () => {
 		},
 		'assets',
 		(data) => {
+			console.log(data);
+
 			items.value = data.items;
 			loading.value = false;
 		}

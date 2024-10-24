@@ -5,7 +5,6 @@ import Canvas from '../../../canvas/canvas';
 import { Rect, util } from 'fabric';
 import { toFixed } from '../../../utils/functions';
 import { EditorModeType, EditorPencilType } from '../../../store/editor';
-import { ByID } from '../../../store/project';
 
 let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -57,7 +56,12 @@ const onObjectModified = ({ target }) => {
 			};
 			return memo;
 		}, {});
+		// const ids = editor.activeLayerIds.concat();
+		editor.activeLayerIds = [];
 		project.updateProps(newProps);
+		/* setTimeout(() => {
+			editor.activeLayerIds = ids;
+		}, 20); */
 		return;
 	}
 
@@ -125,7 +129,7 @@ onMounted(() => {
 watch(
 	(): [string[], any] => [toRaw(project.ids), project.byIds],
 	([newIds], [oldIds]) => {
-		const newLayers: ByID[] = [];
+		const newLayers: any[] = [];
 
 		newIds.forEach((id) => {
 			const object: any = fabricCanvas.getObjectById(id);
@@ -156,7 +160,14 @@ watch(
 					}
 				}
 			} else {
-				newLayers.push(layer);
+				if (layer.type === 'Group') {
+					newLayers.push({
+						...layer,
+						objects: layer.childIds.map((id) => project.byIds[id])
+					});
+				} else {
+					newLayers.push(layer);
+				}
 			}
 		});
 

@@ -15,10 +15,12 @@ import {
 	mdiLockOpenVariant,
 	mdiEyeOff,
 	mdiDragVertical,
-	mdiAlertCircle
+	mdiAlertCircle,
+	mdiContentCopy
 } from '@mdi/js';
 import { useEditor, useProject } from '../../../store';
 import { computed, ref } from 'vue';
+import { uniqueId } from '../../../utils/functions';
 
 const ICON_MAP = {
 	group: mdiLayersOutline,
@@ -89,6 +91,20 @@ const toggleLayer = (id: string) => {
 		visible: !visible
 	});
 };
+const cloneLayer = (id: string) => {
+	const layer = project.byIds[id];
+	const copy = {
+		...layer,
+		id: uniqueId(layer.type),
+		left: layer.left + 10,
+		top: layer.top + 10
+	};
+	if (layer.type === 'Group') {
+		//
+	} else {
+		project.addLayer(copy);
+	}
+};
 const deleteLayer = (id: string) => {
 	project.removeLayer(id);
 	editor.activeLayerIds = [];
@@ -116,22 +132,30 @@ const deleteLayer = (id: string) => {
 					<template v-slot:append>
 						<VBtn
 							:icon="item.lock ? mdiLock : mdiLockOpenVariant"
-							class="mr-1"
-							size="x-small"
 							v-tooltip:top="item.lock ? 'Unlock' : 'Lock'"
+							variant="text"
+							size="x-small"
 							@click="lockLayer(item.id)"
 						/>
 						<VBtn
 							:icon="item.hidden ? mdiEyeOff : mdiEye"
-							size="x-small"
 							v-tooltip:top="item.hidden ? 'Show' : 'Hide'"
+							variant="text"
+							size="x-small"
 							@click="toggleLayer(item.id)"
 						/>
 						<VBtn
-							:icon="mdiTrashCan"
-							class="ml-1"
+							:icon="mdiContentCopy"
+							v-tooltip:top="'Clone'"
+							variant="text"
 							size="x-small"
+							@click="cloneLayer(item.id)"
+						/>
+						<VBtn
+							:icon="mdiTrashCan"
 							v-tooltip:top="'Remove'"
+							variant="text"
+							size="x-small"
 							@click="deleteLayer(item.id)"
 						/>
 					</template>

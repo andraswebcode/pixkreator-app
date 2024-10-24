@@ -116,6 +116,7 @@ const fetchProject = (obj: any) => {
 			}, 20);
 		}
 	}
+	editor.activeLayerIds = [];
 	editor.openStartDialog = !!obj.query.start;
 };
 const onBeforeUnload = () => {

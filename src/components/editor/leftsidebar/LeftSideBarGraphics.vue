@@ -51,14 +51,20 @@ const addGraphic = (item: any) => {
 	const _layer = item.data[0];
 	const layer = {
 		..._layer,
-		left: _layer.left + item.width / 2 + project.width / 2,
-		top: _layer.top + item.height / 2 + project.height / 2
+		left: project.width / 2,
+		top: project.height / 2
 	};
 	const group = {
 		type: 'group',
 		left: project.width / 2,
 		top: project.height / 2,
-		objects: item.data
+		width: item.width,
+		height: item.height,
+		objects: item.data.map((obj) => ({
+			...obj,
+			left: obj.left - item.width / 2,
+			top: obj.top - item.height / 2
+		}))
 	};
 
 	project.addLayer(item.data.length === 1 ? layer : group);

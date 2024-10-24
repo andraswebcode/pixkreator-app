@@ -12,7 +12,7 @@ const onClick = () => {
 
 <template>
 	<VNavigationDrawer location="end" v-model="show">
-		<RightSideBarLayerSettings v-if="editor.activeLayerIds.length" />
+		<RightSideBarLayerSettings v-if="editor.activeLayerIds.length === 1" />
 		<RightSideBarCanvasSettings v-else />
 		<template v-slot:append>
 			<SideBarToggler @click="onClick" :icon="show ? mdiChevronRight : mdiChevronLeft" />

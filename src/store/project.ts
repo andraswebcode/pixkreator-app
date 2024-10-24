@@ -13,6 +13,9 @@ export interface ByID extends FabricObjectProps {
 	filters?: ImageFilter[];
 	text?: string;
 	fontFamily?: string;
+	// Group
+	parentId: string;
+	childIds: string[];
 }
 
 export type ByIDs = {
@@ -66,22 +69,51 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 	getters: {},
 	actions: {
 		addLayer(props) {
-			util.enlivenObjects([props]).then((objects) => {
-				const layer = objects[0].toObject();
-				const { type } = layer;
+			util.enlivenObjects([props]).then((shapes) => {
+				const layer: { type: string; id: string; objects: any[] } = shapes[0].toObject();
+				const { type, objects } = layer;
 				const id = layer.id || uniqueId(type);
-				this.$patch({
-					ids: unique<string>([...this.ids, id]),
-					byIds: {
-						...this.byIds,
-						[id]: {
-							visible: true,
-							selectable: true,
-							...layer,
-							id
+
+				if (type === 'Group' && objects?.length) {
+					const groupLayers = objects.map((obj) => ({
+						...obj,
+						id: obj.id || uniqueId(obj.type),
+						parentId: id
+					}));
+					this.$patch({
+						ids: unique<string>([...this.ids, id]),
+						byIds: {
+							...this.byIds,
+							// Data of the group object.
+							[id]: {
+								visible: true,
+								selectable: true,
+								...layer,
+								id,
+								objects: undefined,
+								childIds: groupLayers.map(({ id }) => id)
+							},
+							// Data of the shapes inside group.
+							...groupLayers.reduce((memo, layer) => {
+								memo[layer.id] = layer;
+								return memo;
+							}, {})
 						}
-					}
-				});
+					});
+				} else {
+					this.$patch({
+						ids: unique<string>([...this.ids, id]),
+						byIds: {
+							...this.byIds,
+							[id]: {
+								visible: true,
+								selectable: true,
+								...layer,
+								id
+							}
+						}
+					});
+				}
 			});
 		},
 		removeLayer(id) {

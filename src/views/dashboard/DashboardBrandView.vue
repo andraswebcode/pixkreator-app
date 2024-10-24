@@ -3,7 +3,7 @@
 <template>
 	<p>Logo</p>
 	<p>Colors</p>
-	<p>Filters/Filter Presets</p>
+	<p>Coming soon...</p>
 </template>
 
 <style scoped lang="scss"></style>
