@@ -2,6 +2,7 @@
 const props = defineProps<{
 	title?: string;
 	maxWidth?: string | number;
+	scroll?: boolean;
 }>();
 const emit = defineEmits(['close']);
 const model = defineModel<boolean | undefined>();
@@ -14,7 +15,7 @@ const model = defineModel<boolean | undefined>();
 				<span class="text-h5 text-medium-emphasis ps-2">{{ props.title }}</span>
 				<CloseBtn @click="emit('close')" />
 			</VCardTitle>
-			<VCardSubtitle>
+			<VCardSubtitle :class="{ scroll }">
 				<slot />
 			</VCardSubtitle>
 			<VCardActions v-if="$slots.actions">
@@ -38,7 +39,10 @@ const model = defineModel<boolean | undefined>();
 .v-card-subtitle {
 	flex: 1;
 	height: 100%;
-	overflow: hidden auto;
+	overflow: hidden;
 	opacity: 1;
+}
+.scroll {
+	overflow: hidden scroll;
 }
 </style>

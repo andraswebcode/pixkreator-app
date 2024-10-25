@@ -11,6 +11,7 @@ const form = ref<'login' | 'register' | 'pwreset' | 'verify'>('login');
 	<PersistentHeaderDialog
 		title="Sign in to Continue"
 		:max-width="LOGIN_DIALOG_WIDTH"
+		scroll
 		v-model="editor.openLoginDialog"
 		@close="editor.openLoginDialog = false"
 	>

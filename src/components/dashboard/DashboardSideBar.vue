@@ -9,14 +9,16 @@ import {
 	mdiViewDashboardEdit
 } from '@mdi/js';
 import { useUser } from '../../store';
+import { useRoute } from 'vue-router';
 
 const userData = useUser();
+const route = useRoute();
 </script>
 
 <template>
 	<VNavigationDrawer width="56" permanent>
 		<VList>
-			<VListItem to="/dashboard" v-tooltip:end="'Home'">
+			<VListItem to="/dashboard" v-tooltip:end="'Home'" :active="route.name === 'home'">
 				<VIcon :icon="mdiHome" />
 			</VListItem>
 			<VListItem to="/dashboard/projects" v-tooltip:end="'Projects'">

@@ -100,7 +100,9 @@ onBeforeRouteUpdate((to) => {
 			<VCol cols="12" md="4">
 				<VRow justify="center" justify-md="end">
 					<VCol cols="auto" class="mr-4">
-						<VBtn :prepend-icon="mdiUpload">Upload</VBtn>
+						<VBtnGroup density="compact">
+							<VBtn :prepend-icon="mdiUpload">Upload</VBtn>
+						</VBtnGroup>
 					</VCol>
 				</VRow>
 			</VCol>

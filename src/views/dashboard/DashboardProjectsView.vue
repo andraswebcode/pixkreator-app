@@ -122,8 +122,9 @@ onBeforeRouteUpdate((to) => {
 			<VCol cols="12" md="4">
 				<VRow justify="center" justify-md="end">
 					<VCol cols="auto" class="mr-4">
-						<VBtnGroup>
+						<VBtnGroup density="compact">
 							<VBtn
+								:active="!route.query.trashed"
 								:prepend-icon="mdiViewList"
 								:to="{
 									query: {
@@ -134,6 +135,7 @@ onBeforeRouteUpdate((to) => {
 								All
 							</VBtn>
 							<VBtn
+								:active="!!route.query.trashed"
 								:prepend-icon="mdiTrashCan"
 								:to="{
 									query: {

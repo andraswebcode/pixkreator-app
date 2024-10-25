@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
 import { useProject } from '../../../store';
+import graphicCategories from '../../../utils/graphic-categories';
 
 const project = useProject();
 const { list } = useRequest();
@@ -14,14 +15,15 @@ const categories = [
 	{
 		label: 'All',
 		value: ''
-	}
+	},
+	...graphicCategories
 ];
 const filter = () => {
 	items.value = [];
 	loading.value = true;
 	list(
 		{
-			resource: 'text',
+			resource: 'graphic',
 			search: search.value
 		},
 		'assets',
@@ -34,7 +36,7 @@ const filter = () => {
 const loadMore = () => {
 	list(
 		{
-			resource: 'text',
+			resource: 'graphic',
 			search: search.value,
 			page: page.value
 		},
@@ -45,21 +47,27 @@ const loadMore = () => {
 		}
 	);
 };
-const addText = (item: any) => {
-	const _layer = item.layers[0];
+const addGraphic = (item: any) => {
+	const _layer = item.data[0];
 	const layer = {
 		..._layer,
-		left: _layer.left + item.width / 2 + project.width / 2,
-		top: _layer.top + item.height / 2 + project.height / 2
+		left: project.width / 2,
+		top: project.height / 2
 	};
 	const group = {
 		type: 'group',
 		left: project.width / 2,
 		top: project.height / 2,
-		objects: item.layers
+		width: item.width,
+		height: item.height,
+		objects: item.data.map((obj) => ({
+			...obj,
+			left: obj.left - item.width / 2,
+			top: obj.top - item.height / 2
+		}))
 	};
 
-	project.addLayer(item.layers.length === 1 ? layer : group);
+	project.addLayer(item.data.length === 1 ? layer : group);
 };
 
 onMounted(filter);
@@ -67,7 +75,7 @@ onMounted(filter);
 
 <template>
 	<LibraryWrapper>
-		<SearchFilter label="Search Texts" v-model="search" @click:append-inner="filter">
+		<SearchFilter label="Search Graphics" v-model="search" @click:append-inner="filter">
 			<VList min-width="331">
 				<VListItem>
 					<VSelect label="Category" :items="categories" v-model="category" />
@@ -85,8 +93,12 @@ onMounted(filter);
 				v-for="item of items"
 				:key="item.id"
 				cols="6"
-				:json="item"
-				@click="addText(item)"
+				:json="{
+					width: item.width,
+					height: item.height,
+					layers: item.data
+				}"
+				@click="addGraphic(item)"
 			/>
 		</LibraryItems>
 	</LibraryWrapper>

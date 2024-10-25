@@ -11,7 +11,7 @@ const domResize: ObjectDirective = {
 			if (binding.value && typeof binding.value === 'function') {
 				binding.value(rect);
 			}
-		}, 220);
+		}, 280);
 
 		el.__resizeObserver__ = new ResizeObserver((entries) => {
 			const { width, height } = entries[0].contentRect;

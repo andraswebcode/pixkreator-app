@@ -3,9 +3,11 @@ import { computed, onMounted, ref } from 'vue';
 import useRequest from '../../hooks/request';
 import { useRouter } from 'vue-router';
 import { DETAILS_DIALOG_WIDTH } from '../../utils/constants';
+import { useDisplay } from 'vuetify';
 
 const { list } = useRequest();
 const router = useRouter();
+const { mdAndUp } = useDisplay();
 const recentProjects = ref<any[]>([]);
 const editorsChoice = ref<any[]>([]);
 const showDetails = ref(false);
@@ -48,7 +50,6 @@ onMounted(() => {
 		'designs',
 		(data) => {
 			recentProjects.value = data.items;
-			console.log(data);
 		}
 	);
 	list({}, 'templates/editorschoice', (data) => {
@@ -64,7 +65,7 @@ onMounted(() => {
 				<VCard :to="{ name: 'editor', query: { start: 'blank' } }">
 					<VCardItem>
 						<VCardTitle>Blank Canvas</VCardTitle>
-						<VCardSubtitle>
+						<VCardSubtitle v-if="mdAndUp">
 							Create a black canvas, and start design images from scratch.
 						</VCardSubtitle>
 					</VCardItem>
@@ -74,8 +75,9 @@ onMounted(() => {
 				<VCard :to="{ name: 'editor', query: { start: 'template' } }">
 					<VCardItem>
 						<VCardTitle>Templates</VCardTitle>
-						<VCardSubtitle>
-							Explore a variety of pre-made design templates to kickstart your project.
+						<VCardSubtitle v-if="mdAndUp">
+							Explore a variety of pre-made design templates to kickstart your
+							project.
 						</VCardSubtitle>
 					</VCardItem>
 				</VCard>
@@ -84,8 +86,9 @@ onMounted(() => {
 				<VCard :to="{ name: 'editor', query: { start: 'photo' } }">
 					<VCardItem>
 						<VCardTitle>Photos</VCardTitle>
-						<VCardSubtitle>
-							Browse a rich library of high-quality stock photos to enhance your designs.
+						<VCardSubtitle v-if="mdAndUp">
+							Browse a rich library of high-quality stock photos to enhance your
+							designs.
 						</VCardSubtitle>
 					</VCardItem>
 				</VCard>

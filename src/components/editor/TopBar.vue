@@ -17,8 +17,10 @@ import { LOGO_SRC, SHARE_IMAGE_MAX_SIZE } from '../../utils/constants';
 import { createSlug } from '../../utils/functions';
 import sizePresets from '../../utils/size-presets';
 import colorNames from '../../utils/color-names';
+import { useDisplay } from 'vuetify';
 
 const { save, updateFile } = useRequest();
+const { smAndUp } = useDisplay();
 const userData = useUser();
 const route = useRoute();
 const router = useRouter();
@@ -222,7 +224,7 @@ const saveTemplate = () => {
 
 <template>
 	<VAppBar>
-		<template v-slot:prepend>
+		<template v-slot:prepend v-if="smAndUp">
 			<VImg :src="LOGO_SRC" class="logo ml-3" />
 		</template>
 		<VBtn :icon="mdiUndo" v-tooltip="'Undo'" @click="project.undo" />
@@ -248,6 +250,6 @@ const saveTemplate = () => {
 
 <style scoped lang="scss">
 .logo {
-	width: 120px;
+	width: 80px;
 }
 </style>

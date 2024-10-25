@@ -3,7 +3,7 @@ import { mdiTune } from '@mdi/js';
 
 const properties = defineProps<{
 	label: string;
-	filterDisabled: boolean;
+	filterDisabled?: boolean;
 }>();
 const search = defineModel();
 const emit = defineEmits(['search']);
