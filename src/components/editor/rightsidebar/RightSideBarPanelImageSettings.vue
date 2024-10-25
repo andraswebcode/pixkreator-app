@@ -4,13 +4,12 @@ import useRequest from '../../../hooks/request';
 import { PHOTO_ORIENTATIONS, DETAILS_DIALOG_WIDTH, PHOTO_SIZES } from '../../../utils/constants';
 import { Orientation, PhotoSize } from '../../../types/common';
 import useProps from '../../../hooks/props';
-import { getCroppedImageDimensions } from '../../../utils/functions';
 import { useUser } from '../../../store';
 
 type ImageOrigin = 'photo' | 'upload' | 'ai';
 
 const userData = useUser();
-const { src, width, height } = useProps(['src', 'width', 'height']);
+const { src } = useProps(['src']);
 const items = ref<any[]>([]);
 const search = ref('');
 const orientation = ref<Orientation | ''>('');
@@ -76,11 +75,7 @@ const replaceImage = () => {
 	showImages.value = false;
 	showDetails.value = false;
 	const item = items.value[index.value];
-	console.log(item);
-	const cropped = getCroppedImageDimensions(item.width, item.height, size.value);
 	src.value = item.proxy[size.value];
-	width.value = cropped.width;
-	height.value = cropped.height;
 };
 
 onMounted(filter);
@@ -91,20 +86,7 @@ onMounted(filter);
 		<VExpansionPanelText>
 			<div v-if="userData.user.admin">
 				<VTextField label="Image Source (Admin Only)" v-model="src" />
-				<InputGroup>
-					<VTextField
-						v-if="userData.user.admin"
-						type="number"
-						label="Image Width"
-						v-model="width"
-					/>
-					<VTextField
-						v-if="userData.user.admin"
-						type="number"
-						label="Image Height"
-						v-model="height"
-					/>
-				</InputGroup>
+
 				<VDivider class="my-8" />
 			</div>
 			<VBtn block @click="showImages = true">Replace Image</VBtn>

@@ -10,7 +10,10 @@ class Sanitizer {
 		skewY: 'number',
 		angle: 'number',
 		width: 'number',
-		height: 'number'
+		height: 'number',
+		cropX: 'number',
+		cropY: 'number',
+		strokeWidth: 'number'
 	};
 
 	public sanitize(property: string, value: any): any {

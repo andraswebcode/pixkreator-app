@@ -137,6 +137,6 @@ onMounted(filter);
 
 <style scoped lang="scss">
 .library-wrapper {
-	height: 90vh;
+	height: calc(90vh - 30px);
 }
 </style>
