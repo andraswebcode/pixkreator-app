@@ -30,8 +30,12 @@ const done = (field: string) => {
 			key: field,
 			value: fields.value[field]
 		},
-		({ meta_value }) => {
-			userData.user.has_stai_key = !!meta_value;
+		(
+			{
+				/* meta_value */
+			}
+		) => {
+			// userData.user.has_stai_key = !!meta_value;
 			fields.value['edit_' + field] = false;
 			fields.value['loading_' + field] = false;
 			notice.send('Field: Stability AI API Key updated successfully.', 'success');
@@ -67,7 +71,7 @@ const cancel = (field: string) => {
 				v-else
 				label="Stability AI API Key"
 				readonly
-				:model-value="userData.user.has_stai_key ? '********' : ' '"
+				model-value="********"
 				:append-inner-icon="mdiPencil"
 				@click:append-inner="edit('stai_key')"
 			/>

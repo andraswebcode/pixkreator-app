@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { mdiAlertCircle } from '@mdi/js';
 import { PRICING_URL } from '../../../utils/constants';
 import { aspectRatios, outputFormats, stylePresets } from '../../../utils/ai-params';
@@ -20,7 +20,6 @@ const image = ref('');
 const width = ref(0);
 const height = ref(0);
 const resize = ref(false);
-const canUseAI = computed(() => true);
 const fitToScreen = useFitToScreen();
 const generate = () => {
 	editor.aiIsGenerating = true;
@@ -74,7 +73,7 @@ const addImage = () => {
 </script>
 
 <template>
-	<div v-if="canUseAI && !image" class="pa-4">
+	<div v-if="userData.canGenerateImage && !image" class="pa-4">
 		<VTextarea label="Prompt" :disabled="editor.aiIsGenerating" v-model="prompt" />
 		<VTextarea label="Negative Prompt" :disabled="editor.aiIsGenerating" v-model="nPrompt" />
 		<VSelect
@@ -97,7 +96,7 @@ const addImage = () => {
 		/>
 		<VBtn block :loading="editor.aiIsGenerating" @click="generate">Generate Image</VBtn>
 	</div>
-	<div v-else-if="canUseAI && image" class="pa-4">
+	<div v-else-if="userData.canGenerateImage && image" class="pa-4">
 		<VImg :src="image" />
 		<VSwitch label="Resize Canvas to Image Size" v-model="resize" />
 		<VBtn block @click="addImage">Add Image to Canvas</VBtn>

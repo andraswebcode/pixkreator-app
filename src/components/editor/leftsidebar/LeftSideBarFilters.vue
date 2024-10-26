@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import imageFilters from '../../../utils/image-filters';
-import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
+import { DETAILS_DIALOG_WIDTH, THUMBNAIL_MAX_SIZE } from '../../../utils/constants';
 import { useEditor, useProject } from '../../../store';
-import { ByID, ByIDs } from '../../../store/project';
+import { ByIDs } from '../../../store/project';
+import { jsonToBlob } from '../../../utils/json-to-blob';
 
 const project = useProject();
 const editor = useEditor();
 const showDetails = ref(false);
-const image = ref<ByID | undefined>();
+const image = ref<any>();
+const thumbnail = ref<any>();
 const index = ref(0);
 const items = computed<any>(() => {
-	const obj = image.value;
-	if (!obj) {
+	if (!image.value || !thumbnail.value) {
 		return [];
 	}
 	return imageFilters.map(({ label, name, controls }) => {
@@ -29,14 +30,27 @@ const items = computed<any>(() => {
 			controls,
 			filter,
 			json: {
-				width: obj.width,
-				height: obj.height,
+				width: image.value.width,
+				height: image.value.height,
 				layers: [
 					{
 						type: 'Image',
-						src: obj.src,
-						left: obj.width / 2,
-						top: obj.height / 2,
+						src: image.value.src,
+						left: image.value.width / 2,
+						top: image.value.height / 2,
+						filters: [filter]
+					}
+				]
+			},
+			thumbJson: {
+				width: thumbnail.value.width,
+				height: thumbnail.value.height,
+				layers: [
+					{
+						type: 'Image',
+						src: thumbnail.value.src,
+						left: thumbnail.value.width / 2,
+						top: thumbnail.value.height / 2,
 						filters: [filter]
 					}
 				]
@@ -62,11 +76,53 @@ watch(
 	(): [string[], string[], ByIDs] => [editor.activeLayerIds, project.ids, project.byIds],
 	([activeIds, ids, byIds]) => {
 		const activeId = activeIds[0];
-		if (activeId && byIds[activeId]?.type === 'Image') {
-			image.value = byIds[activeId];
-		} else {
-			image.value = ids.map((id) => byIds[id]).find((layer) => layer?.type === 'Image');
+		const imgObject =
+			activeId && byIds[activeId]?.type === 'Image'
+				? byIds[activeId]
+				: ids.map((id) => byIds[id]).find((layer) => layer?.type === 'Image');
+
+		if (!imgObject) {
+			return;
 		}
+
+		image.value = imgObject;
+
+		// Make a small image (thumbnail) to optimize performance.
+		const multiplier = THUMBNAIL_MAX_SIZE / Math.max(imgObject.width, imgObject.height);
+		jsonToBlob(
+			{
+				width: imgObject.width,
+				height: imgObject.height,
+				objects: [
+					{
+						...imgObject,
+						left: imgObject.width / 2,
+						top: imgObject.height / 2,
+						scaleX: 1,
+						scaleY: 1,
+						skewX: 0,
+						skewY: 0,
+						angle: 0
+					}
+				]
+			},
+			'image/webp',
+			0.98,
+			multiplier
+		)
+			.then((blob) => {
+				const width = imgObject.width * multiplier;
+				const height = imgObject.height * multiplier;
+				thumbnail.value = {
+					...imgObject,
+					src: URL.createObjectURL(blob),
+					width,
+					height,
+					left: width / 2,
+					top: height / 2
+				};
+			})
+			.catch(console.warn);
 	},
 	{
 		immediate: true
@@ -87,7 +143,7 @@ watch(
 				:key="item.name"
 				:label="item.label"
 				cols="6"
-				:json="item.json"
+				:json="item.thumbJson"
 				@click="openDetails(i)"
 			/>
 		</LibraryItems>

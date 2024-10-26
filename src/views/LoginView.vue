@@ -3,7 +3,11 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const success = () => {
-	router.push('/dashboard');
+	if (localStorage.getItem('design')) {
+		router.push('/');
+	} else {
+		router.push('/dashboard');
+	}
 };
 </script>
 

@@ -10,7 +10,7 @@ export type UserData = {
 	avatar?: string;
 	token?: string;
 	plan?: UserPlan;
-	has_stai_key?: boolean;
+	can_generate_image?: boolean;
 	stai_credits?: number;
 };
 
@@ -21,6 +21,7 @@ export type UserState = {
 export type UserGetters = {
 	loggedIn: (state: UserState) => boolean;
 	bearerToken: (state: UserState) => string;
+	canGenerateImage: (state: UserState) => boolean;
 };
 
 type UserActions = {};
@@ -39,7 +40,9 @@ export default defineStore<string, UserState, UserGetters, UserActions>('user', 
 	}),
 	getters: {
 		loggedIn: ({ user: { id, token } }) => !!(id && token),
-		bearerToken: ({ user: { token } }) => 'Bearer ' + token
+		bearerToken: ({ user: { token } }) => 'Bearer ' + token,
+		canGenerateImage: ({ user: { can_generate_image, id, token } }) =>
+			!!id && !!token && !!can_generate_image
 	},
 	actions: {},
 	undo: {

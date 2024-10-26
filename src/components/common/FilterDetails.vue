@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, toRaw, watch } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
+import { debounce } from '../../utils/functions';
 
 const props = defineProps<{
 	name: string;
@@ -14,7 +15,7 @@ const filters = ref<any[]>([props.filter]);
 
 watch(
 	() => [props.json, filters],
-	([newJson, newFilters]) => {
+	debounce(([newJson, newFilters]) => {
 		jsonToBlob({
 			width: newJson.width,
 			height: newJson.height,
@@ -27,7 +28,7 @@ watch(
 		}).then((blob) => {
 			src.value = URL.createObjectURL(blob);
 		});
-	},
+	}, 400),
 	{
 		deep: true,
 		immediate: true

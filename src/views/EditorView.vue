@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { useEditor, useNotice, useProject, useUser } from '../store';
-import { onBeforeUnmount, onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import useRequest from '../hooks/request';
 import useFitToScreen from '../hooks/fittoscreen';
 import { PhotoSize } from '../types/common';
@@ -119,15 +119,9 @@ const fetchProject = (obj: any) => {
 	editor.activeLayerIds = [];
 	editor.openStartDialog = !!obj.query.start;
 };
-const onBeforeUnload = () => {
-	localStorage.setItem('design', JSON.stringify(project.$state));
-};
 
 onMounted(() => {
 	fetchProject(route);
-	if (!userData.loggedIn) {
-		window.addEventListener('beforeunload', onBeforeUnload);
-	}
 });
 onBeforeRouteUpdate((to, from) => {
 	if (to.path !== '/' && from.path === '/') {
@@ -135,9 +129,15 @@ onBeforeRouteUpdate((to, from) => {
 	}
 	fetchProject(to);
 });
-onBeforeUnmount(() => {
-	window.removeEventListener('beforeunload', onBeforeUnload);
-});
+watch(
+	() => project.$state,
+	() => {
+		if (!userData.loggedIn) {
+			localStorage.setItem('design', JSON.stringify(project.$state));
+		}
+	},
+	{ deep: true }
+);
 </script>
 
 <template>

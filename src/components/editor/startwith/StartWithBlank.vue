@@ -13,6 +13,7 @@ const height = ref(720);
 const showCustomSize = ref(false);
 const fitToScreen = useFitToScreen();
 const setSize = ({ width, height }) => {
+	localStorage.removeItem('design');
 	router
 		.replace({
 			query: {},

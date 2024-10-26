@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import axios from '../../axios';
-import { useNotice } from '../../store';
+import { useNotice, useUser } from '../../store';
 
+const userData = useUser();
 const notice = useNotice();
 const subject = ref('');
 const message = ref('');
@@ -12,7 +13,11 @@ const rules = [(value) => !!value || 'This field is required.'];
 const send = () => {
 	loading.value = true;
 	axios
-		.post('message/support')
+		.post('message/support', {
+			email: userData.user.email,
+			subject: subject.value,
+			message: message.value
+		})
 		.then(({ data }) => {
 			loading.value = false;
 			notice.send(data.message, 'success');
