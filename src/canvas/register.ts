@@ -11,6 +11,7 @@ import { PRODuotone } from './filters/duotone';
 import { PROGamma } from './filters/gamma';
 import { PROEmboss } from './filters/emboss';
 import { PROSharpen } from './filters/sharpen';
+import { PROBlackWhite } from './filters/blackwhite';
 
 // Shapes
 
@@ -26,6 +27,7 @@ classRegistry.setClass(PROIText);
 // Filters
 
 classRegistry.setClass(PRODuotone);
+classRegistry.setClass(PROBlackWhite);
 classRegistry.setClass(PROGamma);
 classRegistry.setClass(PROEmboss);
 classRegistry.setClass(PROSharpen);

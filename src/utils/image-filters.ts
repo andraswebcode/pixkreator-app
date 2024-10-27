@@ -38,7 +38,46 @@ const imageFilters = [
 	{
 		name: 'BlackWhite',
 		label: 'Black & White',
-		controls: []
+		controls: [
+			{
+				type: 'range',
+				name: 'threshold',
+				label: 'Threshold',
+				default: 0.5,
+				min: 0,
+				max: 1,
+				step: 0.01
+			}
+		]
+	},
+	{
+		name: 'Duotone',
+		label: 'Duotone',
+		controls: [
+			{
+				type: 'color',
+				name: 'darkColor',
+				label: 'Dark Color',
+				disableAlpha: true,
+				default: '#000044'
+			},
+			{
+				type: 'color',
+				name: 'lightColor',
+				label: 'Light Color',
+				disableAlpha: true,
+				default: '#FF8A8A'
+			},
+			{
+				type: 'range',
+				name: 'threshold',
+				label: 'Threshold',
+				default: 0.5,
+				min: 0,
+				max: 1,
+				step: 0.01
+			}
+		]
 	},
 	{
 		name: 'Brownie',
@@ -324,26 +363,6 @@ const imageFilters = [
 				min: 0,
 				max: 1,
 				step: 0.01
-			}
-		]
-	},
-	{
-		name: 'Duotone',
-		label: 'Duotone',
-		controls: [
-			{
-				type: 'color',
-				name: 'color1',
-				label: 'Color Dark',
-				disableAlpha: true,
-				default: '#000044'
-			},
-			{
-				type: 'color',
-				name: 'color2',
-				label: 'Color Light',
-				disableAlpha: true,
-				default: '#FF8A8A'
 			}
 		]
 	}
