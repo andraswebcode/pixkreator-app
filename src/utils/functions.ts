@@ -164,7 +164,8 @@ const mimeToExtension = (type: MimeType): Extension => {
 	} = {
 		'image/png': 'png',
 		'image/jpeg': 'jpg',
-		'image/webp': 'webp'
+		'image/webp': 'webp',
+		'image/svg+xml': 'svg'
 	};
 
 	return map[type];

@@ -4,6 +4,8 @@ import { uploadFile } from '../../../utils/upload-file';
 import useRequest from '../../../hooks/request';
 import { useNotice, useProject } from '../../../store';
 import useFitToScreen from '../../../hooks/fittoscreen';
+import { MimeType } from '../../../types/common';
+import { parseSVG } from '../../../utils/parse-svg';
 
 const { save } = useRequest();
 const fitToScreen = useFitToScreen();
@@ -12,10 +14,11 @@ const project = useProject();
 const imgRef = ref<any>(null);
 const src = ref('');
 const imgUrl = ref('');
+const mime = ref<MimeType | undefined>();
 const resize = ref(false);
 const loading = ref(false);
 const upload = () => {
-	uploadFile(['image/jpeg', 'image/png', 'image/webp'])
+	uploadFile(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
 		.then((response) => {
 			const blob = response?.[0];
 
@@ -28,6 +31,7 @@ const upload = () => {
 
 			loading.value = true;
 			src.value = url;
+			mime.value = blob.type as MimeType;
 			img.src = url;
 
 			img.onload = () => {
@@ -71,14 +75,23 @@ const addImage = () => {
 			height: naturalHeight
 		});
 	}
-	project.addLayer({
-		type: 'image',
-		src: imgUrl.value,
-		left: project.width / 2,
-		top: project.height / 2
-	});
-	src.value = '';
-	fitToScreen();
+	if (mime.value === 'image/svg+xml') {
+		parseSVG(imgUrl.value).then((res) => {
+			console.log(res);
+
+			src.value = '';
+			fitToScreen();
+		});
+	} else {
+		project.addLayer({
+			type: 'image',
+			src: imgUrl.value,
+			left: project.width / 2,
+			top: project.height / 2
+		});
+		src.value = '';
+		fitToScreen();
+	}
 };
 
 onUnmounted(() => {
@@ -93,7 +106,7 @@ onUnmounted(() => {
 			<VProgressLinear v-if="loading" class="mb-4" indeterminate />
 			<VSwitch v-if="src && !loading" label="Resize Canvas to Image Size" v-model="resize" />
 			<VBtn v-if="src && !loading" block @click="addImage">Add Image to Canvas</VBtn>
-			<VBtn v-if="!src" class="mb-4" block @click="upload">Upload From Computer</VBtn>
+			<VBtn v-if="!src" block @click="upload">Upload From Computer</VBtn>
 		</div>
 	</LibraryWrapper>
 </template>

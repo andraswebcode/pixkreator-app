@@ -2,12 +2,14 @@
 import { onMounted, ref } from 'vue';
 import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 import useRequest from '../../../hooks/request';
-import { useProject } from '../../../store';
+import { useNotice, useProject } from '../../../store';
 import useFitToScreen from '../../../hooks/fittoscreen';
+import { parseSVG } from '../../../utils/parse-svg';
 
 const { list } = useRequest();
 const fitToScreen = useFitToScreen();
 const project = useProject();
+const notice = useNotice();
 const search = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
@@ -56,14 +58,30 @@ const addImage = () => {
 		project.height = item.height;
 	}
 
-	project.addLayer({
-		type: 'image',
-		src: item.image,
-		left: project.width / 2,
-		top: project.height / 2
-	});
-	showDetails.value = false;
-	fitToScreen();
+	if (item.mime_type === 'image/svg+xml') {
+		parseSVG(item.image)
+			.then(({ layers, group }) => {
+				if (layers.length === 0) {
+					notice.send('SVG parse failed.', 'error');
+				} else if (layers.length === 1) {
+					project.addLayer(layers[0]);
+				} else {
+					project.addLayer(group);
+				}
+				showDetails.value = false;
+				fitToScreen();
+			})
+			.catch(console.warn);
+	} else {
+		project.addLayer({
+			type: 'image',
+			src: item.image,
+			left: project.width / 2,
+			top: project.height / 2
+		});
+		showDetails.value = false;
+		fitToScreen();
+	}
 };
 
 onMounted(filter);
