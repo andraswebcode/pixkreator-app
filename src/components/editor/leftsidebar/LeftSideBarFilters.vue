@@ -102,7 +102,8 @@ watch(
 						scaleY: 1,
 						skewX: 0,
 						skewY: 0,
-						angle: 0
+						angle: 0,
+						filters: []
 					}
 				]
 			},

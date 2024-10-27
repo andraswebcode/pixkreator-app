@@ -49,7 +49,7 @@ const remove = () => {
 			:min="c.min"
 			:max="c.max"
 			:step="c.step"
-			:model-value="modelItem[c.name] || c.default"
+			:model-value="typeof modelItem[c.name] === 'undefined' ? c.default : modelItem[c.name]"
 			@update:model-value="update(c.name, $event)"
 		/>
 		<ColorPicker

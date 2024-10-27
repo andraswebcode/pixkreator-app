@@ -154,9 +154,7 @@ watch(
 							})
 							.catch(console.warn);
 					} else {
-						object.set({
-							filters: []
-						});
+						object.applyFilters([]);
 					}
 				}
 			} else {
