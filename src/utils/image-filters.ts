@@ -66,13 +66,13 @@ const imageFilters = [
 				name: 'lightColor',
 				label: 'Light Color',
 				disableAlpha: true,
-				default: '#FF8A8A'
+				default: '#FFFF00'
 			},
 			{
 				type: 'range',
 				name: 'threshold',
 				label: 'Threshold',
-				default: 0.5,
+				default: 0.3,
 				min: 0,
 				max: 1,
 				step: 0.01

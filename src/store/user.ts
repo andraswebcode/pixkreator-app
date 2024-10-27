@@ -21,6 +21,7 @@ export type UserState = {
 export type UserGetters = {
 	loggedIn: (state: UserState) => boolean;
 	bearerToken: (state: UserState) => string;
+	isProPlan: (state: UserState) => boolean;
 	canGenerateImage: (state: UserState) => boolean;
 };
 
@@ -41,6 +42,7 @@ export default defineStore<string, UserState, UserGetters, UserActions>('user', 
 	getters: {
 		loggedIn: ({ user: { id, token } }) => !!(id && token),
 		bearerToken: ({ user: { token } }) => 'Bearer ' + token,
+		isProPlan: ({ user: { plan, id, token } }) => !!id && !!token && plan !== 'free',
 		canGenerateImage: ({ user: { can_generate_image, id, token } }) =>
 			!!id && !!token && !!can_generate_image
 	},

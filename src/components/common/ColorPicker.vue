@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { mdiSquare, mdiCloseCircle } from '@mdi/js';
 import { ref } from 'vue';
+import { useUser } from '../../store';
 
 const properties = defineProps<{
 	label: string;
 	disabled?: boolean;
+	clearable?: boolean;
+	hideBrand?: boolean;
 }>();
 const model = defineModel<string>();
+const userData = useUser();
 
-const tab = ref('palette');
+const tab = ref(userData.isProPlan ? 'brand' : 'palette');
 const swatches = [
 	['#FFFFFF', '#BFBFBF', '#7F7F7F', '#3F3F3F', '#000000'], // Black to White
 	['#FF0000', '#CC0000', '#990000', '#660000', '#330000'], // Red
@@ -30,7 +34,7 @@ const swatches = [
 				:label="properties.label"
 				dirty
 				readonly
-				clearable
+				:clearable="properties.clearable"
 				:clear-icon="mdiCloseCircle"
 				:disabled="properties.disabled"
 				v-model="model"
@@ -43,11 +47,23 @@ const swatches = [
 		</template>
 		<VCard>
 			<VTabs v-model="tab" fixed-tabs density="compact">
+				<VTab v-if="userData.isProPlan && !properties.hideBrand" value="brand">Brand</VTab>
 				<VTab value="palette">Palette</VTab>
 				<VTab value="picker">Picker</VTab>
 			</VTabs>
 			<VDivider />
 			<VTabsWindow v-model="tab">
+				<VTabsWindowItem v-if="userData.isProPlan && !properties.hideBrand" value="brand">
+					<VColorPicker
+						hide-canvas
+						hide-sliders
+						hide-inputs
+						show-swatches
+						:swatches="[['#000'], ['#fff']]"
+						swatches-max-height="328px"
+						v-model="model"
+					/>
+				</VTabsWindowItem>
 				<VTabsWindowItem value="palette">
 					<VColorPicker
 						hide-canvas
@@ -58,9 +74,15 @@ const swatches = [
 						swatches-max-height="328px"
 						v-model="model"
 					/>
+					<VBtn v-if="userData.isProPlan && !properties.hideBrand" block>
+						Add to Brand Colors
+					</VBtn>
 				</VTabsWindowItem>
 				<VTabsWindowItem value="picker">
 					<VColorPicker v-model="model" />
+					<VBtn v-if="userData.isProPlan && !properties.hideBrand" block>
+						Add to Brand Colors
+					</VBtn>
 				</VTabsWindowItem>
 			</VTabsWindow>
 		</VCard>
