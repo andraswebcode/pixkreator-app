@@ -64,12 +64,18 @@ const routes: RouteRecordRaw[] = [
 			{
 				name: 'brand',
 				path: 'brand',
-				component: DashboardBrandView
+				component: DashboardBrandView,
+				meta: {
+					requiresProPlan: true
+				}
 			},
 			{
 				name: 'admin',
 				path: 'admin',
-				component: DashboardAdmin
+				component: DashboardAdmin,
+				meta: {
+					requiresAdmin: true
+				}
 			}
 		]
 	},
@@ -159,9 +165,13 @@ const router = createRouter({
 
 router.beforeEach((to) => {
 	const userData = useUser();
-	if (to.meta.requiresAuth && !userData.user.id) {
+	if (to.meta.requiresAuth && !userData.loggedIn) {
 		return '/login';
-	} else if (userData.user.id && to.meta.hideOnLoggedIn) {
+	} else if (
+		(to.meta.hideOnLoggedIn && userData.loggedIn) ||
+		(to.meta.requiresAdmin && !userData.user.admin) ||
+		(to.meta.requiresProPlan && !userData.isProPlan)
+	) {
 		return '/dashboard';
 	}
 });

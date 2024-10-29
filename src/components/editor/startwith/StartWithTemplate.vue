@@ -9,7 +9,7 @@ import useFitToScreen from '../../../hooks/fittoscreen';
 const categories = [
 	{
 		label: 'All Templates',
-		slug: ''
+		value: ''
 	},
 	...templateCategories
 ];
@@ -89,7 +89,6 @@ onMounted(filter);
 							<VSelect
 								label="Category"
 								:items="categories"
-								item-value="slug"
 								v-model="category"
 								@update:model-value="filter"
 							/>

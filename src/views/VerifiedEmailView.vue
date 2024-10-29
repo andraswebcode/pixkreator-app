@@ -2,7 +2,7 @@
 import { mdiAlertCircle, mdiCheckCircle, mdiInformation } from '@mdi/js';
 import { useRoute, useRouter } from 'vue-router';
 import { useNotice, useUser } from '../store';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from '../axios';
 
 const route = useRoute();
@@ -29,6 +29,13 @@ const resend = () => {
 			notice.send(error.response?.data?.message || error.message, 'error');
 		});
 };
+
+onMounted(() => {
+	const currentDate = new Date().toISOString().split('T')[0];
+	if (route.query.at === currentDate) {
+		userData.setAndSave('email_verified', true);
+	}
+});
 </script>
 
 <template>

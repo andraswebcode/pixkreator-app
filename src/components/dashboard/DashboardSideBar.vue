@@ -33,7 +33,7 @@ const route = useRoute();
 			<VListItem to="/dashboard/photos" v-tooltip:end="'Photos'">
 				<VIcon :icon="mdiImageMultiple" />
 			</VListItem>
-			<VListItem to="/dashboard/brand" v-tooltip:end="'Brand'">
+			<VListItem v-if="userData.isProPlan" to="/dashboard/brand" v-tooltip:end="'Brand'">
 				<VIcon :icon="mdiPaletteSwatchVariant" />
 			</VListItem>
 			<VDivider v-if="userData.user.admin" />

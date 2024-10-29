@@ -2,9 +2,10 @@
 import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
 import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
-import { useProject } from '../../../store';
+import { useProject, useUser } from '../../../store';
 import useFitToScreen from '../../../hooks/fittoscreen';
 
+const userData = useUser();
 const project = useProject();
 const { list } = useRequest();
 const fitToScreen = useFitToScreen();
@@ -70,7 +71,8 @@ onMounted(filter);
 </script>
 
 <template>
-	<LibraryWrapper>
+	<VerifyEmailAlert v-if="!userData.user.email_verified" class="mx-3 mt-3" />
+	<LibraryWrapper v-else>
 		<SearchInput label="Search" v-model="search" @click:append-inner="filter" />
 		<LibraryItems
 			:items-length="items.length"

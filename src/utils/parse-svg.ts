@@ -1,7 +1,7 @@
 import { Group, loadSVGFromURL } from 'fabric';
 
 const parseSVG = (url: string) => {
-	return loadSVGFromURL(url).then(({ objects, options, ...rest }) => {
+	return loadSVGFromURL(url).then(({ objects, options }) => {
 		const layers = objects.map((obj) => ({
 			...obj?.toJSON(),
 			originX: 'center',

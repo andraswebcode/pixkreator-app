@@ -46,6 +46,8 @@ const logout = () => {
 				<VListItemSubtitle>{{ userData.user.email }}</VListItemSubtitle>
 			</VListItem>
 			<VDivider :vertical="false" />
+			<VerifyEmailAlert v-if="!userData.user.email_verified" class="ma-5" />
+			<VDivider v-if="!userData.user.email_verified" :vertical="false" />
 			<VListItem to="/">
 				<template v-slot:prepend>
 					<VIcon :icon="mdiDraw" />
@@ -76,6 +78,10 @@ const logout = () => {
 </template>
 
 <style scoped>
+.v-list {
+	min-width: 256px;
+	max-width: 356px;
+}
 .v-divider {
 	max-width: 100%;
 }

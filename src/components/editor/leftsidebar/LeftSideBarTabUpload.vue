@@ -2,13 +2,14 @@
 import { onUnmounted, ref } from 'vue';
 import { uploadFile } from '../../../utils/upload-file';
 import useRequest from '../../../hooks/request';
-import { useNotice, useProject } from '../../../store';
+import { useNotice, useProject, useUser } from '../../../store';
 import useFitToScreen from '../../../hooks/fittoscreen';
 import { MimeType } from '../../../types/common';
 import { parseSVG } from '../../../utils/parse-svg';
 
 const { save } = useRequest();
 const fitToScreen = useFitToScreen();
+const userData = useUser();
 const notice = useNotice();
 const project = useProject();
 const imgRef = ref<any>(null);
@@ -100,7 +101,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<LibraryWrapper>
+	<VerifyEmailAlert v-if="!userData.user.email_verified" class="mx-3 mt-3" />
+	<LibraryWrapper v-else>
 		<div class="pa-4">
 			<VImg v-if="src && !loading" ref="imgRef" :class="{ 'mb-4': !loading }" :src="src" />
 			<VProgressLinear v-if="loading" class="mb-4" indeterminate />

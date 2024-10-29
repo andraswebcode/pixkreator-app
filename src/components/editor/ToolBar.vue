@@ -10,8 +10,10 @@ import {
 	mdiShape,
 	mdiViewDashboardEdit
 } from '@mdi/js';
-import { useEditor } from '../../store';
+import { useEditor, useUser } from '../../store';
+
 const editor = useEditor();
+const userData = useUser();
 </script>
 
 <template>
@@ -33,7 +35,12 @@ const editor = useEditor();
 				:icon="mdiImageAutoAdjust"
 			/>
 			<ToolBarItem value="draw" v-tooltip:end="'Draw'" :icon="mdiBrush" />
-			<ToolBarItem value="brand" v-tooltip:end="'Brand'" :icon="mdiPaletteSwatchVariant" />
+			<ToolBarItem
+				v-if="userData.isProPlan"
+				value="brand"
+				v-tooltip:end="'Brand'"
+				:icon="mdiPaletteSwatchVariant"
+			/>
 		</ToolBarList>
 	</VNavigationDrawer>
 </template>

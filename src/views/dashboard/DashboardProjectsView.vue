@@ -10,11 +10,12 @@ import {
 	mdiTrashCan,
 	mdiViewList
 } from '@mdi/js';
-import { useNotice } from '../../store';
+import { useNotice, useUser } from '../../store';
 
 const router = useRouter();
 const route = useRoute();
 const notice = useNotice();
+const userData = useUser();
 const search = ref(route.query.search);
 const page = ref(2);
 const loading = ref(true);
@@ -100,7 +101,10 @@ onBeforeRouteUpdate((to) => {
 </script>
 
 <template>
-	<LibraryWrapper>
+	<div v-if="!userData.user.email_verified">
+		<VerifyEmailAlert />
+	</div>
+	<LibraryWrapper v-else>
 		<VRow justify="space-between" align="center">
 			<VCol cols="12" md="4">
 				<VRow v-if="selections.length" justify="center" justify-md="start">

@@ -18,7 +18,7 @@ const { list } = useRequest();
 const categories = [
 	{
 		label: 'All',
-		slug: ''
+		value: ''
 	},
 	...templateCategories
 ];
@@ -94,7 +94,6 @@ onBeforeRouteUpdate((to) => {
 							<VSelect
 								label="Category"
 								:items="categories"
-								item-value="slug"
 								v-model="category"
 								@update:model-value="filter"
 							/>

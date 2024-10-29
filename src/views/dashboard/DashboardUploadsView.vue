@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
 import { mdiDownload, mdiRename, mdiTrashCan, mdiUpload } from '@mdi/js';
+import { useUser } from '../../store';
 
 const fileSources: { label: string; value: string }[] = [
 	{
@@ -28,6 +29,7 @@ const fileSources: { label: string; value: string }[] = [
 ];
 const router = useRouter();
 const route = useRoute();
+const userData = useUser();
 const search = ref(route.query.search);
 const source = ref(route.params.source);
 const items = ref<any>([]);
@@ -80,7 +82,10 @@ onBeforeRouteUpdate((to) => {
 </script>
 
 <template>
-	<LibraryWrapper>
+	<div v-if="!userData.user.email_verified">
+		<VerifyEmailAlert />
+	</div>
+	<LibraryWrapper v-else>
 		<VRow justify="space-between" align="center">
 			<VCol cols="12" md="4"></VCol>
 			<VCol cols="12" md="4">

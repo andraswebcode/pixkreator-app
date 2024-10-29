@@ -17,7 +17,7 @@ const items = ref<any>([]);
 const categories = [
 	{
 		label: 'All',
-		slug: ''
+		value: ''
 	},
 	...templateCategories
 ];
@@ -79,7 +79,6 @@ onMounted(filter);
 						label="Category"
 						:items="categories"
 						v-model="category"
-						item-value="slug"
 						@update:model-value="filter"
 					/>
 				</VListItem>

@@ -2,12 +2,13 @@
 import { onMounted, ref } from 'vue';
 import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
 import useRequest from '../../../hooks/request';
-import { useNotice, useProject } from '../../../store';
+import { useNotice, useProject, useUser } from '../../../store';
 import useFitToScreen from '../../../hooks/fittoscreen';
 import { parseSVG } from '../../../utils/parse-svg';
 
 const { list } = useRequest();
 const fitToScreen = useFitToScreen();
+const userData = useUser();
 const project = useProject();
 const notice = useNotice();
 const search = ref('');
@@ -88,7 +89,8 @@ onMounted(filter);
 </script>
 
 <template>
-	<LibraryWrapper>
+	<VerifyEmailAlert v-if="!userData.user.email_verified" class="mx-3 mt-3" />
+	<LibraryWrapper v-else>
 		<SearchInput label="Search" v-model="search" @click:append-inner="filter" />
 		<LibraryItems
 			:items-length="items.length"

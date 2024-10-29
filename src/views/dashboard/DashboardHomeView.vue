@@ -4,9 +4,11 @@ import useRequest from '../../hooks/request';
 import { useRouter } from 'vue-router';
 import { DETAILS_DIALOG_WIDTH } from '../../utils/constants';
 import { useDisplay } from 'vuetify';
+import { useUser } from '../../store';
 
 const { list } = useRequest();
 const router = useRouter();
+const userData = useUser();
 const { mdAndUp } = useDisplay();
 const recentProjects = ref<any[]>([]);
 const editorsChoice = ref<any[]>([]);
@@ -97,7 +99,8 @@ onMounted(() => {
 	</VContainer>
 	<div class="items">
 		<VContainer>
-			<VRow>
+			<VerifyEmailAlert v-if="!userData.user.email_verified" class="mb-5" />
+			<VRow v-else>
 				<VCol cols="12">
 					<VRow justify="space-between" align="center">
 						<VCol cols="auto">

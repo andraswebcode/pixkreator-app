@@ -1,117 +1,129 @@
 const templateCategories = [
 	{
-		label: 'Instagram Post',
-		value: 'instagram_post',
+		label: 'Presentation (4:3)',
+		width: 1024,
+		height: 768,
+		value: 'presentation-4-3'
+	},
+	{
+		label: 'Presentation (16:9)',
+		width: 1920,
+		height: 1080,
+		value: 'presentation-16-9'
+	},
+	{
+		label: 'Social Media Story',
 		width: 1080,
-		height: 1080
+		height: 1920,
+		value: 'social-media-story'
 	},
 	{
-		label: 'Facebook Post',
-		value: 'facebook_post',
-		width: 1080,
-		height: 1080
-	},
-	{
-		label: 'Instagram Story',
-		value: 'instagram_story',
-		width: 1080,
-		height: 1920
-	},
-	{
-		label: 'Pinterest Pin',
-		value: 'pinterest_pin',
-		width: 1000,
-		height: 1500
-	},
-	{
-		label: 'Facebook Story',
-		value: 'facebook_story',
-		width: 1080,
-		height: 1920
-	},
-	{
-		label: 'Snapchat Story',
-		value: 'snapchat_story',
-		width: 1080,
-		height: 1920
-	},
-	{
-		label: 'Twitter Header',
-		value: 'twitter_header',
-		width: 1500,
-		height: 500
-	},
-	{
-		label: 'LinkedIn Banner',
-		value: 'linkedin_banner',
-		width: 1584,
-		height: 396
-	},
-	{
-		label: 'YouTube Thumbnail',
-		value: 'youtube_thumbnail',
-		width: 1280,
-		height: 720
+		label: 'Square Social Post',
+		width: 1200,
+		height: 1200,
+		value: 'square-social-post'
 	},
 	{
 		label: 'Facebook Cover',
-		value: 'facebook_cover',
-		width: 820,
-		height: 312
+		width: 1702,
+		height: 630,
+		value: 'facebook-cover'
 	},
 	{
-		label: 'Facebook Event',
-		value: 'facebook_event',
+		label: 'Facebook Page Cover',
+		width: 1702,
+		height: 630,
+		value: 'facebook-page-cover'
+	},
+	{
+		label: 'Facebook Event Cover',
+		width: 1920,
+		height: 1080,
+		value: 'facebook-event-cover'
+	},
+	{
+		label: 'YouTube Channel Art',
+		width: 2560,
+		height: 1440,
+		value: 'youtube-channel-art'
+	},
+	{
+		label: 'YouTube Thumbnail',
+		width: 1280,
+		height: 720,
+		value: 'youtube-thumbnail'
+	},
+	{
+		label: 'Twitter Post',
 		width: 1200,
-		height: 628
+		height: 675,
+		value: 'twitter-post'
 	},
 	{
-		label: 'Website Banner',
-		value: 'website_banner',
+		label: 'Twitter Header',
+		width: 1500,
+		height: 500,
+		value: 'twitter-header'
+	},
+	{
+		label: 'Pinterest Pin',
+		width: 1000,
+		height: 1500,
+		value: 'pinterest-pin'
+	},
+	{
+		label: 'Facebook Ad',
+		width: 1200,
+		height: 628,
+		value: 'facebook-ad'
+	},
+	{
+		label: 'Skyscraper',
+		width: 120,
+		height: 600,
+		value: 'skyscraper'
+	},
+	{
+		label: 'Wide Skyscraper',
+		width: 160,
+		height: 600,
+		value: 'wide-skyscraper'
+	},
+	{
+		label: 'Leaderboard',
 		width: 728,
-		height: 90
+		height: 90,
+		value: 'leaderboard'
 	},
 	{
-		label: 'Display Ad (Medium Rectangle)',
-		value: 'display_ad_medium_rectangle',
+		label: 'Large Leaderboard',
+		width: 728,
+		height: 210,
+		value: 'large-leaderboard'
+	},
+	{
+		label: 'Medium Rectangle',
 		width: 300,
-		height: 250
+		height: 250,
+		value: 'medium-rectangle'
 	},
 	{
-		label: 'Display Ad (Large Rectangle)',
-		value: 'display_ad_large_rectangle',
+		label: 'Large Rectangle',
 		width: 336,
-		height: 280
+		height: 280,
+		value: 'large-rectangle'
 	},
 	{
-		label: 'Flyer (A4)',
-		value: 'flyer_a4',
-		width: 2480,
-		height: 3508
+		label: 'Half Page',
+		width: 300,
+		height: 600,
+		value: 'half-page'
 	},
 	{
-		label: 'Poster (A3)',
-		value: 'poster_a3',
-		width: 3508,
-		height: 4961
-	},
-	{
-		label: 'Business Card',
-		value: 'business_card',
-		width: 1004,
-		height: 650
-	},
-	{
-		label: 'Postcard',
-		value: 'postcard',
-		width: 1748,
-		height: 1240
-	},
-	{
-		label: 'Flyer (DL)',
-		value: 'flyer_dl',
-		width: 1169,
-		height: 2480
+		label: 'Large Mobile',
+		width: 320,
+		height: 100,
+		value: 'large-mobile'
 	}
 ];
 

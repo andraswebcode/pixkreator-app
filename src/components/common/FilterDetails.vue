@@ -9,6 +9,7 @@ const props = defineProps<{
 	filter: any;
 	controls: any[];
 	json: any;
+	thumbJson: any;
 }>();
 const src = ref('');
 const filters = ref<any[]>([props.filter]);

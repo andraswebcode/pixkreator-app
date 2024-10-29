@@ -7,6 +7,7 @@ export type UserData = {
 	admin?: boolean;
 	name?: string;
 	email?: string;
+	email_verified?: boolean;
 	avatar?: string;
 	token?: string;
 	plan?: UserPlan;
@@ -25,7 +26,9 @@ export type UserGetters = {
 	canGenerateImage: (state: UserState) => boolean;
 };
 
-type UserActions = {};
+type UserActions = {
+	setAndSave: (key: string, value: any) => void;
+};
 
 let user: UserData = {};
 
@@ -46,7 +49,15 @@ export default defineStore<string, UserState, UserGetters, UserActions>('user', 
 		canGenerateImage: ({ user: { can_generate_image, id, token } }) =>
 			!!id && !!token && !!can_generate_image
 	},
-	actions: {},
+	actions: {
+		setAndSave(key, value) {
+			this.user[key] = value;
+			// Also, save to localStorage.
+			const data = JSON.parse(localStorage.userData);
+			data[key] = value;
+			localStorage.setItem('userData', JSON.stringify(data));
+		}
+	},
 	undo: {
 		disable: true
 	}
