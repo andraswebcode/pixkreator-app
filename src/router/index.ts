@@ -21,6 +21,7 @@ import VerifiedEmailView from '../views/VerifiedEmailView.vue';
 import ForgotPWView from '../views/ForgotPWView.vue';
 import DashboardAdmin from '../views/dashboard/DashboardAdmin.vue';
 import AccountSettingsView from '../views/account/AccountSettingsView.vue';
+import DeleteUserView from '../views/DeleteUserView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -155,6 +156,14 @@ const routes: RouteRecordRaw[] = [
 		name: 'verify',
 		path: '/verify',
 		component: VerifyEmailView
+	},
+	{
+		name: 'deleteuser',
+		path: '/deleteuser',
+		component: DeleteUserView,
+		meta: {
+			requiresAuth: true
+		}
 	}
 ];
 
