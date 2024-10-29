@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mdiAccount, mdiCogs, mdiInformation, mdiInvoice, mdiLifebuoy } from '@mdi/js';
+import { mdiAccount, mdiCogs, mdiInvoice, mdiLifebuoy } from '@mdi/js';
 </script>
 
 <template>
@@ -15,10 +15,6 @@ import { mdiAccount, mdiCogs, mdiInformation, mdiInvoice, mdiLifebuoy } from '@m
 					<VIcon :icon="mdiCogs" />
 					Settings
 				</VTab>
-				<VTab to="/account/notification">
-					<VIcon :icon="mdiInformation" />
-					Notification
-				</VTab>
 				<VTab to="/account/subscription">
 					<VIcon :icon="mdiInvoice" />
 					Subscription
@@ -29,7 +25,7 @@ import { mdiAccount, mdiCogs, mdiInformation, mdiInvoice, mdiLifebuoy } from '@m
 				</VTab>
 			</VTabs>
 			<VRow justify="center">
-				<VCol cols="12" sm="8" md="6" lg="4">
+				<VCol cols="12" sm="10" md="8" lg="6">
 					<VCard>
 						<RouterView />
 					</VCard>

@@ -13,7 +13,6 @@ import DashboardUploadsView from '../views/dashboard/DashboardUploadsView.vue';
 import DashboardBrandView from '../views/dashboard/DashboardBrandView.vue';
 import DashboardPhotosView from '../views/dashboard/DashboardPhotosView.vue';
 import AccountProfileView from '../views/account/AccountProfileView.vue';
-import AccountNotificationView from '../views/account/AccountNotificationView.vue';
 import AccountSubscriptionView from '../views/account/AccountSubscriptionView.vue';
 import AccountSupportView from '../views/account/AccountSupportView.vue';
 import VerifyEmailView from '../views/VerifyEmailView.vue';
@@ -97,11 +96,6 @@ const routes: RouteRecordRaw[] = [
 				name: 'settings',
 				path: 'settings',
 				component: AccountSettingsView
-			},
-			{
-				name: 'notification',
-				path: 'notification',
-				component: AccountNotificationView
 			},
 			{
 				name: 'subscription',

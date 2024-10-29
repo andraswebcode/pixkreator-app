@@ -43,7 +43,7 @@ const resetPassword = () => {
 	<VMain>
 		<VContainer>
 			<VRow justify="center" align="center">
-				<VCol cols="12" sm="8" md="6" lg="4">
+				<VCol cols="12" sm="10" md="8" lg="6">
 					<VCard>
 						<VCardItem>
 							<VCardTitle>Reset Password</VCardTitle>

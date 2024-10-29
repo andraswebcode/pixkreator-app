@@ -15,7 +15,7 @@ const success = () => {
 	<VMain>
 		<VContainer>
 			<VRow justify="center" align="center">
-				<VCol cols="12" sm="8" md="6" lg="4">
+				<VCol cols="12" sm="10" md="8" lg="6">
 					<LoginCard @success="success">
 						<template v-slot:title>Login</template>
 						<template v-slot:subtitle>
