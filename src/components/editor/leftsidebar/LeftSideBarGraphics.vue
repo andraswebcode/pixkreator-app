@@ -3,11 +3,13 @@ import { onMounted, ref } from 'vue';
 import useRequest from '../../../hooks/request';
 import { useProject } from '../../../store';
 import graphicCategories from '../../../utils/graphic-categories';
+import graphicStyles from '../../../utils/graphic-styles';
 
 const project = useProject();
 const { list } = useRequest();
 const search = ref('');
 const category = ref('');
+const style = ref('');
 const items = ref<any[]>([]);
 const page = ref(2);
 const loading = ref(true);
@@ -17,6 +19,13 @@ const categories = [
 		value: ''
 	},
 	...graphicCategories
+];
+const styles = [
+	{
+		label: 'All',
+		value: ''
+	},
+	...graphicStyles
 ];
 const filter = () => {
 	items.value = [];
@@ -79,6 +88,9 @@ onMounted(filter);
 			<VList min-width="331">
 				<VListItem>
 					<VSelect label="Category" :items="categories" v-model="category" />
+				</VListItem>
+				<VListItem>
+					<VSelect label="Style" :items="styles" v-model="style" />
 				</VListItem>
 			</VList>
 		</SearchFilter>

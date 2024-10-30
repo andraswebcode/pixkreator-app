@@ -2,28 +2,22 @@ import { Group, loadSVGFromURL } from 'fabric';
 
 const parseSVG = (url: string) => {
 	return loadSVGFromURL(url).then(({ objects, options }) => {
-		const layers = objects.map((obj) => ({
-			...obj?.toJSON(),
-			originX: 'center',
-			originY: 'center'
+		const layers = objects.map((o) => o?.toJSON());
+		const group = new Group(objects as any, {
+			left: 0,
+			top: 0
+		});
+		const groupLayer = group.toJSON();
+		groupLayer.objects = groupLayer.objects.map((object) => ({
+			...object,
+			left: object.left + (object.width * object.scaleX) / 2,
+			top: object.top + (object.height * object.scaleY) / 2
 		}));
-		const group = new Group(
-			objects.map((obj) => {
-				obj?.set({
-					originX: 'center',
-					originY: 'center'
-				});
-				return obj;
-			}) as any,
-			{
-				originX: 'center',
-				originY: 'center'
-			}
-		);
+		console.log(groupLayer);
 
 		return {
-			layers,
-			group: group.toJSON(),
+			layers: layers,
+			group: groupLayer,
 			width: options.width,
 			height: options.height
 		};
