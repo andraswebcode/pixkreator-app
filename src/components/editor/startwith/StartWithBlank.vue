@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { useProject } from '../../../store';
-import sizePresets from './../../../utils/size-presets';
+import templateCategories from './../../../utils/template-categories';
 import useFitToScreen from '../../../hooks/fittoscreen';
 import { SMALL_DIALOG_WIDTH } from '../../../utils/constants';
 import { ref } from 'vue';
@@ -45,7 +45,7 @@ const setCustomSize = () => {
 		<LibraryItems :items-length="1" :count="24" :cols="2" responsive>
 			<GridItem label="Custom" @click="openCustomSize" />
 			<GridItem
-				v-for="(item, i) of sizePresets"
+				v-for="(item, i) of templateCategories"
 				:key="i"
 				:label="item.label"
 				cols="2"

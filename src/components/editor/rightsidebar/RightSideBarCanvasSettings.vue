@@ -2,14 +2,14 @@
 import { ref, computed } from 'vue';
 import { useProject, useUser } from '../../../store';
 import { toFixed } from '../../../utils/functions';
-import sizePresets from '../../../utils/size-presets';
+import templateCategories from '../../../utils/template-categories';
 
 const sizes = [
 	{
 		label: 'Custom',
-		value: ''
+		size: ''
 	}
-].concat(sizePresets);
+].concat(templateCategories);
 const userData = useUser();
 const project = useProject();
 const panels = ref(['size']);
@@ -27,10 +27,10 @@ const height = computed({
 });
 const size = computed({
 	get: () => {
-		const value = `${project.width}x${project.height}`;
-		const isPreset = sizePresets.some((preset) => preset.value === value);
+		const size = `${project.width}x${project.height}`;
+		const isPreset = templateCategories.some((preset) => preset.size === size);
 		if (isPreset) {
-			return value;
+			return size;
 		}
 		return '';
 	},
@@ -56,7 +56,7 @@ const size = computed({
 					<VTextField type="number" label="Width" v-model="width" />
 					<VTextField type="number" label="Height" v-model="height" />
 				</InputGroup>
-				<VSelect label="Size Presets" :items="sizes" v-model="size" />
+				<VSelect label="Size Presets" :items="sizes" item-value="size" v-model="size" />
 			</VExpansionPanelText>
 		</VExpansionPanel>
 		<VExpansionPanel title="Meta" value="meta">

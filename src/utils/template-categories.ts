@@ -3,127 +3,162 @@ const templateCategories = [
 		label: 'Presentation (4:3)',
 		width: 1024,
 		height: 768,
-		value: 'presentation-4-3'
+		value: 'presentation-4-3',
+		size: '1024x768'
 	},
 	{
 		label: 'Presentation (16:9)',
 		width: 1920,
 		height: 1080,
-		value: 'presentation-16-9'
+		value: 'presentation-16-9',
+		size: '1920x1080'
 	},
 	{
 		label: 'Social Media Story',
 		width: 1080,
 		height: 1920,
-		value: 'social-media-story'
+		value: 'social-media-story',
+		size: '1080x1920'
 	},
 	{
 		label: 'Square Social Post',
 		width: 1200,
 		height: 1200,
-		value: 'square-social-post'
+		value: 'square-social-post',
+		size: '1200x1200'
 	},
 	{
 		label: 'Facebook Cover',
 		width: 1702,
 		height: 630,
-		value: 'facebook-cover'
+		value: 'facebook-cover',
+		size: '1702x630'
 	},
 	{
 		label: 'Facebook Page Cover',
 		width: 1702,
 		height: 630,
-		value: 'facebook-page-cover'
+		value: 'facebook-page-cover',
+		size: '1702x630'
 	},
 	{
 		label: 'Facebook Event Cover',
 		width: 1920,
 		height: 1080,
-		value: 'facebook-event-cover'
+		value: 'facebook-event-cover',
+		size: '1920x1080'
 	},
 	{
 		label: 'YouTube Channel Art',
 		width: 2560,
 		height: 1440,
-		value: 'youtube-channel-art'
+		value: 'youtube-channel-art',
+		size: '2560x1440'
 	},
 	{
 		label: 'YouTube Thumbnail',
 		width: 1280,
 		height: 720,
-		value: 'youtube-thumbnail'
+		value: 'youtube-thumbnail',
+		size: '1280x720'
 	},
 	{
 		label: 'Twitter Post',
 		width: 1200,
 		height: 675,
-		value: 'twitter-post'
+		value: 'twitter-post',
+		size: '1200x675'
 	},
 	{
 		label: 'Twitter Header',
 		width: 1500,
 		height: 500,
-		value: 'twitter-header'
+		value: 'twitter-header',
+		size: '1500x500'
 	},
 	{
 		label: 'Pinterest Pin',
 		width: 1000,
 		height: 1500,
-		value: 'pinterest-pin'
+		value: 'pinterest-pin',
+		size: '1000x1500'
 	},
 	{
 		label: 'Facebook Ad',
 		width: 1200,
 		height: 628,
-		value: 'facebook-ad'
+		value: 'facebook-ad',
+		size: '1200x628'
 	},
 	{
-		label: 'Skyscraper',
+		label: 'Logo - Square',
+		width: 800,
+		height: 800,
+		value: 'logo-square',
+		size: '800x800'
+	},
+	{
+		label: 'Logo - Landscape',
+		width: 800,
+		height: 450,
+		value: 'logo-landscape',
+		size: '800x450'
+	},
+	{
+		label: 'Banner - Skyscraper',
 		width: 120,
 		height: 600,
-		value: 'skyscraper'
+		value: 'skyscraper',
+		size: '120x600'
 	},
 	{
-		label: 'Wide Skyscraper',
+		label: 'Banner - Wide Skyscraper',
 		width: 160,
 		height: 600,
-		value: 'wide-skyscraper'
+		value: 'wide-skyscraper',
+		size: '160x600'
 	},
 	{
-		label: 'Leaderboard',
+		label: 'Banner - Leaderboard',
 		width: 728,
 		height: 90,
-		value: 'leaderboard'
+		value: 'leaderboard',
+		size: '728x90'
 	},
 	{
-		label: 'Large Leaderboard',
+		label: 'Banner - Large Leaderboard',
 		width: 728,
 		height: 210,
-		value: 'large-leaderboard'
+		value: 'large-leaderboard',
+		size: '728x210'
 	},
 	{
-		label: 'Medium Rectangle',
+		label: 'Banner - Medium Rectangle',
 		width: 300,
 		height: 250,
-		value: 'medium-rectangle'
+		value: 'medium-rectangle',
+		size: '300x250'
 	},
 	{
-		label: 'Large Rectangle',
+		label: 'Banner - Large Rectangle',
 		width: 336,
 		height: 280,
-		value: 'large-rectangle'
+		value: 'large-rectangle',
+		size: '336x280'
 	},
 	{
-		label: 'Half Page',
+		label: 'Banner - Half Page',
 		width: 300,
 		height: 600,
-		value: 'half-page'
+		value: 'half-page',
+		size: '300x600'
 	},
 	{
-		label: 'Large Mobile',
+		label: 'Banner - Large Mobile',
 		width: 320,
 		height: 100,
-		value: 'large-mobile'
+		value: 'large-mobile',
+		size: '320x100'
 	}
 ];
 

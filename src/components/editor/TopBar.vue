@@ -15,7 +15,7 @@ import { jsonToBlob } from '../../utils/json-to-blob';
 import { util } from 'fabric';
 import { LOGO_SRC, SHARE_IMAGE_MAX_SIZE } from '../../utils/constants';
 import { createSlug } from '../../utils/functions';
-import sizePresets from '../../utils/size-presets';
+import templateCategories from '../../utils/template-categories';
 import colorNames from '../../utils/color-names';
 import { useDisplay } from 'vuetify';
 
@@ -128,7 +128,9 @@ const saveDesign = () => {
 const saveTemplate = () => {
 	const { title, description, keywords, width, height, background, ids, byIds } = project;
 	// const multiplier = 1;
-	const category = sizePresets.find((item) => item.width === width && item.height === height);
+	const category = templateCategories.find(
+		(item) => item.width === width && item.height === height
+	);
 	const layers = toRaw(byIds);
 	const layer_ids = toRaw(ids);
 	const colors: {

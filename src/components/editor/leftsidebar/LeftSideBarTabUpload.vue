@@ -77,9 +77,14 @@ const addImage = () => {
 		});
 	}
 	if (mime.value === 'image/svg+xml') {
-		parseSVG(imgUrl.value).then((res) => {
-			console.log(res);
-
+		parseSVG(imgUrl.value).then(({ layers, group }) => {
+			if (layers.length === 0) {
+				notice.send('SVG parse failed.', 'error');
+			} else if (layers.length === 1) {
+				project.addLayer(layers[0]);
+			} else {
+				project.addLayer(group);
+			}
 			src.value = '';
 			fitToScreen();
 		});
