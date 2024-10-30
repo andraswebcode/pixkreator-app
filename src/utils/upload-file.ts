@@ -1,10 +1,11 @@
 import { MimeType } from '../types/common';
 
-const uploadFile = (accept: MimeType | MimeType[] = []) => {
+const uploadFile = (accept: MimeType | MimeType[] = [], multiple = false) => {
 	const input = document.createElement('input');
 
 	input.type = 'file';
 	input.style.display = 'none';
+	input.multiple = multiple;
 
 	if (Array.isArray(accept)) {
 		input.accept = accept.join(',');
