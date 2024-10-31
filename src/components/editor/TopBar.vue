@@ -139,7 +139,7 @@ const saveTemplate = () => {
 	}[] = [];
 	const fonts: string[] = [];
 
-	if (!category?.slug) {
+	if (!category?.value) {
 		return notice.send('Choose a size preset.', 'warning');
 	}
 
@@ -177,7 +177,7 @@ const saveTemplate = () => {
 			title,
 			slug: createSlug(title),
 			description,
-			category: category.slug,
+			category: category.value,
 			keywords: keywords.split(', '),
 			colors,
 			fonts,

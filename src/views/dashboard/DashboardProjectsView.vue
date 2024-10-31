@@ -202,7 +202,15 @@ onBeforeRouteUpdate((to) => {
 				"
 				:json="{
 					...item,
-					layers: item.layer_ids.map((id) => item.layers[id])
+					layers: item.layer_ids.map((id) => {
+						const layer = item.layers[id];
+
+						if (layer.type === 'Group') {
+							layer.objects = layer.childIds.map((id) => item.layers[id]);
+						}
+
+						return layer;
+					})
 				}"
 				responsive
 				@click="editProject(i)"

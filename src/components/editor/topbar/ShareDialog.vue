@@ -198,7 +198,15 @@ watch(
 				width: project.width,
 				height: project.height,
 				background: project.background,
-				objects: project.ids.map((id) => toRaw(project.byIds[id]))
+				objects: project.ids.map((id) => {
+					const layer: any = toRaw(project.byIds[id]);
+
+					if (layer.type === 'Group') {
+						layer.objects = layer.childIds.map((id) => toRaw(project.byIds[id]));
+					}
+
+					return layer;
+				})
 			},
 			'image/webp',
 			0.98,
