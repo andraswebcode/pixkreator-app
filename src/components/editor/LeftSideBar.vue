@@ -17,6 +17,7 @@ const show = computed(() => !!editor.tool);
 		<LeftSideBarFilters v-else-if="editor.tool === 'filters'" />
 		<LeftSideBarDraw v-else-if="editor.tool === 'draw'" />
 		<LeftSideBarBrand v-else-if="editor.tool === 'brand'" />
+		<LeftSideBarLayerList v-else-if="editor.tool === 'list'" />
 	</VNavigationDrawer>
 </template>
 

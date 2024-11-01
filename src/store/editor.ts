@@ -10,7 +10,8 @@ export type EditorToolType =
 	| 'filters'
 	| 'texts'
 	| 'draw'
-	| 'brand';
+	| 'brand'
+	| 'list';
 
 export type EditorModeType = 'select' | 'pan' | 'draw';
 

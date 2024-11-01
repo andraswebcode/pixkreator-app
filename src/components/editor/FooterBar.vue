@@ -4,6 +4,7 @@ import {
 	mdiFitToScreen,
 	mdiHandBackLeft,
 	mdiHelpCircle,
+	mdiLayers,
 	mdiMagnifyMinus,
 	mdiMagnifyPlus,
 	mdiMessageText
@@ -16,6 +17,9 @@ import { useDisplay } from 'vuetify';
 const { smAndUp, mdAndUp } = useDisplay();
 const editor = useEditor();
 const fitToScreen = useFitToScreen();
+const toggleList = () => {
+	editor.tool = editor.tool === 'list' ? '' : 'list';
+};
 const switchPan = () => {
 	editor.mode = editor.mode === 'pan' ? 'select' : 'pan';
 };
@@ -35,7 +39,7 @@ const zoom = (dir: string) => {
 				<VCol cols="auto">
 					<VRow no-gutters justify="center" align="center">
 						<VCol cols="auto">
-							<LayersList />
+							<VBtn :icon="mdiLayers" v-tooltip:top="'Layers'" @click="toggleList" />
 						</VCol>
 						<VCol cols="auto">
 							<VBtn :icon="mdiCog" v-tooltip:top="'Settings'" />
