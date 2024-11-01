@@ -1,42 +1,49 @@
 <script setup lang="ts">
 import { mdiAccountAlert } from '@mdi/js';
-import { useUser } from '../store';
+import { useNotice, useUser } from '../store';
 import { ref } from 'vue';
 import axios from '../axios';
-import useRequest from '../hooks/request';
 import { useRouter } from 'vue-router';
 
 const userData = useUser();
 const router = useRouter();
-const { destroy } = useRequest();
+const notice = useNotice();
 const otp = ref();
 const showVerify = ref(false);
 const sendEmail = () => {
 	axios
 		.post(
 			'deleteuser/email',
-			{
-				otp
-			},
+			{},
 			{
 				headers: {
 					Authorization: userData.bearerToken
 				}
 			}
 		)
-		.then((response) => {
-			console.log(response);
+		.then(() => {
 			showVerify.value = true;
 		})
-		.catch(console.warn);
+		.catch((error) => {
+			notice.send(error.response?.data.message || error.message, 'error');
+		});
 };
 const deleteUser = () => {
-	destroy(userData.user.id as any, 'users', false, (response) => {
-		console.log(response);
-		userData.user = {};
-		localStorage.removeItem('userData');
-		router.push('/');
-	});
+	axios
+		.delete('users/' + userData.user.id, {
+			headers: {
+				Authorization: userData.bearerToken,
+				'X-User-Delete-Code': otp.value
+			}
+		})
+		.then(() => {
+			userData.user = {};
+			localStorage.removeItem('userData');
+			router.push('/');
+		})
+		.catch((error) => {
+			notice.send(error.response?.data.message || error.message, 'error');
+		});
 };
 </script>
 

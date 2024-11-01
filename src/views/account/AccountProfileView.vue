@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useNotice, useUser } from '../../store';
-import { mdiCheck, mdiClose, mdiPencil } from '@mdi/js';
+import { mdiAccountRemove, mdiCheck, mdiClose, mdiPencil } from '@mdi/js';
 import useRequest from '../../hooks/request';
 
 type TField = 'name' | 'password';
@@ -117,6 +117,22 @@ const cancel = (field: TField) => {
 				:append-inner-icon="mdiPencil"
 				@click:append-inner="edit('password')"
 			/>
+			<VDivider class="mb-5" />
+			<VRow justify="space-between" align="center">
+				<VCol>
+					<VCard>
+						<VCardTitle>Delete Account</VCardTitle>
+						<VCardSubtitle>
+							Please note that once you delete your account, there is no going back!
+						</VCardSubtitle>
+					</VCard>
+				</VCol>
+				<VCol cols="auto">
+					<VBtn to="deleteuser" variant="tonal" :prepend-icon="mdiAccountRemove">
+						Delete Account
+					</VBtn>
+				</VCol>
+			</VRow>
 		</VCardItem>
 	</VCard>
 </template>
