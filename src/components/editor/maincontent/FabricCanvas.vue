@@ -184,6 +184,7 @@ watch(
 			editor.loading = false;
 		}
 
+		// Remove old objects.
 		oldIds.forEach((id) => {
 			if (!newIds.includes(id)) {
 				const object = fabricCanvas.getObjectById(id);
@@ -192,6 +193,11 @@ watch(
 				}
 			}
 		});
+
+		// Resort layers in stack if it is needed.
+		if (newIds.length === oldIds.length && JSON.stringify(newIds) !== JSON.stringify(oldIds)) {
+			fabricCanvas.sortObjectsByIds(newIds);
+		}
 
 		fabricCanvas.requestRenderAll();
 	},

@@ -68,6 +68,17 @@ class Canvas extends FabricCanvas {
 		this.setActiveObject(activeSelection);
 		this.requestRenderAll();
 	}
+
+	sortObjectsByIds(ids: string[] = []) {
+		ids.forEach((id, index) => {
+			const object = this.getObjectById(id);
+			if (object) {
+				this.moveObjectTo(object, index);
+			}
+		});
+
+		return this;
+	}
 }
 
 export default Canvas;

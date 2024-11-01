@@ -11,6 +11,9 @@ class Sanitizer {
 		angle: 'number',
 		width: 'number',
 		height: 'number',
+		rx: 'number',
+		ry: 'number',
+		radius: 'number',
 		cropX: 'number',
 		cropY: 'number',
 		strokeWidth: 'number'

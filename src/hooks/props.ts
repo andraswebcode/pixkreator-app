@@ -14,8 +14,25 @@ const useProps = (props: string[]): any => {
 			},
 			set: (value: any) => {
 				const id = editor.activeLayerIds[0];
+				const type = project.byIds[id]?.type;
+				const others: any = {};
+
+				if (type === 'Ellipse') {
+					if (prop === 'width') {
+						others.rx = sanitize('rx', value / 2);
+					} else if (prop === 'height') {
+						others.ry = sanitize('ry', value / 2);
+					}
+				} else if (type === 'Circle') {
+					if (prop === 'radius') {
+						others.width = sanitize('radius', value * 2);
+						others.height = sanitize('radius', value * 2);
+					}
+				}
+
 				project.updateProps(id, {
-					[prop]: sanitize(prop, value)
+					[prop]: sanitize(prop, value),
+					...others
 				});
 			}
 		});
