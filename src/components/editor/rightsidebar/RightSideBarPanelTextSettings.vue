@@ -21,7 +21,8 @@ const {
 	textAlign,
 	fontStyle,
 	fontWeight,
-	underline
+	underline,
+	curve
 } = useProps([
 	'text',
 	'fontFamily',
@@ -31,7 +32,8 @@ const {
 	'textAlign',
 	'fontStyle',
 	'fontWeight',
-	'underline'
+	'underline',
+	'curve'
 ]);
 const format = computed<Format[]>({
 	get() {
@@ -81,6 +83,7 @@ const format = computed<Format[]>({
 				<VBtn :icon="mdiFormatItalic" value="italic" />
 				<VBtn :icon="mdiFormatUnderline" value="underline" />
 			</ButtonToggle>
+			<RangeSlider label="Curve" v-model="curve" :min="-400" :max="400" :step="1" />
 		</VExpansionPanelText>
 	</VExpansionPanel>
 </template>
