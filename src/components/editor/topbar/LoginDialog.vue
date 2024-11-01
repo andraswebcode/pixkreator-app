@@ -12,6 +12,7 @@ const form = ref<'login' | 'register' | 'pwreset' | 'verify'>('login');
 		title="Sign in to Continue"
 		:max-width="LOGIN_DIALOG_WIDTH"
 		scroll
+		auto-height
 		v-model="editor.openLoginDialog"
 		@close="editor.openLoginDialog = false"
 	>

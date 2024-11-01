@@ -94,6 +94,7 @@ onMounted(filter);
 		v-model="showDetails"
 		@close="showDetails = false"
 		:max-width="DETAILS_DIALOG_WIDTH"
+		scroll
 	>
 		<DetailsCarousel v-model="index">
 			<UploadDetails v-for="item of items" :key="item.id" v-bind="item">

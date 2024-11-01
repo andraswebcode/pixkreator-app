@@ -76,7 +76,6 @@ const navigate = (dir: 'next' | 'prev') => {
 }
 .item {
 	height: 100%;
-	overflow: hidden auto;
 }
 .buttons {
 	position: absolute;
