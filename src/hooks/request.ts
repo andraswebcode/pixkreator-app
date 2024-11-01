@@ -120,13 +120,36 @@ const useRequest = () => {
 			.catch(catchFn);
 	};
 
+	const restore = (id: string, path: string, then: ThenFn, catchFn?: ThenFn) => {
+		const _id = parseInt(id);
+
+		if (!_id) {
+			return;
+		}
+
+		axios
+			.patch(
+				path + '/' + _id + '/restore',
+				{},
+				{
+					headers: {
+						Authorization: userData.bearerToken
+					}
+				}
+			)
+			.then(({ data }) => data)
+			.then(then)
+			.catch(catchFn);
+	};
+
 	return {
 		get,
 		list,
 		save,
 		patch,
 		updateFile,
-		destroy
+		destroy,
+		restore
 	};
 };
 

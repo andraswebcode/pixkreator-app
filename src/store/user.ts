@@ -11,7 +11,7 @@ export type UserData = {
 	avatar?: string;
 	token?: string;
 	plan?: UserPlan;
-	can_generate_image?: boolean;
+	sub_news?: 'yes' | 'no';
 	stai_credits?: number;
 };
 
@@ -45,9 +45,10 @@ export default defineStore<string, UserState, UserGetters, UserActions>('user', 
 	getters: {
 		loggedIn: ({ user: { id, token } }) => !!(id && token),
 		bearerToken: ({ user: { token } }) => 'Bearer ' + token,
-		isProPlan: ({ user: { plan, id, token } }) => !!id && !!token && plan !== 'free',
-		canGenerateImage: ({ user: { can_generate_image, id, token } }) =>
-			!!id && !!token && !!can_generate_image
+		isProPlan: ({ user: { plan, id, token, admin } }) =>
+			!!id && !!token && (plan !== 'free' || !!admin),
+		canGenerateImage: ({ user: { stai_credits, id, token } }) =>
+			!!id && !!token && !!stai_credits
 	},
 	actions: {
 		setAndSave(key, value) {

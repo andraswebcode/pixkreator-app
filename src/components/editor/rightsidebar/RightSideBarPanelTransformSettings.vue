@@ -20,8 +20,8 @@ const { left, top, scaleX, scaleY, skewX, skewY, angle } = useProps([
 				<VTextField type="number" label="Top" v-model="top" />
 			</InputGroup>
 			<InputGroup>
-				<VTextField type="number" label="Scale X" v-model="scaleX" />
-				<VTextField type="number" label="Scale Y" v-model="scaleY" />
+				<VTextField type="number" label="Scale X" v-model="scaleX" min="0" step="0.01" />
+				<VTextField type="number" label="Scale Y" v-model="scaleY" min="0" step="0.01" />
 			</InputGroup>
 			<InputGroup>
 				<VTextField type="number" label="Skew X" v-model="skewX" />

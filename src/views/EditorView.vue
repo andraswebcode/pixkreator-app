@@ -6,6 +6,7 @@ import useRequest from '../hooks/request';
 import useFitToScreen from '../hooks/fittoscreen';
 import { PhotoSize } from '../types/common';
 import { getCroppedImageDimensions } from '../utils/functions';
+import { parseSVG } from '../utils/parse-svg';
 
 const route = useRoute();
 const userData = useUser();
@@ -48,8 +49,6 @@ const fetchProject = (obj: any) => {
 			(state) => {
 				project.$reset();
 
-				// editor.loading = false;
-
 				if (state) {
 					project.$patch({
 						...state,
@@ -71,8 +70,6 @@ const fetchProject = (obj: any) => {
 			'photos',
 			(state) => {
 				project.$reset();
-
-				// editor.loading = false;
 
 				if (state) {
 					const size: PhotoSize = obj.query.size || 'src';
@@ -104,6 +101,41 @@ const fetchProject = (obj: any) => {
 				editor.loading = false;
 			}
 		);
+	} else if (obj.query.file) {
+		editor.loading = true;
+		get(obj.query.file, 'uploads', (state) => {
+			const { width, height, image, mime_type } = state;
+
+			project.$reset();
+			project.$patch({
+				width,
+				height
+			});
+
+			if (mime_type === 'image/svg+xml') {
+				parseSVG(image).then(({ layers, group }) => {
+					if (layers.length === 0) {
+						notice.send('SVG parse failed.', 'error');
+					} else if (layers.length === 1) {
+						project.addLayer(layers[0]);
+					} else {
+						project.addLayer(group);
+					}
+				});
+			} else if (mime_type === 'font/ttf' || mime_type === 'font/woff') {
+				console.log('Font file loaded...');
+			} else {
+				project.addLayer({
+					type: 'image',
+					src: image,
+					left: width / 2,
+					top: height / 2
+				});
+			}
+
+			project.resetStack();
+			fitToScreen();
+		});
 	} else {
 		project.$reset();
 

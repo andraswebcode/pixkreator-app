@@ -2,8 +2,9 @@
 import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
-import { mdiDownload, mdiRename, mdiTrashCan, mdiUpload } from '@mdi/js';
-import { useUser } from '../../store';
+import { mdiDownload, mdiTrashCan, mdiUpload } from '@mdi/js';
+import { useNotice, useUser } from '../../store';
+import { uploadFile } from '../../utils/upload-file';
 
 const fileSources: { label: string; value: string }[] = [
 	{
@@ -30,6 +31,8 @@ const fileSources: { label: string; value: string }[] = [
 const router = useRouter();
 const route = useRoute();
 const userData = useUser();
+const notice = useNotice();
+const { save, destroy } = useRequest();
 const search = ref(route.query.search);
 const source = ref(route.params.source);
 const items = ref<any>([]);
@@ -62,6 +65,92 @@ const loadMore = () => {
 		(data) => {
 			items.value.push(...data.items);
 			page.value++;
+		}
+	);
+};
+const upload = () => {
+	uploadFile(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
+		.then((response) => {
+			const blob = response?.[0];
+
+			if (!blob) {
+				return;
+			}
+
+			const img = new Image();
+			const url = URL.createObjectURL(blob);
+
+			img.src = url;
+
+			img.onload = () => {
+				const data = new FormData();
+
+				data.append('file', blob);
+				data.append('source', 'uploads');
+				data.append('width', img.width as any);
+				data.append('height', img.height as any);
+
+				save(
+					'',
+					'uploads',
+					data,
+					(state) => {
+						console.log(state);
+						items.value = [state].concat(items.value);
+						notice.send('Image saved successfully', 'success');
+						URL.revokeObjectURL(url);
+					},
+					(error) => {
+						console.warn(error);
+						notice.send(error.response?.data?.message || error.message, 'error');
+						URL.revokeObjectURL(url);
+					}
+				);
+			};
+		})
+		.catch((error) => {
+			console.error(error);
+			notice.send(error.response?.data?.message || error.message, 'error');
+		});
+};
+const editFile = (i: number) => {
+	const item = items.value[i];
+	router.push({
+		name: 'editor',
+		query: {
+			file: item.id
+		}
+	});
+};
+const downloadFile = (i: number) => () => {
+	const item = items.value[i];
+	const { id, image, file_name, file_extension } = item;
+	const name = file_name || 'image-' + id;
+	const a = document.createElement('a');
+
+	a.style.display = 'none';
+	a.href = image;
+	a.download = name + '.' + file_extension;
+
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
+};
+const deleteFile = (i: number) => () => {
+	const item = items.value[i];
+	const id = item.id;
+	destroy(
+		id,
+		'uploads',
+		false,
+		(data) => {
+			notice.send(data.message, 'success');
+			items.value = items.value.filter((item) => item.id !== id);
+		},
+		(error) => {
+			console.log(error);
+
+			notice.send(error.response?.data?.message || error.message, 'error');
 		}
 	);
 };
@@ -106,7 +195,7 @@ onBeforeRouteUpdate((to) => {
 				<VRow justify="center" justify-md="end">
 					<VCol cols="auto" class="mr-4">
 						<VBtnGroup density="compact">
-							<VBtn :prepend-icon="mdiUpload">Upload</VBtn>
+							<VBtn :prepend-icon="mdiUpload" @click="upload">Upload</VBtn>
 						</VBtnGroup>
 					</VCol>
 				</VRow>
@@ -121,26 +210,24 @@ onBeforeRouteUpdate((to) => {
 			@load="loadMore"
 		>
 			<GridItem
-				v-for="item of items"
+				v-for="(item, i) of items"
 				:key="item.id"
 				cols="2"
-				selectable
 				:actions="[
 					{
-						label: 'Rename',
-						prependIcon: mdiRename
-					},
-					{
 						label: 'Download',
-						prependIcon: mdiDownload
+						prependIcon: mdiDownload,
+						onClick: downloadFile(i)
 					},
 					{
 						label: 'Delete',
-						prependIcon: mdiTrashCan
+						prependIcon: mdiTrashCan,
+						onClick: deleteFile(i)
 					}
 				]"
 				:src="item.image"
 				responsive
+				@click="editFile(i)"
 			/>
 		</LibraryItems>
 	</LibraryWrapper>

@@ -2,14 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
-import {
-	mdiContentCopy,
-	mdiDeleteForever,
-	mdiRename,
-	mdiRestore,
-	mdiTrashCan,
-	mdiViewList
-} from '@mdi/js';
+import { mdiContentCopy, mdiDeleteForever, mdiRestore, mdiTrashCan, mdiViewList } from '@mdi/js';
 import { useNotice, useUser } from '../../store';
 
 const router = useRouter();
@@ -21,7 +14,7 @@ const page = ref(2);
 const loading = ref(true);
 const items = ref<any[]>([]);
 const selections = ref<any[]>([]);
-const { list, destroy } = useRequest();
+const { list, save, destroy, restore } = useRequest();
 const filter = () => {
 	const query: any = {};
 	if (search.value) {
@@ -59,16 +52,52 @@ const editProject = (i: number) => {
 		}
 	});
 };
-const renameProject = (i: number) => () => {
-	console.log(i);
-};
 const cloneProject = (i: number) => () => {
-	console.log(i);
+	const item = items.value[i];
+	const { title, description, width, height, background, layers, layer_ids } = item;
+	console.log(item);
+
+	save(
+		'',
+		'designs',
+		{
+			title,
+			description,
+			status: 'private',
+			width,
+			height,
+			background,
+			layers,
+			layer_ids
+		},
+		(response) => {
+			notice.send('Design created successfully.', 'success');
+			items.value = [response].concat(items.value);
+		},
+		(error) => {
+			notice.send(error.response?.data?.message || error.message, 'error');
+		}
+	);
+};
+const restoreProject = (i: number) => () => {
+	const item = items.value[i];
+	const id = item.id;
+	restore(
+		id,
+		'designs',
+		(data) => {
+			notice.send(data.message, 'success');
+			items.value = items.value.filter((item) => item.id !== id);
+		},
+		(error) => {
+			notice.send(error.response?.data?.message || error.message, 'error');
+		}
+	);
 };
 const deleteProject = (i: number) => () => {
 	const item = items.value[i];
 	const id = item.id;
-	const force = item.deleted_at;
+	const force = !!item.deleted_at;
 	destroy(
 		id,
 		'designs',
@@ -169,25 +198,21 @@ onBeforeRouteUpdate((to) => {
 				:id="item.id"
 				:label="item.title"
 				cols="2"
-				selectable
 				:actions="
 					item.deleted_at
 						? [
 								{
 									label: 'Restore',
-									prependIcon: mdiRestore
+									prependIcon: mdiRestore,
+									onClick: restoreProject(i)
 								},
 								{
 									label: 'Delete Permanently',
-									prependIcon: mdiDeleteForever
+									prependIcon: mdiDeleteForever,
+									onClick: deleteProject(i)
 								}
 						  ]
 						: [
-								{
-									label: 'Rename',
-									prependIcon: mdiRename,
-									onClick: renameProject(i)
-								},
 								{
 									label: 'Clone',
 									prependIcon: mdiContentCopy,
