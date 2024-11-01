@@ -68,7 +68,7 @@ const size = computed({
 		</VExpansionPanel>
 		<VExpansionPanel title="Background" value="background">
 			<VExpansionPanelText>
-				<ColorPicker label="Canvas Background" v-model="project.background" />
+				<ColorPicker label="Canvas Background" clearable v-model="project.background" />
 			</VExpansionPanelText>
 		</VExpansionPanel>
 	</VExpansionPanels>

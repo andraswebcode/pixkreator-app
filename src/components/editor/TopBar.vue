@@ -126,6 +126,10 @@ const saveDesign = () => {
 	}
 };
 const saveTemplate = () => {
+	if (!confirm('Are you sure you want to create template from this design?')) {
+		return;
+	}
+
 	const { title, description, keywords, width, height, background, ids, byIds } = project;
 	// const multiplier = 1;
 	const category = templateCategories.find(

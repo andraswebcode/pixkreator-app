@@ -98,6 +98,13 @@ const deleteProject = (i: number) => () => {
 	const item = items.value[i];
 	const id = item.id;
 	const force = !!item.deleted_at;
+
+	if (force) {
+		if (!confirm('Are you sure you want to permanently delete this item?')) {
+			return;
+		}
+	}
+
 	destroy(
 		id,
 		'designs',

@@ -152,7 +152,7 @@ const defaults = {
 		singleLine: true,
 		flat: true,
 		appendInnerIcon: mdiMagnify
-	},
+	} /*
 	DetailsCarousel: {
 		height: 'auto',
 		continuous: false,
@@ -168,7 +168,7 @@ const defaults = {
 			variant: 'flat',
 			size: 'small'
 		}
-	}
+	}*/
 };
 
 export default defaults;

@@ -137,6 +137,10 @@ const downloadFile = (i: number) => () => {
 	document.body.removeChild(a);
 };
 const deleteFile = (i: number) => () => {
+	if (!confirm('Are you sure you want to permanently delete this item?')) {
+		return;
+	}
+
 	const item = items.value[i];
 	const id = item.id;
 	destroy(

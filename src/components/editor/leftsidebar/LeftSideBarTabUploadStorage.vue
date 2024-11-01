@@ -114,11 +114,9 @@ onMounted(filter);
 		:max-width="DETAILS_DIALOG_WIDTH"
 	>
 		<DetailsCarousel v-model="index">
-			<VCarouselItem v-for="item of items" :key="item.id">
-				<UploadDetails v-bind="item">
-					<VSwitch label="Resize Canvas to Image Size" v-model="resize" />
-				</UploadDetails>
-			</VCarouselItem>
+			<UploadDetails v-for="item of items" :key="item.id" v-bind="item">
+				<VSwitch label="Resize Canvas to Image Size" v-model="resize" />
+			</UploadDetails>
 		</DetailsCarousel>
 		<template v-slot:actions>
 			<VBtn @click="addImage">Add Image</VBtn>

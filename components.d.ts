@@ -14,6 +14,7 @@ declare module 'vue' {
     ColorPicker: typeof import('./src/components/common/ColorPicker.vue')['default']
     DashboardContent: typeof import('./src/components/dashboard/DashboardContent.vue')['default']
     DashboardSideBar: typeof import('./src/components/dashboard/DashboardSideBar.vue')['default']
+    DetailsCarousel: typeof import('./src/components/common/DetailsCarousel.vue')['default']
     DownloadDialog: typeof import('./src/components/editor/topbar/DownloadDialog.vue')['default']
     FabricCanvas: typeof import('./src/components/editor/maincontent/FabricCanvas.vue')['default']
     FilterDetails: typeof import('./src/components/common/FilterDetails.vue')['default']

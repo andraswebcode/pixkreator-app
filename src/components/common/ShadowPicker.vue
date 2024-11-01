@@ -84,4 +84,8 @@ const applyShadow = (apply: boolean | null) => {
 	</VMenu>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.v-text-field * {
+	cursor: pointer;
+}
+</style>

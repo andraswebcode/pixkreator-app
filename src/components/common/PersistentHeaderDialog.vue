@@ -26,6 +26,9 @@ const model = defineModel<boolean | undefined>();
 </template>
 
 <style scoped lang="scss">
+:deep(.v-overlay__content) {
+	height: calc(100% - 48px);
+}
 .v-card {
 	display: flex;
 	flex-direction: column;

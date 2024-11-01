@@ -106,9 +106,7 @@ onMounted(filter);
 		:max-width="DETAILS_DIALOG_WIDTH"
 	>
 		<DetailsCarousel v-model="index">
-			<VCarouselItem v-for="item of items" :key="item.id">
-				<TemplateDetails v-bind="item" />
-			</VCarouselItem>
+			<TemplateDetails v-for="item of items" :key="item.id" v-bind="item" />
 		</DetailsCarousel>
 		<template v-slot:actions>
 			<VBtn @click="addTemplate">Add Template</VBtn>

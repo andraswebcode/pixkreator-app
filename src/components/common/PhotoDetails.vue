@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useDisplay } from 'vuetify';
+
 const props = defineProps<{
 	title: string;
 	photographer: string;
@@ -11,15 +13,31 @@ const props = defineProps<{
 	width: number;
 	height: number;
 }>();
+const { mdAndUp } = useDisplay();
 </script>
 
 <template>
-	<VContainer>
-		<VRow>
-			<VCol cols="12" md="8" align-self="center">
+	<VContainer class="w-100 h-100">
+		<VRow class="w-100 h-100">
+			<VCol
+				cols="12"
+				md="8"
+				align-self="center"
+				class="w-100"
+				:class="{
+					'h-100': mdAndUp
+				}"
+			>
 				<VImg aspect-ratio="1" :src="props.medium" />
 			</VCol>
-			<VCol cols="12" md="4">
+			<VCol
+				cols="12"
+				md="4"
+				class="w-100"
+				:class="{
+					'h-100': mdAndUp
+				}"
+			>
 				<h3 class="mb-2">
 					{{ props.title || 'Photo' }} - by
 					<a :href="props.photographer_url" target="_blank">{{ props.photographer }}</a>
@@ -31,10 +49,4 @@ const props = defineProps<{
 	</VContainer>
 </template>
 
-<style scoped lang="scss">
-.v-container,
-.v-row {
-	width: 100%;
-	height: 100%;
-}
-</style>
+<style scoped lang="scss"></style>
