@@ -231,6 +231,7 @@ onUnmounted(() => {
 	<PersistentHeaderDialog
 		title="Share Image"
 		v-model="editor.openShareDialog"
+		scroll
 		@close="editor.openShareDialog = false"
 	>
 		<VContainer>

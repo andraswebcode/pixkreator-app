@@ -22,10 +22,10 @@ const templateCategories = [
 	},
 	{
 		label: 'Square Social Post',
-		width: 1200,
-		height: 1200,
+		width: 1080,
+		height: 1080,
 		value: 'square-social-post',
-		size: '1200x1200'
+		size: '1080x1080'
 	},
 	{
 		label: 'Facebook Cover',
@@ -33,20 +33,6 @@ const templateCategories = [
 		height: 630,
 		value: 'facebook-cover',
 		size: '1702x630'
-	},
-	{
-		label: 'Facebook Page Cover',
-		width: 1702,
-		height: 630,
-		value: 'facebook-page-cover',
-		size: '1702x630'
-	},
-	{
-		label: 'Facebook Event Cover',
-		width: 1920,
-		height: 1080,
-		value: 'facebook-event-cover',
-		size: '1920x1080'
 	},
 	{
 		label: 'YouTube Channel Art',

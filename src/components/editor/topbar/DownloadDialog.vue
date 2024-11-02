@@ -69,6 +69,7 @@ onUnmounted(() => {
 	<PersistentHeaderDialog
 		title="Download Image"
 		v-model="editor.openDownloadDialog"
+		scroll
 		@close="editor.openDownloadDialog = false"
 	>
 		<VContainer>

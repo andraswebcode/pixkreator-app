@@ -27,6 +27,13 @@ const valueStr = computed(() => {
 	const { offsetX, offsetY, blur, color } = model.value;
 	return `${offsetX} ${offsetY} ${blur} ${color}`;
 });
+const hasShadow = computed(() => {
+	if (!model.value) {
+		return false;
+	}
+	const { offsetX, offsetY, blur } = model.value;
+	return !!(offsetX && offsetY && blur);
+});
 const applyShadow = (apply: boolean | null) => {
 	if (apply) {
 		model.value = {
@@ -64,7 +71,7 @@ const applyShadow = (apply: boolean | null) => {
 			<VCardItem>
 				<VSwitch
 					label="Apply Shadow"
-					:model-value="!!model"
+					:model-value="hasShadow"
 					@update:model-value="applyShadow"
 				/>
 			</VCardItem>
