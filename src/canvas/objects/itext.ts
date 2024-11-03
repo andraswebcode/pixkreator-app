@@ -1,61 +1,40 @@
-import { cache, IText } from 'fabric';
+import { cache, IText, TPathAlign } from 'fabric';
 import { Defaults } from '../mixins/defaults';
 import FontFaceObserver from 'fontfaceobserver';
 import { loadGoogleFonts } from '../../utils/load-gfonts';
-
-/*
-const createCirclePath = (radius: number, curve: number) => {
-	const centerX = 0;
-	const centerY = 0;
-
-	const sweepFlag = curve > 0 ? 1 : 0;
-
-	return `
-        M ${centerX} ${centerY - radius} 
-        A ${radius} ${radius} 0 1 ${sweepFlag} ${centerX} ${centerY + radius}
-        A ${radius} ${radius} 0 1 ${sweepFlag} ${centerX} ${centerY - radius}
-    `;
-};
-*/
+import { PROPath } from './path';
 
 class PROIText extends Defaults(IText) {
-	/*
+	pathAlign: TPathAlign = 'center';
+
 	private _curve = 0;
-	private _radius = 0;
-	
+
 	get curve() {
 		return this._curve;
 	}
 
 	set curve(value: number) {
-		this._curve = value;
-		this._radius = 8000 / value;
+		this._curve = value || 0;
 		this.editable = !value;
 
-		const path = value
-			? new PROPath(createCirclePath(this._radius, this._curve), {
-					//visible: false,
-					selectable: false,
-					fill: null,
-					strokeWidth: 1,
-					stroke: 'black'
-			  })
-			: undefined;
-
-		let pso = 0;
+		let lineWidth = 0;
 
 		try {
-			pso = this.calcTextWidth();
+			lineWidth = this.calcTextWidth();
 		} catch (e) {
 			//
 		}
 
-		this.set({
-			path,
-			pathStartOffset: pso
-		});
+		const radius = 8000 / this._curve;
+		const path = this._curve
+			? new PROPath(_createArcPath(lineWidth, radius), {
+					visible: false
+			  })
+			: undefined;
+
+		this.set('path', path);
 	}
-*/
+
 	_set(key: string, value: any) {
 		this.originX = 'center';
 		this.originY = 'center';
@@ -77,8 +56,23 @@ class PROIText extends Defaults(IText) {
 			return s;
 		});
 	}
+}
 
-	// calcOwnMatrix(): TMat2D {}
+function _createArcPath(arcLength, radius) {
+	const absRadius = Math.abs(radius);
+	const angleRadians = arcLength / absRadius;
+	const x = absRadius * Math.sin(angleRadians / 2);
+	let y = absRadius * (1 - Math.cos(angleRadians / 2));
+
+	if (radius < 0) {
+		y = -y;
+	}
+
+	const largeArcFlag = angleRadians > Math.PI ? 1 : 0;
+
+	return `M ${-x},${-y} A ${absRadius},${absRadius} 0 ${largeArcFlag} ${
+		radius < 0 ? 0 : 1
+	} ${x},${-y}`;
 }
 
 export { PROIText };
