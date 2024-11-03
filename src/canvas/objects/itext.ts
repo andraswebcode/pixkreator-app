@@ -1,4 +1,4 @@
-import { IText } from 'fabric';
+import { cache, IText } from 'fabric';
 import { Defaults } from '../mixins/defaults';
 import FontFaceObserver from 'fontfaceobserver';
 import { loadGoogleFonts } from '../../utils/load-gfonts';
@@ -71,7 +71,11 @@ class PROIText extends Defaults(IText) {
 
 		loadGoogleFonts([{ family }]);
 
-		return Promise.all([superPromise, fontPromise]).then(([s]) => s);
+		return Promise.all([superPromise, fontPromise]).then(([s]) => {
+			cache.clearFontCache(family);
+			s.initDimensions();
+			return s;
+		});
 	}
 
 	// calcOwnMatrix(): TMat2D {}
