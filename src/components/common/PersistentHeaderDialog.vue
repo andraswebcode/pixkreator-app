@@ -2,7 +2,7 @@
 const props = defineProps<{
 	title?: string;
 	maxWidth?: string | number;
-	autoHeight: boolean;
+	autoHeight?: boolean;
 	scroll?: boolean;
 }>();
 const emit = defineEmits(['close']);

@@ -123,11 +123,9 @@ onMounted(filter);
 		:max-width="DETAILS_DIALOG_WIDTH"
 	>
 		<DetailsCarousel v-model="index">
-			<VCarouselItem v-for="item of items" :key="item.id">
-				<PhotoDetails v-bind="item">
-					<VSelect label="Select a Size" :items="PHOTO_SIZES" v-model="size" />
-				</PhotoDetails>
-			</VCarouselItem>
+			<PhotoDetails v-for="item of items" :key="item.id" v-bind="item">
+				<VSelect label="Select a Size" :items="PHOTO_SIZES" v-model="size" />
+			</PhotoDetails>
 		</DetailsCarousel>
 		<template v-slot:actions>
 			<VBtn @click="addPhoto">Edit This Photo</VBtn>
