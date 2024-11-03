@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import useProps from '../../../hooks/props';
 
-const { left, top, scaleX, scaleY, skewX, skewY, angle } = useProps([
+const { left, top, scaleX, scaleY, skewX, skewY, angle, flipX, flipY } = useProps([
 	'left',
 	'top',
 	'scaleX',
 	'scaleY',
 	'skewX',
 	'skewY',
-	'angle'
+	'angle',
+	'flipX',
+	'flipY'
 ]);
 </script>
 
@@ -28,6 +30,14 @@ const { left, top, scaleX, scaleY, skewX, skewY, angle } = useProps([
 				<VTextField type="number" label="Skew Y" v-model="skewY" />
 			</InputGroup>
 			<VTextField type="number" label="Rotate" v-model="angle" />
+			<VRow>
+				<VCol class="py-0">
+					<VCheckbox label="Flip X" v-model="flipX" />
+				</VCol>
+				<VCol class="py-0">
+					<VCheckbox label="Flip Y" v-model="flipY" />
+				</VCol>
+			</VRow>
 		</VExpansionPanelText>
 	</VExpansionPanel>
 </template>

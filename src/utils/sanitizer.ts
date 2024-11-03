@@ -9,6 +9,8 @@ class Sanitizer {
 		skewX: 'number',
 		skewY: 'number',
 		angle: 'number',
+		flipX: 'boolean',
+		flipY: 'boolean',
 		width: 'number',
 		height: 'number',
 		rx: 'number',
@@ -38,6 +40,11 @@ class Sanitizer {
 	// @ts-ignore
 	private _number(value: any): number {
 		return toFixed(value);
+	}
+
+	// @ts-ignore
+	private _boolean(value: any): boolean {
+		return !!value;
 	}
 }
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const props = defineProps<{
 	label: string;
-	multiple: boolean;
-	mandatory: boolean;
+	multiple?: boolean;
+	mandatory?: boolean;
 }>();
 const model = defineModel();
 </script>

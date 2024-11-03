@@ -1,4 +1,6 @@
 import {
+	mdiCheckboxBlankOutline,
+	mdiCheckboxOutline,
 	mdiCheckCircleOutline,
 	mdiChevronDown,
 	mdiChevronLeft,
@@ -97,6 +99,12 @@ const defaults = {
 			density: 'compact',
 			dirty: true
 		},
+		VCheckbox: {
+			density: 'compact',
+			hideDetails: true,
+			trueIcon: mdiCheckboxOutline,
+			falseIcon: mdiCheckboxBlankOutline
+		},
 		VSelect: {
 			variant: 'underlined',
 			density: 'compact'
@@ -152,23 +160,7 @@ const defaults = {
 		singleLine: true,
 		flat: true,
 		appendInnerIcon: mdiMagnify
-	} /*
-	DetailsCarousel: {
-		height: 'auto',
-		continuous: false,
-		prevIcon: mdiChevronLeft,
-		nextIcon: mdiChevronRight,
-		hideDelimiters: true,
-		hideDelimiterBackground: true,
-		VCarouselItem: {
-			class: 'mx-10'
-		},
-		VBtn: {
-			density: 'comfortable',
-			variant: 'flat',
-			size: 'small'
-		}
-	}*/
+	}
 };
 
 export default defaults;

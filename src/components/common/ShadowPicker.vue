@@ -32,7 +32,7 @@ const hasShadow = computed(() => {
 		return false;
 	}
 	const { offsetX, offsetY, blur } = model.value;
-	return !!(offsetX && offsetY && blur);
+	return !!(offsetX || offsetY || blur);
 });
 const applyShadow = (apply: boolean | null) => {
 	if (apply) {
