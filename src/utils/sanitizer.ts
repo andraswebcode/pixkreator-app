@@ -18,7 +18,9 @@ class Sanitizer {
 		radius: 'number',
 		cropX: 'number',
 		cropY: 'number',
-		strokeWidth: 'number'
+		strokeWidth: 'number',
+		strokeDashArray: 'numberArray',
+		strokeDashOffset: 'number'
 	};
 
 	public sanitize(property: string, value: any): any {
@@ -40,6 +42,14 @@ class Sanitizer {
 	// @ts-ignore
 	private _number(value: any): number {
 		return toFixed(value);
+	}
+
+	// @ts-ignore
+	private _numberArray(value: any): number[] {
+		if (!Array.isArray(value)) {
+			return [];
+		}
+		return value.map((v) => toFixed(v));
 	}
 
 	// @ts-ignore

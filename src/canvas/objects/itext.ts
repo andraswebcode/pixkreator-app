@@ -41,6 +41,13 @@ class PROIText extends Defaults(IText) {
 		return super._set(key, value);
 	}
 
+	// @ts-ignore
+	toObject(propertiesToInclude?: string[] = []): any {
+		const object = super.toObject(propertiesToInclude.concat(['curve']));
+		delete object.path;
+		return object;
+	}
+
 	static _fromObject<S extends any>(object: any, options?: any) {
 		const family = object.fontFamily || 'Arial';
 		// @ts-ignore
@@ -53,6 +60,7 @@ class PROIText extends Defaults(IText) {
 		return Promise.all([superPromise, fontPromise]).then(([s]) => {
 			cache.clearFontCache(family);
 			s.initDimensions();
+			s.set('curve', object.curve);
 			return s;
 		});
 	}
