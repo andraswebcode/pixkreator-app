@@ -50,6 +50,8 @@ const generate = () => {
 			notice.send('Image saved successfully', 'success');
 		})
 		.catch((error) => {
+			console.warn(error);
+
 			editor.aiIsGenerating = false;
 			notice.send(error.response?.data?.message || error.message, 'error');
 		});

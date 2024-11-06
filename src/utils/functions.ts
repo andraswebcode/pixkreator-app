@@ -126,16 +126,16 @@ const getCroppedImageDimensions = (
 ): { width: number; height: number } => {
 	if (sizeKey === 'src') {
 		return { width: originalWidth, height: originalHeight };
+	} else if (sizeKey === 'large') {
+		return {
+			width: 1280,
+			height: (1280 / originalWidth) * originalHeight
+		};
 	} else if (sizeKey === 'thumbnail') {
 		return { width: 280, height: 280 };
 	}
 
-	const maxDimensions: { [key: string]: number } = {
-		large: 1280,
-		medium: 640
-	};
-
-	const maxDimension = maxDimensions[sizeKey];
+	const maxDimension = 640;
 
 	if (originalWidth > originalHeight) {
 		const newWidth = maxDimension;

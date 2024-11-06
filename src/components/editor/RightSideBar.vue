@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-import { ref } from 'vue';
-import { useEditor } from '../../store';
+import { computed, ref } from 'vue';
+import { useEditor, useProject } from '../../store';
 
-const show = ref(true);
 const editor = useEditor();
+const project = useProject();
+const show = ref(true);
+const showLayerSettings = computed(
+	() => editor.activeLayerIds.length === 1 && project.ids.includes(editor.activeLayerIds[0])
+);
 const onClick = () => {
 	show.value = !show.value;
 };
@@ -12,7 +16,7 @@ const onClick = () => {
 
 <template>
 	<VNavigationDrawer location="end" v-model="show">
-		<RightSideBarLayerSettings v-if="editor.activeLayerIds.length === 1" />
+		<RightSideBarLayerSettings v-if="showLayerSettings" />
 		<RightSideBarCanvasSettings v-else />
 		<template v-slot:append>
 			<SideBarToggler @click="onClick" :icon="show ? mdiChevronRight : mdiChevronLeft" />

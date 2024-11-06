@@ -63,6 +63,7 @@ const setCustomSize = () => {
 		v-model="showCustomSize"
 		@close="showCustomSize = false"
 		:max-width="SMALL_DIALOG_WIDTH"
+		auto-height
 	>
 		<InputGroup>
 			<VTextField type="number" label="Width" flat variant="underlined" v-model="width" />

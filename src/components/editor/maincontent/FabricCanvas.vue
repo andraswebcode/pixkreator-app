@@ -28,10 +28,10 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
 	editor.width = width;
 	editor.height = height;
 	if (fabricCanvas) {
-		fabricCanvas.set({ width, height });
+		fabricCanvas.setWidth(width);
+		fabricCanvas.setHeight(height);
 	}
 	updateCanvas();
-	console.log('resize');
 };
 
 const onObjectSelection = ({ e, selected = [] }) => {

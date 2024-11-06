@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import { DETAILS_DIALOG_WIDTH } from '../../utils/constants';
 import { useDisplay } from 'vuetify';
 import { useUser } from '../../store';
+import { mdiAlertCircle } from '@mdi/js';
 
 const { list } = useRequest();
 const router = useRouter();
@@ -12,6 +13,7 @@ const userData = useUser();
 const { mdAndUp } = useDisplay();
 const recentProjects = ref<any[]>([]);
 const editorsChoice = ref<any[]>([]);
+const loadingProjects = ref(true);
 const showDetails = ref(false);
 const index = ref(0);
 const category = ref('');
@@ -52,6 +54,7 @@ onMounted(() => {
 		'designs',
 		(data) => {
 			recentProjects.value = data.items;
+			loadingProjects.value = false;
 		}
 	);
 	list({}, 'templates/editorschoice', (data) => {
@@ -110,15 +113,16 @@ onMounted(() => {
 							<VBtn
 								variant="plain"
 								to="dashboard/projects"
-								:disabled="!recentProjects.length"
+								:disabled="loadingProjects || !recentProjects.length"
 							>
 								View All
 							</VBtn>
 						</VCol>
 					</VRow>
 				</VCol>
+				<GridLoader v-if="loadingProjects" :cols="2" :count="6" responsive />
 				<GridItem
-					v-if="recentProjects.length"
+					v-else-if="!loadingProjects && recentProjects.length"
 					v-for="(item, i) of recentProjects"
 					:key="item.id"
 					:label="item.title"
@@ -138,14 +142,16 @@ onMounted(() => {
 					responsive
 					@click="editProject(i)"
 				/>
-				<GridLoader v-else :cols="2" :count="6" responsive />
+				<VAlert v-else class="mx-3 mt-3" type="warning" :icon="mdiAlertCircle">
+					No items found
+				</VAlert>
 			</VRow>
 			<VRow>
 				<VCol>
 					<h2>Editor's Choice</h2>
 				</VCol>
 			</VRow>
-			<VRow v-if="editorsChoice.length" v-for="item of editorsChoice" :key="item.value">
+			<VRow v-if="editorsChoice.length" v-for="item of editorsChoice" :key="item.slug">
 				<VCol cols="12">
 					<VRow justify="space-between" align="center">
 						<VCol cols="auto">
@@ -157,9 +163,10 @@ onMounted(() => {
 								:to="{
 									name: 'templates',
 									params: {
-										category: item.value
+										category: item.slug
 									}
 								}"
+								:disabled="!item.templates?.length"
 							>
 								View All
 							</VBtn>
@@ -167,6 +174,7 @@ onMounted(() => {
 					</VRow>
 				</VCol>
 				<GridItem
+					v-if="item.templates?.length"
 					v-for="(tmpl, i) of item.templates"
 					:key="tmpl.id"
 					cols="2"
@@ -174,6 +182,9 @@ onMounted(() => {
 					responsive
 					@click="openDetails(i, tmpl.category)"
 				/>
+				<VAlert v-else class="mx-3 mt-3" type="warning" :icon="mdiAlertCircle">
+					No items found
+				</VAlert>
 			</VRow>
 			<VRow v-else v-for="i in 3" :key="i">
 				<VCol cols="12">
