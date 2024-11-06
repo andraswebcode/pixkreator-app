@@ -144,7 +144,7 @@ onBeforeRouteUpdate((to) => {
 		:max-width="DETAILS_DIALOG_WIDTH"
 	>
 		<DetailsCarousel v-model="index">
-			<PhotoDetails v-for="item of items" :key="item.id" v-bind="item">
+			<PhotoDetails v-for="item of items" :key="item.id" :size="size" v-bind="item">
 				<VSelect label="Select a Size" :items="PHOTO_SIZES" v-model="size" />
 			</PhotoDetails>
 		</DetailsCarousel>

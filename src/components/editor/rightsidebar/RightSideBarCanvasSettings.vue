@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { useProject, useUser } from '../../../store';
 import { toFixed } from '../../../utils/functions';
 import templateCategories from '../../../utils/template-categories';
+import useFitToScreen from '../../../hooks/fittoscreen';
 
 const sizes = [
 	{
@@ -12,6 +13,7 @@ const sizes = [
 ].concat(templateCategories);
 const userData = useUser();
 const project = useProject();
+const fitToScreen = useFitToScreen();
 const panels = ref(['size']);
 const width = computed({
 	get: () => project.width,
@@ -56,7 +58,13 @@ const size = computed({
 					<VTextField type="number" label="Width" v-model="width" />
 					<VTextField type="number" label="Height" v-model="height" />
 				</InputGroup>
-				<VSelect label="Size Presets" :items="sizes" item-value="size" v-model="size" />
+				<VSelect
+					label="Size Presets"
+					:items="sizes"
+					item-value="size"
+					v-model="size"
+					@update:model-value="fitToScreen()"
+				/>
 			</VExpansionPanelText>
 		</VExpansionPanel>
 		<VExpansionPanel title="Meta" value="meta">

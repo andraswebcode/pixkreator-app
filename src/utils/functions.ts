@@ -128,8 +128,8 @@ const getCroppedImageDimensions = (
 		return { width: originalWidth, height: originalHeight };
 	} else if (sizeKey === 'large') {
 		return {
-			width: 1280,
-			height: (1280 / originalWidth) * originalHeight
+			width: 1200,
+			height: Math.round((1200 / originalWidth) * originalHeight)
 		};
 	} else if (sizeKey === 'thumbnail') {
 		return { width: 280, height: 280 };
