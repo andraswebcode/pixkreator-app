@@ -11,7 +11,8 @@ export type EditorToolType =
 	| 'texts'
 	| 'draw'
 	| 'brand'
-	| 'list';
+	| 'list'
+	| 'settings';
 
 export type EditorModeType = 'select' | 'pan' | 'draw';
 
@@ -39,6 +40,10 @@ export interface EditorState {
 	penColor: string;
 	// Layers
 	activeLayerIds: string[];
+	// Settings
+	showMargin: boolean;
+	margin: number;
+	snap: boolean;
 }
 
 export type EditorGetters = {};
@@ -61,7 +66,10 @@ export default defineStore<string, EditorState, EditorGetters>('editor', {
 		pencil: 'brush',
 		penWidth: 2,
 		penColor: '#000000',
-		activeLayerIds: []
+		activeLayerIds: [],
+		showMargin: true,
+		margin: 20,
+		snap: true
 	}),
 	getters: {},
 	undo: {

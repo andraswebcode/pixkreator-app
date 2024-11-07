@@ -9,7 +9,9 @@ import {
 	mdiCircleOutline,
 	mdiClose,
 	mdiMagnify,
-	mdiMenuDown
+	mdiMenuDown,
+	mdiStar,
+	mdiStarOutline
 } from '@mdi/js';
 
 const defaults = {
@@ -52,6 +54,10 @@ const defaults = {
 	},
 	VNavigationDrawer: {
 		tag: 'aside'
+	},
+	VRating: {
+		emptyIcon: mdiStarOutline,
+		fullIcon: mdiStar
 	},
 	VAppBar: {
 		density: 'comfortable',

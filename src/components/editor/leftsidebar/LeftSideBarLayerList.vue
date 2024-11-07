@@ -15,11 +15,14 @@ import {
 	mdiEyeOff,
 	mdiDragVertical,
 	mdiAlertCircle,
-	mdiContentCopy
+	mdiContentCopy,
+	mdiGroup,
+	mdiUngroup
 } from '@mdi/js';
 import { useEditor, useProject } from '../../../store';
 import { computed } from 'vue';
 import { uniqueId } from '../../../utils/functions';
+import useProps from '../../../hooks/props';
 
 const ICON_MAP = {
 	group: mdiLayersOutline,
@@ -45,6 +48,7 @@ const NAME_MAP = {
 };
 const project = useProject();
 const editor = useEditor();
+const { type } = useProps(['type']);
 const items = computed<any[]>(() =>
 	project.ids.map((id) => {
 		const item = project.byIds[id] || {};
@@ -58,6 +62,12 @@ const items = computed<any[]>(() =>
 		};
 	})
 );
+const groupLayers = () => {
+	project.groupLayers(editor.activeLayerIds);
+};
+const ungroupLayers = () => {
+	project.ungroupLayers(editor.activeLayerIds[0]);
+};
 const sortLayers = (ids: string[]) => {
 	project.ids = ids;
 };
@@ -111,6 +121,25 @@ const deleteLayer = (id: string) => {
 
 <template>
 	<div class="pa-4">
+		<div class="mb-2">
+			<VBtn
+				:icon="mdiGroup"
+				v-tooltip="'Group'"
+				size="x-small"
+				variant="text"
+				:disabled="editor.activeLayerIds.length < 2"
+				@click="groupLayers"
+			/>
+			<VBtn
+				:icon="mdiUngroup"
+				v-tooltip="'Ungroup'"
+				size="x-small"
+				variant="text"
+				:disabled="type !== 'Group' || editor.activeLayerIds.length !== 1"
+				@click="ungroupLayers"
+			/>
+		</div>
+		<VDivider />
 		<VList v-if="items.length" v-sortable="sortLayers">
 			<VListItem
 				v-for="item of items"
@@ -155,7 +184,7 @@ const deleteLayer = (id: string) => {
 				</template>
 			</VListItem>
 		</VList>
-		<VAlert v-else type="warning" :icon="mdiAlertCircle">
+		<VAlert v-else type="warning" class="mt-2" :icon="mdiAlertCircle">
 			There are no layers on the canvas.
 		</VAlert>
 	</div>

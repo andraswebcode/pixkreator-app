@@ -6,8 +6,7 @@ import {
 	mdiHelpCircle,
 	mdiLayers,
 	mdiMagnifyMinus,
-	mdiMagnifyPlus,
-	mdiMessageText
+	mdiMagnifyPlus
 } from '@mdi/js';
 import { useEditor } from '../../store';
 import { MAX_ZOOM, MIN_ZOOM, ZOOM_STEP } from '../../utils/constants';
@@ -19,6 +18,9 @@ const editor = useEditor();
 const fitToScreen = useFitToScreen();
 const toggleList = () => {
 	editor.tool = editor.tool === 'list' ? '' : 'list';
+};
+const toggleSettings = () => {
+	editor.tool = editor.tool === 'settings' ? '' : 'settings';
 };
 const switchPan = () => {
 	editor.mode = editor.mode === 'pan' ? 'select' : 'pan';
@@ -42,7 +44,11 @@ const zoom = (dir: string) => {
 							<VBtn :icon="mdiLayers" v-tooltip:top="'Layers'" @click="toggleList" />
 						</VCol>
 						<VCol cols="auto">
-							<VBtn :icon="mdiCog" v-tooltip:top="'Settings'" />
+							<VBtn
+								:icon="mdiCog"
+								v-tooltip:top="'Settings'"
+								@click="toggleSettings"
+							/>
 						</VCol>
 					</VRow>
 				</VCol>
@@ -101,7 +107,7 @@ const zoom = (dir: string) => {
 				<VCol cols="auto">
 					<VRow no-gutters justify="center" align="center">
 						<VCol cols="auto">
-							<VBtn :icon="mdiMessageText" v-tooltip:top="'Feedback'" />
+							<FeedBack />
 						</VCol>
 						<VCol cols="auto">
 							<VBtn :icon="mdiHelpCircle" v-tooltip:top="'Help'" />

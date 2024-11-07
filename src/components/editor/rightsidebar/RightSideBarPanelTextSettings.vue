@@ -64,7 +64,7 @@ const format = computed<Format[]>({
 		<VExpansionPanelText>
 			<VTextarea label="Text" v-model="text" />
 			<FontSelect label="Font Family" v-model="fontFamily" />
-			<RangeSlider label="Font Size" v-model="fontSize" :min="16" :max="400" />
+			<RangeSlider label="Font Size" v-model="fontSize" :min="10" :max="400" />
 			<RangeSlider
 				label="Line Height"
 				v-model="lineHeight"

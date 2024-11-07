@@ -46,6 +46,8 @@ export type ProjectGetters = {};
 export interface ProjectActions {
 	addLayer: (props: Partial<ByID>) => void;
 	removeLayer: (id: string) => void;
+	groupLayers: (ids: string[]) => void;
+	ungroupLayers: (id: string) => void;
 	updateProps: (id: string | ChangedProps, props?: Partial<ByID>) => void;
 	applyFilter: (id: string, filter: ImageFilter) => void;
 	removeFilter: (id: string, type: ImageFilterType) => void;
@@ -123,6 +125,12 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 				byIds: restLayers,
 				ids: this.ids.filter((_id) => _id !== id)
 			});
+		},
+		groupLayers(ids) {
+			console.log(ids);
+		},
+		ungroupLayers(id) {
+			console.log(id);
 		},
 		updateProps(id, props) {
 			if (typeof id === 'string') {
