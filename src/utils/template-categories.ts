@@ -28,6 +28,13 @@ const templateCategories = [
 		size: '1080x1080'
 	},
 	{
+		label: 'Instagram Feed',
+		width: 1080,
+		height: 1350,
+		value: 'instagram-feed',
+		size: '1080x1350'
+	},
+	{
 		label: 'Facebook Cover',
 		width: 1702,
 		height: 630,
