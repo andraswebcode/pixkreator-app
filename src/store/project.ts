@@ -120,6 +120,7 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 			});
 		},
 		removeLayer(id) {
+			// @ts-ignore
 			this.$patch({
 				byIds: {
 					...this.byIds,
@@ -164,23 +165,40 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 			});
 		},
 		ungroupLayers(id) {
-			const group = this.byIds[id];
-			this.$patch({
-				ids: [...this.ids.filter((_id) => _id !== id), ...group.childIds],
-				byIds: {
-					...this.byIds,
-					[id]: undefined,
-					...group.childIds.reduce((memo, id) => {
-						const layer = this.byIds[id];
-						memo[id] = {
-							...layer,
-							left: layer.left + group.left,
-							top: layer.top + group.top,
-							parentId: undefined
-						};
-						return memo;
-					}, {})
-				}
+			const groupLayerBase = this.byIds[id];
+			const groupLayer = {
+				...groupLayerBase,
+				objects: groupLayerBase.childIds.map((id) => this.byIds[id])
+			};
+
+			util.enlivenObjects([groupLayer]).then((groups: any) => {
+				const shapes = groups[0].getObjects();
+
+				this.$patch({
+					ids: [...this.ids.filter((_id) => _id !== id), ...groupLayer.childIds],
+					byIds: {
+						...this.byIds,
+						[id]: undefined,
+						...groupLayer.childIds.reduce((memo, id, i) => {
+							const layer = this.byIds[id];
+							const { translateX, translateY, scaleX, scaleY, skewX, skewY, angle } =
+								util.qrDecompose(shapes[i].calcTransformMatrix());
+
+							memo[id] = {
+								...layer,
+								left: translateX,
+								top: translateY,
+								scaleX,
+								scaleY,
+								skewX,
+								skewY,
+								angle,
+								parentId: undefined
+							};
+							return memo;
+						}, {})
+					}
+				});
 			});
 		},
 		updateProps(id, props) {

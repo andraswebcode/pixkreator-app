@@ -64,6 +64,7 @@ const items = computed<any[]>(() =>
 );
 const groupLayers = () => {
 	project.groupLayers(editor.activeLayerIds);
+	editor.activeLayerIds = [];
 };
 const ungroupLayers = () => {
 	project.ungroupLayers(editor.activeLayerIds[0]);
