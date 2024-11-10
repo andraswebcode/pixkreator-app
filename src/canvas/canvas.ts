@@ -146,7 +146,7 @@ class Canvas extends FabricCanvas {
 		ctx.lineTo(m, height - m);
 		ctx.closePath();
 
-		ctx.lineWidth = 1;
+		ctx.lineWidth = 1 / this.getZoom();
 		ctx.strokeStyle = this.marginColor;
 		ctx.stroke();
 

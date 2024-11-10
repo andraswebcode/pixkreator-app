@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { unique, uniqueId } from '../utils/functions';
 import { FabricObjectProps, util } from 'fabric';
 import { ImageFilter, ImageFilterType } from '../types/image-filter';
+import { PROGroup } from '../canvas/objects/group';
 
 export type IDList = string[];
 
@@ -119,18 +120,68 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 			});
 		},
 		removeLayer(id) {
-			const { [id]: _, ...restLayers } = this.byIds;
-			// @ts-ignore
 			this.$patch({
-				byIds: restLayers,
+				byIds: {
+					...this.byIds,
+					[id]: undefined
+				},
 				ids: this.ids.filter((_id) => _id !== id)
 			});
 		},
 		groupLayers(ids) {
-			console.log(ids);
+			const layers = ids.map((id) => this.byIds[id]);
+			util.enlivenObjects(layers).then((shapes: any) => {
+				const group = new PROGroup(shapes);
+				const groupLayer = group.toObject();
+				const id = groupLayer.id || uniqueId('Group');
+				this.$patch({
+					ids: unique<string>([...this.ids.filter((id) => !ids.includes(id)), id]),
+					byIds: {
+						...this.byIds,
+						// Data of the group object.
+						[id]: {
+							visible: true,
+							selectable: true,
+							...groupLayer,
+							id,
+							objects: undefined,
+							childIds: ids,
+							left: groupLayer.left + groupLayer.width / 2,
+							top: groupLayer.top + groupLayer.height / 2
+						},
+						...ids.reduce((memo, id, i) => {
+							const { left, top } = groupLayer.objects[i];
+							memo[id] = {
+								...this.byIds[id],
+								left,
+								top,
+								parentId: groupLayer.id
+							};
+							return memo;
+						}, {})
+					}
+				});
+			});
 		},
 		ungroupLayers(id) {
-			console.log(id);
+			const group = this.byIds[id];
+			this.$patch({
+				ids: [...this.ids.filter((_id) => _id !== id), ...group.childIds],
+				byIds: {
+					...this.byIds,
+					[id]: undefined,
+					...group.childIds.reduce((memo, id) => {
+						const layer = this.byIds[id];
+						memo[id] = {
+							...layer,
+							left: layer.left + group.left,
+							top: layer.top + group.top,
+							parentId: undefined
+						};
+						return memo;
+					}, {})
+				}
+			});
 		},
 		updateProps(id, props) {
 			if (typeof id === 'string') {
