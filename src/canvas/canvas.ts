@@ -24,7 +24,9 @@ class Canvas extends FabricCanvas {
 	margin = 20;
 	snap = true;
 	marginColor = '#EEEEEE';
+	marginDashArray = [1, 5];
 	helperLineColor = '#10BBE5';
+	helperDashArray = [1, 5];
 
 	constructor(el?, options?) {
 		super(el, options);
@@ -110,6 +112,7 @@ class Canvas extends FabricCanvas {
 
 		ctx.lineWidth = 1 / this.getZoom();
 		ctx.strokeStyle = this.helperLineColor;
+		ctx.setLineDash(this.helperDashArray);
 		ctx.stroke();
 
 		ctx.restore();
@@ -124,10 +127,8 @@ class Canvas extends FabricCanvas {
 		property: 'background' | 'overlay'
 	): void {
 		super._renderBackgroundOrOverlay(ctx, property);
-		if (property === 'background') {
-			if (this.showMargin) {
-				this._renderMarginHelper(ctx);
-			}
+		if (property === 'background' && this.showMargin) {
+			this._renderMarginHelper(ctx);
 		}
 	}
 
@@ -148,6 +149,7 @@ class Canvas extends FabricCanvas {
 
 		ctx.lineWidth = 1 / this.getZoom();
 		ctx.strokeStyle = this.marginColor;
+		ctx.setLineDash(this.marginDashArray);
 		ctx.stroke();
 
 		ctx.restore();

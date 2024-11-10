@@ -12,6 +12,8 @@ import { PROGamma } from './filters/gamma';
 import { PROEmboss } from './filters/emboss';
 import { PROSharpen } from './filters/sharpen';
 import { PROBlackWhite } from './filters/blackwhite';
+import { PROPolyline } from './objects/polyline';
+import { PROPolygon } from './objects/polygon';
 
 // Shapes
 
@@ -21,6 +23,8 @@ classRegistry.setClass(PROEllipse);
 classRegistry.setClass(PROGroup);
 classRegistry.setClass(PROImage);
 classRegistry.setClass(PROPath);
+classRegistry.setClass(PROPolyline);
+classRegistry.setClass(PROPolygon);
 classRegistry.setClass(PRORect);
 classRegistry.setClass(PROIText);
 
