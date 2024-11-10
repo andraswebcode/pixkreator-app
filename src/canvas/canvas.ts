@@ -20,6 +20,12 @@ class Canvas extends FabricCanvas {
 	altActionKey: ModifierKey = 'ctrlKey';
 	uniScaleKey = null;
 
+	showMargin = true;
+	margin = 20;
+	snap = true;
+	marginColor = '#EEEEEE';
+	helperLineColor = '#10BBE5';
+
 	constructor(el?, options?) {
 		super(el, options);
 		this.freeDrawingBrush = new PROPencilBrush(this);
@@ -78,6 +84,73 @@ class Canvas extends FabricCanvas {
 		});
 
 		return this;
+	}
+
+	getSceneSize() {
+		const { width = 0, height = 0 } = this.clipPath || {};
+		return { width, height };
+	}
+
+	drawHelperLine(orientation: 'h' | 'v', position: number) {
+		const ctx = this.getTopContext();
+		const vpt = this.viewportTransform;
+		const { width, height } = this.getSceneSize();
+		const isH = orientation === 'h';
+		const mx = isH ? position : 0;
+		const my = isH ? 0 : position;
+		const lx = isH ? position : width;
+		const ly = isH ? height : position;
+
+		ctx.save();
+		ctx.transform(...vpt);
+
+		ctx.beginPath();
+		ctx.moveTo(mx, my);
+		ctx.lineTo(lx, ly);
+
+		ctx.lineWidth = 1 / this.getZoom();
+		ctx.strokeStyle = this.helperLineColor;
+		ctx.stroke();
+
+		ctx.restore();
+	}
+
+	ereaseHelperLine() {
+		this.clearContext(this.getTopContext());
+	}
+
+	_renderBackgroundOrOverlay(
+		ctx: CanvasRenderingContext2D,
+		property: 'background' | 'overlay'
+	): void {
+		super._renderBackgroundOrOverlay(ctx, property);
+		if (property === 'background') {
+			if (this.showMargin) {
+				this._renderMarginHelper(ctx);
+			}
+		}
+	}
+
+	_renderMarginHelper(ctx: CanvasRenderingContext2D) {
+		const m = this.margin;
+		const vpt = this.viewportTransform;
+		const { width, height } = this.getSceneSize();
+
+		ctx.save();
+		ctx.transform(...vpt);
+
+		ctx.beginPath();
+		ctx.moveTo(m, m);
+		ctx.lineTo(width - m, m);
+		ctx.lineTo(width - m, height - m);
+		ctx.lineTo(m, height - m);
+		ctx.closePath();
+
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = this.marginColor;
+		ctx.stroke();
+
+		ctx.restore();
 	}
 }
 

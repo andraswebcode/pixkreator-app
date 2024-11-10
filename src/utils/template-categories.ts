@@ -28,10 +28,10 @@ const templateCategories = [
 		size: '1080x1080'
 	},
 	{
-		label: 'Instagram Feed',
+		label: 'Portrait Social Post',
 		width: 1080,
 		height: 1350,
-		value: 'instagram-feed',
+		value: 'portrait-social-post',
 		size: '1080x1350'
 	},
 	{

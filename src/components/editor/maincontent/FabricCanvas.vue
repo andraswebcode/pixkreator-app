@@ -3,8 +3,9 @@ import { ref, onMounted, watch, toRaw } from 'vue';
 import { useEditor, useNotice, useProject } from './../../../store';
 import Canvas from '../../../canvas/canvas';
 import { Rect, util } from 'fabric';
-import { toFixed } from '../../../utils/functions';
+import { isAround, toFixed } from '../../../utils/functions';
 import { EditorModeType, EditorPencilType } from '../../../store/editor';
+import { SNAP_THRESHOLD } from '../../../utils/constants';
 
 let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -39,7 +40,52 @@ const onObjectSelection = ({ e, selected = [] }) => {
 		editor.activeLayerIds = selected.map(({ id }) => id);
 	}
 };
+const onObjectMoving = ({ target }) => {
+	if (!editor.snap) {
+		return;
+	}
+
+	const threshold = SNAP_THRESHOLD / Math.sqrt(editor.zoom);
+	const m = editor.margin;
+	const cw = project.width;
+	const ch = project.height;
+	const { width, height } = target.getBoundingRect(true);
+	const ow2 = width / 2;
+	const oh2 = height / 2;
+	const hGuides = [m, cw / 2, cw - m];
+	const vGuides = [m, ch / 2, ch - m];
+	let { left, top } = target;
+
+	fabricCanvas.ereaseHelperLine();
+
+	hGuides.forEach((v) => {
+		const isACenter = isAround(left, v, threshold);
+		const isALeft = isAround(left - ow2, v, threshold);
+		const isARight = isAround(left + ow2, v, threshold);
+
+		if (isACenter || isALeft || isARight) {
+			fabricCanvas.drawHelperLine('h', v);
+		}
+
+		left = isACenter ? v : isALeft ? v + ow2 : isARight ? v - ow2 : left;
+	});
+	vGuides.forEach((v) => {
+		const isAMiddle = isAround(top, v, threshold);
+		const isATop = isAround(top - oh2, v, threshold);
+		const isABottom = isAround(top + oh2, v, threshold);
+
+		if (isAMiddle || isATop || isABottom) {
+			fabricCanvas.drawHelperLine('v', v);
+		}
+
+		top = isAMiddle ? v : isATop ? v + oh2 : isABottom ? v - oh2 : top;
+	});
+
+	target.set({ left, top });
+};
 const onObjectModified = ({ target }) => {
+	// Erease helper drawn on object moving.
+	fabricCanvas.ereaseHelperLine();
 	if (target?.type === 'activeselection') {
 		const newProps = target.getObjects().reduce((memo, obj) => {
 			const matrix = obj.calcTransformMatrix();
@@ -110,12 +156,16 @@ onMounted(() => {
 			height: project.height
 		})
 	});
+	fabricCanvas.showMargin = editor.showMargin;
+	fabricCanvas.margin = editor.margin;
+	fabricCanvas.snap = editor.snap;
 	// @ts-ignore
 	fabricCanvas.on('selection:created', onObjectSelection);
 	// @ts-ignore
 	fabricCanvas.on('selection:updated', onObjectSelection);
 	// @ts-ignore
 	fabricCanvas.on('selection:cleared', onObjectSelection);
+	fabricCanvas.on('object:moving', onObjectMoving);
 	fabricCanvas.on('object:modified', onObjectModified);
 	fabricCanvas.on('path:created', onPathCreated);
 	fabricCanvas.on('text:changed', onTextChanged);
@@ -226,6 +276,15 @@ watch(
 		fabricCanvas.isDrawingMode = newMode === 'draw';
 		fabricCanvas.freeDrawingBrush!.width = newWidth;
 		fabricCanvas.freeDrawingBrush!.color = newColor;
+	}
+);
+watch(
+	(): [boolean, number, boolean] => [editor.showMargin, editor.margin, editor.snap],
+	([newShowMargin, newMargin, newSnap]) => {
+		fabricCanvas.showMargin = newShowMargin;
+		fabricCanvas.margin = newMargin;
+		fabricCanvas.snap = newSnap;
+		fabricCanvas.requestRenderAll();
 	}
 );
 watch(

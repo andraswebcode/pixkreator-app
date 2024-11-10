@@ -8,6 +8,8 @@ export const MAX_ZOOM = 3;
 
 export const ZOOM_STEP = 0.01;
 
+export const SNAP_THRESHOLD = 10;
+
 export const DETAILS_DIALOG_WIDTH = 1200;
 
 export const SMALL_DIALOG_WIDTH = 400;

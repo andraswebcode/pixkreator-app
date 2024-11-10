@@ -11,6 +11,11 @@ const toFixed = (value: any, fractionDigits = 2): number => {
 const randInt = (min: number, max: number): number =>
 	Math.floor(Math.random() * (max - min + 1)) + min;
 
+const isBetween = (value: number, min: number, max: number) => value >= min && value <= max;
+
+const isAround = (v1: number, v2: number, distance: number) =>
+	isBetween(v1, v2 - distance, v2 + distance);
+
 const uniqueId = (prefix?: string): string => {
 	const pf = prefix ? prefix + '-' : '';
 	const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -175,6 +180,8 @@ export {
 	clamp,
 	toFixed,
 	randInt,
+	isAround,
+	isBetween,
 	uniqueId,
 	debounce,
 	isEqual,
