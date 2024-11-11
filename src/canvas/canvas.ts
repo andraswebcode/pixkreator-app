@@ -127,7 +127,7 @@ class Canvas extends FabricCanvas {
 		property: 'background' | 'overlay'
 	): void {
 		super._renderBackgroundOrOverlay(ctx, property);
-		if (property === 'background' && this.showMargin) {
+		if (property === 'overlay' && this.showMargin) {
 			this._renderMarginHelper(ctx);
 		}
 	}

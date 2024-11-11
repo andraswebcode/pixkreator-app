@@ -1,4 +1,11 @@
-import { Constructor, FabricObject, FabricObjectProps, TOriginX, TOriginY } from 'fabric';
+import {
+	Constructor,
+	controlsUtils,
+	FabricObject,
+	FabricObjectProps,
+	TOriginX,
+	TOriginY
+} from 'fabric';
 
 function Defaults<TBase extends Constructor<FabricObject>>(Base: TBase) {
 	return class Defaults extends Base implements Partial<FabricObjectProps> {
@@ -13,9 +20,25 @@ function Defaults<TBase extends Constructor<FabricObject>>(Base: TBase) {
 		originX: TOriginX = 'center';
 		originY: TOriginY = 'center';
 
+		private _currentControls: 'transform' | 'modify' = 'transform';
+
 		toObject(propertiesToInclude: string[] = []) {
 			return super.toObject(propertiesToInclude.concat(['id', 'name', 'selectable']));
 		}
+
+		switchControls() {
+			if (this._currentControls === 'modify') {
+				this.controls = controlsUtils.createObjectDefaultControls();
+				this._currentControls = 'transform';
+			} else {
+				this._createModifyControls();
+				this._currentControls = 'modify';
+			}
+			this.setCoords();
+			this.canvas?.requestRenderAll();
+		}
+
+		_createModifyControls() {}
 	};
 }
 

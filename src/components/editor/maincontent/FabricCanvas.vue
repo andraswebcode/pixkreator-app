@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, toRaw } from 'vue';
+import { ref, onMounted, onUnmounted, watch, toRaw } from 'vue';
 import { useEditor, useNotice, useProject } from './../../../store';
 import Canvas from '../../../canvas/canvas';
 import { Rect, util } from 'fabric';
@@ -38,6 +38,11 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
 const onObjectSelection = ({ e, selected = [] }) => {
 	if (e) {
 		editor.activeLayerIds = selected.map(({ id }) => id);
+	}
+};
+const onDoubleClick = ({ target }) => {
+	if (target) {
+		target.switchControls();
 	}
 };
 const onObjectMoving = ({ target }) => {
@@ -165,6 +170,8 @@ onMounted(() => {
 	fabricCanvas.on('selection:updated', onObjectSelection);
 	// @ts-ignore
 	fabricCanvas.on('selection:cleared', onObjectSelection);
+	// @ts-ignore
+	fabricCanvas.on('mouse:dblclick', onDoubleClick);
 	fabricCanvas.on('object:moving', onObjectMoving);
 	fabricCanvas.on('object:modified', onObjectModified);
 	fabricCanvas.on('path:created', onPathCreated);
@@ -174,6 +181,22 @@ onMounted(() => {
 	editor.width = clientWidth;
 	editor.height = clientHeight;
 	updateCanvas();
+});
+
+onUnmounted(() => {
+	fabricCanvas.destroy();
+	// @ts-ignore
+	fabricCanvas.off('selection:created', onObjectSelection);
+	// @ts-ignore
+	fabricCanvas.off('selection:updated', onObjectSelection);
+	// @ts-ignore
+	fabricCanvas.off('selection:cleared', onObjectSelection);
+	// @ts-ignore
+	fabricCanvas.off('mouse:dblclick', onDoubleClick);
+	fabricCanvas.off('object:moving', onObjectMoving);
+	fabricCanvas.off('object:modified', onObjectModified);
+	fabricCanvas.off('path:created', onPathCreated);
+	fabricCanvas.off('text:changed', onTextChanged);
 });
 
 watch(
