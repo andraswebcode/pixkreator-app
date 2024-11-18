@@ -109,7 +109,13 @@ onUnmounted(() => {
 	<VerifyEmailAlert v-if="!userData.user.email_verified" class="mx-3 mt-3" />
 	<LibraryWrapper v-else>
 		<div class="pa-4">
-			<VImg v-if="src && !loading" ref="imgRef" :class="{ 'mb-4': !loading }" :src="src" />
+			<VImg
+				v-if="src && !loading"
+				ref="imgRef"
+				:class="{ 'mb-4': !loading }"
+				max-height="40vh"
+				:src="src"
+			/>
 			<VProgressLinear v-if="loading" class="mb-4" indeterminate />
 			<VSwitch v-if="src && !loading" label="Resize Canvas to Image Size" v-model="resize" />
 			<VBtn v-if="src && !loading" block @click="addImage">Add Image to Canvas</VBtn>

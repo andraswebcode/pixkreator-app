@@ -77,7 +77,12 @@ const addImage = () => {
 <template>
 	<div v-if="userData.canGenerateImage && !image" class="pa-4">
 		<VTextarea label="Prompt" :disabled="editor.aiIsGenerating" v-model="prompt" />
-		<VTextarea label="Negative Prompt" :disabled="editor.aiIsGenerating" v-model="nPrompt" />
+		<VTextarea
+			label="Negative Prompt"
+			rows="1"
+			:disabled="editor.aiIsGenerating"
+			v-model="nPrompt"
+		/>
 		<VSelect
 			label="Image Format"
 			:disabled="editor.aiIsGenerating"
@@ -99,7 +104,7 @@ const addImage = () => {
 		<VBtn block :loading="editor.aiIsGenerating" @click="generate">Generate Image</VBtn>
 	</div>
 	<div v-else-if="userData.canGenerateImage && image" class="pa-4">
-		<VImg :src="image" />
+		<VImg :src="image" max-height="40vh" />
 		<VSwitch label="Resize Canvas to Image Size" v-model="resize" />
 		<VBtn block @click="addImage">Add Image to Canvas</VBtn>
 	</div>
