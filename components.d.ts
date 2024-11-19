@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppBar: typeof import('./src/components/common/AppBar.vue')['default']
+    AppCard: typeof import('./src/components/common/AppCard.vue')['default']
     ButtonToggle: typeof import('./src/components/common/ButtonToggle.vue')['default']
     CanvasBackground: typeof import('./src/components/editor/maincontent/CanvasBackground.vue')['default']
     CanvasPan: typeof import('./src/components/editor/maincontent/CanvasPan.vue')['default']
@@ -31,6 +32,9 @@ declare module 'vue' {
     InputGroup: typeof import('./src/components/common/InputGroup.vue')['default']
     LeftSideBar: typeof import('./src/components/editor/LeftSideBar.vue')['default']
     LeftSideBarAI: typeof import('./src/components/editor/leftsidebar/LeftSideBarAI.vue')['default']
+    LeftSideBarAppBGRemover: typeof import('./src/components/editor/leftsidebar/LeftSideBarAppBGRemover.vue')['default']
+    LeftSideBarAppQRGenerator: typeof import('./src/components/editor/leftsidebar/LeftSideBarAppQRGenerator.vue')['default']
+    LeftSideBarApps: typeof import('./src/components/editor/leftsidebar/LeftSideBarApps.vue')['default']
     LeftSideBarBrand: typeof import('./src/components/editor/leftsidebar/LeftSideBarBrand.vue')['default']
     LeftSideBarDraw: typeof import('./src/components/editor/leftsidebar/LeftSideBarDraw.vue')['default']
     LeftSideBarFilters: typeof import('./src/components/editor/leftsidebar/LeftSideBarFilters.vue')['default']

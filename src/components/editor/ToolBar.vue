@@ -21,7 +21,7 @@ const userData = useUser();
 			<ToolBarItem
 				value="filters"
 				v-tooltip:end="'Photo Effects'"
-				:icon="mdiImageAutoAdjust"
+				icon="mdi-image-auto-adjust"
 			/>
 			<ToolBarItem value="draw" v-tooltip:end="'Draw'" icon="mdi-brush" />
 			<ToolBarItem value="apps" v-tooltip:end="'Apps'" icon="mdi-apps" />

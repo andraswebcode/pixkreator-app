@@ -16,6 +16,7 @@
 		"fontfaceobserver": "^2.3.0",
 		"pinia": "^2.2.1",
 		"pinia-undo": "^0.2.4",
+		"qr-code-styling": "^1.8.4",
 		"sortablejs": "^1.15.2",
 		"vue": "^3.4.35",
 		"vue-router": "^4.4.3",

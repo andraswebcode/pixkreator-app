@@ -21,12 +21,19 @@ import ForgotPWView from '../views/ForgotPWView.vue';
 import DashboardAdmin from '../views/dashboard/DashboardAdmin.vue';
 import AccountSettingsView from '../views/account/AccountSettingsView.vue';
 import DeleteUserView from '../views/DeleteUserView.vue';
+import AppsView from '../views/AppsView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
 		name: 'editor',
 		path: '/:id?',
 		component: EditorView
+	},
+	{
+		name: 'apps',
+		path: '/apps',
+		component: AppsView,
+		children: []
 	},
 	{
 		name: 'dashboard',

@@ -16,6 +16,7 @@ const show = computed(() => !!editor.tool);
 		<LeftSideBarAI v-else-if="editor.tool === 'ai'" />
 		<LeftSideBarFilters v-else-if="editor.tool === 'filters'" />
 		<LeftSideBarDraw v-else-if="editor.tool === 'draw'" />
+		<LeftSideBarApps v-else-if="editor.tool === 'apps'" />
 		<LeftSideBarBrand v-else-if="editor.tool === 'brand'" />
 		<LeftSideBarLayerList v-else-if="editor.tool === 'list'" />
 		<LeftSideBarSettings v-else-if="editor.tool === 'settings'" />

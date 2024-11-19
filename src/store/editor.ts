@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { AppID } from '../types/apps';
 
 export type EditorToolType =
 	| ''
@@ -39,6 +40,8 @@ export interface EditorState {
 	pencil: EditorPencilType;
 	penWidth: number;
 	penColor: string;
+	// Apps
+	activeApp: AppID | '';
 	// Layers
 	activeLayerIds: string[];
 	// Settings
@@ -67,6 +70,7 @@ export default defineStore<string, EditorState, EditorGetters>('editor', {
 		pencil: 'brush',
 		penWidth: 2,
 		penColor: '#000000',
+		activeApp: '',
 		activeLayerIds: [],
 		showMargin: true,
 		margin: 20,
