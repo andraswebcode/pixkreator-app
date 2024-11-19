@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { mdiTune } from '@mdi/js';
-
 const properties = defineProps<{
 	label: string;
 	filterDisabled?: boolean;
@@ -15,7 +13,7 @@ const emit = defineEmits(['search']);
 			<VMenu :close-on-content-click="false">
 				<template v-slot:activator="{ props }">
 					<VIcon
-						:icon="mdiTune"
+						icon="mdi-tune"
 						:style="{ opacity: properties.filterDisabled ? 0.4 : 1 }"
 						v-bind="props"
 						:disabled="properties.filterDisabled"

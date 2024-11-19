@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiEmailCheck } from '@mdi/js';
 import { ref } from 'vue';
 import axios from '../../axios';
 import { useNotice, useUser } from '../../store';
@@ -27,7 +26,7 @@ const resend = () => {
 
 <template>
 	<VEmptyState
-		:icon="mdiEmailCheck"
+		icon="mdi-email-check"
 		headline="Almost There!"
 		title="Check Your Inbox"
 		text="We’ve sent you a confirmation email. Please click the link to verify your account."

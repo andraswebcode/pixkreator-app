@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { mdiTrashCan } from '@mdi/js';
 
 const panels = ref([]);
 </script>
@@ -15,7 +14,7 @@ const panels = ref([]);
 				<InputGroup v-for="i of 4" :key="i">
 					<VTextField label="Name" />
 					<ColorPicker label="Color" hide-brand />
-					<VBtn :icon="mdiTrashCan" size="x-small" flat />
+					<VBtn icon="mdi-trash-can" size="x-small" flat />
 				</InputGroup>
 			</VExpansionPanelText>
 		</VExpansionPanel>

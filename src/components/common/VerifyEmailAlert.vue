@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiAlertCircle, mdiEmailSync } from '@mdi/js';
 import { useNotice, useUser } from '../../store';
 import { ref } from 'vue';
 import axios from '../../axios';
@@ -28,10 +27,10 @@ const sendEmail = () => {
 </script>
 
 <template>
-	<VAlert v-if="loading" :class="props.class" type="info" :icon="mdiEmailSync">
+	<VAlert v-if="loading" :class="props.class" type="info" icon="mdi-email-sync">
 		Email is being sent...
 	</VAlert>
-	<VAlert v-else :class="props.class" type="warning" :icon="mdiAlertCircle">
+	<VAlert v-else :class="props.class" type="warning" icon="mdi-alert-circle">
 		Your email is not verified. Please
 		<a href="#" @click.prevent="sendEmail">verify your email</a> to access all the features.
 	</VAlert>

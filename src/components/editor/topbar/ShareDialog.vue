@@ -2,7 +2,6 @@
 import { computed, onUnmounted, ref, toRaw, watch } from 'vue';
 import { useEditor, useNotice, useProject } from '../../../store';
 import { jsonToBlob } from '../../../utils/json-to-blob';
-import { mdiContentCopy, mdiFacebook, mdiInformation, mdiPinterest, mdiTwitter } from '@mdi/js';
 import useRequest from '../../../hooks/request';
 import { useRoute, useRouter } from 'vue-router';
 import { debounce } from '../../../utils/functions';
@@ -254,7 +253,7 @@ onUnmounted(() => {
 						v-if="project.status !== 'public'"
 						class="mb-5"
 						type="info"
-						:icon="mdiInformation"
+						icon="mdi-information"
 					>
 						This link can be deleted at any time.
 					</VAlert>
@@ -262,7 +261,7 @@ onUnmounted(() => {
 						v-else
 						readonly
 						:model-value="project.link"
-						:append-inner-icon="mdiContentCopy"
+						append-inner-icon="mdi-content-copy"
 						@click:append-inner="copyLink"
 					/>
 					<VTextField
@@ -283,21 +282,21 @@ onUnmounted(() => {
 					<VRow class="mb-5">
 						<VCol cols="auto">
 							<VBtn
-								:icon="mdiPinterest"
+								icon="mdi-pinterest"
 								:disabled="disabled"
 								@click="shareImage('pinterest')"
 							/>
 						</VCol>
 						<VCol cols="auto">
 							<VBtn
-								:icon="mdiFacebook"
+								icon="mdi-facebook"
 								:disabled="disabled"
 								@click="shareImage('facebook')"
 							/>
 						</VCol>
 						<VCol cols="auto">
 							<VBtn
-								:icon="mdiTwitter"
+								icon="mdi-twitter"
 								:disabled="disabled"
 								@click="shareImage('x')"
 							/>

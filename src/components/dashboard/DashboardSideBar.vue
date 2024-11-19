@@ -1,13 +1,4 @@
 <script setup lang="ts">
-import {
-	mdiFileDocumentMultiple,
-	mdiFolderMultiple,
-	mdiHammerWrench,
-	mdiHome,
-	mdiImageMultiple,
-	mdiPaletteSwatchVariant,
-	mdiViewDashboardEdit
-} from '@mdi/js';
 import { useUser } from '../../store';
 import { useRoute } from 'vue-router';
 
@@ -19,22 +10,22 @@ const route = useRoute();
 	<VNavigationDrawer width="56" permanent>
 		<VList>
 			<VListItem to="/dashboard" v-tooltip:end="'Home'" :active="route.name === 'home'">
-				<VIcon :icon="mdiHome" />
+				<VIcon icon="mdi-home" />
 			</VListItem>
 			<VListItem to="/dashboard/projects" v-tooltip:end="'Projects'">
-				<VIcon :icon="mdiFolderMultiple" />
+				<VIcon icon="mdi-folder-multiple" />
 			</VListItem>
 			<VListItem to="/dashboard/files" v-tooltip:end="'Files'">
-				<VIcon :icon="mdiFileDocumentMultiple" />
+				<VIcon icon="mdi-file-document-multiple" />
 			</VListItem>
 			<VListItem to="/dashboard/templates" v-tooltip:end="'Templates'">
-				<VIcon :icon="mdiViewDashboardEdit" />
+				<VIcon icon="mdi-view-dashboard-edit" />
 			</VListItem>
 			<VListItem to="/dashboard/photos" v-tooltip:end="'Photos'">
-				<VIcon :icon="mdiImageMultiple" />
+				<VIcon icon="mdi-image-multiple" />
 			</VListItem>
 			<VListItem v-if="userData.isProPlan" to="/dashboard/brand" v-tooltip:end="'Brand'">
-				<VIcon :icon="mdiPaletteSwatchVariant" />
+				<VIcon icon="mdi-palette-swatch-variant" />
 			</VListItem>
 			<VDivider v-if="userData.user.admin" />
 			<VListItem
@@ -42,7 +33,7 @@ const route = useRoute();
 				to="/dashboard/admin"
 				v-tooltip:end="'Admin Tools'"
 			>
-				<VIcon :icon="mdiHammerWrench" />
+				<VIcon icon="mdi-hammer-wrench" />
 			</VListItem>
 		</VList>
 	</VNavigationDrawer>

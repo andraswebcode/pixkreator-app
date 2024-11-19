@@ -1,12 +1,4 @@
 <script setup lang="ts">
-import {
-	mdiContentSave,
-	mdiContentSaveCog,
-	mdiDownload,
-	mdiRedo,
-	mdiShare,
-	mdiUndo
-} from '@mdi/js';
 import useRequest from '../../hooks/request';
 import { useRoute, useRouter } from 'vue-router';
 import { useEditor, useNotice, useProject, useUser } from '../../store';
@@ -233,15 +225,15 @@ const saveTemplate = () => {
 		<template v-slot:prepend v-if="smAndUp">
 			<VImg :src="LOGO_SRC" class="logo ml-3" />
 		</template>
-		<VBtn :icon="mdiUndo" v-tooltip="'Undo'" @click="project.undo" />
-		<VBtn :icon="mdiRedo" v-tooltip="'Redo'" @click="project.redo" />
+		<VBtn icon="mdi-undo" v-tooltip="'Undo'" @click="project.undo" />
+		<VBtn icon="mdi-redo" v-tooltip="'Redo'" @click="project.redo" />
 		<template v-slot:append>
-			<VBtn :icon="mdiShare" v-tooltip="'Share'" @click="shareDesign" />
-			<VBtn :icon="mdiDownload" v-tooltip="'Download'" @click="downloadDesign" />
-			<VBtn :icon="mdiContentSave" v-tooltip="'Save'" @click="saveDesign" />
+			<VBtn icon="mdi-share" v-tooltip="'Share'" @click="shareDesign" />
+			<VBtn icon="mdi-download" v-tooltip="'Download'" @click="downloadDesign" />
+			<VBtn icon="mdi-content-save" v-tooltip="'Save'" @click="saveDesign" />
 			<VBtn
 				v-if="userData.user.admin"
-				:icon="mdiContentSaveCog"
+				icon="mdi-content-save-cog"
 				v-tooltip="'Save as Template'"
 				@click="saveTemplate"
 			/>

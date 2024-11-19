@@ -1,5 +1,4 @@
 <script setup>
-import { mdiAccount, mdiAccountCog, mdiDraw, mdiLogin, mdiLogout, mdiViewDashboard } from '@mdi/js';
 import { useUser } from '../../store';
 import { useRouter } from 'vue-router';
 import axios from '../../axios';
@@ -31,15 +30,15 @@ const logout = () => {
 </script>
 
 <template>
-	<VBtn v-if="userData.loggedIn" id="user-menu" :icon="mdiAccount" />
-	<VBtn v-else :icon="mdiLogin" to="/login" v-tooltip="'Login'" />
+	<VBtn v-if="userData.loggedIn" id="user-menu" icon="mdi-account" />
+	<VBtn v-else icon="mdi-login" to="/login" v-tooltip="'Login'" />
 	<VMenu v-if="userData.loggedIn" activator="#user-menu">
 		<VList>
 			<VListItem class="mb-2">
 				<template v-slot:prepend>
 					<VAvatar>
 						<VImg v-if="userData.user.avatar" :src="userData.user.avatar" />
-						<VIcon v-else :icon="mdiAccount" />
+						<VIcon v-else icon="mdi-account" />
 					</VAvatar>
 				</template>
 				<VListItemTitle>{{ userData.user.name }}</VListItemTitle>
@@ -50,26 +49,26 @@ const logout = () => {
 			<VDivider v-if="!userData.user.email_verified" :vertical="false" />
 			<VListItem to="/">
 				<template v-slot:prepend>
-					<VIcon :icon="mdiDraw" />
+					<VIcon icon="mdi-draw" />
 				</template>
 				<VListItemTitle>Editor</VListItemTitle>
 			</VListItem>
 			<VListItem to="/dashboard">
 				<template v-slot:prepend>
-					<VIcon :icon="mdiViewDashboard" />
+					<VIcon icon="mdi-view-dashboard" />
 				</template>
 				<VListItemTitle>Dashboard</VListItemTitle>
 			</VListItem>
 			<VListItem to="/account">
 				<template v-slot:prepend>
-					<VIcon :icon="mdiAccountCog" />
+					<VIcon icon="mdi-account-cog" />
 				</template>
 				<VListItemTitle>Account</VListItemTitle>
 			</VListItem>
 
 			<VListItem href="#" @click="logout">
 				<template v-slot:prepend>
-					<VIcon :icon="mdiLogout" />
+					<VIcon icon="mdi-logout" />
 				</template>
 				<VListItemTitle>Logout</VListItemTitle>
 			</VListItem>

@@ -3,7 +3,6 @@ import { useDisplay } from 'vuetify';
 import { useNotice, useUser } from '../../store';
 import { SocialLoginProvider } from '../../types/common';
 import { oauthLogin } from '../../utils/oauth-login';
-import { mdiFacebook, mdiGoogle } from '@mdi/js';
 import { computed } from 'vue';
 
 const emit = defineEmits(['success']);
@@ -28,22 +27,12 @@ const socialLogin = (provider: SocialLoginProvider) => {
 	<VRow justify="center">
 		<VCol cols="auto">
 			<VBtn
-				:prepend-icon="mdiGoogle"
+				prepend-icon="mdi-google"
 				variant="tonal"
 				:size="size"
 				@click="socialLogin('google')"
 			>
 				Google
-			</VBtn>
-		</VCol>
-		<VCol cols="auto">
-			<VBtn
-				:prepend-icon="mdiFacebook"
-				variant="tonal"
-				:size="size"
-				@click="socialLogin('facebook')"
-			>
-				Facebook
 			</VBtn>
 		</VCol>
 	</VRow>

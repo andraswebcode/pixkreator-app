@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { mdiAlertCircle } from '@mdi/js';
-
 const props = defineProps<{
 	itemsLength: number;
 	cols: number;
@@ -27,7 +25,7 @@ const onLoad = () => {
 		<VContainer>
 			<VRow>
 				<slot v-if="props.itemsLength" />
-				<VAlert v-else class="mx-3 mt-3" type="warning" :icon="mdiAlertCircle">
+				<VAlert v-else class="mx-3 mt-3" type="warning" icon="mdi-alert-circle">
 					{{ props.noItemsWarning || 'No items found' }}
 				</VAlert>
 			</VRow>

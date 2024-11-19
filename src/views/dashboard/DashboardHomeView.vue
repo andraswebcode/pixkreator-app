@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router';
 import { DETAILS_DIALOG_WIDTH } from '../../utils/constants';
 import { useDisplay } from 'vuetify';
 import { useUser } from '../../store';
-import { mdiAlertCircle } from '@mdi/js';
 
 const { list } = useRequest();
 const router = useRouter();
@@ -142,7 +141,7 @@ onMounted(() => {
 					responsive
 					@click="editProject(i)"
 				/>
-				<VAlert v-else class="mx-3 mt-3" type="warning" :icon="mdiAlertCircle">
+				<VAlert v-else class="mx-3 mt-3" type="warning" icon="mdi-alert-circle">
 					No items found
 				</VAlert>
 			</VRow>

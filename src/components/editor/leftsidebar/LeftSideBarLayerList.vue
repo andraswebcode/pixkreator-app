@@ -1,40 +1,21 @@
 <script setup lang="ts">
-import {
-	mdiRectangleOutline,
-	mdiCircleOutline,
-	mdiEllipseOutline,
-	mdiEye,
-	mdiLock,
-	mdiLayersOutline,
-	mdiHeartOutline,
-	mdiDiamondOutline,
-	mdiImageOutline,
-	mdiFormatText,
-	mdiTrashCan,
-	mdiLockOpenVariant,
-	mdiEyeOff,
-	mdiDragVertical,
-	mdiAlertCircle,
-	mdiContentCopy,
-	mdiGroup,
-	mdiUngroup
-} from '@mdi/js';
 import { useEditor, useProject } from '../../../store';
 import { computed } from 'vue';
 import { uniqueId } from '../../../utils/functions';
 import useProps from '../../../hooks/props';
 
 const ICON_MAP = {
-	group: mdiLayersOutline,
-	image: mdiImageOutline,
-	rect: mdiRectangleOutline,
-	circle: mdiCircleOutline,
-	ellipse: mdiEllipseOutline,
-	path: mdiHeartOutline,
-	polyline: mdiDiamondOutline,
-	polygon: mdiDiamondOutline,
-	itext: mdiFormatText
+	group: 'mdi-layers-outline',
+	image: 'mdi-image-outline',
+	rect: 'mdi-rectangle-outline',
+	circle: 'mdi-circle-outline',
+	ellipse: 'mdi-ellipse-outline',
+	path: 'mdi-heart-outline',
+	polyline: 'mdi-diamond-outline',
+	polygon: 'mdi-diamond-outline',
+	itext: 'mdi-format-text'
 };
+
 const NAME_MAP = {
 	group: 'Group',
 	image: 'Image',
@@ -124,7 +105,7 @@ const deleteLayer = (id: string) => {
 	<div class="pa-4">
 		<div class="mb-2">
 			<VBtn
-				:icon="mdiGroup"
+				icon="mdi-group"
 				v-tooltip="'Group'"
 				size="x-small"
 				variant="text"
@@ -132,7 +113,7 @@ const deleteLayer = (id: string) => {
 				@click="groupLayers"
 			/>
 			<VBtn
-				:icon="mdiUngroup"
+				icon="mdi-ungroup"
 				v-tooltip="'Ungroup'"
 				size="x-small"
 				variant="text"
@@ -149,34 +130,34 @@ const deleteLayer = (id: string) => {
 				:data-id="item.id"
 			>
 				<template v-slot:prepend>
-					<VIcon :icon="mdiDragVertical" class="handle" />
+					<VIcon icon="mdi-drag-vertical" class="handle" />
 					<VIcon :icon="item.icon" :disabled="item.lock" @click="selectLayer(item)" />
 				</template>
 				<VListItemTitle>{{ item.label }}</VListItemTitle>
 				<template v-slot:append>
 					<VBtn
-						:icon="item.lock ? mdiLock : mdiLockOpenVariant"
+						:icon="item.lock ? 'mdi-lock' : 'mdi-lock-open-variant'"
 						v-tooltip:top="item.lock ? 'Unlock' : 'Lock'"
 						variant="text"
 						size="x-small"
 						@click="lockLayer(item.id)"
 					/>
 					<VBtn
-						:icon="item.hidden ? mdiEyeOff : mdiEye"
+						:icon="item.hidden ? 'mdi-eye-off' : 'mdi-eye'"
 						v-tooltip:top="item.hidden ? 'Show' : 'Hide'"
 						variant="text"
 						size="x-small"
 						@click="toggleLayer(item.id)"
 					/>
 					<VBtn
-						:icon="mdiContentCopy"
+						icon="mdi-content-copy"
 						v-tooltip:top="'Clone'"
 						variant="text"
 						size="x-small"
 						@click="cloneLayer(item.id)"
 					/>
 					<VBtn
-						:icon="mdiTrashCan"
+						icon="mdi-trash-can"
 						v-tooltip:top="'Remove'"
 						variant="text"
 						size="x-small"
@@ -185,7 +166,7 @@ const deleteLayer = (id: string) => {
 				</template>
 			</VListItem>
 		</VList>
-		<VAlert v-else type="warning" class="mt-2" :icon="mdiAlertCircle">
+		<VAlert v-else type="warning" class="mt-2" icon="mdi-alert-circle">
 			There are no layers on the canvas.
 		</VAlert>
 	</div>

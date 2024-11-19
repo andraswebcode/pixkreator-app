@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiClose, mdiPlus } from '@mdi/js';
 import { computed } from 'vue';
 
 const props = defineProps<{
@@ -64,9 +63,9 @@ const removeDashGap = (index: number) => {
 				:model-value="item[1]"
 				@update:model-value="updateValue(parseFloat($event), i, 1)"
 			/>
-			<VBtn :icon="mdiClose" size="x-small" flat @click="removeDashGap(i)" />
+			<VBtn icon="mdi-close" size="x-small" flat @click="removeDashGap(i)" />
 		</InputGroup>
-		<VBtn :prepend-icon="mdiPlus" size="x-small" flat @click="addDashGap">Add</VBtn>
+		<VBtn prepend-icon="mdi-plus" size="x-small" flat @click="addDashGap">Add</VBtn>
 	</div>
 </template>
 

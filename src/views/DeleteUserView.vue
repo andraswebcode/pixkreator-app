@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiAccountAlert } from '@mdi/js';
 import { useNotice, useUser } from '../store';
 import { ref } from 'vue';
 import axios from '../axios';
@@ -53,7 +52,7 @@ const deleteUser = () => {
 		<VContainer>
 			<VEmptyState
 				v-if="showVerify"
-				:icon="mdiAccountAlert"
+				icon="mdi-account-alert"
 				headline="This action cannot be undone"
 				title="Verify Your Identity"
 				action-text="Delete Account Permanently"

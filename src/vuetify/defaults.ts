@@ -1,19 +1,3 @@
-import {
-	mdiCheckboxBlankOutline,
-	mdiCheckboxOutline,
-	mdiCheckCircleOutline,
-	mdiChevronDown,
-	mdiChevronLeft,
-	mdiChevronRight,
-	mdiChevronUp,
-	mdiCircleOutline,
-	mdiClose,
-	mdiMagnify,
-	mdiMenuDown,
-	mdiStar,
-	mdiStarOutline
-} from '@mdi/js';
-
 const defaults = {
 	global: {
 		// density: 'compact'
@@ -32,7 +16,6 @@ const defaults = {
 		step: 1
 	},
 	VSelect: {
-		menuIcon: mdiMenuDown,
 		itemTitle: 'label',
 		itemValue: 'value',
 		flat: true,
@@ -40,7 +23,6 @@ const defaults = {
 		// variant: 'solo'
 	},
 	VAutocomplete: {
-		menuIcon: mdiMenuDown,
 		itemTitle: 'label',
 		itemValue: 'value',
 		flat: true,
@@ -48,17 +30,12 @@ const defaults = {
 		// variant: 'solo'
 	},
 	VCheckbox: {
-		trueIcon: mdiCheckCircleOutline,
-		falseIcon: mdiCircleOutline,
 		hideDetails: true
 	},
 	VNavigationDrawer: {
 		tag: 'aside'
 	},
-	VRating: {
-		emptyIcon: mdiStarOutline,
-		fullIcon: mdiStar
-	},
+	VRating: {},
 	VAppBar: {
 		density: 'comfortable',
 		VBtn: {
@@ -77,17 +54,9 @@ const defaults = {
 			size: 'small'
 		}
 	},
-	VPagination: {
-		prevIcon: mdiChevronLeft,
-		nextIcon: mdiChevronRight
-	},
-	VTabs: {
-		prevIcon: mdiChevronLeft,
-		nextIcon: mdiChevronRight
-	},
+	VPagination: {},
+	VTabs: {},
 	VExpansionPanels: {
-		collapseIcon: mdiChevronUp,
-		expandIcon: mdiChevronDown,
 		flat: true,
 		variant: 'accordion',
 		multiple: true
@@ -107,9 +76,7 @@ const defaults = {
 		},
 		VCheckbox: {
 			density: 'compact',
-			hideDetails: true,
-			trueIcon: mdiCheckboxOutline,
-			falseIcon: mdiCheckboxBlankOutline
+			hideDetails: true
 		},
 		VSelect: {
 			variant: 'underlined',
@@ -156,7 +123,7 @@ const defaults = {
 		density: 'compact'
 	},
 	CloseBtn: {
-		icon: mdiClose,
+		icon: 'mdi-close',
 		variant: 'flat',
 		size: 'small'
 	},
@@ -165,7 +132,7 @@ const defaults = {
 		hideDetails: true,
 		singleLine: true,
 		flat: true,
-		appendInnerIcon: mdiMagnify
+		appendInnerIcon: 'mdi-magnify'
 	}
 };
 

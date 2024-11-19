@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { mdiAlertCircle } from '@mdi/js';
 import { PRICING_URL } from '../../../utils/constants';
 import { aspectRatios, outputFormats, stylePresets } from '../../../utils/ai-params';
 import axios from '../../../axios';
@@ -108,7 +107,7 @@ const addImage = () => {
 		<VSwitch label="Resize Canvas to Image Size" v-model="resize" />
 		<VBtn block @click="addImage">Add Image to Canvas</VBtn>
 	</div>
-	<VAlert v-else class="mx-3 mt-3" type="warning" :icon="mdiAlertCircle">
+	<VAlert v-else class="mx-3 mt-3" type="warning" icon="mdi-alert-circle">
 		AI credits for image generation have run out. Please
 		<RouterLink to="account/settings" target="_blank">add your own API key</RouterLink>
 		or

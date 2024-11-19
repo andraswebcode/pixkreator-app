@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import imageFilters from '../../utils/image-filters';
-import { mdiTrashCan } from '@mdi/js';
 import { useEditor, useProject } from '../../store';
 import { ImageFilterType } from '../../types/image-filter';
 
@@ -32,7 +31,7 @@ const remove = () => {
 			<h4>{{ item.label }}</h4>
 		</VCol>
 		<VCol cols="auto">
-			<VBtn :icon="mdiTrashCan" size="x-small" flat @click="remove" />
+			<VBtn icon="mdi-trash-can" size="x-small" flat @click="remove" />
 		</VCol>
 	</VRow>
 	<div v-if="item" v-for="c in item.controls">

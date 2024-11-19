@@ -11,6 +11,7 @@ export type EditorToolType =
 	| 'texts'
 	| 'draw'
 	| 'brand'
+	| 'apps'
 	| 'list'
 	| 'settings';
 

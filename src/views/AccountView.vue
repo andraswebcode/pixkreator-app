@@ -1,6 +1,4 @@
-<script setup lang="ts">
-import { mdiAccount, mdiCogs, mdiInvoice, mdiLifebuoy } from '@mdi/js';
-</script>
+<script setup lang="ts"></script>
 
 <template>
 	<AppBar />
@@ -8,19 +6,19 @@ import { mdiAccount, mdiCogs, mdiInvoice, mdiLifebuoy } from '@mdi/js';
 		<VContainer>
 			<VTabs class="mb-5" align-tabs="center" stacked>
 				<VTab to="/account">
-					<VIcon :icon="mdiAccount" />
+					<VIcon icon="mdi-account" />
 					Profile
 				</VTab>
 				<VTab to="/account/settings">
-					<VIcon :icon="mdiCogs" />
+					<VIcon icon="mdi-cogs" />
 					Settings
 				</VTab>
 				<VTab to="/account/subscription">
-					<VIcon :icon="mdiInvoice" />
+					<VIcon icon="mdi-invoice" />
 					Subscription
 				</VTab>
 				<VTab to="/account/support">
-					<VIcon :icon="mdiLifebuoy" />
+					<VIcon icon="mdi-lifebuoy" />
 					Support
 				</VTab>
 			</VTabs>

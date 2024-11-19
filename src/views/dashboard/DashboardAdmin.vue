@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiClose } from '@mdi/js';
 import { ref, toRaw } from 'vue';
 import useRequest from '../../hooks/request';
 import { uploadFile } from '../../utils/upload-file';
@@ -139,7 +138,7 @@ const saveAssets = () => {
 						<VSelect label="Style" :items="graphicStyles" v-model="item.style" />
 					</VCol>
 					<VCol cols="auto">
-						<VBtn :icon="mdiClose" />
+						<VBtn icon="mdi-close" />
 					</VCol>
 				</VRow>
 			</VCardItem>

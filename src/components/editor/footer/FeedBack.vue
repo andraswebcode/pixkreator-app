@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiMessageText } from '@mdi/js';
 import { computed, ref } from 'vue';
 import axios from '../../../axios';
 import { useNotice } from '../../../store';
@@ -32,7 +31,7 @@ const send = () => {
 <template>
 	<VMenu persistent :close-on-content-click="false" v-model="open">
 		<template v-slot:activator="{ props }">
-			<VBtn :icon="mdiMessageText" v-tooltip:top="'Feedback'" v-bind="props" />
+			<VBtn icon="mdi-message-text" v-tooltip:top="'Feedback'" v-bind="props" />
 		</template>
 		<VCard>
 			<VCardItem>

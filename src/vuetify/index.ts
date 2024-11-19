@@ -1,18 +1,19 @@
 import { createVuetify } from 'vuetify';
-import { mdi } from 'vuetify/iconsets/mdi-svg';
+import { mdi, aliases } from 'vuetify/iconsets/mdi';
 import components from './components';
 import defaults from './defaults';
-import aliases from './aliases';
+import componentAliases from './aliases';
 
 export default createVuetify({
 	components,
 	directives: {},
 	icons: {
 		defaultSet: 'mdi',
+		aliases,
 		sets: {
 			mdi
 		}
 	},
 	defaults: defaults,
-	aliases: aliases
+	aliases: componentAliases
 });

@@ -1,12 +1,4 @@
 <script setup lang="ts">
-import {
-	mdiFormatAlignCenter,
-	mdiFormatAlignLeft,
-	mdiFormatAlignRight,
-	mdiFormatBold,
-	mdiFormatItalic,
-	mdiFormatUnderline
-} from '@mdi/js';
 import useProps from '../../../hooks/props';
 import { computed } from 'vue';
 
@@ -74,14 +66,14 @@ const format = computed<Format[]>({
 			/>
 			<RangeSlider label="Character Spacing" v-model="charSpacing" :min="0" :max="400" />
 			<ButtonToggle label="Text Align" v-model="textAlign">
-				<VBtn :icon="mdiFormatAlignLeft" value="left" v-tooltip="'Left'" />
-				<VBtn :icon="mdiFormatAlignCenter" value="center" v-tooltip="'Center'" />
-				<VBtn :icon="mdiFormatAlignRight" value="right" v-tooltip="'Right'" />
+				<VBtn icon="mdi-format-align-left" value="left" v-tooltip="'Left'" />
+				<VBtn icon="mdi-format-align-center" value="center" v-tooltip="'Center'" />
+				<VBtn icon="mdi-format-align-right" value="right" v-tooltip="'Right'" />
 			</ButtonToggle>
 			<ButtonToggle label="Format" v-model="format" multiple :mandatory="false">
-				<VBtn :icon="mdiFormatBold" value="bold" />
-				<VBtn :icon="mdiFormatItalic" value="italic" />
-				<VBtn :icon="mdiFormatUnderline" value="underline" />
+				<VBtn icon="mdi-format-bold" value="bold" />
+				<VBtn icon="mdi-format-italic" value="italic" />
+				<VBtn icon="mdi-format-underline" value="underline" />
 			</ButtonToggle>
 			<RangeSlider label="Curve" v-model="curve" :min="-100" :max="100" :step="1" />
 		</VExpansionPanelText>

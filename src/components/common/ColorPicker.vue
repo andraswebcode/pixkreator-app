@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiSquare, mdiCloseCircle } from '@mdi/js';
 import { ref } from 'vue';
 import { useUser } from '../../store';
 
@@ -35,13 +34,13 @@ const swatches = [
 				dirty
 				readonly
 				:clearable="properties.clearable"
-				:clear-icon="mdiCloseCircle"
+				clear-icon="mdi-close-circle"
 				:disabled="properties.disabled"
 				v-model="model"
 				v-bind="props"
 			>
 				<template v-slot:prepend-inner>
-					<VIcon :icon="mdiSquare" :color="model" />
+					<VIcon icon="mdi-square" :color="model" />
 				</template>
 			</VTextField>
 		</template>

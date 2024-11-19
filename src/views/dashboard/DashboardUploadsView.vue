@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
-import { mdiDownload, mdiTrashCan, mdiUpload } from '@mdi/js';
 import { useNotice, useUser } from '../../store';
 import { uploadFile } from '../../utils/upload-file';
 
@@ -199,7 +198,7 @@ onBeforeRouteUpdate((to) => {
 				<VRow justify="center" justify-md="end">
 					<VCol cols="auto" class="mr-4">
 						<VBtnGroup density="compact">
-							<VBtn :prepend-icon="mdiUpload" @click="upload">Upload</VBtn>
+							<VBtn prepend-icon="mdi-upload" @click="upload">Upload</VBtn>
 						</VBtnGroup>
 					</VCol>
 				</VRow>
@@ -220,12 +219,12 @@ onBeforeRouteUpdate((to) => {
 				:actions="[
 					{
 						label: 'Download',
-						prependIcon: mdiDownload,
+						prependIcon: 'mdi-download',
 						onClick: downloadFile(i)
 					},
 					{
 						label: 'Delete',
-						prependIcon: mdiTrashCan,
+						prependIcon: 'mdi-trash-can',
 						onClick: deleteFile(i)
 					}
 				]"

@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
-import { mdiContentCopy, mdiDeleteForever, mdiRestore, mdiTrashCan, mdiViewList } from '@mdi/js';
 import { useNotice, useUser } from '../../store';
 
 const router = useRouter();
@@ -146,8 +145,8 @@ onBeforeRouteUpdate((to) => {
 				<VRow v-if="selections.length" justify="center" justify-md="start">
 					<VCol cols="auto" class="ml-4">
 						<VBtnGroup>
-							<VBtn :icon="mdiContentCopy" size="x-small" />
-							<VBtn :icon="mdiTrashCan" size="x-small" />
+							<VBtn icon="mdi-content-copy" size="x-small" />
+							<VBtn icon="mdi-trash-can" size="x-small" />
 						</VBtnGroup>
 					</VCol>
 				</VRow>
@@ -165,7 +164,7 @@ onBeforeRouteUpdate((to) => {
 						<VBtnGroup density="compact">
 							<VBtn
 								:active="!route.query.trashed"
-								:prepend-icon="mdiViewList"
+								prepend-icon="mdi-view-list"
 								:to="{
 									query: {
 										search
@@ -176,7 +175,7 @@ onBeforeRouteUpdate((to) => {
 							</VBtn>
 							<VBtn
 								:active="!!route.query.trashed"
-								:prepend-icon="mdiTrashCan"
+								prepend-icon="mdi-trash-can"
 								:to="{
 									query: {
 										search,
@@ -210,24 +209,24 @@ onBeforeRouteUpdate((to) => {
 						? [
 								{
 									label: 'Restore',
-									prependIcon: mdiRestore,
+									prependIcon: 'mdi-restore',
 									onClick: restoreProject(i)
 								},
 								{
 									label: 'Delete Permanently',
-									prependIcon: mdiDeleteForever,
+									prependIcon: 'mdi-delete-forever',
 									onClick: deleteProject(i)
 								}
 						  ]
 						: [
 								{
 									label: 'Clone',
-									prependIcon: mdiContentCopy,
+									prependIcon: 'mdi-content-copy',
 									onClick: cloneProject(i)
 								},
 								{
 									label: 'Delete',
-									prependIcon: mdiTrashCan,
+									prependIcon: 'mdi-trash-can',
 									onClick: deleteProject(i)
 								}
 						  ]

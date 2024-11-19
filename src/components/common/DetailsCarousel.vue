@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 import { computed, useSlots } from 'vue';
 
 const model = defineModel<number>({
@@ -52,7 +51,7 @@ const navigate = (dir: 'next' | 'prev') => {
 			<VBtn
 				v-if="showPrev"
 				class="prev"
-				:icon="mdiChevronLeft"
+				icon="mdi-chevron-left"
 				variant="tonal"
 				size="x-small"
 				@click="navigate('prev')"
@@ -60,7 +59,7 @@ const navigate = (dir: 'next' | 'prev') => {
 			<VBtn
 				v-if="showNext"
 				class="next"
-				:icon="mdiChevronRight"
+				icon="mdi-chevron-right"
 				variant="tonal"
 				size="x-small"
 				@click="navigate('next')"

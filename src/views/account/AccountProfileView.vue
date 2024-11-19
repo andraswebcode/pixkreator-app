@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useNotice, useUser } from '../../store';
-import { mdiAccountRemove, mdiCheck, mdiClose, mdiPencil } from '@mdi/js';
 import useRequest from '../../hooks/request';
 
 type TField = 'name' | 'password';
@@ -76,8 +75,8 @@ const cancel = (field: TField) => {
 					v-model="fields.confirm_password_name"
 				>
 					<template v-slot:append-inner>
-						<VIcon :icon="mdiCheck" @click="done('name')" />
-						<VIcon :icon="mdiClose" @click="cancel('name')" />
+						<VIcon icon="mdi-check" @click="done('name')" />
+						<VIcon icon="mdi-close" @click="cancel('name')" />
 					</template>
 				</VTextField>
 			</InputGroup>
@@ -86,7 +85,7 @@ const cancel = (field: TField) => {
 				label="Name"
 				readonly
 				:model-value="fields.name"
-				:append-inner-icon="mdiPencil"
+				append-inner-icon="mdi-pencil"
 				@click:append-inner="edit('name')"
 			/>
 			<InputGroup v-if="fields.edit_password" ref="pwRef">
@@ -104,8 +103,8 @@ const cancel = (field: TField) => {
 					v-model="fields.confirm_password_password"
 				>
 					<template v-slot:append-inner>
-						<VIcon :icon="mdiCheck" @click="done('password')" />
-						<VIcon :icon="mdiClose" @click="cancel('password')" />
+						<VIcon icon="mdi-check" @click="done('password')" />
+						<VIcon icon="mdi-close" @click="cancel('password')" />
 					</template>
 				</VTextField>
 			</InputGroup>
@@ -114,7 +113,7 @@ const cancel = (field: TField) => {
 				label="Password"
 				readonly
 				model-value="********"
-				:append-inner-icon="mdiPencil"
+				append-inner-icon="mdi-pencil"
 				@click:append-inner="edit('password')"
 			/>
 			<VDivider class="mb-5" />
@@ -128,7 +127,7 @@ const cancel = (field: TField) => {
 					</VCard>
 				</VCol>
 				<VCol cols="auto">
-					<VBtn to="deleteuser" variant="tonal" :prepend-icon="mdiAccountRemove">
+					<VBtn to="deleteuser" variant="tonal" prepend-icon="mdi-account-remove">
 						Delete Account
 					</VBtn>
 				</VCol>

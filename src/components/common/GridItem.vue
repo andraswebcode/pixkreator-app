@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, toRaw, watch } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
-import { mdiDotsVertical } from '@mdi/js';
 import { util } from 'fabric';
 import { THUMBNAIL_MAX_SIZE } from '../../utils/constants';
 
@@ -84,7 +83,7 @@ watch(
 					<VMenu v-if="properties.actions" max-width="200">
 						<template v-slot:activator="{ props }">
 							<VBtn
-								:icon="mdiDotsVertical"
+								icon="mdi-dots-vertical"
 								:class="['mr-2', { 'mt-3': !properties.selectable }]"
 								density="comfortable"
 								size="small"

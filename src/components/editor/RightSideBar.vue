@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 import { computed, ref } from 'vue';
 import { useEditor, useProject } from '../../store';
 
@@ -19,7 +18,10 @@ const onClick = () => {
 		<RightSideBarLayerSettings v-if="showLayerSettings" />
 		<RightSideBarCanvasSettings v-else />
 		<template v-slot:append>
-			<SideBarToggler @click="onClick" :icon="show ? mdiChevronRight : mdiChevronLeft" />
+			<SideBarToggler
+				@click="onClick"
+				:icon="show ? 'mdi-chevron-right' : 'mdi-chevron-left'"
+			/>
 		</template>
 	</VNavigationDrawer>
 </template>

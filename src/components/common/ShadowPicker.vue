@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiCloseCircle, mdiSquare } from '@mdi/js';
 import { computed } from 'vue';
 
 const properties = defineProps<{
@@ -57,13 +56,13 @@ const applyShadow = (apply: boolean | null) => {
 				readonly
 				clearable
 				:model-value="valueStr"
-				:clear-icon="mdiCloseCircle"
+				clear-icon="mdi-close-circle"
 				:disabled="properties.disabled"
 				v-bind="props"
 				@click:clear="applyShadow(false)"
 			>
 				<template v-slot:prepend-inner>
-					<VIcon :icon="mdiSquare" />
+					<VIcon icon="mdi-square" />
 				</template>
 			</VTextField>
 		</template>

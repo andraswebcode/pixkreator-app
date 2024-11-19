@@ -1,6 +1,4 @@
-<script setup lang="ts">
-import { mdiStar } from '@mdi/js';
-</script>
+<script setup lang="ts"></script>
 
 <template>
 	<VCard>
@@ -13,7 +11,7 @@ import { mdiStar } from '@mdi/js';
 					<VChip>Free</VChip>
 				</VCol>
 				<VCol>
-					<VBtn :prepend-icon="mdiStar" variant="tonal">Upgrade</VBtn>
+					<VBtn prepend-icon="mdi-star" variant="tonal">Upgrade</VBtn>
 				</VCol>
 			</VRow>
 		</VCardItem>

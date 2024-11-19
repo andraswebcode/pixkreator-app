@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { mdiAlertCircle, mdiCheckCircle, mdiInformation } from '@mdi/js';
 import { useRoute, useRouter } from 'vue-router';
 import { useNotice, useUser } from '../store';
 import { onMounted, ref } from 'vue';
@@ -44,7 +43,7 @@ onMounted(() => {
 		<VContainer>
 			<VEmptyState
 				v-if="route.params.status === 'no'"
-				:icon="mdiAlertCircle"
+				icon="mdi-alert-circle"
 				headline="Uh-oh!"
 				title="Verification Failed"
 				text="Something went wrong. Please try verifying your email again."
@@ -53,7 +52,7 @@ onMounted(() => {
 			/>
 			<VEmptyState
 				v-if="route.params.status === 'has'"
-				:icon="mdiInformation"
+				icon="mdi-information"
 				headline="Oops!"
 				title="Email Already Verified"
 				text="This email has already been verified. You're all set to explore all the features."
@@ -62,7 +61,7 @@ onMounted(() => {
 			/>
 			<VEmptyState
 				v-else
-				:icon="mdiCheckCircle"
+				icon="mdi-check-circle"
 				headline="You're All Set!"
 				title="Email Verified Successfully!"
 				text="Your email has been confirmed. You're now ready to explore all the features."

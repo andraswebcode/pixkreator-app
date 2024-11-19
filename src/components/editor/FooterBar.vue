@@ -1,13 +1,4 @@
 <script setup lang="ts">
-import {
-	mdiCog,
-	mdiFitToScreen,
-	mdiHandBackLeft,
-	mdiHelpCircle,
-	mdiLayers,
-	mdiMagnifyMinus,
-	mdiMagnifyPlus
-} from '@mdi/js';
 import { useEditor } from '../../store';
 import { MAX_ZOOM, MIN_ZOOM, ZOOM_STEP } from '../../utils/constants';
 import useFitToScreen from '../../hooks/fittoscreen';
@@ -41,11 +32,11 @@ const zoom = (dir: string) => {
 				<VCol cols="auto">
 					<VRow no-gutters justify="center" align="center">
 						<VCol cols="auto">
-							<VBtn :icon="mdiLayers" v-tooltip:top="'Layers'" @click="toggleList" />
+							<VBtn icon="mdi-layers" v-tooltip:top="'Layers'" @click="toggleList" />
 						</VCol>
 						<VCol cols="auto">
 							<VBtn
-								:icon="mdiCog"
+								icon="mdi-cog"
 								v-tooltip:top="'Settings'"
 								@click="toggleSettings"
 							/>
@@ -57,14 +48,14 @@ const zoom = (dir: string) => {
 						<VCol cols="auto">
 							<VBtn
 								:color="editor.mode === 'pan' ? 'primary' : ''"
-								:icon="mdiHandBackLeft"
+								icon="mdi-hand-back-left"
 								v-tooltip:top="'Pan Mode'"
 								@click="switchPan"
 							/>
 						</VCol>
 						<VCol cols="auto">
 							<VBtn
-								:icon="mdiFitToScreen"
+								icon="mdi-fit-to-screen"
 								v-tooltip:top="'Fit to Screen'"
 								@click="fitToScreen"
 							/>
@@ -80,7 +71,7 @@ const zoom = (dir: string) => {
 							>
 								<template v-slot:prepend>
 									<VBtn
-										:icon="mdiMagnifyMinus"
+										icon="mdi-magnify-minus"
 										v-tooltip:top="'Zoom Out'"
 										:disabled="editor.zoom === MIN_ZOOM"
 										@click="zoom('out')"
@@ -88,7 +79,7 @@ const zoom = (dir: string) => {
 								</template>
 								<template v-slot:append>
 									<VBtn
-										:icon="mdiMagnifyPlus"
+										icon="mdi-magnify-plus"
 										v-tooltip:top="'Zoom in'"
 										:disabled="editor.zoom === MAX_ZOOM"
 										@click="zoom('in')"
@@ -110,7 +101,7 @@ const zoom = (dir: string) => {
 							<FeedBack />
 						</VCol>
 						<VCol cols="auto">
-							<VBtn :icon="mdiHelpCircle" v-tooltip:top="'Help'" />
+							<VBtn icon="mdi-help-circle" v-tooltip:top="'Help'" />
 						</VCol>
 					</VRow>
 				</VCol>
