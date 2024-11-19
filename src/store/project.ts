@@ -17,6 +17,8 @@ export interface ByID extends FabricObjectProps {
 	// Group
 	parentId: string;
 	childIds: string[];
+	// QR Code
+	size: number;
 }
 
 export type ByIDs = {

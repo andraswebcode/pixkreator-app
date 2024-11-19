@@ -13,7 +13,9 @@ const ICON_MAP = {
 	path: 'mdi-heart-outline',
 	polyline: 'mdi-diamond-outline',
 	polygon: 'mdi-diamond-outline',
-	itext: 'mdi-format-text'
+	itext: 'mdi-format-text',
+	qrcode: 'mdi-qrcode',
+	chart: 'mdi-chart-areaspline'
 };
 
 const NAME_MAP = {
@@ -25,7 +27,9 @@ const NAME_MAP = {
 	path: 'Path',
 	polyline: 'Polyline',
 	polygon: 'Polygon',
-	itext: 'Text'
+	itext: 'Text',
+	qrcode: 'QR Code',
+	chart: 'Chart'
 };
 const project = useProject();
 const editor = useEditor();

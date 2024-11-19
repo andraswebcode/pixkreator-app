@@ -86,7 +86,9 @@ const addImage = () => {
 				project.addLayer(group);
 			}
 			src.value = '';
-			fitToScreen();
+			if (resize.value) {
+				fitToScreen();
+			}
 		});
 	} else {
 		project.addLayer({
@@ -96,7 +98,9 @@ const addImage = () => {
 			top: project.height / 2
 		});
 		src.value = '';
-		fitToScreen();
+		if (resize.value) {
+			fitToScreen();
+		}
 	}
 };
 

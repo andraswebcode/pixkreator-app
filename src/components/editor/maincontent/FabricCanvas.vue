@@ -229,6 +229,8 @@ watch(
 					} else {
 						object.applyFilters([]);
 					}
+				} else if (_type === 'QRCode') {
+					// object.updateImage();
 				}
 			} else {
 				if (layer.type === 'Group') {

@@ -14,6 +14,8 @@ import { PROSharpen } from './filters/sharpen';
 import { PROBlackWhite } from './filters/blackwhite';
 import { PROPolyline } from './objects/polyline';
 import { PROPolygon } from './objects/polygon';
+import { PROQRCode } from './objects/qrcode';
+import { PROChart } from './objects/chart';
 
 // Shapes
 
@@ -27,6 +29,8 @@ classRegistry.setClass(PROPolyline);
 classRegistry.setClass(PROPolygon);
 classRegistry.setClass(PRORect);
 classRegistry.setClass(PROIText);
+classRegistry.setClass(PROQRCode);
+classRegistry.setClass(PROChart);
 
 // Filters
 

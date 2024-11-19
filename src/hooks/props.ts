@@ -28,6 +28,11 @@ const useProps = (props: string[]): any => {
 						others.width = sanitize('radius', value * 2);
 						others.height = sanitize('radius', value * 2);
 					}
+				} else if (type === 'QRCode') {
+					if (prop === 'size') {
+						others.width = sanitize('width', value);
+						others.height = sanitize('height', value);
+					}
 				}
 
 				project.updateProps(id, {
