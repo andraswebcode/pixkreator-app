@@ -1,4 +1,4 @@
-import { ErrorCorrectionLevel } from 'qr-code-styling';
+import { CornerDotType, CornerSquareType, DotType, ErrorCorrectionLevel } from 'qr-code-styling';
 
 export type AppID =
 	| 'qr-code-generator'
@@ -16,4 +16,14 @@ export interface QRCodeOptions {
 	size: number;
 	margin: number;
 	ecl: ErrorCorrectionLevel;
+	background: string;
+	imageSrc: string;
+	imageSize: number;
+	imageMargin: number;
+	dotsColor: string;
+	dotsType: DotType;
+	cornerSquareType: CornerSquareType | '';
+	cornerSquareColor: string;
+	cornerDotType: CornerDotType | '';
+	cornerDotColor: string;
 }

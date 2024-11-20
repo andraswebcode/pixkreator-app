@@ -3,6 +3,10 @@
 <template>
 	<RightSideBarPanelTransformSettings />
 	<RightSideBarPanelQRCodeSettings />
+	<RightSideBarPanelQRCodeBGSettings />
+	<RightSideBarPanelQRCodeImageSettings />
+	<RightSideBarPanelQRCodeDotsSettings />
+	<RightSideBarPanelQRCodeCornerSettings />
 	<RightSideBarPanelShadowSettings />
 	<RightSideBarPanelCompositingSettings />
 </template>

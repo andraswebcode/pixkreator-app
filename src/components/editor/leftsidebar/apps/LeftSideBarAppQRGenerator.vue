@@ -43,7 +43,16 @@ const addQRCode = () => {
 		text: text.value || WEBSITE_URL,
 		size: size.value,
 		margin: margin.value,
-		ecl: ecl.value
+		ecl: ecl.value,
+		background: bg.value,
+		imageSrc: imgSrc.value,
+		imageMargin: imgMargin.value,
+		dotsColor: dotsColor.value,
+		dotsType: dotsType.value,
+		cornerSquareType: cornerSquareType.value,
+		cornerSquareColor: cornerSquareColor.value,
+		cornerDotType: cornerDotType.value,
+		cornerDotColor: cornerDotColor.value
 	});
 };
 
@@ -150,10 +159,10 @@ watch(
 		</VExpansionPanel>
 		<VExpansionPanel title="Background" value="background">
 			<VExpansionPanelText>
-				<ColorPicker label="Background Color" v-model="bg" />
+				<ColorPicker label="Background Color" clearable v-model="bg" />
 			</VExpansionPanelText>
 		</VExpansionPanel>
-		<VExpansionPanel title="Image" value="image">
+		<VExpansionPanel title="Logo" value="image">
 			<VExpansionPanelText>
 				<ImageSelect btn-label="Add Logo" v-model:src="imgSrc" />
 				<RangeSlider label="Size (%)" v-model="imgSize" />

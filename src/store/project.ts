@@ -3,11 +3,11 @@ import { unique, uniqueId } from '../utils/functions';
 import { FabricObjectProps, util } from 'fabric';
 import { ImageFilter, ImageFilterType } from '../types/image-filter';
 import { PROGroup } from '../canvas/objects/group';
-import { ErrorCorrectionLevel } from 'qr-code-styling';
+import { QRCodeOptions } from '../types/apps';
 
 export type IDList = string[];
 
-export interface ByID extends FabricObjectProps {
+export interface ByID extends FabricObjectProps, Partial<QRCodeOptions> {
 	id: string;
 	name: string;
 	type: string;
@@ -18,10 +18,6 @@ export interface ByID extends FabricObjectProps {
 	// Group
 	parentId?: string;
 	childIds?: string[];
-	// QR Code
-	size?: number;
-	margin?: number;
-	ecl?: ErrorCorrectionLevel;
 }
 
 export type ByIDs = {

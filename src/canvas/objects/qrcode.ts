@@ -1,12 +1,33 @@
 import { FabricObject, FabricObjectProps, TClassProperties, util } from 'fabric';
 import { Defaults } from '../mixins/defaults';
-import QRCodeStyling, { ErrorCorrectionLevel, Options } from 'qr-code-styling';
+import QRCodeStyling, {
+	CornerDotType,
+	CornerSquareType,
+	DotType,
+	ErrorCorrectionLevel,
+	Options
+} from 'qr-code-styling';
 import { WEBSITE_URL } from '../../utils/constants';
 import { QRCodeOptions } from '../../types/apps';
 
 interface QRCodeProps extends QRCodeOptions, FabricObjectProps {}
 
-const QRCODE_PROPS = ['text', 'size', 'margin', 'ecl'] as const;
+const QRCODE_PROPS = [
+	'text',
+	'size',
+	'margin',
+	'ecl',
+	'background',
+	'imageSrc',
+	'imageSize',
+	'imageMargin',
+	'dotsType',
+	'dotsColor',
+	'cornerSquareType',
+	'cornerSquareColor',
+	'cornerDotType',
+	'cornerDotColor'
+] as const;
 
 const qrCodeDefaultValues: Partial<TClassProperties<PROQRCode>> = {
 	text: WEBSITE_URL,
@@ -20,6 +41,16 @@ class PROQRCode extends Defaults(FabricObject) implements QRCodeProps {
 	declare size: number;
 	declare margin: number;
 	declare ecl: ErrorCorrectionLevel;
+	declare background: string;
+	declare imageSrc: string;
+	declare imageSize: number;
+	declare imageMargin: number;
+	declare dotsType: DotType;
+	declare dotsColor: string;
+	declare cornerSquareType: '' | CornerSquareType;
+	declare cornerSquareColor: string;
+	declare cornerDotType: '' | CornerDotType;
+	declare cornerDotColor: string;
 
 	private _element = new Image();
 
@@ -103,7 +134,26 @@ class PROQRCode extends Defaults(FabricObject) implements QRCodeProps {
 			margin: this.margin,
 			qrOptions: {
 				errorCorrectionLevel: this.ecl
-			}
+			},
+			backgroundOptions: {
+				color: this.background
+			},
+			dotsOptions: {
+				type: this.dotsType,
+				color: this.dotsColor
+			},
+			cornersSquareOptions: this.cornerSquareType
+				? {
+						type: this.cornerSquareType,
+						color: this.cornerSquareColor
+				  }
+				: undefined,
+			cornersDotOptions: this.cornerDotType
+				? {
+						type: this.cornerDotType,
+						color: this.cornerDotColor
+				  }
+				: undefined
 		};
 	}
 }
