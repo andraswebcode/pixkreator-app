@@ -28,6 +28,7 @@ declare module 'vue' {
     FullScreenLoader: typeof import('./src/components/editor/FullScreenLoader.vue')['default']
     GridItem: typeof import('./src/components/common/GridItem.vue')['default']
     GridLoader: typeof import('./src/components/common/GridLoader.vue')['default']
+    ImageSelect: typeof import('./src/components/common/ImageSelect.vue')['default']
     InfiniteScroll: typeof import('./src/components/common/InfiniteScroll.vue')['default']
     InputGroup: typeof import('./src/components/common/InputGroup.vue')['default']
     LeftSideBar: typeof import('./src/components/editor/LeftSideBar.vue')['default']

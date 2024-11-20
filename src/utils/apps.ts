@@ -77,4 +77,26 @@ const qrCodeECLs: {
 	}
 ];
 
-export { apps, qrCodeECLs };
+const qrCodeDotTypes = [
+	{ label: 'Rounded', value: 'rounded' },
+	{ label: 'Dots', value: 'dots' },
+	{ label: 'Classy', value: 'classy' },
+	{ label: 'Classy Rounded', value: 'classy-rounded' },
+	{ label: 'Square', value: 'square' },
+	{ label: 'Extra Rounded', value: 'extra-rounded' }
+];
+
+const qrCodeCornerSquareTypes = [
+	{ label: 'None', value: '' },
+	{ label: 'Dot', value: 'dot' },
+	{ label: 'Square', value: 'square' },
+	{ label: 'Extra Rounded', value: 'extra-rounded' }
+];
+
+const qrCodeCornerDotTypes = [
+	{ label: 'None', value: '' },
+	{ label: 'Dot', value: 'dot' },
+	{ label: 'Square', value: 'square' }
+];
+
+export { apps, qrCodeECLs, qrCodeDotTypes, qrCodeCornerSquareTypes, qrCodeCornerDotTypes };
