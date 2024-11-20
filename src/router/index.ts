@@ -22,6 +22,12 @@ import DashboardAdmin from '../views/dashboard/DashboardAdmin.vue';
 import AccountSettingsView from '../views/account/AccountSettingsView.vue';
 import DeleteUserView from '../views/DeleteUserView.vue';
 import AppsView from '../views/AppsView.vue';
+import AppHomeView from '../views/apps/AppHomeView.vue';
+import AppQRCodeGeneratorView from '../views/apps/AppQRCodeGeneratorView.vue';
+import AppChartMakerView from '../views/apps/AppChartMakerView.vue';
+import AppBGRemoverView from '../views/apps/AppBGRemoverView.vue';
+import AppPatternCreatorView from '../views/apps/AppPatternCreatorView.vue';
+import AppCPExtractorView from '../views/apps/AppCPExtractorView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -33,7 +39,38 @@ const routes: RouteRecordRaw[] = [
 		name: 'apps',
 		path: '/apps',
 		component: AppsView,
-		children: []
+		children: [
+			{
+				name: 'applist',
+				path: '',
+				component: AppHomeView
+			},
+			{
+				name: 'qr-code-generator',
+				path: 'qr-code-generator',
+				component: AppQRCodeGeneratorView
+			},
+			{
+				name: 'chart-maker',
+				path: 'chart-maker',
+				component: AppChartMakerView
+			},
+			{
+				name: 'background-remover',
+				path: 'background-remover',
+				component: AppBGRemoverView
+			},
+			{
+				name: 'pattern-creator',
+				path: 'pattern-creator',
+				component: AppPatternCreatorView
+			},
+			{
+				name: 'color-palette-extractor',
+				path: 'color-palette-extractor',
+				component: AppCPExtractorView
+			}
+		]
 	},
 	{
 		name: 'dashboard',

@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, watch, toRaw } from 'vue';
 import { useEditor, useNotice, useProject } from './../../../store';
 import Canvas from '../../../canvas/canvas';
 import { Rect, util } from 'fabric';
-import { isAround, toFixed } from '../../../utils/functions';
+import { debounce, isAround, toFixed } from '../../../utils/functions';
 import { EditorModeType, EditorPencilType } from '../../../store/editor';
 import { SNAP_THRESHOLD } from '../../../utils/constants';
 
@@ -201,7 +201,7 @@ onUnmounted(() => {
 
 watch(
 	(): [string[], any] => [toRaw(project.ids), project.byIds],
-	([newIds], [oldIds]) => {
+	debounce(([newIds], [oldIds]) => {
 		const newLayers: any[] = [];
 
 		newIds.forEach((id) => {
@@ -230,13 +230,15 @@ watch(
 						object.applyFilters([]);
 					}
 				} else if (_type === 'QRCode') {
-					// object.updateImage();
+					object.updateImage().then(() => {
+						fabricCanvas.requestRenderAll();
+					});
 				}
 			} else {
 				if (layer.type === 'Group') {
 					newLayers.push({
 						...layer,
-						objects: layer.childIds.map((id) => project.byIds[id])
+						objects: (layer.childIds || []).map((id) => project.byIds[id])
 					});
 				} else {
 					newLayers.push(layer);
@@ -275,7 +277,7 @@ watch(
 		}
 
 		fabricCanvas.requestRenderAll();
-	},
+	}, 200),
 	{ deep: true }
 );
 watch(

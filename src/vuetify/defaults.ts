@@ -112,7 +112,7 @@ const defaults = {
 		}
 	},
 	ToolBarItem: {
-		class: 'toolbar-item',
+		class: 'toolbar-item rounded-0',
 		block: true
 	},
 	SideBarToggler: {

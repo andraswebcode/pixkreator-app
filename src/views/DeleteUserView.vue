@@ -66,7 +66,7 @@ const deleteUser = () => {
 			</VEmptyState>
 			<VEmptyState
 				v-else
-				:icon="mdiAccountAlert"
+				icon="mdi-account-alert"
 				headline="This action cannot be undone"
 				title="Are you sure you want to delete your account?"
 				action-text="Delete Account"

@@ -181,7 +181,7 @@ onMounted(() => {
 					responsive
 					@click="openDetails(i, tmpl.category)"
 				/>
-				<VAlert v-else class="mx-3 mt-3" type="warning" :icon="mdiAlertCircle">
+				<VAlert v-else class="mx-3 mt-3" type="warning" icon="mdi-alert-circle">
 					No items found
 				</VAlert>
 			</VRow>

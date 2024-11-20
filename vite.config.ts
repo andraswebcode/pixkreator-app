@@ -15,6 +15,25 @@ export default defineConfig({
 			}
 		}
 	},
+	build: {
+		assetsDir: 'assets',
+		rollupOptions: {
+			output: {
+				entryFileNames: 'assets/js/app.js',
+				assetFileNames: ({ originalFileNames }) => {
+					if (
+						originalFileNames?.[0]?.endsWith('.woff2') ||
+						originalFileNames?.[0]?.endsWith('.woff') ||
+						originalFileNames?.[0]?.endsWith('.eot') ||
+						originalFileNames?.[0]?.endsWith('.ttf')
+					) {
+						return 'assets/webfonts/materialicons[extname]';
+					}
+					return 'assets/css/app[extname]';
+				}
+			}
+		}
+	},
 	plugins: [
 		vue(),
 		vuetify({

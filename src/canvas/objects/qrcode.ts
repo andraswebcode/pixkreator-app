@@ -1,21 +1,25 @@
 import { FabricObject, FabricObjectProps, TClassProperties, util } from 'fabric';
 import { Defaults } from '../mixins/defaults';
-import QRCodeStyling, { Options } from 'qr-code-styling';
+import QRCodeStyling, { ErrorCorrectionLevel, Options } from 'qr-code-styling';
 import { WEBSITE_URL } from '../../utils/constants';
 import { QRCodeOptions } from '../../types/apps';
 
 interface QRCodeProps extends QRCodeOptions, FabricObjectProps {}
 
-const QRCODE_PROPS = ['text', 'size'] as const;
+const QRCODE_PROPS = ['text', 'size', 'margin', 'ecl'] as const;
 
 const qrCodeDefaultValues: Partial<TClassProperties<PROQRCode>> = {
 	text: WEBSITE_URL,
-	size: 300
+	size: 300,
+	margin: 0,
+	ecl: 'Q'
 };
 
 class PROQRCode extends Defaults(FabricObject) implements QRCodeProps {
 	declare text: string;
 	declare size: number;
+	declare margin: number;
+	declare ecl: ErrorCorrectionLevel;
 
 	private _element = new Image();
 
@@ -95,7 +99,11 @@ class PROQRCode extends Defaults(FabricObject) implements QRCodeProps {
 		return {
 			data: this.text || WEBSITE_URL,
 			width: this.size,
-			height: this.size
+			height: this.size,
+			margin: this.margin,
+			qrOptions: {
+				errorCorrectionLevel: this.ecl
+			}
 		};
 	}
 }

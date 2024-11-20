@@ -3,6 +3,7 @@ import { unique, uniqueId } from '../utils/functions';
 import { FabricObjectProps, util } from 'fabric';
 import { ImageFilter, ImageFilterType } from '../types/image-filter';
 import { PROGroup } from '../canvas/objects/group';
+import { ErrorCorrectionLevel } from 'qr-code-styling';
 
 export type IDList = string[];
 
@@ -15,10 +16,12 @@ export interface ByID extends FabricObjectProps {
 	text?: string;
 	fontFamily?: string;
 	// Group
-	parentId: string;
-	childIds: string[];
+	parentId?: string;
+	childIds?: string[];
 	// QR Code
-	size: number;
+	size?: number;
+	margin?: number;
+	ecl?: ErrorCorrectionLevel;
 }
 
 export type ByIDs = {
@@ -170,18 +173,18 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 			const groupLayerBase = this.byIds[id];
 			const groupLayer = {
 				...groupLayerBase,
-				objects: groupLayerBase.childIds.map((id) => this.byIds[id])
+				objects: groupLayerBase.childIds?.map((id) => this.byIds[id]) || []
 			};
 
 			util.enlivenObjects([groupLayer]).then((groups: any) => {
 				const shapes = groups[0].getObjects();
 
 				this.$patch({
-					ids: [...this.ids.filter((_id) => _id !== id), ...groupLayer.childIds],
+					ids: [...this.ids.filter((_id) => _id !== id), ...(groupLayer?.childIds || [])],
 					byIds: {
 						...this.byIds,
 						[id]: undefined,
-						...groupLayer.childIds.reduce((memo, id, i) => {
+						...(groupLayer?.childIds || []).reduce((memo, id, i) => {
 							const layer = this.byIds[id];
 							const { translateX, translateY, scaleX, scaleY, skewX, skewY, angle } =
 								util.qrDecompose(shapes[i].calcTransformMatrix());

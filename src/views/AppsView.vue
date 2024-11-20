@@ -2,6 +2,11 @@
 
 <template>
 	<AppBar />
+	<VMain>
+		<VContainer>
+			<RouterView />
+		</VContainer>
+	</VMain>
 </template>
 
 <style scoped lang="scss"></style>
