@@ -22,7 +22,11 @@ const setActiveApp = (id: AppID) => {
 		<LeftSideBarAppQRGenerator v-if="editor.activeApp === 'qr-code-generator'" />
 		<LeftSideBarAppChartMaker v-if="editor.activeApp === 'chart-maker'" />
 		<LeftSideBarAppBGRemover v-else-if="editor.activeApp === 'background-remover'" />
+		<LeftSideBarAppImageUpscaler v-else-if="editor.activeApp === 'image-upscaler'" />
+		<LeftSideBarAppColorWheel v-else-if="editor.activeApp === 'color-wheel'" />
 		<LeftSideBarAppCPExtractor v-else-if="editor.activeApp === 'color-palette-extractor'" />
+		<LeftSideBarAppDesignGenerator v-else-if="editor.activeApp === 'design-generator'" />
+		<LeftSideBarAppCollageMaker v-else-if="editor.activeApp === 'collage-maker'" />
 		<LeftSideBarAppPatternCreator v-else-if="editor.activeApp === 'pattern-creator'" />
 	</div>
 	<div v-else class="pa-4">

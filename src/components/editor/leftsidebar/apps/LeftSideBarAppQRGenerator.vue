@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { useProject } from '../../../store';
-import { WEBSITE_URL } from '../../../utils/constants';
+import { useProject } from '../../../../store';
+import { WEBSITE_URL } from '../../../../utils/constants';
 import QRCodeStyling, { ErrorCorrectionLevel } from 'qr-code-styling';
-import { debounce } from '../../../utils/functions';
-import { qrCodeECLs } from '../../../utils/apps';
+import { debounce } from '../../../../utils/functions';
+import { qrCodeECLs } from '../../../../utils/apps';
 
 const qrCode = new QRCodeStyling();
 const project = useProject();

@@ -5,7 +5,11 @@ export type AppID =
 	| 'chart-maker'
 	| 'background-remover'
 	| 'pattern-creator'
-	| 'color-palette-extractor';
+	| 'color-palette-extractor'
+	| 'color-wheel'
+	| 'collage-maker'
+	| 'image-upscaler'
+	| 'design-generator';
 
 export interface QRCodeOptions {
 	text: string;

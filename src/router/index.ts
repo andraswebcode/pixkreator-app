@@ -28,6 +28,10 @@ import AppChartMakerView from '../views/apps/AppChartMakerView.vue';
 import AppBGRemoverView from '../views/apps/AppBGRemoverView.vue';
 import AppPatternCreatorView from '../views/apps/AppPatternCreatorView.vue';
 import AppCPExtractorView from '../views/apps/AppCPExtractorView.vue';
+import AppCollageMakerView from '../views/apps/AppCollageMakerView.vue';
+import AppColorWheelView from '../views/apps/AppColorWheelView.vue';
+import AppImageUpscalerView from '../views/apps/AppImageUpscalerView.vue';
+import AppDesignGeneratorView from '../views/apps/AppDesignGeneratorView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -61,6 +65,16 @@ const routes: RouteRecordRaw[] = [
 				component: AppBGRemoverView
 			},
 			{
+				name: 'image-upscaler',
+				path: 'image-upscaler',
+				component: AppImageUpscalerView
+			},
+			{
+				name: 'design-generator',
+				path: 'design-generator',
+				component: AppDesignGeneratorView
+			},
+			{
 				name: 'pattern-creator',
 				path: 'pattern-creator',
 				component: AppPatternCreatorView
@@ -69,6 +83,16 @@ const routes: RouteRecordRaw[] = [
 				name: 'color-palette-extractor',
 				path: 'color-palette-extractor',
 				component: AppCPExtractorView
+			},
+			{
+				name: 'collage-maker',
+				path: 'collage-maker',
+				component: AppCollageMakerView
+			},
+			{
+				name: 'color-wheel',
+				path: 'color-wheel',
+				component: AppColorWheelView
 			}
 		]
 	},

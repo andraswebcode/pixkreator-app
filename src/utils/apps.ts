@@ -24,14 +24,34 @@ const apps: App[] = [
 		description: 'Easily remove backgrounds from your images with precision.'
 	},
 	{
-		id: 'pattern-creator',
-		title: 'Pattern Creator',
-		description: 'Design seamless patterns to elevate your backgrounds and layouts.'
+		id: 'image-upscaler',
+		title: 'Image Upscaler',
+		description: 'Boost image resolution for flawless quality on any platform.'
+	},
+	{
+		id: 'color-wheel',
+		title: 'Color Wheel',
+		description: 'Create perfect combinations with an interactive color wheel.'
 	},
 	{
 		id: 'color-palette-extractor',
 		title: 'Color Palette Extractor',
 		description: 'Extract color palettes from your images for a cohesive design.'
+	},
+	{
+		id: 'collage-maker',
+		title: 'Collage Maker',
+		description: 'Combine photos and designs into beautiful collages.'
+	},
+	{
+		id: 'design-generator',
+		title: 'Design Generator',
+		description: 'Create templates from prompts with perfect images, text, and layouts.'
+	},
+	{
+		id: 'pattern-creator',
+		title: 'Pattern Creator',
+		description: 'Design seamless patterns to create backgrounds.'
 	}
 ];
 
