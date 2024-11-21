@@ -32,6 +32,9 @@ import AppCollageMakerView from '../views/apps/AppCollageMakerView.vue';
 import AppColorWheelView from '../views/apps/AppColorWheelView.vue';
 import AppImageUpscalerView from '../views/apps/AppImageUpscalerView.vue';
 import AppDesignGeneratorView from '../views/apps/AppDesignGeneratorView.vue';
+import AppSketchToImageView from '../views/apps/AppSketchToImageView.vue';
+import AppEraseObjectView from '../views/apps/AppEraseObjectView.vue';
+import AppInpaintView from '../views/apps/AppInpaintView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -68,6 +71,21 @@ const routes: RouteRecordRaw[] = [
 				name: 'image-upscaler',
 				path: 'image-upscaler',
 				component: AppImageUpscalerView
+			},
+			{
+				name: 'sketch-to-image',
+				path: 'sketch-to-image',
+				component: AppSketchToImageView
+			},
+			{
+				name: 'erase-object',
+				path: 'erase-object',
+				component: AppEraseObjectView
+			},
+			{
+				name: 'inpaint',
+				path: 'inpaint',
+				component: AppInpaintView
 			},
 			{
 				name: 'design-generator',

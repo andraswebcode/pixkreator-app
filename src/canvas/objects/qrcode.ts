@@ -132,11 +132,17 @@ class PROQRCode extends Defaults(FabricObject) implements QRCodeProps {
 			width: this.size,
 			height: this.size,
 			margin: this.margin,
+			image: this.imageSrc,
 			qrOptions: {
 				errorCorrectionLevel: this.ecl
 			},
 			backgroundOptions: {
 				color: this.background
+			},
+			imageOptions: {
+				imageSize: this.imageSize,
+				margin: this.imageMargin,
+				crossOrigin: 'anonymus'
 			},
 			dotsOptions: {
 				type: this.dotsType,

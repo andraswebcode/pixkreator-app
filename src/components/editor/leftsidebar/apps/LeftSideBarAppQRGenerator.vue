@@ -46,6 +46,7 @@ const addQRCode = () => {
 		ecl: ecl.value,
 		background: bg.value,
 		imageSrc: imgSrc.value,
+		imageSize: imgSize.value,
 		imageMargin: imgMargin.value,
 		dotsColor: dotsColor.value,
 		dotsType: dotsType.value,
@@ -165,7 +166,7 @@ watch(
 		<VExpansionPanel title="Logo" value="image">
 			<VExpansionPanelText>
 				<ImageSelect btn-label="Add Logo" v-model:src="imgSrc" />
-				<RangeSlider label="Size (%)" v-model="imgSize" />
+				<RangeSlider label="Size (%)" v-model="imgSize" :min="0.01" :max="1" :step="0.01" />
 				<RangeSlider label="Margin" v-model="imgMargin" />
 			</VExpansionPanelText>
 		</VExpansionPanel>

@@ -4,11 +4,14 @@ export type AppID =
 	| 'qr-code-generator'
 	| 'chart-maker'
 	| 'background-remover'
+	| 'image-upscaler'
+	| 'erase-object'
+	| 'inpaint'
+	| 'sketch-to-image'
 	| 'pattern-creator'
 	| 'color-palette-extractor'
 	| 'color-wheel'
 	| 'collage-maker'
-	| 'image-upscaler'
 	| 'design-generator';
 
 export interface QRCodeOptions {

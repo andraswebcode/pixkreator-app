@@ -29,6 +29,21 @@ const apps: App[] = [
 		description: 'Boost image resolution for flawless quality on any platform.'
 	},
 	{
+		id: 'erase-object',
+		title: 'Erase Object',
+		description: 'Easily remove unwanted objects from your images.'
+	},
+	{
+		id: 'inpaint',
+		title: 'Inpaint',
+		description: 'Fill or replace image areas, based on a mask and prompt.'
+	},
+	{
+		id: 'sketch-to-image',
+		title: 'Sketch to Image',
+		description: 'Turn sketches into detailed images, based on your prompts.'
+	},
+	{
 		id: 'color-wheel',
 		title: 'Color Wheel',
 		description: 'Create perfect combinations with an interactive color wheel.'

@@ -91,7 +91,14 @@ onMounted(filter);
 </script>
 
 <template>
-	<VBtn block @click="showImages = true">{{ props.btnLabel }}</VBtn>
+	<VImg v-if="src" class="mb-3" :src="src" aspect-ratio="1">
+		<template v-slot:placeholder>
+			<div class="d-flex align-center justify-center fill-height">
+				<VProgressCircular color="grey-lighten-4" indeterminate />
+			</div>
+		</template>
+	</VImg>
+	<VBtn class="mb-5" block @click="showImages = true">{{ props.btnLabel }}</VBtn>
 	<PersistentHeaderDialog v-model="showImages" @close="showImages = false">
 		<LibraryWrapper>
 			<VRow justify="center" justify-md="space-between">

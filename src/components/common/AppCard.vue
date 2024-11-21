@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { AppID } from '../../types/apps';
 import { IMAGES_FOLDER } from '../../utils/constants';
 
 const props = defineProps<{
