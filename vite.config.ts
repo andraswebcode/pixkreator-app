@@ -6,7 +6,7 @@ import { VuetifyResolver } from 'unplugin-vue-components/resolvers';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	server: {
+	/*server: {
 		proxy: {
 			'/api': {
 				target: 'http://localhost:8000',
@@ -14,7 +14,7 @@ export default defineConfig({
 				secure: false
 			}
 		}
-	},
+	},*/
 	build: {
 		assetsDir: 'assets',
 		rollupOptions: {

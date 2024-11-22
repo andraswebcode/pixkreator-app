@@ -10,6 +10,7 @@ declare module 'vue' {
     AppBar: typeof import('./src/components/common/AppBar.vue')['default']
     AppCard: typeof import('./src/components/common/AppCard.vue')['default']
     ButtonToggle: typeof import('./src/components/common/ButtonToggle.vue')['default']
+    CantGenerateImageAlert: typeof import('./src/components/common/CantGenerateImageAlert.vue')['default']
     CanvasBackground: typeof import('./src/components/editor/maincontent/CanvasBackground.vue')['default']
     CanvasPan: typeof import('./src/components/editor/maincontent/CanvasPan.vue')['default']
     ColorPicker: typeof import('./src/components/common/ColorPicker.vue')['default']

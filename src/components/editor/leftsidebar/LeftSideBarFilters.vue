@@ -2,12 +2,12 @@
 import { computed, ref, watch } from 'vue';
 import imageFilters from '../../../utils/image-filters';
 import { DETAILS_DIALOG_WIDTH, THUMBNAIL_MAX_SIZE } from '../../../utils/constants';
-import { useEditor, useProject } from '../../../store';
-import { ByIDs } from '../../../store/project';
+import { useProject } from '../../../store';
 import { jsonToBlob } from '../../../utils/json-to-blob';
+import useImage from '../../../hooks/image';
 
 const project = useProject();
-const editor = useEditor();
+const { currentImage } = useImage();
 const showDetails = ref(false);
 const image = ref<any>();
 const thumbnail = ref<any>();
@@ -73,14 +73,8 @@ const applyFilter = () => {
 };
 
 watch(
-	(): [string[], string[], ByIDs] => [editor.activeLayerIds, project.ids, project.byIds],
-	([activeIds, ids, byIds]) => {
-		const activeId = activeIds[0];
-		const imgObject =
-			activeId && byIds[activeId]?.type === 'Image'
-				? byIds[activeId]
-				: ids.map((id) => byIds[id]).find((layer) => layer?.type === 'Image');
-
+	() => [currentImage.value],
+	([imgObject]) => {
 		if (!imgObject) {
 			return;
 		}
