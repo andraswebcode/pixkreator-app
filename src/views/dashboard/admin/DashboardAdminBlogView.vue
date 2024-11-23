@@ -20,9 +20,27 @@ const options = {
 		toolbar: [{ header: [2, 3, false] }, 'bold', 'italic', 'underline', 'link']
 	}
 };
+const addNew = () => {
+	edit.value = true;
+	title.value = '';
+	content.value = '';
+	slug.value = '';
+	category.value = '';
+	image.value = '';
+	excerpt.value = '';
+	metaDesc.value = '';
+};
 const editArticle = (_id: number) => {
 	edit.value = true;
 	id.value = _id;
+	const item = items.value.find(({ id }) => id === _id);
+	title.value = item.title;
+	content.value = item.content;
+	slug.value = item.slug;
+	category.value = item.category;
+	image.value = item.image;
+	excerpt.value = item.excerpt;
+	metaDesc.value = item.meta_description;
 };
 const saveArticle = () => {
 	save(
@@ -67,7 +85,7 @@ onMounted(filter);
 		<VBtn @click="edit = false">Back</VBtn>
 	</div>
 	<div v-else>
-		<VBtn class="mb-4" @click="edit = true">Add New</VBtn>
+		<VBtn class="mb-4" @click="addNew">Add New</VBtn>
 		<VRow>
 			<VCol v-for="item in items" :key="item.id" cols="4">
 				<VCard class="mb-4">

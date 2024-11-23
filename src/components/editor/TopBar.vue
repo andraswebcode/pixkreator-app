@@ -5,7 +5,7 @@ import { useEditor, useNotice, useProject, useUser } from '../../store';
 import { toRaw } from 'vue';
 import { jsonToBlob } from '../../utils/json-to-blob';
 import { util } from 'fabric';
-import { LOGO_SRC, SHARE_IMAGE_MAX_SIZE } from '../../utils/constants';
+import { LOGO_SRC, SHARE_IMAGE_MAX_SIZE, THUMBNAIL_MAX_SIZE } from '../../utils/constants';
 import { createSlug } from '../../utils/functions';
 import templateCategories from '../../utils/template-categories';
 import colorNames from '../../utils/color-names';
@@ -123,7 +123,17 @@ const saveTemplate = () => {
 	}
 
 	const { title, description, keywords, width, height, background, ids, byIds } = project;
-	// const multiplier = 1;
+	const thumbnailMultiplier = util.findScaleToFit(
+		{
+			width,
+			height
+		},
+		{
+			width: THUMBNAIL_MAX_SIZE,
+			height: THUMBNAIL_MAX_SIZE
+		}
+	);
+
 	const category = templateCategories.find(
 		(item) => item.width === width && item.height === height
 	);
@@ -185,31 +195,48 @@ const saveTemplate = () => {
 		},
 		(response) => {
 			console.log(response);
-			editor.loading = false;
-			notice.send('Template Saved Successfully', 'success');
-			/*
-			jsonToBlob(
-				{
-					width,
-					height,
-					background,
-					objects: ids.map((id) => toRaw(byIds[id]))
-				},
-				'image/webp',
-				0.98,
-				Math.min(multiplier, 1)
-			)
-				.then((blob) => {
-					const url = URL.createObjectURL(blob);
-					console.log(url);
-					URL.revokeObjectURL(url);
-					editor.loading = false;
+
+			const promises = [
+				// Create preview
+				jsonToBlob(
+					{
+						width,
+						height,
+						background,
+						objects: ids.map((id) => toRaw(byIds[id]))
+					},
+					'image/webp',
+					0.98
+				),
+				// Create thumbnail
+				jsonToBlob(
+					{
+						width,
+						height,
+						background,
+						objects: ids.map((id) => toRaw(byIds[id]))
+					},
+					'image/webp',
+					0.98,
+					Math.min(thumbnailMultiplier, 1)
+				)
+			];
+
+			Promise.all(promises)
+				.then(([preview, thumbnail]) => {
+					const data = new FormData();
+					data.append('preview', preview);
+					data.append('thumbnail', thumbnail);
+					save('', 'admin/templates/assets/' + response.id, data, (data) => {
+						console.log(data);
+						editor.loading = false;
+						notice.send('Template Saved Successfully', 'success');
+					});
 				})
 				.catch(() => {
-					notice.send('Can not create image file.', 'error');
+					notice.send('Can not create assets.', 'error');
 					editor.loading = false;
 				});
-			*/
 		},
 		(error) => {
 			console.warn(error);

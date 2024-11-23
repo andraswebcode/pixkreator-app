@@ -22,7 +22,7 @@ export const LOGIN_DIALOG_WIDTH = 500;
 
 export const SHARE_IMAGE_MAX_SIZE = 2000;
 
-export const THUMBNAIL_MAX_SIZE = 200;
+export const THUMBNAIL_MAX_SIZE = 300;
 
 export const PHOTO_SIZES = [
 	{

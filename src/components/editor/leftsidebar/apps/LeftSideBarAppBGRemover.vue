@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import useImage from '../../../../hooks/image';
-import useProps from '../../../../hooks/props';
-import useRequest from '../../../../hooks/request';
-import { useNotice, useUser } from '../../../../store';
+// import useProps from '../../../../hooks/props';
+// import useRequest from '../../../../hooks/request';
+import { /* useNotice, */ useUser } from '../../../../store';
 
 const userData = useUser();
-const notice = useNotice();
-const { src } = useProps(['src']);
+// const notice = useNotice();
+// const { src } = useProps(['src']);
 const { currentImage } = useImage();
-const { save } = useRequest();
+// const { save } = useRequest();
 const removeBackground = () => {
 	/*
 	if (!currentImage.value) {
