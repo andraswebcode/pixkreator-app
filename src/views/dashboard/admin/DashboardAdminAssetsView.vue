@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, toRaw } from 'vue';
-import useRequest from '../../hooks/request';
-import { uploadFile } from '../../utils/upload-file';
+import useRequest from '../../../hooks/request';
+import { uploadFile } from '../../../utils/upload-file';
 import { loadSVGFromString } from 'fabric';
-import { toFixed } from '../../utils/functions';
-import graphicCategories from '../../utils/graphic-categories';
-import graphicStyles from '../../utils/graphic-styles';
-import { useNotice } from '../../store';
+import { toFixed } from '../../../utils/functions';
+import graphicCategories from '../../../utils/graphic-categories';
+import graphicStyles from '../../../utils/graphic-styles';
+import { useNotice } from '../../../store';
 
 const { save } = useRequest();
 const notice = useNotice();

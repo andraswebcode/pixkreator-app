@@ -168,7 +168,7 @@ const saveTemplate = () => {
 
 	save(
 		route.query.template as string,
-		'templates',
+		'admin/templates',
 		{
 			title,
 			slug: createSlug(title),

@@ -18,7 +18,7 @@ import AccountSupportView from '../views/account/AccountSupportView.vue';
 import VerifyEmailView from '../views/VerifyEmailView.vue';
 import VerifiedEmailView from '../views/VerifiedEmailView.vue';
 import ForgotPWView from '../views/ForgotPWView.vue';
-import DashboardAdmin from '../views/dashboard/DashboardAdmin.vue';
+import DashboardAdminView from '../views/dashboard/DashboardAdminView.vue';
 import AccountSettingsView from '../views/account/AccountSettingsView.vue';
 import DeleteUserView from '../views/DeleteUserView.vue';
 import AppsView from '../views/AppsView.vue';
@@ -35,6 +35,8 @@ import AppDesignGeneratorView from '../views/apps/AppDesignGeneratorView.vue';
 import AppSketchToImageView from '../views/apps/AppSketchToImageView.vue';
 import AppEraseObjectView from '../views/apps/AppEraseObjectView.vue';
 import AppInpaintView from '../views/apps/AppInpaintView.vue';
+import DashboardAdminAssetsView from '../views/dashboard/admin/DashboardAdminAssetsView.vue';
+import DashboardAdminBlogView from '../views/dashboard/admin/DashboardAdminBlogView.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -158,10 +160,22 @@ const routes: RouteRecordRaw[] = [
 			{
 				name: 'admin',
 				path: 'admin',
-				component: DashboardAdmin,
+				component: DashboardAdminView,
 				meta: {
 					requiresAdmin: true
-				}
+				},
+				children: [
+					{
+						name: 'admin-blog',
+						path: '',
+						component: DashboardAdminBlogView
+					},
+					{
+						name: 'admin-assets',
+						path: 'assets',
+						component: DashboardAdminAssetsView
+					}
+				]
 			}
 		]
 	},
