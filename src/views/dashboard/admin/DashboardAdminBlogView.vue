@@ -14,6 +14,7 @@ const metaDesc = ref('');
 const edit = ref(false);
 const items = ref<any[]>([]);
 const id = ref(0);
+const html = ref(false);
 const options = {
 	modules: {
 		toolbar: [{ header: [2, 3, false] }, 'bold', 'italic', 'underline', 'link']
@@ -55,7 +56,9 @@ onMounted(filter);
 	<div v-if="edit" class="editor">
 		<VTextField label="Title" v-model="title" />
 		<VTextField label="Slug" v-model="slug" />
-		<QuillEditor content-type="html" v-model:content="content" :options="options" />
+		<VSwitch label="Edit HTML" v-model="html" />
+		<VTextarea v-if="html" v-model="content" />
+		<QuillEditor v-else content-type="html" v-model:content="content" :options="options" />
 		<VTextField label="Category" v-model="category" />
 		<VTextField label="Image" v-model="image" />
 		<VTextarea label="Excerpt" v-model="excerpt" />
