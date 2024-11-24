@@ -203,7 +203,7 @@ const saveTemplate = () => {
 						width,
 						height,
 						background,
-						objects: ids.map((id) => toRaw(byIds[id]))
+						objects: project.fabricJSON
 					},
 					'image/webp',
 					0.98
@@ -214,7 +214,7 @@ const saveTemplate = () => {
 						width,
 						height,
 						background,
-						objects: ids.map((id) => toRaw(byIds[id]))
+						objects: project.fabricJSON
 					},
 					'image/webp',
 					0.98,

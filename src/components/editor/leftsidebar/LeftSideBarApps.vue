@@ -23,6 +23,9 @@ const setActiveApp = (id: AppID) => {
 		<LeftSideBarAppChartMaker v-if="editor.activeApp === 'chart-maker'" />
 		<LeftSideBarAppBGRemover v-else-if="editor.activeApp === 'background-remover'" />
 		<LeftSideBarAppImageUpscaler v-else-if="editor.activeApp === 'image-upscaler'" />
+		<LeftSideBarAppSketchToImage v-else-if="editor.activeApp === 'sketch-to-image'" />
+		<LeftSideBarAppEraseObject v-else-if="editor.activeApp === 'erase-object'" />
+		<LeftSideBarAppInpaint v-else-if="editor.activeApp === 'inpaint'" />
 		<LeftSideBarAppColorWheel v-else-if="editor.activeApp === 'color-wheel'" />
 		<LeftSideBarAppCPExtractor v-else-if="editor.activeApp === 'color-palette-extractor'" />
 		<LeftSideBarAppDesignGenerator v-else-if="editor.activeApp === 'design-generator'" />

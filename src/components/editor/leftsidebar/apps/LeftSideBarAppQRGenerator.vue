@@ -138,13 +138,7 @@ watch(
 </script>
 
 <template>
-	<VImg class="mb-4" aspect-ratio="1" :src="preview">
-		<template v-slot:placeholder>
-			<div class="d-flex align-center justify-center fill-height">
-				<VProgressCircular color="grey-lighten-4" indeterminate />
-			</div>
-		</template>
-	</VImg>
+	<LazyLoadImage class="mb-4" aspect-ratio="1" :src="preview" />
 	<VExpansionPanels class="mb-4" v-model="panels">
 		<VExpansionPanel title="QR Code" value="qr">
 			<VExpansionPanelText>

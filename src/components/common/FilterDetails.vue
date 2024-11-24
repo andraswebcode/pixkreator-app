@@ -51,7 +51,7 @@ const { mdAndUp } = useDisplay();
 					'h-100': mdAndUp
 				}"
 			>
-				<VImg aspect-ratio="1" :src="src" />
+				<LazyLoadImage aspect-ratio="1" :src="src" />
 			</VCol>
 			<VCol
 				cols="12"

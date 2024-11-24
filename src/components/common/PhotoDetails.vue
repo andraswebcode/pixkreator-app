@@ -36,7 +36,7 @@ const size = computed(() => {
 					'h-100': mdAndUp
 				}"
 			>
-				<VImg aspect-ratio="1" :src="props.medium" />
+				<LazyLoadImage aspect-ratio="1" :src="props.medium" />
 			</VCol>
 			<VCol
 				cols="12"

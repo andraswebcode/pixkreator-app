@@ -94,7 +94,7 @@ const saveAssets = () => {
 	}));
 	save(
 		'',
-		'assets',
+		'admin/assets',
 		{
 			assets: graphics
 		},

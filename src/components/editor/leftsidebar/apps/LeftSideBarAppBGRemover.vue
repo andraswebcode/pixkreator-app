@@ -35,7 +35,7 @@ const removeBackground = () => {
 
 <template>
 	<div v-if="userData.canGenerateImage && currentImage">
-		<VImg class="mb-4" aspect-ratio="1" :src="currentImage.src" />
+		<LazyLoadImage class="mb-4" aspect-ratio="1" :src="currentImage.src" />
 		<VBtn block @click="removeBackground">Remove Background</VBtn>
 	</div>
 	<VAlert

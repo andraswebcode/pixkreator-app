@@ -4,6 +4,7 @@ import { FabricObjectProps, util } from 'fabric';
 import { ImageFilter, ImageFilterType } from '../types/image-filter';
 import { PROGroup } from '../canvas/objects/group';
 import { QRCodeOptions } from '../types/apps';
+import { toRaw } from 'vue';
 
 export type IDList = string[];
 
@@ -43,7 +44,9 @@ export interface ProjectState {
 	keywords: string;
 }
 
-export type ProjectGetters = {};
+export type ProjectGetters = {
+	fabricJSON: (state: ProjectState) => any;
+};
 
 export interface ProjectActions {
 	addLayer: (props: Partial<ByID>) => void;
@@ -70,7 +73,18 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 		// for templates
 		keywords: ''
 	}),
-	getters: {},
+	getters: {
+		fabricJSON: ({ ids, byIds }) =>
+			ids.map((id) => {
+				const layer: any = toRaw(byIds[id]);
+
+				if (layer.type === 'Group') {
+					layer.objects = layer.childIds.map((id) => toRaw(byIds[id]));
+				}
+
+				return layer;
+			})
+	},
 	actions: {
 		addLayer(props) {
 			util.enlivenObjects([props]).then((shapes) => {
