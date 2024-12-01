@@ -9,7 +9,7 @@ const props = defineProps<{
 	user_id: number;
 	file_name: string;
 	mime_type: string;
-	file_size: string;
+	file_size: number;
 	file_extension: string;
 	source: string;
 	metadata: any;

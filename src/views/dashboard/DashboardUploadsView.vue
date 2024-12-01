@@ -57,7 +57,7 @@ const loadMore = () => {
 	list(
 		{
 			search: search.value,
-			category: source.value,
+			source: source.value,
 			page: page.value
 		},
 		'uploads',

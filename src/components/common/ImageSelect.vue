@@ -5,7 +5,7 @@ import { PHOTO_ORIENTATIONS, DETAILS_DIALOG_WIDTH, PHOTO_SIZES } from '../../uti
 import { Orientation, PhotoSize } from '../../types/common';
 import { getCroppedImageDimensions } from '../../utils/functions';
 
-type ImageOrigin = 'photo' | 'upload' | 'ai';
+type ImageOrigin = 'photos' | 'uploads' | 'ais';
 
 const props = defineProps<{
 	btnLabel: string;
@@ -24,12 +24,12 @@ const showDetails = ref(false);
 const index = ref(0);
 const size = ref<PhotoSize>('large');
 const showImages = ref(false);
-const imageOrigin = ref<ImageOrigin>('photo');
+const imageOrigin = ref<ImageOrigin>('photos');
 const { list } = useRequest();
 const filter = () => {
 	items.value = [];
 	loading.value = true;
-	if (imageOrigin.value === 'photo') {
+	if (imageOrigin.value === 'photos') {
 		list(
 			{
 				query: search.value,
@@ -43,14 +43,21 @@ const filter = () => {
 			}
 		);
 	} else {
-		list({}, 'assets', (data) => {
-			items.value = data.items;
-			loading.value = false;
-		});
+		list(
+			{
+				search: search.value,
+				source: imageOrigin.value
+			},
+			'uploads',
+			(data) => {
+				items.value = data.items;
+				loading.value = false;
+			}
+		);
 	}
 };
 const loadMore = () => {
-	if (imageOrigin.value === 'photo') {
+	if (imageOrigin.value === 'photos') {
 		list(
 			{
 				query: search.value,
@@ -65,10 +72,18 @@ const loadMore = () => {
 			}
 		);
 	} else {
-		list({}, 'assets', (data) => {
-			items.value.push(...data.items);
-			page.value++;
-		});
+		list(
+			{
+				search: search.value,
+				source: imageOrigin.value,
+				page: page.value
+			},
+			'uploads',
+			(data) => {
+				items.value.push(...data.items);
+				page.value++;
+			}
+		);
 	}
 };
 const openDetails = (i: number) => {
@@ -80,11 +95,18 @@ const replaceImage = () => {
 	showDetails.value = false;
 
 	const item = items.value[index.value];
-	const cropped = getCroppedImageDimensions(item.width, item.height, size.value);
 
-	src.value = item.proxy[size.value];
-	width.value = cropped.width;
-	height.value = cropped.height;
+	if (imageOrigin.value === 'photos') {
+		const cropped = getCroppedImageDimensions(item.width, item.height, size.value);
+
+		src.value = item.proxy[size.value];
+		width.value = cropped.width;
+		height.value = cropped.height;
+	} else {
+		src.value = item.image;
+		width.value = item.width;
+		height.value = item.height;
+	}
 };
 
 onMounted(filter);
@@ -98,7 +120,7 @@ onMounted(filter);
 			<VRow justify="center" justify-md="space-between">
 				<VCol cols="12" md="4">
 					<SearchFilter
-						v-if="imageOrigin === 'photo'"
+						v-if="imageOrigin === 'photos'"
 						label="Search Photos"
 						v-model="search"
 						:filter-disabled="!search"
@@ -117,12 +139,18 @@ onMounted(filter);
 							</VListItem>
 						</VList>
 					</SearchFilter>
+					<SearchInput
+						v-else
+						label="Search Photos"
+						v-model="search"
+						@click:append-inner="filter"
+					/>
 				</VCol>
 				<VCol cols="auto">
 					<VBtnToggle v-model="imageOrigin" @update:model-value="filter">
-						<VBtn value="photo">Photos</VBtn>
-						<VBtn value="upload">Uploads</VBtn>
-						<VBtn value="ai">AI Archive</VBtn>
+						<VBtn value="photos">Photos</VBtn>
+						<VBtn value="uploads">Uploads</VBtn>
+						<VBtn value="ais">AI Archive</VBtn>
 					</VBtnToggle>
 				</VCol>
 			</VRow>
@@ -139,7 +167,7 @@ onMounted(filter);
 					:key="item.id"
 					cols="2"
 					responsive
-					:src="item.thumbnail"
+					:src="item.thumbnail || item.image"
 					@click="openDetails(i)"
 				/>
 			</LibraryItems>
@@ -150,10 +178,13 @@ onMounted(filter);
 		@close="showDetails = false"
 		:max-width="DETAILS_DIALOG_WIDTH"
 	>
-		<DetailsCarousel v-model="index">
+		<DetailsCarousel v-if="imageOrigin === 'photos'" v-model="index">
 			<PhotoDetails v-for="item of items" :key="item.id" v-bind="item">
 				<VSelect label="Select a Size" :items="PHOTO_SIZES" v-model="size" />
 			</PhotoDetails>
+		</DetailsCarousel>
+		<DetailsCarousel v-else v-model="index">
+			<UploadDetails v-for="item of items" :key="item.id" v-bind="item" />
 		</DetailsCarousel>
 		<template v-slot:actions>
 			<VBtn @click="replaceImage">{{ props.addLabel || props.btnLabel }}</VBtn>

@@ -39,7 +39,8 @@ const removeBackground = () => {
 </script>
 
 <template>
-	<div v-if="userData.canGenerateImage && src">
+	<LoginNotice v-if="!userData.loggedIn" />
+	<div v-else-if="userData.canGenerateImage && src">
 		<LazyLoadImage class="mb-4" aspect-ratio="1" :src="src" />
 		<VBtn block :loading="loading" @click="removeBackground">Remove Background</VBtn>
 	</div>
