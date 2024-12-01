@@ -1,48 +1,49 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import useImage from '../../../../hooks/image';
-// import useProps from '../../../../hooks/props';
-// import useRequest from '../../../../hooks/request';
-import { /* useNotice, */ useUser } from '../../../../store';
+import useRequest from '../../../../hooks/request';
+import { useNotice, useUser } from '../../../../store';
 
 const userData = useUser();
-// const notice = useNotice();
-// const { src } = useProps(['src']);
-const { currentImage } = useImage();
-// const { save } = useRequest();
+const notice = useNotice();
+const {
+	currentImageProps: { src }
+} = useImage(['src']);
+const { save } = useRequest();
+const loading = ref(false);
 const removeBackground = () => {
-	/*
-	if (!currentImage.value) {
+	if (!src.value) {
 		return;
 	}
+
+	loading.value = true;
 
 	save(
 		'',
 		'ai/removebackground',
 		{
-			src: currentImage.value.src
+			src: src.value
 		},
 		(data) => {
 			console.log(data);
 			src.value = data.image;
+			loading.value = false;
 		},
 		(error) => {
 			console.warn(error);
 			notice.send('Error', 'error');
+			loading.value = false;
 		}
-	);*/
+	);
 };
 </script>
 
 <template>
-	<div v-if="userData.canGenerateImage && currentImage">
-		<LazyLoadImage class="mb-4" aspect-ratio="1" :src="currentImage.src" />
-		<VBtn block @click="removeBackground">Remove Background</VBtn>
+	<div v-if="userData.canGenerateImage && src">
+		<LazyLoadImage class="mb-4" aspect-ratio="1" :src="src" />
+		<VBtn block :loading="loading" @click="removeBackground">Remove Background</VBtn>
 	</div>
-	<VAlert
-		v-else-if="userData.canGenerateImage && !currentImage"
-		type="warning"
-		icon="mdi-alert-circle"
-	>
+	<VAlert v-else-if="userData.canGenerateImage && !src" type="warning" icon="mdi-alert-circle">
 		There is no image layer on the canvas.
 	</VAlert>
 	<CantGenerateImageAlert v-else />

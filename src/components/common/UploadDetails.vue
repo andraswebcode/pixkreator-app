@@ -17,6 +17,10 @@ const props = defineProps<{
 	updated_at: string;
 }>();
 const { mdAndUp } = useDisplay();
+const actionTextMap = {
+	'background-remover': 'Removed Background',
+	'image-upscaler': 'Upscaled by 4x'
+};
 </script>
 
 <template>
@@ -42,11 +46,21 @@ const { mdAndUp } = useDisplay();
 				}"
 			>
 				<h3 v-if="props.title" class="mb-2">{{ props.title }}</h3>
-				<p v-if="props.source === 'ais'">
-					<strong>Prompt:</strong>
-					<br />
-					{{ props.metadata?.prompt }}
-				</p>
+				<div v-if="props.source === 'ais'">
+					<p v-if="props.metadata?.prompt">
+						<strong>Prompt:</strong>
+						<br />
+						{{ props.metadata.prompt }}
+					</p>
+					<p v-if="props.metadata?.style">
+						<strong>Style: </strong>
+						{{ props.metadata.style }}
+					</p>
+					<p v-if="props.metadata?.app">
+						<strong>Action: </strong>
+						{{ actionTextMap[props.metadata.app] }}
+					</p>
+				</div>
 				<slot />
 			</VCol>
 		</VRow>

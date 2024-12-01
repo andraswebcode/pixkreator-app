@@ -1,7 +1,8 @@
 import { computed } from 'vue';
 import { useEditor, useProject } from '../store';
+import { sanitize } from '../utils/sanitizer';
 
-const useImage = () => {
+const useImage = (props: string[] = []) => {
 	const editor = useEditor();
 	const project = useProject();
 
@@ -12,7 +13,28 @@ const useImage = () => {
 			: project.ids.map((id) => project.byIds[id]).find((layer) => layer?.type === 'Image');
 	});
 
-	return { currentImage };
+	const currentImageProps: any = props.reduce((memo, prop) => {
+		memo[prop] = computed({
+			get: () => {
+				if (!currentImage.value) {
+					return '';
+				}
+				const id = currentImage.value.id;
+				return project.byIds[id]?.[prop];
+			},
+			set: (value: any) => {
+				if (!currentImage.value) {
+					return;
+				}
+				project.updateProps(currentImage.value.id, {
+					[prop]: sanitize(prop, value)
+				});
+			}
+		});
+		return memo;
+	}, {});
+
+	return { currentImage, currentImageProps };
 };
 
 export default useImage;

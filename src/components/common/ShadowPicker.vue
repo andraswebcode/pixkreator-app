@@ -36,8 +36,8 @@ const hasShadow = computed(() => {
 const applyShadow = (apply: boolean | null) => {
 	if (apply) {
 		model.value = {
-			offsetX: 10,
-			offsetY: 10,
+			offsetX: 0,
+			offsetY: 0,
 			blur: 5,
 			color: '#00000066'
 		};
