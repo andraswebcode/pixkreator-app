@@ -4,6 +4,7 @@ import { aspectRatios, outputFormats, stylePresets } from '../../../utils/ai-par
 import axios from '../../../axios';
 import { useEditor, useNotice, useProject, useUser } from '../../../store';
 import useFitToScreen from '../../../hooks/fittoscreen';
+import { getConfirmText } from '../../../utils/ai-credits';
 
 const userData = useUser();
 const editor = useEditor();
@@ -20,6 +21,10 @@ const height = ref(0);
 const resize = ref(false);
 const fitToScreen = useFitToScreen();
 const generate = () => {
+	if (!confirm(getConfirmText('generate'))) {
+		return;
+	}
+
 	editor.aiIsGenerating = true;
 
 	axios
@@ -45,6 +50,7 @@ const generate = () => {
 			width.value = data.width;
 			height.value = data.height;
 			editor.aiIsGenerating = false;
+			userData.setAndSave('stai_credits', data.stai_credits || 0);
 			notice.send('Image saved successfully', 'success');
 		})
 		.catch((error) => {
@@ -73,8 +79,9 @@ const addImage = () => {
 </script>
 
 <template>
-	<div v-if="userData.canGenerateImage && !image" class="pa-4">
-		<VTextarea label="Prompt" :disabled="editor.aiIsGenerating" v-model="prompt" />
+	<VerifyEmailAlert v-if="!userData.user.email_verified" class="mx-3 mt-3" />
+	<div v-else-if="userData.canGenerateImage && !image" class="pa-4">
+		<VTextarea label="Prompt" rows="3" :disabled="editor.aiIsGenerating" v-model="prompt" />
 		<VTextarea
 			label="Negative Prompt"
 			rows="1"
@@ -99,6 +106,7 @@ const addImage = () => {
 			:items="aspectRatios"
 			v-model="aspect"
 		/>
+		<AICreditAlert fee="generate" />
 		<VBtn block :loading="editor.aiIsGenerating" @click="generate">Generate Image</VBtn>
 	</div>
 	<div v-else-if="userData.canGenerateImage && image" class="pa-4">

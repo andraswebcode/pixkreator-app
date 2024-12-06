@@ -54,7 +54,7 @@ export default defineStore<string, UserState, UserGetters, UserActions>('user', 
 		setAndSave(key, value) {
 			this.user[key] = value;
 			// Also, save to localStorage.
-			const data = JSON.parse(localStorage.userData);
+			const data = JSON.parse(localStorage.getItem('userData') || '');
 			data[key] = value;
 			localStorage.setItem('userData', JSON.stringify(data));
 		}
