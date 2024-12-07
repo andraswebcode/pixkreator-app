@@ -39,8 +39,8 @@ const sendEmail = () => {
 			</VCardSubtitle>
 		</VCardItem>
 		<VDivider v-if="$slots.title || $slots.subtitle" class="mb-5" />
-		<VForm v-model="isValid" @submit.prevent="sendEmail">
-			<VCardItem>
+		<VCardItem>
+			<VForm v-model="isValid" @submit.prevent="sendEmail">
 				<VTextField
 					label="Email"
 					type="email"
@@ -49,12 +49,11 @@ const sendEmail = () => {
 					v-model="email"
 				/>
 				<slot />
-			</VCardItem>
-			<VDivider />
-			<VCardActions>
-				<VBtn type="submit" :disabled="!isValid" :loading="loading">Send Email</VBtn>
-			</VCardActions>
-		</VForm>
+				<VBtn type="submit" block size="large" :disabled="!isValid" :loading="loading">
+					Send Email
+				</VBtn>
+			</VForm>
+		</VCardItem>
 	</VCard>
 </template>
 

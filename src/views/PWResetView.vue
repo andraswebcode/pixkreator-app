@@ -50,8 +50,8 @@ const resetPassword = () => {
 							<VCardSubtitle>Enter your new password</VCardSubtitle>
 						</VCardItem>
 						<VDivider v-if="$slots.title || $slots.subtitle" class="mb-5" />
-						<VForm v-model="isValid" @submit.prevent="resetPassword">
-							<VCardItem>
+						<VCardItem>
+							<VForm v-model="isValid" @submit.prevent="resetPassword">
 								<VTextField
 									label="New Password"
 									type="password"
@@ -68,16 +68,20 @@ const resetPassword = () => {
 									:hide-details="false"
 									v-model="passwordConfirm"
 								/>
-								<small class="d-block mb-2">
+								<small class="d-block my-2">
 									<RouterLink to="/login">&larr; Back to Login</RouterLink>
 								</small>
-							</VCardItem>
-							<VCardActions>
-								<VBtn type="submit" :disabled="!isValid" :loading="loading">
+								<VBtn
+									type="submit"
+									block
+									size="large"
+									:disabled="!isValid"
+									:loading="loading"
+								>
 									Set Password
 								</VBtn>
-							</VCardActions>
-						</VForm>
+							</VForm>
+						</VCardItem>
 					</VCard>
 				</VCol>
 			</VRow>

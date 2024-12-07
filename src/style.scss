@@ -14,3 +14,7 @@ html {
 .v-card-subtitle {
 	white-space: normal !important;
 }
+
+.v-card-item__content {
+	overflow: visible;
+}

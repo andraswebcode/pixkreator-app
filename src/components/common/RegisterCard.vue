@@ -9,7 +9,6 @@ const notice = useNotice();
 const name = ref('');
 const email = ref('');
 const password = ref('');
-const passwordConfirm = ref('');
 const loading = ref(false);
 const isValid = ref(false);
 const nameRules = [(value) => (value && value.length) || 'Please provide your name.'];
@@ -19,17 +18,13 @@ const emailRules = [
 const pwRules = [
 	(value) => (value && value.length > 7) || 'The password must be at least 8 characters.'
 ];
-const pwcRules = [
-	(value) => (value && value === password.value) || 'The password confirmation does not match.'
-];
 const register = () => {
 	loading.value = true;
 	axios
 		.post('register', {
 			name: name.value,
 			email: email.value,
-			password: password.value,
-			password_confirmation: passwordConfirm.value
+			password: password.value
 		})
 		.then(({ data }) => {
 			loading.value = false;
@@ -56,11 +51,7 @@ const register = () => {
 		</VCardItem>
 		<VDivider v-if="$slots.title || $slots.subtitle" class="mb-5" />
 		<VCardItem>
-			<SocialLogin @success="emit('success')" />
-		</VCardItem>
-		<VDivider class="my-5" />
-		<VForm v-model="isValid" @submit.prevent="register">
-			<VCardItem>
+			<VForm v-model="isValid" @submit.prevent="register">
 				<VTextField
 					label="Name"
 					required
@@ -87,21 +78,14 @@ const register = () => {
 					:hide-details="false"
 					autocomplete="new-password"
 				/>
-				<VTextField
-					label="Confirm Password"
-					type="password"
-					required
-					v-model="passwordConfirm"
-					:rules="pwcRules"
-					:hide-details="false"
-					autocomplete="new-password"
-				/>
-			</VCardItem>
-			<VDivider />
-			<VCardActions>
-				<VBtn type="submit" :disabled="!isValid" :loading="loading">Register</VBtn>
-			</VCardActions>
-		</VForm>
+				<VBtn type="submit" block size="large" :disabled="!isValid" :loading="loading">
+					Register
+				</VBtn>
+			</VForm>
+		</VCardItem>
+		<VCardItem>
+			<SocialLogin @success="emit('success')" />
+		</VCardItem>
 	</VCard>
 </template>
 

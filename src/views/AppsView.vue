@@ -9,4 +9,9 @@
 	</VMain>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.v-container,
+.v-row {
+	height: 100%;
+}
+</style>

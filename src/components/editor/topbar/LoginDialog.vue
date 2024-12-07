@@ -5,6 +5,29 @@ import { LOGIN_DIALOG_WIDTH } from '../../../utils/constants';
 
 const editor = useEditor();
 const form = ref<'login' | 'register' | 'pwreset' | 'verify'>('login');
+const _openDialog = () => {
+	if (editor.nonLoggedInUserWantsTo === 'download') {
+		editor.openDownloadDialog = true;
+	} else if (editor.nonLoggedInUserWantsTo === 'share') {
+		editor.openShareDialog = true;
+	}
+	editor.nonLoggedInUserWantsTo = false;
+	editor.openLoginDialog = false;
+};
+const loginSuccess = () => {
+	if (editor.nonLoggedInUserWantsTo) {
+		_openDialog();
+	} else {
+		editor.openLoginDialog = false;
+	}
+};
+const registerSuccess = () => {
+	if (editor.nonLoggedInUserWantsTo) {
+		_openDialog();
+	} else {
+		form.value = 'verify';
+	}
+};
 </script>
 
 <template>
@@ -16,7 +39,7 @@ const form = ref<'login' | 'register' | 'pwreset' | 'verify'>('login');
 		v-model="editor.openLoginDialog"
 		@close="editor.openLoginDialog = false"
 	>
-		<LoginCard v-if="form === 'login'" @success="editor.openLoginDialog = false">
+		<LoginCard v-if="form === 'login'" @success="loginSuccess">
 			<template v-slot:subtitle>
 				New to PixKreator?
 				<a href="#" @click.prevent="form = 'register'">Create an account</a>
@@ -25,7 +48,7 @@ const form = ref<'login' | 'register' | 'pwreset' | 'verify'>('login');
 				<a href="#" @click.prevent="form = 'pwreset'">Forgot your password?</a>
 			</small>
 		</LoginCard>
-		<RegisterCard v-else-if="form === 'register'" @success="form = 'verify'">
+		<RegisterCard v-else-if="form === 'register'" @success="registerSuccess">
 			<template v-slot:subtitle>
 				Already have an account?
 				<a href="#" @click.prevent="form = 'login'">Login</a>

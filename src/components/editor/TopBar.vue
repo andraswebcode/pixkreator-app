@@ -24,6 +24,7 @@ const shareDesign = () => {
 		editor.openShareDialog = true;
 	} else {
 		editor.openLoginDialog = true;
+		editor.nonLoggedInUserWantsTo = 'share';
 	}
 };
 const downloadDesign = () => {
@@ -31,11 +32,13 @@ const downloadDesign = () => {
 		editor.openDownloadDialog = true;
 	} else {
 		editor.openLoginDialog = true;
+		editor.nonLoggedInUserWantsTo = 'download';
 	}
 };
 const saveDesign = () => {
 	if (!userData.loggedIn) {
 		editor.openLoginDialog = true;
+		editor.nonLoggedInUserWantsTo = false;
 		return;
 	}
 	const { title, description, status, upload_id, width, height, background, byIds, ids } =

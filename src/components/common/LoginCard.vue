@@ -46,12 +46,9 @@ const login = () => {
 			</VCardSubtitle>
 		</VCardItem>
 		<VDivider v-if="$slots.title || $slots.subtitle" class="mb-5" />
+
 		<VCardItem>
-			<SocialLogin @success="emit('success')" />
-		</VCardItem>
-		<VDivider class="my-5" />
-		<VForm v-model="isValid" @submit.prevent="login">
-			<VCardItem>
+			<VForm v-model="isValid" @submit.prevent="login">
 				<VTextField
 					label="Email"
 					type="email"
@@ -67,12 +64,14 @@ const login = () => {
 					v-model="password"
 				/>
 				<slot />
-			</VCardItem>
-			<VDivider />
-			<VCardActions>
-				<VBtn type="submit" :disabled="!isValid" :loading="loading">Login</VBtn>
-			</VCardActions>
-		</VForm>
+				<VBtn type="submit" block size="large" :disabled="!isValid" :loading="loading">
+					Login
+				</VBtn>
+			</VForm>
+		</VCardItem>
+		<VCardItem>
+			<SocialLogin @success="emit('success')" />
+		</VCardItem>
 	</VCard>
 </template>
 

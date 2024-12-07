@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import { useDisplay } from 'vuetify';
 import { useNotice, useUser } from '../../store';
 import { SocialLoginProvider } from '../../types/common';
 import { oauthLogin } from '../../utils/oauth-login';
-import { computed } from 'vue';
 
 const emit = defineEmits(['success']);
 const userData = useUser();
 const notice = useNotice();
-const { smAndUp } = useDisplay();
-const size = computed(() => (smAndUp.value ? 'large' : 'small'));
 const socialLogin = (provider: SocialLoginProvider) => {
 	oauthLogin(provider)
 		.then(({ user }) => {
@@ -24,16 +20,20 @@ const socialLogin = (provider: SocialLoginProvider) => {
 </script>
 
 <template>
+	<VRow no-gutters align="center">
+		<VCol>
+			<VDivider />
+		</VCol>
+		<VCol class="px-2" cols="auto">
+			<p class="text-body-2">or continue with</p>
+		</VCol>
+		<VCol>
+			<VDivider />
+		</VCol>
+	</VRow>
 	<VRow justify="center">
 		<VCol cols="auto">
-			<VBtn
-				prepend-icon="mdi-google"
-				variant="tonal"
-				:size="size"
-				@click="socialLogin('google')"
-			>
-				Google
-			</VBtn>
+			<VBtn prepend-icon="mdi-google" @click="socialLogin('google')">Google</VBtn>
 		</VCol>
 	</VRow>
 </template>

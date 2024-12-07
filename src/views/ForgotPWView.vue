@@ -10,7 +10,7 @@
 						<template v-slot:subtitle>
 							Enter your email, and we'll send a link to reset your password.
 						</template>
-						<small class="d-block mb-2">
+						<small class="d-block my-2">
 							<RouterLink to="/login">&larr; Back to Login</RouterLink>
 						</small>
 					</ForgotPWCard>

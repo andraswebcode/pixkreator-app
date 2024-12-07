@@ -22,7 +22,7 @@ const success = () => {
 							New to PixKreator?
 							<RouterLink to="/register">Create an account</RouterLink>
 						</template>
-						<small class="d-block mb-2">
+						<small class="d-block my-2">
 							<RouterLink to="/forgotpw">Forgot your password?</RouterLink>
 						</small>
 					</LoginCard>

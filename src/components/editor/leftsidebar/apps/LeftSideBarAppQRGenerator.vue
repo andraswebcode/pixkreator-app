@@ -1,39 +1,34 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { useProject } from '../../../../store';
 import { WEBSITE_URL } from '../../../../utils/constants';
-import QRCodeStyling, {
-	CornerDotType,
-	CornerSquareType,
-	DotType,
-	ErrorCorrectionLevel
-} from 'qr-code-styling';
-import { debounce } from '../../../../utils/functions';
 import {
 	qrCodeCornerDotTypes,
 	qrCodeCornerSquareTypes,
 	qrCodeDotTypes,
 	qrCodeECLs
 } from '../../../../utils/apps';
+import useQRCode from '../../../../hooks/qrcode';
 
-const qrCode = new QRCodeStyling();
 const project = useProject();
 const panels = ref(['qr']);
-const preview = ref('');
-const text = ref('');
-const size = ref(300);
-const margin = ref(0);
-const ecl = ref<ErrorCorrectionLevel>('Q');
-const bg = ref('');
-const imgSrc = ref('');
-const imgSize = ref(0.4);
-const imgMargin = ref(0);
-const dotsColor = ref('#000');
-const dotsType = ref<DotType>('square');
-const cornerSquareType = ref<CornerSquareType | ''>('');
-const cornerSquareColor = ref('');
-const cornerDotType = ref<CornerDotType | ''>('');
-const cornerDotColor = ref('');
+const {
+	text,
+	size,
+	margin,
+	ecl,
+	bg,
+	imgSrc,
+	imgSize,
+	imgMargin,
+	dotsColor,
+	dotsType,
+	cornerSquareType,
+	cornerSquareColor,
+	cornerDotType,
+	cornerDotColor,
+	preview
+} = useQRCode();
 
 const addQRCode = () => {
 	project.addLayer({
@@ -56,85 +51,6 @@ const addQRCode = () => {
 		cornerDotColor: cornerDotColor.value
 	});
 };
-
-watch(
-	() => [
-		text.value,
-		size.value,
-		margin.value,
-		ecl.value,
-		bg.value,
-		imgSrc.value,
-		imgSize.value,
-		imgMargin.value,
-		dotsColor.value,
-		dotsType.value,
-		cornerSquareType.value,
-		cornerSquareColor.value,
-		cornerDotType.value,
-		cornerDotColor.value
-	],
-	debounce(
-		([
-			newText,
-			newSize,
-			newMargin,
-			newECL,
-			newBg,
-			newImgSrc,
-			newImgSize,
-			newImgMargin,
-			newDotsColor,
-			newDotsType,
-			newCornerSquareType,
-			newCornerSquareColor,
-			newCornerDotType,
-			newCornerDotColor
-		]) => {
-			qrCode.update({
-				data: newText || WEBSITE_URL,
-				width: newSize,
-				height: newSize,
-				margin: newMargin,
-				image: newImgSrc,
-				qrOptions: {
-					errorCorrectionLevel: newECL
-				},
-				backgroundOptions: {
-					color: newBg
-				},
-				imageOptions: {
-					imageSize: newImgSize,
-					margin: newImgMargin
-				},
-				dotsOptions: {
-					type: newDotsType,
-					color: newDotsColor
-				},
-				cornersSquareOptions: newCornerSquareType
-					? {
-							type: newCornerSquareType,
-							color: newCornerSquareColor
-					  }
-					: undefined,
-				cornersDotOptions: newCornerDotType
-					? {
-							type: newCornerDotType,
-							color: newCornerDotColor
-					  }
-					: undefined
-			});
-
-			qrCode.getRawData('png').then((blob) => {
-				preview.value = URL.createObjectURL(blob);
-			});
-		},
-		800
-	),
-	{
-		immediate: true
-	}
-);
 </script>
 
 <template>

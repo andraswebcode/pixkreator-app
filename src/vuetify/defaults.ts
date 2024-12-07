@@ -4,33 +4,44 @@ const defaults = {
 	},
 	VBtn: {
 		// density: 'default'
+		variant: 'tonal'
 	},
 	VTextField: {
-		class: 'mb-5',
-		hideDetails: true
+		class: 'mb-3',
+		hideDetails: true,
+		variant: 'outlined',
+		density: 'comfortable'
+	},
+	VTextarea: {
+		variant: 'outlined',
+		density: 'comfortable'
 	},
 	VSlider: {
 		thumbSize: 18,
 		thumbLabel: true,
 		hideDetails: true,
-		step: 1
+		step: 1,
+		density: 'comfortable'
 	},
 	VSelect: {
 		itemTitle: 'label',
 		itemValue: 'value',
 		flat: true,
-		hideDetails: true
-		// variant: 'solo'
+		hideDetails: true,
+		variant: 'outlined',
+		density: 'comfortable'
 	},
 	VAutocomplete: {
 		itemTitle: 'label',
 		itemValue: 'value',
 		flat: true,
-		hideDetails: true
-		// variant: 'solo'
+		hideDetails: true,
+		variant: 'outlined',
+		density: 'comfortable'
 	},
 	VCheckbox: {
-		hideDetails: true
+		hideDetails: true,
+		density: 'comfortable'
 	},
 	VNavigationDrawer: {
 		tag: 'aside'
@@ -98,10 +109,12 @@ const defaults = {
 	},
 	VMenu: {
 		VTextField: {
+			/*
 			flat: true,
 			variant: 'underlined',
 			density: 'compact',
 			dirty: true
+		*/
 		}
 	},
 	// Custom components.
