@@ -35,9 +35,14 @@ const onResize = ({ width, height }: { width: number; height: number }) => {
 	updateCanvas();
 };
 
-const onObjectSelection = ({ e, selected = [] }) => {
+const onObjectSelection = ({ e, selected = [], deselected = [] }) => {
 	if (e) {
 		editor.activeLayerIds = selected.map(({ id }) => id);
+	}
+	if (deselected.length) {
+		deselected.forEach((object: any) => {
+			object.switchControls('transform');
+		});
 	}
 };
 const onDoubleClick = ({ target }) => {
