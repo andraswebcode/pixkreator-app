@@ -90,16 +90,29 @@ const toggleLayer = (id: string) => {
 };
 const cloneLayer = (id: string) => {
 	const layer = project.getFirstLayer(id);
-	const copy = {
-		...layer,
-		id: uniqueId(layer.type),
-		left: layer.left + 10,
-		top: layer.top + 10
-	};
+
 	if (layer.type === 'Group') {
-		//
+		const group = {
+			...layer,
+			id: uniqueId(layer.type),
+			left: layer.left + 10,
+			top: layer.top + 10,
+			objects: layer.childIds?.map((childId) => {
+				const child = project.getFirstLayer(childId);
+				return {
+					...child,
+					id: uniqueId(child.type)
+				};
+			})
+		};
+		project.addLayer(group);
 	} else {
-		project.addLayer(copy);
+		project.addLayer({
+			...layer,
+			id: uniqueId(layer.type),
+			left: layer.left + 10,
+			top: layer.top + 10
+		});
 	}
 };
 const deleteLayer = (id: string) => {
