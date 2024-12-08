@@ -36,7 +36,7 @@ const editor = useEditor();
 const { type } = useProps(['type']);
 const items = computed<any[]>(() =>
 	project.ids.map((id) => {
-		const item = project.byIds[id] || {};
+		const item = project.getFirstLayer(id);
 		return {
 			id: item.id,
 			label: item.name || NAME_MAP[item.type.toLowerCase()],
@@ -73,20 +73,23 @@ const selectLayer = (item: any) => {
 	editor.mode = 'select';
 };
 const lockLayer = (id: string) => {
-	const { selectable } = project.byIds[id] || {};
-	project.updateProps(id, {
+	const { selectable } = project.getFirstLayer(id);
+	const _id = editor.activeLayerIds.includes(id) ? editor.activeLayerIds : id;
+	project.updateProps(_id, {
 		selectable: !selectable
 	});
-	editor.activeLayerIds = editor.activeLayerIds.filter((_id) => _id !== id);
+	editor.activeLayerIds = [];
 };
 const toggleLayer = (id: string) => {
-	const { visible } = project.byIds[id] || {};
-	project.updateProps(id, {
+	const { visible } = project.getFirstLayer(id);
+	const _id = editor.activeLayerIds.includes(id) ? editor.activeLayerIds : id;
+	project.updateProps(_id, {
 		visible: !visible
 	});
+	editor.activeLayerIds = [];
 };
 const cloneLayer = (id: string) => {
-	const layer = project.byIds[id];
+	const layer = project.getFirstLayer(id);
 	const copy = {
 		...layer,
 		id: uniqueId(layer.type),
@@ -100,7 +103,8 @@ const cloneLayer = (id: string) => {
 	}
 };
 const deleteLayer = (id: string) => {
-	project.removeLayer(id);
+	const _id = editor.activeLayerIds.includes(id) ? editor.activeLayerIds : id;
+	project.removeLayer(_id);
 	editor.activeLayerIds = [];
 };
 </script>

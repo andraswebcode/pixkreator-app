@@ -50,12 +50,13 @@ export type ProjectGetters = {
 
 export interface ProjectActions {
 	addLayer: (props: Partial<ByID>) => void;
-	removeLayer: (id: string) => void;
-	groupLayers: (ids: string[]) => void;
+	removeLayer: (id: string | IDList) => void;
+	groupLayers: (ids: IDList) => void;
 	ungroupLayers: (id: string) => void;
 	updateProps: (id: string | IDList | ChangedProps, props?: Partial<ByID>) => void;
 	applyFilter: (id: string, filter: ImageFilter) => void;
 	removeFilter: (id: string, type: ImageFilterType) => void;
+	getFirstLayer: (id: string | IDList) => ByID;
 }
 
 export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>('project', {
@@ -135,14 +136,20 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 			});
 		},
 		removeLayer(id) {
-			// @ts-ignore
-			this.$patch({
-				byIds: {
-					...this.byIds,
-					[id]: undefined
-				},
-				ids: this.ids.filter((_id) => _id !== id)
-			});
+			if (Array.isArray(id)) {
+				id.forEach((_id) => {
+					this.removeLayer(_id);
+				});
+			} else {
+				// @ts-ignore
+				this.$patch({
+					byIds: {
+						...this.byIds,
+						[id]: undefined
+					},
+					ids: this.ids.filter((_id) => _id !== id)
+				});
+			}
 		},
 		groupLayers(ids) {
 			const layers = ids.map((id) => this.byIds[id]);
@@ -258,6 +265,10 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 			if (index !== -1) {
 				layer.filters.splice(index, 1);
 			}
+		},
+		getFirstLayer(id) {
+			const _id = Array.isArray(id) ? id[0] : id;
+			return this.byIds[_id] || {};
 		}
 	},
 	undo: {

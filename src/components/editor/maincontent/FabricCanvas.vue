@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted, watch, toRaw } from 'vue';
 import { useEditor, useNotice, useProject } from './../../../store';
 import Canvas from '../../../canvas/canvas';
-import { Rect, util } from 'fabric';
+import { Rect, TPointerEvent, util } from 'fabric';
 import { debounce, isAround, toFixed } from '../../../utils/functions';
 import { EditorModeType, EditorPencilType } from '../../../store/editor';
 import { SNAP_THRESHOLD } from '../../../utils/constants';
@@ -49,9 +49,9 @@ const onMouseDown = ({ e: { button }, target }) => {
 	editor.showContextMenu = false;
 	if (button === 2 && editor.mode === 'select') {
 		if (target?.selectable) {
-			fabricCanvas.setActiveObject(target);
+			fabricCanvas.setActiveObject(target, {} as TPointerEvent);
 		} else {
-			fabricCanvas.discardActiveObject();
+			fabricCanvas.discardActiveObject({} as TPointerEvent);
 		}
 		fabricCanvas.requestRenderAll();
 	}
