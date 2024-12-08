@@ -119,7 +119,7 @@ const cancel = (field: TField) => {
 			<VDivider class="mb-5" />
 			<VRow justify="space-between" align="center">
 				<VCol>
-					<VCard>
+					<VCard flat>
 						<VCardTitle>Delete Account</VCardTitle>
 						<VCardSubtitle>
 							Please note that once you delete your account, there is no going back!
@@ -127,9 +127,7 @@ const cancel = (field: TField) => {
 					</VCard>
 				</VCol>
 				<VCol cols="auto">
-					<VBtn to="deleteuser" variant="tonal" prepend-icon="mdi-account-remove">
-						Delete Account
-					</VBtn>
+					<VBtn to="deleteuser" prepend-icon="mdi-account-remove"> Delete Account </VBtn>
 				</VCol>
 			</VRow>
 		</VCardItem>

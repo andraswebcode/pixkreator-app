@@ -10,6 +10,7 @@ const editor = useEditor();
 			<CanvasBackground />
 			<FabricCanvas />
 			<CanvasPan v-if="editor.mode === 'pan'" />
+			<ContextMenu v-if="editor.mode === 'select' && editor.showContextMenu" />
 		</VContainer>
 	</VMain>
 </template>

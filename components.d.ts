@@ -15,6 +15,7 @@ declare module 'vue' {
     CanvasBackground: typeof import('./src/components/editor/maincontent/CanvasBackground.vue')['default']
     CanvasPan: typeof import('./src/components/editor/maincontent/CanvasPan.vue')['default']
     ColorPicker: typeof import('./src/components/common/ColorPicker.vue')['default']
+    ContextMenu: typeof import('./src/components/editor/maincontent/ContextMenu.vue')['default']
     DashboardContent: typeof import('./src/components/dashboard/DashboardContent.vue')['default']
     DashboardSideBar: typeof import('./src/components/dashboard/DashboardSideBar.vue')['default']
     DetailsCarousel: typeof import('./src/components/common/DetailsCarousel.vue')['default']

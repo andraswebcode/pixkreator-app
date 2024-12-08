@@ -39,8 +39,8 @@ const send = () => {
 			</VCardSubtitle>
 		</VCardItem>
 		<VDivider class="mb-5" />
-		<VForm v-model="isValid" @submit.prevent="send">
-			<VCardItem>
+		<VCardItem>
+			<VForm v-model="isValid" @submit.prevent="send">
 				<VTextField
 					label="Subject"
 					:rules="rules"
@@ -48,11 +48,11 @@ const send = () => {
 					v-model="subject"
 				/>
 				<VTextarea label="Message" :rules="rules" :hide-details="false" v-model="message" />
-			</VCardItem>
-			<VCardActions>
-				<VBtn type="submit" :disabled="!isValid" :loading="loading">Send</VBtn>
-			</VCardActions>
-		</VForm>
+				<VBtn type="submit" block size="large" :disabled="!isValid" :loading="loading">
+					Send
+				</VBtn>
+			</VForm>
+		</VCardItem>
 	</VCard>
 </template>
 

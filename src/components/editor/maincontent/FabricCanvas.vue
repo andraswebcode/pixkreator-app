@@ -45,6 +45,30 @@ const onDoubleClick = ({ target }) => {
 		target.switchControls();
 	}
 };
+const onMouseDown = ({ e: { button }, target }) => {
+	editor.showContextMenu = false;
+	if (button === 2 && editor.mode === 'select') {
+		if (target?.selectable) {
+			fabricCanvas.setActiveObject(target);
+		} else {
+			fabricCanvas.discardActiveObject();
+		}
+		fabricCanvas.requestRenderAll();
+	}
+};
+const onMouseUp = ({ e: { button }, target, pointer }) => {
+	if (button === 2 && editor.mode === 'select') {
+		if (target?.selectable) {
+			editor.$patch({
+				showContextMenu: true,
+				contextMenuX: pointer.x,
+				contextMenuY: pointer.y
+			});
+		} else {
+			editor.showContextMenu = false;
+		}
+	}
+};
 const onObjectMoving = ({ target }) => {
 	if (!editor.snap) {
 		return;
@@ -172,6 +196,10 @@ onMounted(() => {
 	fabricCanvas.on('selection:cleared', onObjectSelection);
 	// @ts-ignore
 	fabricCanvas.on('mouse:dblclick', onDoubleClick);
+	// @ts-ignore
+	fabricCanvas.on('mouse:down', onMouseDown);
+	// @ts-ignore
+	fabricCanvas.on('mouse:up', onMouseUp);
 	fabricCanvas.on('object:moving', onObjectMoving);
 	fabricCanvas.on('object:modified', onObjectModified);
 	fabricCanvas.on('path:created', onPathCreated);
@@ -193,6 +221,8 @@ onUnmounted(() => {
 	fabricCanvas.off('selection:cleared', onObjectSelection);
 	// @ts-ignore
 	fabricCanvas.off('mouse:dblclick', onDoubleClick);
+	fabricCanvas.off('mouse:down', onMouseDown);
+	fabricCanvas.off('mouse:up', onMouseUp);
 	fabricCanvas.off('object:moving', onObjectMoving);
 	fabricCanvas.off('object:modified', onObjectModified);
 	fabricCanvas.off('path:created', onPathCreated);

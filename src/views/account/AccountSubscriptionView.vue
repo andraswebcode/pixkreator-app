@@ -11,7 +11,7 @@
 					<VChip>Free</VChip>
 				</VCol>
 				<VCol>
-					<VBtn prepend-icon="mdi-star" variant="tonal">Upgrade</VBtn>
+					<VBtn prepend-icon="mdi-star">Upgrade</VBtn>
 				</VCol>
 			</VRow>
 		</VCardItem>

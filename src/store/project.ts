@@ -53,7 +53,7 @@ export interface ProjectActions {
 	removeLayer: (id: string) => void;
 	groupLayers: (ids: string[]) => void;
 	ungroupLayers: (id: string) => void;
-	updateProps: (id: string | ChangedProps, props?: Partial<ByID>) => void;
+	updateProps: (id: string | IDList | ChangedProps, props?: Partial<ByID>) => void;
 	applyFilter: (id: string, filter: ImageFilter) => void;
 	removeFilter: (id: string, type: ImageFilterType) => void;
 }
@@ -224,6 +224,10 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 						...props
 					};
 				}
+			} else if (Array.isArray(id)) {
+				id.forEach((_id) => {
+					this.updateProps(_id, props);
+				});
 			} else {
 				for (let _id in id) {
 					this.updateProps(_id, id[_id]);

@@ -17,7 +17,7 @@ const showDetails = ref(false);
 const index = ref(0);
 const category = ref('');
 const items = computed(
-	() => editorsChoice.value.find((cat) => cat.value === category.value)?.templates
+	() => editorsChoice.value.find((cat) => cat.slug === category.value)?.templates
 );
 
 const editProject = (i: number) => {
