@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import useProps from '../../../hooks/props';
+
+type FlipDirection = 'x' | 'y';
 
 const { left, top, scaleX, scaleY, skewX, skewY, angle, flipX, flipY } = useProps([
 	'left',
@@ -12,6 +15,22 @@ const { left, top, scaleX, scaleY, skewX, skewY, angle, flipX, flipY } = useProp
 	'flipX',
 	'flipY'
 ]);
+const flip = computed<FlipDirection[]>({
+	get() {
+		const value: FlipDirection[] = [];
+		if (flipX.value) {
+			value.push('x');
+		}
+		if (flipY.value) {
+			value.push('y');
+		}
+		return value;
+	},
+	set(value: FlipDirection[]) {
+		flipX.value = value.includes('x');
+		flipY.value = value.includes('y');
+	}
+});
 </script>
 
 <template>
@@ -30,14 +49,10 @@ const { left, top, scaleX, scaleY, skewX, skewY, angle, flipX, flipY } = useProp
 				<VTextField type="number" label="Skew Y" v-model="skewY" />
 			</InputGroup>
 			<VTextField type="number" label="Rotate" v-model="angle" />
-			<VRow>
-				<VCol class="py-0">
-					<VCheckbox label="Flip X" v-model="flipX" />
-				</VCol>
-				<VCol class="py-0">
-					<VCheckbox label="Flip Y" v-model="flipY" />
-				</VCol>
-			</VRow>
+			<ButtonToggle label="Flip" v-model="flip" multiple :mandatory="false">
+				<VBtn icon="mdi-flip-horizontal" value="x" />
+				<VBtn icon="mdi-flip-vertical" value="y" />
+			</ButtonToggle>
 		</VExpansionPanelText>
 	</VExpansionPanel>
 </template>
