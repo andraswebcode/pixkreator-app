@@ -1,5 +1,6 @@
 import {
 	Constructor,
+	Control,
 	controlsUtils,
 	FabricObject,
 	FabricObjectProps,
@@ -19,6 +20,7 @@ function Defaults<TBase extends Constructor<FabricObject>>(Base: TBase) {
 		borderOpacityWhenMoving = 0.8;
 		originX: TOriginX = 'center';
 		originY: TOriginY = 'center';
+		objectCaching = false;
 
 		private _currentControls: 'transform' | 'modify' = 'transform';
 
@@ -31,14 +33,18 @@ function Defaults<TBase extends Constructor<FabricObject>>(Base: TBase) {
 				this.controls = controlsUtils.createObjectDefaultControls();
 				this._currentControls = 'transform';
 			} else {
-				this._createModifyControls();
+				this.controls = this._getModifyControls();
 				this._currentControls = 'modify';
 			}
+			this.lockMovementX = this._currentControls === 'modify';
+			this.lockMovementY = this._currentControls === 'modify';
 			this.setCoords();
 			this.canvas?.requestRenderAll();
 		}
 
-		_createModifyControls() {}
+		_getModifyControls(): Record<string, Control> {
+			return {};
+		}
 	};
 }
 

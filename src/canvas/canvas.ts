@@ -12,7 +12,7 @@ class Canvas extends FabricCanvas {
 	selectionDashArray = [4, 2];
 	preserveObjectStacking = true;
 	controlsAboveOverlay = true;
-	perPixelTargetFind = true;
+	// perPixelTargetFind = true;
 	targetFindTolerance = 10;
 	stopContextMenu = true;
 	fireRightClick = true;

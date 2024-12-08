@@ -1,13 +1,22 @@
-import { cache, IText, TPathAlign } from 'fabric';
+import { cache, IText, Textbox, TPathAlign } from 'fabric';
 import { Defaults } from '../mixins/defaults';
 import FontFaceObserver from 'fontfaceobserver';
 import { loadGoogleFonts } from '../../utils/load-gfonts';
 import { PROPath } from './path';
+import { TextWrapControl } from '../controls/textwrap';
 
 class PROIText extends Defaults(IText) {
 	pathAlign: TPathAlign = 'center';
 
 	private _curve = 0;
+
+	_wordJoiners = /[ \t\r]/;
+	dynamicMinWidth = 2;
+	_wrapText = Textbox.prototype._wrapText;
+	_wrapLine = Textbox.prototype._wrapLine;
+	_measureWord = Textbox.prototype._measureWord;
+	getGraphemeDataForRender = Textbox.prototype.getGraphemeDataForRender;
+	wordSplit = Textbox.prototype.wordSplit;
 
 	get curve() {
 		return this._curve;
@@ -39,6 +48,19 @@ class PROIText extends Defaults(IText) {
 		this.originX = 'center';
 		this.originY = 'center';
 		return super._set(key, value);
+	}
+
+	_getModifyControls() {
+		return {
+			ml: new TextWrapControl({
+				x: -0.5,
+				y: 0
+			}),
+			mr: new TextWrapControl({
+				x: 0.5,
+				y: 0
+			})
+		};
 	}
 
 	// @ts-ignore

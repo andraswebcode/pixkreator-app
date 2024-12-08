@@ -140,7 +140,26 @@ const onObjectModified = ({ target }) => {
 		return;
 	}
 
-	const { id, left, top, scaleX, scaleY, skewX, skewY, angle } = target;
+	const {
+		id,
+		left,
+		top,
+		scaleX,
+		scaleY,
+		skewX,
+		skewY,
+		angle,
+		width,
+		height,
+		cropX,
+		cropY,
+		rx,
+		ry,
+		radius,
+		text,
+		path,
+		points
+	} = target;
 	const newProps = {
 		left: toFixed(left, 0),
 		top: toFixed(top, 0),
@@ -148,7 +167,17 @@ const onObjectModified = ({ target }) => {
 		scaleY: toFixed(scaleY, 2),
 		skewX: toFixed(skewX, 0),
 		skewY: toFixed(skewY, 0),
-		angle: toFixed(angle, 0)
+		angle: toFixed(angle, 0),
+		width: toFixed(width, 0),
+		height: toFixed(height, 0),
+		cropX: toFixed(cropX, 0),
+		cropY: toFixed(cropY, 0),
+		rx: toFixed(rx, 0),
+		ry: toFixed(ry, 0),
+		radius: toFixed(radius, 0),
+		text,
+		path,
+		points
 	};
 
 	project.updateProps(id, newProps);
