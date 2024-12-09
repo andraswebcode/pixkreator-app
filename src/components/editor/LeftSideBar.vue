@@ -7,7 +7,7 @@ const show = computed(() => !!editor.tool);
 </script>
 
 <template>
-	<VNavigationDrawer v-model="show" :width="356">
+	<LeftSideBarDrawer v-model="show">
 		<LeftSideBarTemplates v-if="editor.tool === 'templates'" />
 		<LeftSideBarUploads v-else-if="editor.tool === 'uploads'" />
 		<LeftSideBarPhotos v-else-if="editor.tool === 'photos'" />
@@ -20,7 +20,7 @@ const show = computed(() => !!editor.tool);
 		<LeftSideBarBrand v-else-if="editor.tool === 'brand'" />
 		<LeftSideBarLayerList v-else-if="editor.tool === 'list'" />
 		<LeftSideBarSettings v-else-if="editor.tool === 'settings'" />
-	</VNavigationDrawer>
+	</LeftSideBarDrawer>
 </template>
 
 <style scoped lang="scss">

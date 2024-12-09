@@ -43,8 +43,13 @@ const defaults = {
 		hideDetails: true,
 		density: 'comfortable'
 	},
-	VNavigationDrawer: {
+	LeftSideBarDrawer: {
 		tag: 'aside',
+		width: 356
+	},
+	RightSideBarDrawer: {
+		tag: 'aside',
+		location: 'end',
 		VTabs: {
 			density: 'compact',
 			grow: true
@@ -105,49 +110,7 @@ const defaults = {
 			variant: 'flat',
 			size: 'small'
 		}
-	} /*
-	VPagination: {},
-	VTabs: {},
-	VExpansionPanels: {
-		flat: true,
-		variant: 'accordion',
-		multiple: true
 	},
-	VExpansionPanel: {
-		VTextField: {
-			flat: true,
-			variant: 'underlined',
-			density: 'compact',
-			dirty: true
-		},
-		VTextarea: {
-			flat: true,
-			variant: 'underlined',
-			density: 'compact',
-			dirty: true
-		},
-		VCheckbox: {
-			density: 'compact',
-			hideDetails: true
-		},
-		VSelect: {
-			variant: 'underlined',
-			density: 'compact'
-		},
-		VAutocomplete: {
-			variant: 'underlined'
-		},
-		VBtnToggle: {
-			mandatory: 'force',
-			density: 'comfortable',
-			divided: true,
-			border: 'sm',
-			rounded: false,
-			VBtn: {
-				// size: 'small'
-			}
-		}
-	},*/,
 	VMenu: {
 		VTextField: {
 			/*

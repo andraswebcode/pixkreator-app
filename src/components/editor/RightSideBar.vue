@@ -14,7 +14,7 @@ const onClick = () => {
 </script>
 
 <template>
-	<VNavigationDrawer location="end" v-model="show">
+	<RightSideBarDrawer v-model="show">
 		<RightSideBarLayerSettings v-if="showLayerSettings" />
 		<RightSideBarCanvasSettings v-else />
 		<template v-slot:append>
@@ -23,7 +23,7 @@ const onClick = () => {
 				:icon="show ? 'mdi-chevron-right' : 'mdi-chevron-left'"
 			/>
 		</template>
-	</VNavigationDrawer>
+	</RightSideBarDrawer>
 </template>
 
 <style scoped lang="scss">
