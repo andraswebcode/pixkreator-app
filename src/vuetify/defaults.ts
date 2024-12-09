@@ -44,7 +44,48 @@ const defaults = {
 		density: 'comfortable'
 	},
 	VNavigationDrawer: {
-		tag: 'aside'
+		tag: 'aside',
+		VTabs: {
+			density: 'compact',
+			grow: true
+		},
+		VTab: {
+			size: 'x-small',
+			minWidth: 0
+		},
+		TabItem: {
+			class: 'px-4 py-5',
+			VTextField: {
+				flat: true,
+				variant: 'underlined',
+				density: 'compact',
+				dirty: true
+			},
+			VTextarea: {
+				flat: true,
+				variant: 'underlined',
+				density: 'compact',
+				dirty: true
+			},
+			VCheckbox: {
+				density: 'compact',
+				hideDetails: true
+			},
+			VSelect: {
+				variant: 'underlined',
+				density: 'compact'
+			},
+			VAutocomplete: {
+				variant: 'underlined'
+			},
+			VBtnToggle: {
+				mandatory: 'force',
+				density: 'comfortable',
+				divided: true,
+				border: 'sm',
+				rounded: false
+			}
+		}
 	},
 	VRating: {},
 	VAppBar: {
@@ -64,7 +105,7 @@ const defaults = {
 			variant: 'flat',
 			size: 'small'
 		}
-	},
+	} /*
 	VPagination: {},
 	VTabs: {},
 	VExpansionPanels: {
@@ -106,7 +147,7 @@ const defaults = {
 				// size: 'small'
 			}
 		}
-	},
+	},*/,
 	VMenu: {
 		VTextField: {
 			/*

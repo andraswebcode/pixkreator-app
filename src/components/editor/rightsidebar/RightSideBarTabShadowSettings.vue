@@ -5,11 +5,7 @@ const { shadow } = useProps(['shadow']);
 </script>
 
 <template>
-	<VExpansionPanel title="Shadow" value="shadow">
-		<VExpansionPanelText>
-			<ShadowPicker v-model="shadow" />
-		</VExpansionPanelText>
-	</VExpansionPanel>
+	<ShadowPicker v-model="shadow" />
 </template>
 
 <style scoped lang="scss"></style>

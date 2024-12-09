@@ -6,12 +6,8 @@ const { dotsType, dotsColor } = useProps(['dotsType', 'dotsColor']);
 </script>
 
 <template>
-	<VExpansionPanel title="Dots" value="qrcodedots">
-		<VExpansionPanelText>
-			<VSelect label="Dot Shape" :items="qrCodeDotTypes" v-model="dotsType" />
-			<ColorPicker label="Dot Color" v-model="dotsColor" />
-		</VExpansionPanelText>
-	</VExpansionPanel>
+	<VSelect label="Dot Shape" :items="qrCodeDotTypes" v-model="dotsType" />
+	<ColorPicker label="Dot Color" v-model="dotsColor" />
 </template>
 
 <style scoped lang="scss"></style>

@@ -11,7 +11,7 @@ import {
 import useQRCode from '../../../../hooks/qrcode';
 
 const project = useProject();
-const panels = ref(['qr']);
+const tab = ref('qrcode');
 const {
 	text,
 	size,
@@ -55,54 +55,51 @@ const addQRCode = () => {
 
 <template>
 	<LazyLoadImage class="mb-4" aspect-ratio="1" :src="preview" />
-	<VExpansionPanels class="mb-4" v-model="panels">
-		<VExpansionPanel title="QR Code" value="qr">
-			<VExpansionPanelText>
-				<VTextField
-					label="Text"
-					placeholder="Text to encode to QR code..."
-					v-model="text"
-				/>
-				<RangeSlider label="Size" :min="200" :max="1000" :step="10" v-model="size" />
-				<RangeSlider label="Margin" :min="0" :max="200" :step="1" v-model="margin" />
-				<VSelect label="Error Correction Level" :items="qrCodeECLs" v-model="ecl" />
-			</VExpansionPanelText>
-		</VExpansionPanel>
-		<VExpansionPanel title="Background" value="background">
-			<VExpansionPanelText>
-				<ColorPicker label="Background Color" clearable v-model="bg" />
-			</VExpansionPanelText>
-		</VExpansionPanel>
-		<VExpansionPanel title="Logo" value="image">
-			<VExpansionPanelText>
-				<ImageSelect btn-label="Add Logo" v-model:src="imgSrc" />
-				<RangeSlider label="Size (%)" v-model="imgSize" :min="0.01" :max="1" :step="0.01" />
-				<RangeSlider label="Margin" v-model="imgMargin" />
-			</VExpansionPanelText>
-		</VExpansionPanel>
-		<VExpansionPanel title="Dots" value="dots">
-			<VExpansionPanelText>
-				<VSelect label="Dot Shape" :items="qrCodeDotTypes" v-model="dotsType" />
-				<ColorPicker label="Dot Color" v-model="dotsColor" />
-			</VExpansionPanelText>
-		</VExpansionPanel>
-		<VExpansionPanel title="Corner" value="corner">
-			<VExpansionPanelText>
-				<VSelect
-					label="Corner Square Shape"
-					:items="qrCodeCornerSquareTypes"
-					v-model="cornerSquareType"
-				/>
-				<ColorPicker label="Corner Square Color" v-model="cornerSquareColor" />
-				<VSelect
-					label="Corner Dots Shape"
-					:items="qrCodeCornerDotTypes"
-					v-model="cornerDotType"
-				/>
-				<ColorPicker label="Corner Dots Color" v-model="cornerDotColor" />
-			</VExpansionPanelText>
-		</VExpansionPanel>
-	</VExpansionPanels>
+	<VTabs v-model="tab">
+		<VTab value="qrcode" v-tooltip:top="'QR Code'">
+			<VIcon icon="mdi-qrcode-edit" />
+		</VTab>
+		<VTab value="background" v-tooltip:top="'Background'">
+			<VIcon icon="mdi-format-color-fill" />
+		</VTab>
+		<VTab value="image" v-tooltip:top="'Logo'">
+			<VIcon icon="mdi-image" />
+		</VTab>
+		<VTab value="dots" v-tooltip:top="'Dots'">
+			<VIcon icon="mdi-dots-grid" />
+		</VTab>
+		<VTab value="corners" v-tooltip:top="'Corners'">
+			<VIcon icon="mdi-border-none-variant" />
+		</VTab>
+	</VTabs>
+	<TabItem v-if="tab === 'qrcode'">
+		<VTextField label="Text" placeholder="Text to encode to QR code..." v-model="text" />
+		<RangeSlider label="Size" :min="200" :max="1000" :step="10" v-model="size" />
+		<RangeSlider label="Margin" :min="0" :max="200" :step="1" v-model="margin" />
+		<VSelect label="Error Correction Level" :items="qrCodeECLs" v-model="ecl" />
+	</TabItem>
+	<TabItem v-else-if="tab === 'background'">
+		<ColorPicker label="Background Color" clearable v-model="bg" />
+	</TabItem>
+	<TabItem v-else-if="tab === 'image'">
+		<ImageSelect btn-label="Add Logo" v-model:src="imgSrc" />
+		<RangeSlider label="Size (%)" v-model="imgSize" :min="0.01" :max="1" :step="0.01" />
+		<RangeSlider label="Margin" v-model="imgMargin" />
+	</TabItem>
+	<TabItem v-else-if="tab === 'dots'">
+		<VSelect label="Dot Shape" :items="qrCodeDotTypes" v-model="dotsType" />
+		<ColorPicker label="Dot Color" v-model="dotsColor" />
+	</TabItem>
+	<TabItem v-else-if="tab === 'corners'">
+		<VSelect
+			label="Corner Square Shape"
+			:items="qrCodeCornerSquareTypes"
+			v-model="cornerSquareType"
+		/>
+		<ColorPicker label="Corner Square Color" v-model="cornerSquareColor" />
+		<VSelect label="Corner Dots Shape" :items="qrCodeCornerDotTypes" v-model="cornerDotType" />
+		<ColorPicker label="Corner Dots Color" v-model="cornerDotColor" />
+	</TabItem>
 	<VBtn block @click="addQRCode">Add to Canvas</VBtn>
 </template>
 
