@@ -6,18 +6,18 @@ import { Rect, TPointerEvent, util } from 'fabric';
 import { debounce, isAround, toFixed } from '../../../utils/functions';
 import { EditorModeType, EditorPencilType } from '../../../store/editor';
 import { SNAP_THRESHOLD } from '../../../utils/constants';
+import useCanvas from '../../../hooks/canvas';
 
 let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const project = useProject();
 const editor = useEditor();
 const notice = useNotice();
+const { viewportTransform } = useCanvas();
 
 const updateCanvas = () => {
 	if (fabricCanvas) {
-		const panX = editor.width / 2 - (project.width / 2) * editor.zoom + editor.panX;
-		const panY = editor.height / 2 - (project.height / 2) * editor.zoom + editor.panY;
-		fabricCanvas.setViewportTransform([editor.zoom, 0, 0, editor.zoom, panX, panY]);
+		fabricCanvas.setViewportTransform(viewportTransform.value);
 		fabricCanvas.clipPath?.set({
 			width: toFixed(project.width),
 			height: toFixed(project.height)

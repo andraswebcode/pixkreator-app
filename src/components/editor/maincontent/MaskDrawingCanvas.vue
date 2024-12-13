@@ -1,14 +1,30 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { useEditor, useStAI } from '../../../store';
-import { Canvas, PencilBrush } from 'fabric';
+import { useEditor, useProject, useStAI } from '../../../store';
+import { Canvas, FabricImage, PencilBrush, util } from 'fabric';
+import useCanvas from '../../../hooks/canvas';
+import useImage from '../../../hooks/image';
 
 let maskCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const editor = useEditor();
+const project = useProject();
 const stai = useStAI();
+const { viewportTransform } = useCanvas();
+const { currentImageMatrix } = useImage();
 const onPathCreated = () => {
-	maskCanvas.toCanvasElement().toBlob((blob) => {
+	maskCanvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+
+	const canvas = maskCanvas.toCanvasElement(1, {});
+
+	maskCanvas.setViewportTransform(viewportTransform.value);
+
+	const m = util.invertTransform(currentImageMatrix.value);
+	const o = util.qrDecompose(m);
+	const image = new FabricImage(canvas, {
+		...o
+	});
+	image.toCanvasElement().toBlob((blob) => {
 		stai.mask = blob;
 	});
 };
@@ -19,6 +35,7 @@ onMounted(() => {
 		height: editor.height,
 		isDrawingMode: true
 	});
+	maskCanvas.setViewportTransform(viewportTransform.value);
 	maskCanvas.freeDrawingBrush = new PencilBrush(maskCanvas);
 	maskCanvas.freeDrawingBrush.width = stai.brushWidth;
 	// @ts-ignore
@@ -32,6 +49,12 @@ onUnmounted(() => {
 	maskCanvas.off('path:created', onPathCreated);
 });
 
+watch(
+	() => [editor.zoom, editor.panX, editor.panY],
+	() => {
+		maskCanvas.setViewportTransform(viewportTransform.value);
+	}
+);
 watch(
 	() => stai.brushWidth,
 	(newWidth) => {

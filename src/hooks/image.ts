@@ -1,6 +1,7 @@
 import { computed } from 'vue';
 import { useEditor, useProject } from '../store';
 import { sanitize } from '../utils/sanitizer';
+import { TMat2D, util } from 'fabric';
 
 const useImage = (props: string[] = []) => {
 	const editor = useEditor();
@@ -34,7 +35,23 @@ const useImage = (props: string[] = []) => {
 		return memo;
 	}, {});
 
-	return { currentImage, currentImageProps };
+	const currentImageMatrix = computed<TMat2D>(() => {
+		if (!currentImage.value) {
+			return [1, 0, 0, 1, 0, 0];
+		}
+		const { left, top, scaleX, scaleY, skewX, skewY, angle } = currentImage.value;
+		return util.composeMatrix({
+			translateX: left,
+			translateY: top,
+			scaleX,
+			scaleY,
+			skewX,
+			skewY,
+			angle
+		});
+	});
+
+	return { currentImage, currentImageProps, currentImageMatrix };
 };
 
 export default useImage;
