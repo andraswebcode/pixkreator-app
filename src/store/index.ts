@@ -3,6 +3,7 @@ import useEditor from './editor';
 import useProject from './project';
 import useUser from './user';
 import useNotice from './notification';
+import useStAI from './stai';
 import { PiniaUndo } from 'pinia-undo';
 import LocalStoragePlugin from './localstorage';
 
@@ -12,4 +13,4 @@ store.use(PiniaUndo);
 store.use(LocalStoragePlugin);
 
 export default store;
-export { useEditor, useProject, useUser, useNotice };
+export { useEditor, useProject, useUser, useNotice, useStAI };

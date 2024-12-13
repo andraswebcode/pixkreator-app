@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useEditor } from '../../store';
+import { useEditor, useStAI } from '../../store';
 
 const editor = useEditor();
+const stai = useStAI();
 </script>
 
 <template>
@@ -11,6 +12,7 @@ const editor = useEditor();
 			<FabricCanvas />
 			<CanvasPan v-if="editor.mode === 'pan'" />
 			<ContextMenu v-if="editor.mode === 'select' && editor.showContextMenu" />
+			<MaskDrawingCanvas v-if="stai.drawMask" />
 		</VContainer>
 	</VMain>
 </template>

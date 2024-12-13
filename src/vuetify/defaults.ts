@@ -45,7 +45,18 @@ const defaults = {
 	},
 	LeftSideBarDrawer: {
 		tag: 'aside',
-		width: 356
+		width: 356,
+		VTabs: {
+			density: 'compact',
+			grow: true
+		},
+		VTab: {
+			size: 'x-small',
+			minWidth: 0
+		},
+		TabItem: {
+			class: 'py-5'
+		}
 	},
 	RightSideBarDrawer: {
 		tag: 'aside',

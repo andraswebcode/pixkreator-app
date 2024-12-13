@@ -72,6 +72,7 @@ declare module 'vue' {
     LoginDialog: typeof import('./src/components/editor/topbar/LoginDialog.vue')['default']
     LoginNotice: typeof import('./src/components/common/LoginNotice.vue')['default']
     MainContent: typeof import('./src/components/editor/MainContent.vue')['default']
+    MaskDrawingCanvas: typeof import('./src/components/editor/maincontent/MaskDrawingCanvas.vue')['default']
     NotificationBar: typeof import('./src/components/common/NotificationBar.vue')['default']
     PersistentHeaderDialog: typeof import('./src/components/common/PersistentHeaderDialog.vue')['default']
     PhotoDetails: typeof import('./src/components/common/PhotoDetails.vue')['default']
@@ -124,6 +125,5 @@ declare module 'vue' {
     UserMenu: typeof import('./src/components/common/UserMenu.vue')['default']
     VerifyEmail: typeof import('./src/components/common/VerifyEmail.vue')['default']
     VerifyEmailAlert: typeof import('./src/components/common/VerifyEmailAlert.vue')['default']
-    VTabItem: typeof import('vuetify/lib')['VTabItem']
   }
 }
