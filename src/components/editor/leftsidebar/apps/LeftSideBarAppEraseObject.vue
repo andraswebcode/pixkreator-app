@@ -71,8 +71,8 @@ watch(
 	<VerifyEmailAlert v-else-if="!userData.user.email_verified" class="mx-3 mt-3" />
 	<div v-else-if="userData.canGenerateImage && src">
 		<div class="preview mb-4">
-			<LazyLoadImage aspect-ratio="1" :src="src" />
-			<LazyLoadImage v-if="maskUrl" aspect-ratio="1" :src="maskUrl" />
+			<LazyLoadImage aspect-ratio="2" :src="src" />
+			<LazyLoadImage v-if="maskUrl" aspect-ratio="2" :src="maskUrl" />
 		</div>
 		<AICreditAlert fee="erase" />
 		<RangeSlider
@@ -108,7 +108,7 @@ watch(
 	position: relative;
 	display: block;
 	width: 100%;
-	padding-bottom: 100%;
+	padding-bottom: 50%;
 }
 .v-img {
 	position: absolute;

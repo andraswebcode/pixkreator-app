@@ -47,7 +47,7 @@ const removeBackground = () => {
 	<LoginNotice v-if="!userData.loggedIn" />
 	<VerifyEmailAlert v-else-if="!userData.user.email_verified" class="mx-3 mt-3" />
 	<div v-else-if="userData.canGenerateImage && src">
-		<LazyLoadImage class="mb-4" aspect-ratio="1" :src="src" />
+		<LazyLoadImage class="mb-4" aspect-ratio="2" :src="src" />
 		<AICreditAlert fee="removebg" />
 		<VBtn block :loading="editor.aiIsGenerating" @click="removeBackground">
 			Remove Background

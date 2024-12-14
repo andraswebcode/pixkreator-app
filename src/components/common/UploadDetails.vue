@@ -19,7 +19,9 @@ const props = defineProps<{
 const { mdAndUp } = useDisplay();
 const actionTextMap = {
 	'background-remover': 'Removed Background',
-	'image-upscaler': 'Upscaled by 4x'
+	'image-upscaler': 'Upscaled by 4x',
+	'erase-object': 'Object Erased',
+	inpaint: 'Inpainted'
 };
 </script>
 
@@ -47,11 +49,6 @@ const actionTextMap = {
 			>
 				<h3 v-if="props.title" class="mb-2">{{ props.title }}</h3>
 				<div v-if="props.source === 'ais'">
-					<p v-if="props.metadata?.prompt">
-						<strong>Prompt:</strong>
-						<br />
-						{{ props.metadata.prompt }}
-					</p>
 					<p v-if="props.metadata?.style">
 						<strong>Style: </strong>
 						{{ props.metadata.style }}
@@ -59,6 +56,11 @@ const actionTextMap = {
 					<p v-if="props.metadata?.app">
 						<strong>Action: </strong>
 						{{ actionTextMap[props.metadata.app] }}
+					</p>
+					<p v-if="props.metadata?.prompt">
+						<strong>Prompt:</strong>
+						<br />
+						{{ props.metadata.prompt }}
 					</p>
 				</div>
 				<slot />
