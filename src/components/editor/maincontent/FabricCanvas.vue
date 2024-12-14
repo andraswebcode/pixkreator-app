@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, toRaw } from 'vue';
-import { useEditor, useNotice, useProject } from './../../../store';
+import { useEditor, useNotice, useProject, useStAI } from './../../../store';
 import Canvas from '../../../canvas/canvas';
 import { Rect, TPointerEvent, util } from 'fabric';
 import { debounce, isAround, toFixed } from '../../../utils/functions';
 import { EditorModeType, EditorPencilType } from '../../../store/editor';
 import { SNAP_THRESHOLD } from '../../../utils/constants';
 import useCanvas from '../../../hooks/canvas';
+import useImage from '../../../hooks/image';
 
 let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const project = useProject();
 const editor = useEditor();
 const notice = useNotice();
+const stai = useStAI();
 const { viewportTransform } = useCanvas();
+const { currentImageId } = useImage();
 
 const updateCanvas = () => {
 	if (fabricCanvas) {
@@ -382,6 +385,17 @@ watch(
 	() => editor.activeLayerIds,
 	(newIds) => {
 		fabricCanvas.setActiveObjectsByIds(newIds);
+	}
+);
+watch(
+	() => stai.alphaMask,
+	(newAlphaMask) => {
+		const img = fabricCanvas.getObjectById(currentImageId.value);
+		if (!img) {
+			return;
+		}
+		// @ts-ignore
+		img.setAlphaMask(newAlphaMask);
 	}
 );
 </script>

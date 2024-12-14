@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
 
 export interface StAIState {
-	drawMask: string;
+	drawMask: boolean;
 	mask: Blob | null;
+	alphaMask: Blob | null;
 	brushWidth: number;
 	clearMask: number; // Incremented number, just for signing mask canvas to clear.
 }
@@ -11,9 +12,10 @@ export type StAIGetters = {};
 
 export default defineStore<string, StAIState, StAIGetters>('stai', {
 	state: () => ({
-		drawMask: '',
+		drawMask: false,
 		mask: null,
-		brushWidth: 10,
+		alphaMask: null,
+		brushWidth: 100,
 		clearMask: 0
 	}),
 	getters: {},

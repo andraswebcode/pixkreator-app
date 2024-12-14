@@ -12,12 +12,12 @@ const apps: App[] = [
 		id: 'qr-code-generator',
 		title: 'QR Code Generator',
 		description: 'Easily generate and customize QR codes for your designs.'
-	},
+	} /*
 	{
 		id: 'chart-maker',
 		title: 'Chart Maker',
 		description: 'Easily create stunning data visualizations for your projects.'
-	},
+	},*/,
 	{
 		id: 'background-remover',
 		title: 'Background Remover',
@@ -37,7 +37,7 @@ const apps: App[] = [
 		id: 'inpaint',
 		title: 'Inpaint',
 		description: 'Fill or replace image areas, based on a mask and prompt.'
-	},
+	} /*
 	{
 		id: 'sketch-to-image',
 		title: 'Sketch to Image',
@@ -67,7 +67,7 @@ const apps: App[] = [
 		id: 'pattern-creator',
 		title: 'Pattern Creator',
 		description: 'Design seamless patterns to create backgrounds.'
-	}
+	}*/
 ];
 
 const qrCodeECLs: {

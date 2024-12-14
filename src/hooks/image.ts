@@ -14,6 +14,8 @@ const useImage = (props: string[] = []) => {
 			: project.ids.map((id) => project.byIds[id]).find((layer) => layer?.type === 'Image');
 	});
 
+	const currentImageId = computed(() => currentImage.value?.id || '');
+
 	const currentImageProps: any = props.reduce((memo, prop) => {
 		memo[prop] = computed({
 			get: () => {
@@ -51,7 +53,7 @@ const useImage = (props: string[] = []) => {
 		});
 	});
 
-	return { currentImage, currentImageProps, currentImageMatrix };
+	return { currentImage, currentImageId, currentImageProps, currentImageMatrix };
 };
 
 export default useImage;

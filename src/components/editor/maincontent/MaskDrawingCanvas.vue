@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useEditor, useProject, useStAI } from '../../../store';
-import { Canvas, FabricImage, PencilBrush, util } from 'fabric';
+import { Canvas, PencilBrush } from 'fabric';
 import useCanvas from '../../../hooks/canvas';
-import useImage from '../../../hooks/image';
+import { invertAlphaMask } from '../../../utils/ai-utils';
 
 let maskCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -11,20 +11,22 @@ const editor = useEditor();
 const project = useProject();
 const stai = useStAI();
 const { viewportTransform } = useCanvas();
-const { currentImageMatrix } = useImage();
 const onPathCreated = () => {
 	maskCanvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
 
-	const canvas = maskCanvas.toCanvasElement(1, {});
+	const alphaCanvas = maskCanvas.toCanvasElement(1, {
+		width: project.width,
+		height: project.height
+	});
 
 	maskCanvas.setViewportTransform(viewportTransform.value);
 
-	const m = util.invertTransform(currentImageMatrix.value);
-	const o = util.qrDecompose(m);
-	const image = new FabricImage(canvas, {
-		...o
+	const canvas = invertAlphaMask(alphaCanvas);
+
+	alphaCanvas.toBlob((blob) => {
+		stai.alphaMask = blob;
 	});
-	image.toCanvasElement().toBlob((blob) => {
+	canvas.toBlob((blob) => {
 		stai.mask = blob;
 	});
 };
@@ -66,6 +68,8 @@ watch(
 	(newClear, oldClear) => {
 		if (newClear !== oldClear) {
 			maskCanvas.clear();
+			stai.alphaMask = null;
+			stai.mask = null;
 		}
 	}
 );
