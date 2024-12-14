@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
 export interface StAIState {
+	prompt: string;
 	drawMask: boolean;
 	mask: Blob | null;
 	alphaMask: Blob | null;
@@ -12,6 +13,7 @@ export type StAIGetters = {};
 
 export default defineStore<string, StAIState, StAIGetters>('stai', {
 	state: () => ({
+		prompt: '',
 		drawMask: false,
 		mask: null,
 		alphaMask: null,

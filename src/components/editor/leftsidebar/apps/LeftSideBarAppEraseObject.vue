@@ -67,7 +67,6 @@ watch(
 </script>
 
 <template>
-	{{ stai.$state }}
 	<LoginNotice v-if="!userData.loggedIn" />
 	<VerifyEmailAlert v-else-if="!userData.user.email_verified" class="mx-3 mt-3" />
 	<div v-else-if="userData.canGenerateImage && src">
