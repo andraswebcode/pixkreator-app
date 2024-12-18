@@ -55,11 +55,11 @@ const size = computed({
 		<VTab value="size" v-tooltip:top="'Size'">
 			<VIcon icon="mdi-resize" />
 		</VTab>
-		<VTab value="meta" v-tooltip:top="'Meta'">
-			<VIcon icon="mdi-file-document" />
-		</VTab>
 		<VTab value="background" v-tooltip:top="'Background'">
 			<VIcon icon="mdi-format-color-fill" />
+		</VTab>
+		<VTab value="meta" v-tooltip:top="'Meta'">
+			<VIcon icon="mdi-file-document" />
 		</VTab>
 	</VTabs>
 	<TabItem v-if="tab === 'size'">
@@ -75,13 +75,13 @@ const size = computed({
 			@update:model-value="fitToScreen()"
 		/>
 	</TabItem>
+	<TabItem v-else-if="tab === 'background'">
+		<ColorPicker label="Canvas Background" clearable v-model="project.background" />
+	</TabItem>
 	<TabItem v-else-if="tab === 'meta'">
 		<VTextField label="Title" v-model="project.title" />
 		<VTextarea label="Description" v-model="project.description" />
 		<VTextarea v-if="userData.user.admin" label="Keywords" v-model="project.keywords" />
-	</TabItem>
-	<TabItem v-else-if="tab === 'background'">
-		<ColorPicker label="Canvas Background" clearable v-model="project.background" />
 	</TabItem>
 </template>
 

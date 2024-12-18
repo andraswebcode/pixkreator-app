@@ -16,9 +16,9 @@ const { cornerSquareType, cornerSquareColor, cornerDotType, cornerDotColor } = u
 		:items="qrCodeCornerSquareTypes"
 		v-model="cornerSquareType"
 	/>
-	<ColorPicker label="Corner Square Color" v-model="cornerSquareColor" />
+	<ColorPicker label="Corner Square Color" clearable v-model="cornerSquareColor" />
 	<VSelect label="Corner Dots Shape" :items="qrCodeCornerDotTypes" v-model="cornerDotType" />
-	<ColorPicker label="Corner Dots Color" v-model="cornerDotColor" />
+	<ColorPicker label="Corner Dots Color" clearable v-model="cornerDotColor" />
 </template>
 
 <style scoped lang="scss"></style>

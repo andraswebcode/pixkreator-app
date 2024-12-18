@@ -54,7 +54,7 @@ const addQRCode = () => {
 </script>
 
 <template>
-	<LazyLoadImage class="mb-4" aspect-ratio="1" :src="preview" />
+	<LazyLoadImage class="mb-4" aspect-ratio="2" :src="preview" />
 	<VTabs v-model="tab">
 		<VTab value="qrcode" v-tooltip:top="'QR Code'">
 			<VIcon icon="mdi-qrcode-edit" />
@@ -88,7 +88,7 @@ const addQRCode = () => {
 	</TabItem>
 	<TabItem v-else-if="tab === 'dots'">
 		<VSelect label="Dot Shape" :items="qrCodeDotTypes" v-model="dotsType" />
-		<ColorPicker label="Dot Color" v-model="dotsColor" />
+		<ColorPicker label="Dot Color" clearable v-model="dotsColor" />
 	</TabItem>
 	<TabItem v-else-if="tab === 'corners'">
 		<VSelect
@@ -96,9 +96,9 @@ const addQRCode = () => {
 			:items="qrCodeCornerSquareTypes"
 			v-model="cornerSquareType"
 		/>
-		<ColorPicker label="Corner Square Color" v-model="cornerSquareColor" />
+		<ColorPicker label="Corner Square Color" clearable v-model="cornerSquareColor" />
 		<VSelect label="Corner Dots Shape" :items="qrCodeCornerDotTypes" v-model="cornerDotType" />
-		<ColorPicker label="Corner Dots Color" v-model="cornerDotColor" />
+		<ColorPicker label="Corner Dots Color" clearable v-model="cornerDotColor" />
 	</TabItem>
 	<VBtn block @click="addQRCode">Add to Canvas</VBtn>
 </template>

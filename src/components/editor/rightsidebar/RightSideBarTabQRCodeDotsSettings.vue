@@ -7,7 +7,7 @@ const { dotsType, dotsColor } = useProps(['dotsType', 'dotsColor']);
 
 <template>
 	<VSelect label="Dot Shape" :items="qrCodeDotTypes" v-model="dotsType" />
-	<ColorPicker label="Dot Color" v-model="dotsColor" />
+	<ColorPicker label="Dot Color" clearable v-model="dotsColor" />
 </template>
 
 <style scoped lang="scss"></style>

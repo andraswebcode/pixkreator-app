@@ -4,6 +4,7 @@ import useRequest from '../../hooks/request';
 import { PHOTO_ORIENTATIONS, DETAILS_DIALOG_WIDTH, PHOTO_SIZES } from '../../utils/constants';
 import { Orientation, PhotoSize } from '../../types/common';
 import { getCroppedImageDimensions } from '../../utils/functions';
+import { useUser } from '../../store';
 
 type ImageOrigin = 'photos' | 'uploads' | 'ais';
 
@@ -14,6 +15,7 @@ const props = defineProps<{
 const src = defineModel<string>('src');
 const width = defineModel<number>('width');
 const height = defineModel<number>('height');
+const userData = useUser();
 const items = ref<any[]>([]);
 const search = ref('');
 const orientation = ref<Orientation | ''>('');
@@ -43,17 +45,19 @@ const filter = () => {
 			}
 		);
 	} else {
-		list(
-			{
-				search: search.value,
-				source: imageOrigin.value
-			},
-			'uploads',
-			(data) => {
-				items.value = data.items;
-				loading.value = false;
-			}
-		);
+		if (userData.loggedIn) {
+			list(
+				{
+					search: search.value,
+					source: imageOrigin.value
+				},
+				'uploads',
+				(data) => {
+					items.value = data.items;
+					loading.value = false;
+				}
+			);
+		}
 	}
 };
 const loadMore = () => {
@@ -72,18 +76,20 @@ const loadMore = () => {
 			}
 		);
 	} else {
-		list(
-			{
-				search: search.value,
-				source: imageOrigin.value,
-				page: page.value
-			},
-			'uploads',
-			(data) => {
-				items.value.push(...data.items);
-				page.value++;
-			}
-		);
+		if (userData.loggedIn) {
+			list(
+				{
+					search: search.value,
+					source: imageOrigin.value,
+					page: page.value
+				},
+				'uploads',
+				(data) => {
+					items.value.push(...data.items);
+					page.value++;
+				}
+			);
+		}
 	}
 };
 const openDetails = (i: number) => {
@@ -146,7 +152,7 @@ onMounted(filter);
 						@click:append-inner="filter"
 					/>
 				</VCol>
-				<VCol cols="auto">
+				<VCol v-if="userData.loggedIn" cols="auto">
 					<VBtnToggle v-model="imageOrigin" @update:model-value="filter">
 						<VBtn value="photos">Photos</VBtn>
 						<VBtn value="uploads">Uploads</VBtn>
