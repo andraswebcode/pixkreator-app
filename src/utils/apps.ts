@@ -19,6 +19,11 @@ const apps: App[] = [
 		description: 'Easily create stunning data visualizations for your projects.'
 	},*/,
 	{
+		id: 'collage-maker',
+		title: 'Collage Maker',
+		description: 'Combine photos and designs into beautiful collages.'
+	},
+	{
 		id: 'background-remover',
 		title: 'Background Remover',
 		description: 'Easily remove backgrounds from your images with precision.'
@@ -52,12 +57,7 @@ const apps: App[] = [
 		id: 'color-palette-extractor',
 		title: 'Color Palette Extractor',
 		description: 'Extract color palettes from your images for a cohesive design.'
-	},*/,
-	{
-		id: 'collage-maker',
-		title: 'Collage Maker',
-		description: 'Combine photos and designs into beautiful collages.'
-	} /*
+	},
 	{
 		id: 'design-generator',
 		title: 'Design Generator',

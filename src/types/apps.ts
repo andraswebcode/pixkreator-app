@@ -30,3 +30,9 @@ export interface QRCodeOptions {
 	cornerDotType: CornerDotType | '';
 	cornerDotColor: string;
 }
+
+export type CollageItem = {
+	src: string;
+	width: number; // percentage values
+	height: number;
+};
