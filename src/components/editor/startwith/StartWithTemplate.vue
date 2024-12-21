@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import useRequest from '../../../hooks/request';
 import templateCategories from '../../../utils/template-categories';
 import { DETAILS_DIALOG_WIDTH } from '../../../utils/constants';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import useFitToScreen from '../../../hooks/fittoscreen';
 
 const categories = [
@@ -15,6 +15,7 @@ const categories = [
 ];
 const { list } = useRequest();
 const router = useRouter();
+const route = useRoute();
 const fitToScreen = useFitToScreen();
 const search = ref('');
 const category = ref('');
@@ -29,7 +30,8 @@ const filter = () => {
 	list(
 		{
 			search: search.value,
-			category: category.value
+			category: category.value,
+			keyword: route.query.keyword
 		},
 		'templates',
 		(data) => {
@@ -43,6 +45,7 @@ const loadMore = () => {
 		{
 			search: search.value,
 			category: category.value,
+			keyword: route.query.keyword,
 			page: page.value
 		},
 		'templates',
