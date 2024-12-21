@@ -15,7 +15,8 @@ const ICON_MAP = {
 	polygon: 'mdi-diamond-outline',
 	itext: 'mdi-format-text',
 	qrcode: 'mdi-qrcode',
-	chart: 'mdi-chart-areaspline'
+	chart: 'mdi-chart-areaspline',
+	collage: 'mdi-collage'
 };
 
 const NAME_MAP = {
@@ -29,7 +30,8 @@ const NAME_MAP = {
 	polygon: 'Polygon',
 	itext: 'Text',
 	qrcode: 'QR Code',
-	chart: 'Chart'
+	chart: 'Chart',
+	collage: 'Collage'
 };
 const project = useProject();
 const editor = useEditor();

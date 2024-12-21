@@ -52,12 +52,12 @@ const apps: App[] = [
 		id: 'color-palette-extractor',
 		title: 'Color Palette Extractor',
 		description: 'Extract color palettes from your images for a cohesive design.'
-	},
+	},*/,
 	{
 		id: 'collage-maker',
 		title: 'Collage Maker',
 		description: 'Combine photos and designs into beautiful collages.'
-	},
+	} /*
 	{
 		id: 'design-generator',
 		title: 'Design Generator',

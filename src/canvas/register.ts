@@ -16,6 +16,7 @@ import { PROPolyline } from './objects/polyline';
 import { PROPolygon } from './objects/polygon';
 import { PROQRCode } from './objects/qrcode';
 import { PROChart } from './objects/chart';
+import { PROCollage } from './objects/collage';
 
 // Shapes
 
@@ -31,6 +32,7 @@ classRegistry.setClass(PRORect);
 classRegistry.setClass(PROIText);
 classRegistry.setClass(PROQRCode);
 classRegistry.setClass(PROChart);
+classRegistry.setClass(PROCollage);
 
 // Filters
 

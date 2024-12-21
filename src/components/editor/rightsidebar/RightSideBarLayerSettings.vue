@@ -16,6 +16,7 @@ const { type } = useProps(['type']);
 	<RightSideBarLayerGroupSettings v-else-if="type === 'Group'" />
 	<RightSideBarLayerQRCodeSettings v-else-if="type === 'QRCode'" />
 	<RightSideBarLayerChartSettings v-else-if="type === 'Chart'" />
+	<RightSideBarLayerCollageSettings v-else-if="type === 'Collage'" />
 </template>
 
 <style scoped lang="scss"></style>

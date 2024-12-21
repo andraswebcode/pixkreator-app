@@ -82,6 +82,7 @@ declare module 'vue' {
     RightSideBarCanvasSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarCanvasSettings.vue')['default']
     RightSideBarLayerChartSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarLayerChartSettings.vue')['default']
     RightSideBarLayerCircleSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarLayerCircleSettings.vue')['default']
+    RightSideBarLayerCollageSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarLayerCollageSettings.vue')['default']
     RightSideBarLayerEllipseSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarLayerEllipseSettings.vue')['default']
     RightSideBarLayerGroupSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarLayerGroupSettings.vue')['default']
     RightSideBarLayerImageSettings: typeof import('./src/components/editor/rightsidebar/RightSideBarLayerImageSettings.vue')['default']
