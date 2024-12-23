@@ -24,6 +24,8 @@ export const SHARE_IMAGE_MAX_SIZE = 2000;
 
 export const THUMBNAIL_MAX_SIZE = 300;
 
+export const PATCH_DEBOUNCE_TIMEOUT = 800;
+
 export const PHOTO_SIZES = [
 	{
 		label: 'Original',

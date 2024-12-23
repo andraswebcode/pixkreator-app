@@ -11,7 +11,7 @@ const userData = useUser();
 <template>
 	<VAlert class="mb-5" type="info">
 		This action will cost {{ aiCreditFees[props.fee] }} credits. You have
-		{{ userData.user.stai_credits }} credits available.
+		{{ userData.user.ai_credits }} credits available.
 	</VAlert>
 </template>
 

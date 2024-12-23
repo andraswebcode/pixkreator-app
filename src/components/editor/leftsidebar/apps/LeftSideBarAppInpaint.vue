@@ -96,6 +96,7 @@ watch(
 			<VBtn class="mb-5" block @click="stai.drawMask = true">Draw Mask</VBtn>
 			<VBtn
 				block
+				append-icon="mdi-creation"
 				:loading="editor.aiIsGenerating"
 				:disabled="!stai.alphaMask || !stai.prompt"
 				@click="inpaint"

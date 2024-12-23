@@ -1,4 +1,3 @@
-// import { VCarousel } from 'vuetify/components';
 import { VNavigationDrawer } from 'vuetify/components';
 import { VBtn } from 'vuetify/components/VBtn';
 import { VBtnToggle } from 'vuetify/components/VBtnToggle';

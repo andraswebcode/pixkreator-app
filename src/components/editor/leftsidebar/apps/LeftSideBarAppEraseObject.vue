@@ -92,7 +92,13 @@ watch(
 		</VRow>
 		<div v-else>
 			<VBtn class="mb-5" block @click="stai.drawMask = true">Draw Mask</VBtn>
-			<VBtn block :loading="editor.aiIsGenerating" :disabled="!stai.alphaMask" @click="erase">
+			<VBtn
+				block
+				append-icon="mdi-creation"
+				:loading="editor.aiIsGenerating"
+				:disabled="!stai.alphaMask"
+				@click="erase"
+			>
 				Erase Object
 			</VBtn>
 		</div>

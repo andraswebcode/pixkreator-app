@@ -54,7 +54,9 @@ const upscale = () => {
 	<div v-else-if="userData.canGenerateImage && src">
 		<LazyLoadImage class="mb-4" aspect-ratio="2" :src="src" />
 		<AICreditAlert fee="upscale" />
-		<VBtn block :loading="editor.aiIsGenerating" @click="upscale">Upscale 4x</VBtn>
+		<VBtn block append-icon="mdi-creation" :loading="editor.aiIsGenerating" @click="upscale">
+			Upscale 4x
+		</VBtn>
 	</div>
 	<VAlert v-else-if="userData.canGenerateImage && !src" type="warning" icon="mdi-alert-circle">
 		There is no image layer on the canvas.

@@ -6,7 +6,7 @@ import useRequest from '../../../hooks/request';
 import { useRoute, useRouter } from 'vue-router';
 import { debounce } from '../../../utils/functions';
 import { util } from 'fabric';
-import { SHARE_IMAGE_MAX_SIZE } from '../../../utils/constants';
+import { PATCH_DEBOUNCE_TIMEOUT, SHARE_IMAGE_MAX_SIZE } from '../../../utils/constants';
 import { SocialMedia } from '../../../types/common';
 
 const TEXTS_MAP = {
@@ -161,7 +161,7 @@ const saveTexts = debounce((prop: 'title' | 'description') => {
 			loadingTextField.value = false;
 		}
 	);
-}, 800);
+}, PATCH_DEBOUNCE_TIMEOUT);
 const shareImage = (media: SocialMedia) => {
 	const url = encodeURIComponent(project.link);
 	const image = '';
@@ -270,6 +270,9 @@ onUnmounted(() => {
 						:loading="loadingTextField === 'description'"
 						@update:model-value="saveTexts('description')"
 					/>
+					<VBtn block append-icon="mdi-creation" :disabled="disabled || project.isEmpty">
+						Generate With AI
+					</VBtn>
 					<VDivider class="my-8" />
 					<VRow class="mb-5">
 						<VCol cols="auto">

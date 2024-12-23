@@ -49,7 +49,12 @@ const removeBackground = () => {
 	<div v-else-if="userData.canGenerateImage && src">
 		<LazyLoadImage class="mb-4" aspect-ratio="2" :src="src" />
 		<AICreditAlert fee="removebg" />
-		<VBtn block :loading="editor.aiIsGenerating" @click="removeBackground">
+		<VBtn
+			block
+			append-icon="mdi-creation"
+			:loading="editor.aiIsGenerating"
+			@click="removeBackground"
+		>
 			Remove Background
 		</VBtn>
 	</div>

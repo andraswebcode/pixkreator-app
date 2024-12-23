@@ -49,19 +49,33 @@ const actionTextMap = {
 			>
 				<h3 v-if="props.title" class="mb-2">{{ props.title }}</h3>
 				<div v-if="props.source === 'ais'">
+					<p v-if="props.metadata?.model">
+						<strong>Model: </strong>
+						{{ props.metadata.model }}
+					</p>
+					<VDivider v-if="props.metadata?.model" class="my-2" />
 					<p v-if="props.metadata?.style">
 						<strong>Style: </strong>
 						{{ props.metadata.style }}
 					</p>
+					<VDivider v-if="props.metadata?.style" class="my-2" />
 					<p v-if="props.metadata?.app">
 						<strong>Action: </strong>
 						{{ actionTextMap[props.metadata.app] }}
 					</p>
+					<VDivider v-if="props.metadata?.app" class="my-2" />
 					<p v-if="props.metadata?.prompt">
 						<strong>Prompt:</strong>
 						<br />
 						{{ props.metadata.prompt }}
 					</p>
+					<VDivider v-if="props.metadata?.prompt" class="my-2" />
+					<p v-if="props.metadata?.revised_prompt">
+						<strong>Revised Prompt</strong>
+						<br />
+						{{ props.metadata.revised_prompt }}
+					</p>
+					<VDivider v-if="props.metadata?.revised_prompt" class="my-2" />
 				</div>
 				<slot />
 			</VCol>

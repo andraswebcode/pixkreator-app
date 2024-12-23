@@ -3,18 +3,20 @@ import { ref } from 'vue';
 import useRequest from '../../hooks/request';
 import { debounce } from '../../utils/functions';
 import { useNotice, useUser } from '../../store';
+import { PATCH_DEBOUNCE_TIMEOUT } from '../../utils/constants';
 
 const { save } = useRequest();
 const notice = useNotice();
 const userData = useUser();
 const sub_news = ref(userData.user.sub_news || 'yes');
 const stai_key = ref('');
+const openai_key = ref('');
 const loading = ref({
 	sub_news: false,
-	stai_key: false
+	stai_key: false,
+	openai_key: false
 });
 const updateSetting = debounce((key, value) => {
-	// loading.value[key] = true;
 	save(
 		'',
 		'usermeta',
@@ -22,7 +24,7 @@ const updateSetting = debounce((key, value) => {
 			key,
 			value
 		},
-		({ meta_key, meta_value, stai_credits }) => {
+		({ meta_key, meta_value, openai_credits, stai_credits }) => {
 			loading.value[key] = false;
 			if (typeof stai_credits !== 'undefined') {
 				notice.send(
@@ -30,6 +32,12 @@ const updateSetting = debounce((key, value) => {
 					'success'
 				);
 				userData.setAndSave('stai_credits', stai_credits);
+			} else if (typeof openai_credits !== 'undefined') {
+				notice.send(
+					`API key updated successfully. You have ${openai_credits} credits.`,
+					'success'
+				);
+				userData.setAndSave('openai_credits', openai_credits);
 			} else {
 				notice.send('Setting updated successfully.', 'success');
 				userData.setAndSave(meta_key, meta_value);
@@ -40,7 +48,7 @@ const updateSetting = debounce((key, value) => {
 			notice.send(error.response?.data?.message || error.message, 'error');
 		}
 	);
-}, 800);
+}, PATCH_DEBOUNCE_TIMEOUT);
 </script>
 
 <template>
@@ -64,6 +72,15 @@ const updateSetting = debounce((key, value) => {
 				@update:model-value="
 					loading.stai_key = true;
 					updateSetting('stai_key', $event);
+				"
+			/>
+			<VTextField
+				label="Open AI API Key"
+				:loading="loading.openai_key"
+				v-model="openai_key"
+				@update:model-value="
+					loading.openai_key = true;
+					updateSetting('openai_key', $event);
 				"
 			/>
 		</VCardItem>

@@ -17,12 +17,12 @@ const apps: App[] = [
 		id: 'chart-maker',
 		title: 'Chart Maker',
 		description: 'Easily create stunning data visualizations for your projects.'
-	},*/,
+	},,
 	{
 		id: 'collage-maker',
 		title: 'Collage Maker',
 		description: 'Combine photos and designs into beautiful collages.'
-	},
+	}*/,
 	{
 		id: 'background-remover',
 		title: 'Background Remover',

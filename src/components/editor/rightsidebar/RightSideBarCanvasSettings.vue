@@ -82,6 +82,7 @@ const size = computed({
 		<VTextField label="Title" v-model="project.title" />
 		<VTextarea label="Description" v-model="project.description" />
 		<VTextarea v-if="userData.user.admin" label="Keywords" v-model="project.keywords" />
+		<VBtn block append-icon="mdi-creation" :disabled="project.isEmpty">Generate With AI</VBtn>
 	</TabItem>
 </template>
 

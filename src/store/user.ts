@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { BrandColorObject } from '../types/brand';
 
 export type UserPlan = 'free';
 
@@ -12,7 +13,11 @@ export type UserData = {
 	token?: string;
 	plan?: UserPlan;
 	sub_news?: 'yes' | 'no';
+	ai_credits?: number;
+	openai_credits?: number;
 	stai_credits?: number;
+	brand_introduction?: string;
+	brand_colors?: BrandColorObject[];
 };
 
 export type UserState = {
@@ -47,8 +52,8 @@ export default defineStore<string, UserState, UserGetters, UserActions>('user', 
 		bearerToken: ({ user: { token } }) => 'Bearer ' + token,
 		isProPlan: ({ user: { plan, id, token, admin } }) =>
 			!!id && !!token && (plan !== 'free' || !!admin),
-		canGenerateImage: ({ user: { stai_credits, id, token } }) =>
-			!!id && !!token && !!stai_credits
+		canGenerateImage: ({ user: { ai_credits, openai_credits, stai_credits, id, token } }) =>
+			!!id && !!token && !!(ai_credits || openai_credits || stai_credits)
 	},
 	actions: {
 		setAndSave(key, value) {

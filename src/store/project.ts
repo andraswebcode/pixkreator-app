@@ -46,6 +46,7 @@ export interface ProjectState {
 
 export type ProjectGetters = {
 	fabricJSON: (state: ProjectState) => any;
+	isEmpty: (state: ProjectState) => boolean;
 };
 
 export interface ProjectActions {
@@ -84,7 +85,8 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 				}
 
 				return layer;
-			})
+			}),
+		isEmpty: ({ ids }) => !ids?.length
 	},
 	actions: {
 		addLayer(props) {

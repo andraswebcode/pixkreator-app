@@ -100,6 +100,9 @@ const defaults = {
 				divided: true,
 				border: 'sm',
 				rounded: false
+			},
+			VBtn: {
+				size: 'small'
 			}
 		}
 	},

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useUser } from '../../store';
 
 const properties = defineProps<{
@@ -24,6 +24,7 @@ const swatches = [
 	['#FF00FF', '#CC00CC', '#990099', '#660066', '#330033'], // Magenta
 	['#800080', '#660066', '#4C004C', '#330033', '#190019'] // Purple
 ];
+const brandSwatches = computed(() => (userData.user.brand_colors || []).map(({ color }) => color));
 </script>
 
 <template>
@@ -58,7 +59,7 @@ const swatches = [
 						hide-sliders
 						hide-inputs
 						show-swatches
-						:swatches="[['#000'], ['#fff']]"
+						:swatches="[brandSwatches]"
 						swatches-max-height="328px"
 						v-model="model"
 					/>

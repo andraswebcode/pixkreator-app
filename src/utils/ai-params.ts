@@ -1,4 +1,57 @@
-const outputFormats = [
+import { ImageModel } from '../types/ai';
+
+const imageModels: {
+	label: string;
+	value: ImageModel;
+}[] = [
+	{
+		label: 'Stable Image Core',
+		value: 'stable-image-core'
+	},
+	{
+		label: 'DALL-E',
+		value: 'dall-e-3'
+	}
+];
+
+const openaiQualities = [
+	{
+		label: 'Standard',
+		value: 'standard'
+	},
+	{
+		label: 'HD',
+		value: 'hd'
+	}
+];
+
+const openaiSizes = [
+	{
+		label: 'Square',
+		value: '1024x1024'
+	},
+	{
+		label: 'Landscape',
+		value: '1792x1024'
+	},
+	{
+		label: 'Portrait',
+		value: '1024x1792'
+	}
+];
+
+const openaiStyles = [
+	{
+		label: 'Vivid',
+		value: 'vivid'
+	},
+	{
+		label: 'Natural',
+		value: 'natural'
+	}
+];
+
+const staiOutputFormats = [
 	{
 		label: 'JPEG Image',
 		value: 'jpeg'
@@ -13,7 +66,7 @@ const outputFormats = [
 	}
 ];
 
-const stylePresets = [
+const staiStylePresets = [
 	{
 		label: 'No Style',
 		value: ''
@@ -88,7 +141,7 @@ const stylePresets = [
 	}
 ];
 
-const aspectRatios = [
+const staiAspectRatios = [
 	{
 		label: 'Square - 1:1',
 		value: '1:1'
@@ -127,4 +180,12 @@ const aspectRatios = [
 	}
 ];
 
-export { outputFormats, stylePresets, aspectRatios };
+export {
+	imageModels,
+	openaiQualities,
+	openaiSizes,
+	openaiStyles,
+	staiOutputFormats,
+	staiStylePresets,
+	staiAspectRatios
+};
