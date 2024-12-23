@@ -1,6 +1,7 @@
 import { computed } from 'vue';
 import { useEditor, useProject } from '../store';
 import { sanitize } from '../utils/sanitizer';
+import { IDList } from '../store/project';
 
 const useProps = (props: string[]): any => {
 	const editor = useEditor();
@@ -13,9 +14,23 @@ const useProps = (props: string[]): any => {
 				return project.byIds[id]?.[prop];
 			},
 			set: (value: any) => {
-				const id = editor.activeLayerIds[0];
-				const type = project.byIds[id]?.type;
+				const layer = project.getFirstLayer(editor.activeLayerIds);
+				const { type } = layer;
 				const others: any = {};
+				const omitChildProps = [
+					'left',
+					'top',
+					'scaleX',
+					'scaleY',
+					'skewX',
+					'skewY',
+					'flipX',
+					'flipY',
+					'angle',
+					'opacity',
+					'shadow',
+					'globalCompositeOperation'
+				];
 
 				if (type === 'Ellipse') {
 					if (prop === 'width') {
@@ -35,10 +50,16 @@ const useProps = (props: string[]): any => {
 					}
 				}
 
-				project.updateProps(id, {
-					[prop]: sanitize(prop, value),
-					...others
-				});
+				if (type === 'Group' && !omitChildProps.includes(prop)) {
+					project.updateProps([layer.id].concat(layer.childIds as IDList), {
+						[prop]: sanitize(prop, value)
+					});
+				} else {
+					project.updateProps(layer.id, {
+						[prop]: sanitize(prop, value),
+						...others
+					});
+				}
 			}
 		});
 		return memo;

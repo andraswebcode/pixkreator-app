@@ -273,7 +273,7 @@ watch(
 
 		newIds.forEach((id) => {
 			const object: any = fabricCanvas.getObjectById(id);
-			const layer = project.byIds[id];
+			const layer = project.getFirstLayer(id);
 			if (object) {
 				const { id: _id, type: _type, filters, src, ..._layer } = layer;
 				object.set(_layer).setCoords();
@@ -300,12 +300,17 @@ watch(
 					object.updateImage().then(() => {
 						fabricCanvas.requestRenderAll();
 					});
+				} else if (_type === 'Group') {
+					object.forEachObject((child) => {
+						const { id, type, ..._layer } = project.getFirstLayer(child.id);
+						child.set(_layer);
+					});
 				}
 			} else {
 				if (layer.type === 'Group') {
 					newLayers.push({
 						...layer,
-						objects: (layer.childIds || []).map((id) => project.byIds[id])
+						objects: (layer.childIds || []).map((id) => project.getFirstLayer(id))
 					});
 				} else {
 					newLayers.push(layer);
