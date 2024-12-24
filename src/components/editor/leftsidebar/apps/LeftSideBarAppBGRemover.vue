@@ -16,7 +16,7 @@ const removeBackground = () => {
 		return;
 	}
 
-	if (!confirm(getConfirmText('removebg'))) {
+	if (!confirm(getConfirmText('removebg', userData.user.ai_credits))) {
 		return;
 	}
 
@@ -48,7 +48,6 @@ const removeBackground = () => {
 	<VerifyEmailAlert v-else-if="!userData.user.email_verified" class="mx-3 mt-3" />
 	<div v-else-if="userData.canGenerateImage && src">
 		<LazyLoadImage class="mb-4" aspect-ratio="2" :src="src" />
-		<AICreditAlert fee="removebg" />
 		<VBtn
 			block
 			append-icon="mdi-creation"

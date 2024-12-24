@@ -16,7 +16,7 @@ const upscale = () => {
 		return;
 	}
 
-	if (!confirm(getConfirmText('upscale'))) {
+	if (!confirm(getConfirmText('upscale', userData.user.ai_credits))) {
 		return;
 	}
 
@@ -53,7 +53,6 @@ const upscale = () => {
 	<VerifyEmailAlert v-else-if="!userData.user.email_verified" class="mx-3 mt-3" />
 	<div v-else-if="userData.canGenerateImage && src">
 		<LazyLoadImage class="mb-4" aspect-ratio="2" :src="src" />
-		<AICreditAlert fee="upscale" />
 		<VBtn block append-icon="mdi-creation" :loading="editor.aiIsGenerating" @click="upscale">
 			Upscale 4x
 		</VBtn>

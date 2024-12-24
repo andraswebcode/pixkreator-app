@@ -24,7 +24,9 @@ const swatches = [
 	['#FF00FF', '#CC00CC', '#990099', '#660066', '#330033'], // Magenta
 	['#800080', '#660066', '#4C004C', '#330033', '#190019'] // Purple
 ];
-const brandSwatches = computed(() => (userData.user.brand_colors || []).map(({ color }) => color));
+const brandSwatches = computed(() =>
+	(userData.user.brand_colors || []).map(({ color }) => [color])
+);
 </script>
 
 <template>
@@ -59,7 +61,7 @@ const brandSwatches = computed(() => (userData.user.brand_colors || []).map(({ c
 						hide-sliders
 						hide-inputs
 						show-swatches
-						:swatches="[brandSwatches]"
+						:swatches="brandSwatches"
 						swatches-max-height="328px"
 						v-model="model"
 					/>

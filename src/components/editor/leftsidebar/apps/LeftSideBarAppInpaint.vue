@@ -19,7 +19,7 @@ const inpaint = () => {
 		return;
 	}
 
-	if (!confirm(getConfirmText('inpaint'))) {
+	if (!confirm(getConfirmText('inpaint', userData.user.ai_credits))) {
 		return;
 	}
 
@@ -75,7 +75,6 @@ watch(
 			<LazyLoadImage aspect-ratio="2" :src="src" />
 			<LazyLoadImage v-if="maskUrl" aspect-ratio="2" :src="maskUrl" />
 		</div>
-		<AICreditAlert fee="inpaint" />
 		<RangeSlider
 			v-if="stai.drawMask"
 			label="Brush Width"

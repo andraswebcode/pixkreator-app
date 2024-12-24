@@ -9,6 +9,10 @@ const imageModels: {
 		value: 'stable-image-core'
 	},
 	{
+		label: 'Stable Image Ultra',
+		value: 'stable-image-ultra'
+	},
+	{
 		label: 'DALL-E',
 		value: 'dall-e-3'
 	}

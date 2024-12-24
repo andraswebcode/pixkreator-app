@@ -43,7 +43,7 @@ const generateAction = computed<AICreditFeeKey>(() => {
 });
 const fitToScreen = useFitToScreen();
 const generate = () => {
-	if (!confirm(getConfirmText(generateAction.value))) {
+	if (!confirm(getConfirmText(generateAction.value, userData.user.ai_credits))) {
 		return;
 	}
 
@@ -112,14 +112,14 @@ const addImage = () => {
 		<VSelect label="Model" :items="imageModels" v-model="model" />
 		<VTextarea label="Prompt" rows="3" :disabled="editor.aiIsGenerating" v-model="prompt" />
 		<VTextarea
-			v-if="model === 'stable-image-core'"
+			v-if="model === 'stable-image-core' || model === 'stable-image-ultra'"
 			label="Negative Prompt"
 			rows="1"
 			:disabled="editor.aiIsGenerating"
 			v-model="nPrompt"
 		/>
 		<VSelect
-			v-if="model === 'stable-image-core'"
+			v-if="model === 'stable-image-core' || model === 'stable-image-ultra'"
 			label="Image Format"
 			:disabled="editor.aiIsGenerating"
 			:items="staiOutputFormats"
@@ -133,7 +133,7 @@ const addImage = () => {
 			v-model="staiStyle"
 		/>
 		<VSelect
-			v-if="model === 'stable-image-core'"
+			v-if="model === 'stable-image-core' || model === 'stable-image-ultra'"
 			label="Aspect Ratio"
 			:disabled="editor.aiIsGenerating"
 			:items="staiAspectRatios"
@@ -157,7 +157,6 @@ const addImage = () => {
 			:items="openaiStyles"
 			v-model="openaiStyle"
 		/>
-		<AICreditAlert :fee="generateAction" />
 		<VBtn block append-icon="mdi-creation" :loading="editor.aiIsGenerating" @click="generate">
 			Generate Image
 		</VBtn>
