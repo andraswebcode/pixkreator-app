@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useProject, useUser } from '../../../store';
+import { useNotice, useProject, useUser } from '../../../store';
 import { toFixed } from '../../../utils/functions';
 import templateCategories from '../../../utils/template-categories';
 import useFitToScreen from '../../../hooks/fittoscreen';
+import useRequest from '../../../hooks/request';
+import { jsonToBlob } from '../../../utils/json-to-blob';
 
 const sizes = [
 	{
@@ -13,7 +15,9 @@ const sizes = [
 ].concat(templateCategories);
 const userData = useUser();
 const project = useProject();
+const notice = useNotice();
 const fitToScreen = useFitToScreen();
+const { save } = useRequest();
 const tab = ref('size');
 const width = computed({
 	get: () => project.width,
@@ -48,6 +52,47 @@ const size = computed({
 		}
 	}
 });
+const generateMeta = () => {
+	const _save = (base64) => {
+		save(
+			'',
+			'ai/assistant',
+			{
+				task: 'design-meta',
+				messages: {
+					'user-1': project.description,
+					'user-2': base64
+				}
+			},
+			({ title, description, ...data }) => {
+				console.log(data);
+
+				project.$patch({
+					title,
+					description
+				});
+			},
+			(error) => {
+				console.log(error);
+
+				notice.send(error.response?.data?.message || error.message, 'error');
+			}
+		);
+	};
+
+	jsonToBlob({
+		width: project.width,
+		height: project.height,
+		background: project.background,
+		objects: project.fabricJSON
+	}).then((blob) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(blob);
+		reader.onloadend = () => {
+			_save(reader.result);
+		};
+	});
+};
 </script>
 
 <template>
@@ -82,7 +127,9 @@ const size = computed({
 		<VTextField label="Title" v-model="project.title" />
 		<VTextarea label="Description" v-model="project.description" />
 		<VTextarea v-if="userData.user.admin" label="Keywords" v-model="project.keywords" />
-		<VBtn block append-icon="mdi-creation" :disabled="project.isEmpty">Generate With AI</VBtn>
+		<VBtn block append-icon="mdi-creation" :disabled="project.isEmpty" @click="generateMeta"
+			>Generate With AI</VBtn
+		>
 	</TabItem>
 </template>
 

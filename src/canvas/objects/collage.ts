@@ -36,6 +36,7 @@ const collageDefaultValues: Partial<TClassProperties<PROCollage>> = {
 class PROCollage extends Defaults(FabricObject) implements CollageProps {
 	declare items: CollageItem[];
 
+	// @ts-ignore
 	private _elements: HTMLImageElement[] = [];
 
 	static type = 'Collage';
@@ -51,7 +52,7 @@ class PROCollage extends Defaults(FabricObject) implements CollageProps {
 		};
 	}
 
-	static fromObject(object, options) {
+	static fromObject(object) {
 		return new Promise<any>((resolve) => {
 			resolve(new this(object));
 		});
