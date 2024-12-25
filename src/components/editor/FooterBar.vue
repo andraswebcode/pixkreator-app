@@ -43,7 +43,7 @@ const zoom = (dir: string) => {
 						</VCol>
 					</VRow>
 				</VCol>
-				<VCol cols="auto">
+				<VCol v-if="smAndUp" cols="auto">
 					<VRow no-gutters justify="center" align="center">
 						<VCol cols="auto">
 							<VBtn
@@ -60,7 +60,7 @@ const zoom = (dir: string) => {
 								@click="fitToScreen"
 							/>
 						</VCol>
-						<VCol v-if="smAndUp" cols="auto">
+						<VCol cols="auto">
 							<VSlider
 								v-model="editor.zoom"
 								:min="MIN_ZOOM"

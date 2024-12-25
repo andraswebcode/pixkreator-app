@@ -1,83 +1,13 @@
 <script setup lang="ts">
-import { onUnmounted, ref } from 'vue';
-import { uploadFile } from '../../../utils/upload-file';
-import useRequest from '../../../hooks/request';
 import { useNotice, useProject, useUser } from '../../../store';
-import useFitToScreen from '../../../hooks/fittoscreen';
-import { MimeType } from '../../../types/common';
 import { parseSVG } from '../../../utils/parse-svg';
 
-const { save } = useRequest();
-const fitToScreen = useFitToScreen();
 const userData = useUser();
 const notice = useNotice();
 const project = useProject();
-const imgRef = ref<any>(null);
-const src = ref('');
-const imgUrl = ref('');
-const mime = ref<MimeType | undefined>();
-const resize = ref(false);
-const loading = ref(false);
-const upload = () => {
-	uploadFile(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
-		.then((response) => {
-			const blob = response?.[0];
-
-			if (!blob) {
-				return;
-			}
-
-			const img = new Image();
-			const url = URL.createObjectURL(blob);
-
-			loading.value = true;
-			src.value = url;
-			mime.value = blob.type as MimeType;
-			img.src = url;
-
-			img.onload = () => {
-				const data = new FormData();
-
-				data.append('file', blob);
-				data.append('source', 'uploads');
-				data.append('width', img.width as any);
-				data.append('height', img.height as any);
-
-				save(
-					'',
-					'uploads',
-					data,
-					(state) => {
-						imgUrl.value = state.image;
-						notice.send('Image saved successfully', 'success');
-						loading.value = false;
-					},
-					(error) => {
-						console.warn(error);
-						notice.send(error.response?.data?.message || error.message, 'error');
-						URL.revokeObjectURL(src.value);
-						src.value = '';
-						loading.value = false;
-					}
-				);
-			};
-		})
-		.catch((error) => {
-			console.error(error);
-			notice.send('Image upload failed.', 'error');
-			loading.value = false;
-		});
-};
-const addImage = () => {
-	const { naturalWidth = 0, naturalHeight = 0 } = imgRef.value?.image || {};
-	if (resize.value) {
-		project.$patch({
-			width: naturalWidth,
-			height: naturalHeight
-		});
-	}
-	if (mime.value === 'image/svg+xml') {
-		parseSVG(imgUrl.value).then(({ layers, group }) => {
+const addImage = ({ image, mime_type }) => {
+	if (mime_type === 'image/svg+xml') {
+		parseSVG(image).then(({ layers, group }) => {
 			if (layers.length === 0) {
 				notice.send('SVG parse failed.', 'error');
 			} else if (layers.length === 1) {
@@ -85,45 +15,23 @@ const addImage = () => {
 			} else {
 				project.addLayer(group);
 			}
-			src.value = '';
-			if (resize.value) {
-				fitToScreen();
-			}
 		});
 	} else {
 		project.addLayer({
 			type: 'image',
-			src: imgUrl.value,
+			src: image,
 			left: project.width / 2,
 			top: project.height / 2
 		});
-		src.value = '';
-		if (resize.value) {
-			fitToScreen();
-		}
 	}
 };
-
-onUnmounted(() => {
-	URL.revokeObjectURL(src.value);
-});
 </script>
 
 <template>
 	<VerifyEmailAlert v-if="!userData.user.email_verified" class="mx-3 mt-3" />
 	<LibraryWrapper v-else>
 		<div class="pa-4">
-			<VImg
-				v-if="src && !loading"
-				ref="imgRef"
-				:class="{ 'mb-4': !loading }"
-				max-height="40vh"
-				:src="src"
-			/>
-			<VProgressLinear v-if="loading" class="mb-4" indeterminate />
-			<VSwitch v-if="src && !loading" label="Resize Canvas to Image Size" v-model="resize" />
-			<VBtn v-if="src && !loading" block @click="addImage">Add Image to Canvas</VBtn>
-			<VBtn v-if="!src" block @click="upload">Upload From Computer</VBtn>
+			<FileUploader @add="addImage" />
 		</div>
 	</LibraryWrapper>
 </template>

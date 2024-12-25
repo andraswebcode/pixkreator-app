@@ -53,7 +53,7 @@ const openDetails = (i: number) => {
 	showDetails.value = true;
 	index.value = i;
 };
-const addPhoto = () => {
+const editPhoto = () => {
 	const id = items.value[index.value]?.id;
 
 	router.push({
@@ -149,7 +149,7 @@ onBeforeRouteUpdate((to) => {
 			</PhotoDetails>
 		</DetailsCarousel>
 		<template v-slot:actions>
-			<VBtn @click="addPhoto">Add Photo</VBtn>
+			<VBtn @click="editPhoto">Edit Photo</VBtn>
 		</template>
 	</PersistentHeaderDialog>
 </template>

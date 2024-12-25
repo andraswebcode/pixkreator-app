@@ -21,6 +21,7 @@ declare module 'vue' {
     DownloadDialog: typeof import('./src/components/editor/topbar/DownloadDialog.vue')['default']
     FabricCanvas: typeof import('./src/components/editor/maincontent/FabricCanvas.vue')['default']
     FeedBack: typeof import('./src/components/editor/footer/FeedBack.vue')['default']
+    FileUploader: typeof import('./src/components/common/FileUploader.vue')['default']
     FilterDetails: typeof import('./src/components/common/FilterDetails.vue')['default']
     FilterItemSettings: typeof import('./src/components/common/FilterItemSettings.vue')['default']
     FilterSettings: typeof import('./src/components/common/FilterSettings.vue')['default']
@@ -125,5 +126,6 @@ declare module 'vue' {
     UserMenu: typeof import('./src/components/common/UserMenu.vue')['default']
     VerifyEmail: typeof import('./src/components/common/VerifyEmail.vue')['default']
     VerifyEmailAlert: typeof import('./src/components/common/VerifyEmailAlert.vue')['default']
+    VFileUploadItem: typeof import('vuetify/lib')['VFileUploadItem']
   }
 }

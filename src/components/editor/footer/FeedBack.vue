@@ -50,4 +50,8 @@ const send = () => {
 	</VMenu>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.v-card {
+	overflow: hidden !important;
+}
+</style>

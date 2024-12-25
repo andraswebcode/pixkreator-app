@@ -18,6 +18,9 @@ const stai = useStAI();
 </template>
 
 <style scoped lang="scss">
+.v-main {
+	margin-bottom: 56px;
+}
 .v-container {
 	height: 100%;
 }
