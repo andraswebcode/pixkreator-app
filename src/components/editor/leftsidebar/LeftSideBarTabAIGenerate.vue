@@ -109,7 +109,12 @@ const addImage = () => {
 <template>
 	<VerifyEmailAlert v-if="!userData.user.email_verified" class="mx-3 mt-3" />
 	<div v-else-if="userData.canGenerateImage && !image" class="pa-4">
-		<VSelect label="Model" :items="imageModels" v-model="model" />
+		<VSelect
+			label="Model"
+			:disabled="editor.aiIsGenerating"
+			:items="imageModels"
+			v-model="model"
+		/>
 		<VTextarea label="Prompt" rows="3" :disabled="editor.aiIsGenerating" v-model="prompt" />
 		<VTextarea
 			v-if="model === 'stable-image-core' || model === 'stable-image-ultra'"

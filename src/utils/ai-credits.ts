@@ -1,5 +1,6 @@
 export type AICreditFeeKey =
 	| 'assistant-design-meta'
+	| 'assistant-mood-to-color'
 	| 'generate-dall-e-3--standard--1024x1024'
 	| 'generate-dall-e-3--standard--1792x1024'
 	| 'generate-dall-e-3--standard--1024x1792'
@@ -17,6 +18,7 @@ export const aiCreditFees: {
 	[key in AICreditFeeKey]: number;
 } = {
 	'assistant-design-meta': 1,
+	'assistant-mood-to-color': 1,
 	'generate-dall-e-3--standard--1024x1024': 4,
 	'generate-dall-e-3--standard--1792x1024': 8,
 	'generate-dall-e-3--standard--1024x1792': 8,

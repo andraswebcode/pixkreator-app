@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { useUser } from '../../store';
+import { useEditor, useNotice, useUser } from '../../store';
+import { getConfirmText } from '../../utils/ai-credits';
+import useRequest from '../../hooks/request';
 
 const properties = defineProps<{
 	label: string;
@@ -10,7 +12,9 @@ const properties = defineProps<{
 }>();
 const model = defineModel<string>();
 const userData = useUser();
-
+const editor = useEditor();
+const notice = useNotice();
+const { save } = useRequest();
 const tab = ref(userData.isProPlan ? 'brand' : 'palette');
 const swatches = [
 	['#FFFFFF', '#BFBFBF', '#7F7F7F', '#3F3F3F', '#000000'], // Black to White
@@ -27,6 +31,71 @@ const swatches = [
 const brandSwatches = computed(() =>
 	(userData.user.brand_colors || []).map(({ color }) => [color])
 );
+const loading = ref(false);
+const prompt = ref('');
+const moodSwatches = ref<string[][]>([]);
+const addToBrandColors = () => {
+	const currentColors = userData.user.brand_colors || [];
+	const color = model.value || '';
+
+	if (currentColors.find((item) => item.color === color)) {
+		notice.send('This color is already exists in your brand colors.', 'warning');
+		return;
+	}
+
+	const colors = currentColors.concat([
+		{
+			name: '',
+			color
+		}
+	]);
+
+	loading.value = true;
+
+	save(
+		'',
+		'usermeta',
+		{
+			key: 'brand_colors',
+			value: JSON.stringify(colors)
+		},
+		({ meta_key, meta_value }) => {
+			notice.send('Brand color palette updated successfully.', 'success');
+			userData.setAndSave(meta_key, JSON.parse(meta_value));
+			loading.value = false;
+		},
+		(error) => {
+			notice.send(error.response?.data?.message || error.message, 'error');
+			loading.value = false;
+		}
+	);
+};
+const generateColors = () => {
+	if (!confirm(getConfirmText('assistant-mood-to-color', userData.user.ai_credits))) {
+		return;
+	}
+
+	editor.aiIsGenerating = true;
+	save(
+		'',
+		'ai/assistant',
+		{
+			task: 'mood-to-color',
+			messages: {
+				'user-1': prompt.value
+			}
+		},
+		({ title, description, ...data }) => {
+			console.log(data);
+			editor.aiIsGenerating = false;
+		},
+		(error) => {
+			console.log(error);
+			editor.aiIsGenerating = false;
+			notice.send(error.response?.data?.message || error.message, 'error');
+		}
+	);
+};
 </script>
 
 <template>
@@ -47,46 +116,125 @@ const brandSwatches = computed(() =>
 				</template>
 			</VTextField>
 		</template>
-		<VCard>
-			<VTabs v-model="tab" fixed-tabs density="compact">
-				<VTab v-if="userData.isProPlan && !properties.hideBrand" value="brand">Brand</VTab>
-				<VTab value="palette">Palette</VTab>
-				<VTab value="picker">Picker</VTab>
+		<VCard max-width="300">
+			<VTabs v-model="tab" fixed-tabs density="compact" grow>
+				<VTab
+					v-if="userData.isProPlan && !properties.hideBrand"
+					v-tooltip="'Brand Colors'"
+					value="brand"
+					size="x-small"
+					min-width="0"
+				>
+					<VIcon icon="mdi-palette-swatch-variant" />
+				</VTab>
+				<VTab v-tooltip="'Color Palette'" value="palette" size="x-small" min-width="0">
+					<VIcon icon="mdi-palette" />
+				</VTab>
+				<VTab v-tooltip="'Color Picker'" value="picker" size="x-small" min-width="0">
+					<VIcon icon="mdi-eyedropper" />
+				</VTab>
+				<VTab v-tooltip="'Mood to Color'" value="ai" size="x-small" min-width="0">
+					<VIcon icon="mdi-creation" />
+				</VTab>
 			</VTabs>
 			<VDivider />
-			<VTabsWindow v-model="tab">
-				<VTabsWindowItem v-if="userData.isProPlan && !properties.hideBrand" value="brand">
-					<VColorPicker
-						hide-canvas
-						hide-sliders
-						hide-inputs
-						show-swatches
-						:swatches="brandSwatches"
-						swatches-max-height="328px"
-						v-model="model"
-					/>
-				</VTabsWindowItem>
-				<VTabsWindowItem value="palette">
-					<VColorPicker
-						hide-canvas
-						hide-sliders
-						hide-inputs
-						show-swatches
-						:swatches="swatches"
-						swatches-max-height="328px"
-						v-model="model"
-					/>
-					<VBtn v-if="userData.isProPlan && !properties.hideBrand" block>
-						Add to Brand Colors
-					</VBtn>
-				</VTabsWindowItem>
-				<VTabsWindowItem value="picker">
-					<VColorPicker v-model="model" />
-					<VBtn v-if="userData.isProPlan && !properties.hideBrand" block>
-						Add to Brand Colors
-					</VBtn>
-				</VTabsWindowItem>
-			</VTabsWindow>
+			<TabItem v-if="tab === 'brand' && userData.isProPlan && !properties.hideBrand">
+				<VColorPicker
+					hide-canvas
+					hide-sliders
+					hide-inputs
+					elevation="0"
+					rounded="0"
+					show-swatches
+					:swatches="brandSwatches"
+					swatches-max-height="328px"
+					v-model="model"
+				/>
+			</TabItem>
+			<TabItem v-if="tab === 'palette'">
+				<VColorPicker
+					hide-canvas
+					hide-sliders
+					hide-inputs
+					elevation="0"
+					rounded="0"
+					show-swatches
+					:swatches="swatches"
+					swatches-max-height="328px"
+					v-model="model"
+				/>
+				<VBtn
+					v-if="userData.isProPlan && !properties.hideBrand"
+					block
+					size="small"
+					:loading="loading"
+					@click="addToBrandColors"
+				>
+					Add to Brand Colors
+				</VBtn>
+			</TabItem>
+			<TabItem v-if="tab === 'picker'">
+				<VColorPicker v-model="model" elevation="0" rounded="0" />
+				<VBtn
+					v-if="userData.isProPlan && !properties.hideBrand"
+					block
+					size="small"
+					:loading="loading"
+					@click="addToBrandColors"
+				>
+					Add to Brand Colors
+				</VBtn>
+			</TabItem>
+			<TabItem v-if="tab === 'ai' && userData.canGenerateImage">
+				<VTextField
+					class="mx-4 mt-4"
+					label="Mood to Color"
+					hint="Describe a mood or vibe to generate matching colors."
+					placeholder="e.g. blue sky at dusk..."
+					width="268"
+					persistent-hint
+					:hide-details="false"
+					:disabled="editor.aiIsGenerating"
+					variant="underlined"
+					density="compact"
+					flat
+					dirty
+					v-model="prompt"
+				/>
+				<VColorPicker
+					v-if="moodSwatches.length"
+					hide-canvas
+					hide-sliders
+					hide-inputs
+					elevation="0"
+					rounded="0"
+					show-swatches
+					:swatches="moodSwatches"
+					swatches-max-height="328px"
+					v-model="model"
+				/>
+				<VBtn
+					class="mb-2"
+					block
+					size="small"
+					append-icon="mdi-creation"
+					:disabled="!prompt"
+					:loading="editor.aiIsGenerating"
+					@click="generateColors"
+				>
+					Generate
+				</VBtn>
+				<VBtn
+					v-if="userData.isProPlan && !properties.hideBrand"
+					block
+					size="small"
+					:disabled="!moodSwatches.length"
+					:loading="loading"
+					@click="addToBrandColors"
+				>
+					Add to Brand Colors
+				</VBtn>
+			</TabItem>
 		</VCard>
 	</VMenu>
 </template>

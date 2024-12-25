@@ -98,13 +98,20 @@ const generateMeta = () => {
 		height: project.height,
 		background: project.background,
 		objects: project.fabricJSON
-	}).then((blob) => {
-		const reader = new FileReader();
-		reader.readAsDataURL(blob);
-		reader.onloadend = () => {
-			_save(reader.result);
-		};
-	});
+	})
+		.then((blob) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(blob);
+			reader.onloadend = () => {
+				_save(reader.result);
+			};
+		})
+		.catch((error) => {
+			console.warn(error);
+			editor.aiIsGenerating = false;
+			showGoal.value = false;
+			notice.send('Can not create image file.', 'error');
+		});
 };
 </script>
 

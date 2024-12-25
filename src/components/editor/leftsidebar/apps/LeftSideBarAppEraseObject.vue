@@ -90,7 +90,14 @@ watch(
 			</VCol>
 		</VRow>
 		<div v-else>
-			<VBtn class="mb-5" block @click="stai.drawMask = true">Draw Mask</VBtn>
+			<VBtn
+				class="mb-5"
+				block
+				:disabled="editor.aiIsGenerating"
+				@click="stai.drawMask = true"
+			>
+				Draw Mask
+			</VBtn>
 			<VBtn
 				block
 				append-icon="mdi-creation"

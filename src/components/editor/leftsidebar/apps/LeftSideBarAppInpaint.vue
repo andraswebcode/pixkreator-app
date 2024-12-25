@@ -82,7 +82,7 @@ watch(
 			:max="200"
 			v-model="stai.brushWidth"
 		/>
-		<VTextarea v-else label="Prompt" v-model="stai.prompt" />
+		<VTextarea v-else label="Prompt" :disabled="editor.aiIsGenerating" v-model="stai.prompt" />
 		<VRow v-if="stai.drawMask">
 			<VCol>
 				<VBtn block @click="stai.drawMask = false">Done</VBtn>
@@ -92,7 +92,14 @@ watch(
 			</VCol>
 		</VRow>
 		<div v-else>
-			<VBtn class="mb-5" block @click="stai.drawMask = true">Draw Mask</VBtn>
+			<VBtn
+				class="mb-5"
+				block
+				:disabled="editor.aiIsGenerating"
+				@click="stai.drawMask = true"
+			>
+				Draw Mask
+			</VBtn>
 			<VBtn
 				block
 				append-icon="mdi-creation"
