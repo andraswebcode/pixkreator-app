@@ -123,7 +123,7 @@ const generateMeta = () => {
 		<VTab value="background" v-tooltip:top="'Background'">
 			<VIcon icon="mdi-format-color-fill" />
 		</VTab>
-		<VTab value="meta" v-tooltip:top="'Meta'">
+		<VTab v-if="userData.loggedIn" value="meta" v-tooltip:top="'Meta'">
 			<VIcon icon="mdi-file-document" />
 		</VTab>
 	</VTabs>
@@ -143,7 +143,7 @@ const generateMeta = () => {
 	<TabItem v-else-if="tab === 'background'">
 		<ColorPicker label="Canvas Background" clearable v-model="project.background" />
 	</TabItem>
-	<TabItem v-else-if="tab === 'meta'">
+	<TabItem v-else-if="tab === 'meta' && userData.loggedIn">
 		<VTextField label="Title" v-model="project.title" />
 		<VTextarea label="Description" v-model="project.description" />
 		<VTextarea v-if="userData.user.admin" label="Keywords" v-model="project.keywords" />

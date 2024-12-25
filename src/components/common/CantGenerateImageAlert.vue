@@ -8,7 +8,7 @@ const props = defineProps<{
 
 <template>
 	<VAlert :class="props.class" type="warning" icon="mdi-alert-circle">
-		AI credits for image generation have run out. Please
+		AI credits have run out. Please
 		<RouterLink to="account/settings" target="_blank">add your own API key</RouterLink>
 		or
 		<a :href="PRICING_URL" target="_blank">upgrade to a paid plans</a>

@@ -85,9 +85,10 @@ const generateColors = () => {
 				'user-1': prompt.value
 			}
 		},
-		({ title, description, ...data }) => {
-			console.log(data);
+		({ colors }) => {
+			console.log(colors);
 			editor.aiIsGenerating = false;
+			moodSwatches.value = colors.map(({ color }) => [color]);
 		},
 		(error) => {
 			console.log(error);
@@ -234,6 +235,12 @@ const generateColors = () => {
 				>
 					Add to Brand Colors
 				</VBtn>
+			</TabItem>
+			<TabItem v-else-if="tab === 'ai' && !userData.loggedIn">
+				<LoginNotice />
+			</TabItem>
+			<TabItem v-else-if="tab === 'ai' && !userData.canGenerateImage">
+				<CantGenerateImageAlert />
 			</TabItem>
 		</VCard>
 	</VMenu>
