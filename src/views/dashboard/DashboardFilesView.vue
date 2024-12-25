@@ -151,7 +151,7 @@ onBeforeRouteUpdate((to) => {
 				<VRow justify="center" justify-md="end">
 					<VCol cols="auto" class="mr-4">
 						<VBtnGroup density="compact">
-							<VBtn prepend-icon="mdi-upload">Upload</VBtn>
+							<VBtn prepend-icon="mdi-upload" to="upload">Upload</VBtn>
 						</VBtnGroup>
 					</VCol>
 				</VRow>

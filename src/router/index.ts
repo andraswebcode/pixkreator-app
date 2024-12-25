@@ -9,7 +9,8 @@ import AccountView from '../views/AccountView.vue';
 import DashboardHomeView from '../views/dashboard/DashboardHomeView.vue';
 import DashboardTemplatesView from '../views/dashboard/DashboardTemplatesView.vue';
 import DashboardProjectsView from '../views/dashboard/DashboardProjectsView.vue';
-import DashboardUploadsView from '../views/dashboard/DashboardUploadsView.vue';
+import DashboardFilesView from '../views/dashboard/DashboardFilesView.vue';
+import DashboardUploadView from '../views/dashboard/DashboardUploadView.vue';
 import DashboardBrandView from '../views/dashboard/DashboardBrandView.vue';
 import DashboardPhotosView from '../views/dashboard/DashboardPhotosView.vue';
 import AccountProfileView from '../views/account/AccountProfileView.vue';
@@ -137,7 +138,12 @@ const routes: RouteRecordRaw[] = [
 			{
 				name: 'files',
 				path: 'files/:source?',
-				component: DashboardUploadsView
+				component: DashboardFilesView
+			},
+			{
+				name: 'upload',
+				path: 'upload',
+				component: DashboardUploadView
 			},
 			{
 				name: 'templates',
