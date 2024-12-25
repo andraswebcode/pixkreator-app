@@ -1,5 +1,8 @@
 import { MimeType } from '../types/common';
-
+/**
+ *
+ * @deprecated
+ */
 const uploadFile = (accept: MimeType | MimeType[] = [], multiple = false) => {
 	const input = document.createElement('input');
 

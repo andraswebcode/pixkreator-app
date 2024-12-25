@@ -8,7 +8,6 @@ import { EditorModeType, EditorPencilType } from '../../../store/editor';
 import { SNAP_THRESHOLD } from '../../../utils/constants';
 import useCanvas from '../../../hooks/canvas';
 import useImage from '../../../hooks/image';
-import useFitToScreen from '../../../hooks/fittoscreen';
 
 let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -18,7 +17,6 @@ const notice = useNotice();
 const stai = useStAI();
 const { viewportTransform } = useCanvas();
 const { currentImageId } = useImage();
-const fitToScreen = useFitToScreen();
 
 const updateCanvas = () => {
 	if (fabricCanvas) {
@@ -247,7 +245,6 @@ onMounted(() => {
 	window._fc = fabricCanvas;
 	editor.width = clientWidth;
 	editor.height = clientHeight;
-	fitToScreen();
 	updateCanvas();
 });
 

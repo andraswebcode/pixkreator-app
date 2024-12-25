@@ -176,6 +176,11 @@ const mimeToExtension = (type: MimeType): Extension => {
 	return map[type];
 };
 
+const isValidMimeType = (type: MimeType) => {
+	const mimeTypes: MimeType[] = ['image/jpeg', 'image/webp', 'image/png', 'image/svg+xml'];
+	return mimeTypes.includes(type);
+};
+
 export {
 	clamp,
 	toFixed,
@@ -189,5 +194,6 @@ export {
 	createSlug,
 	getCroppedImageDimensions,
 	formatBlobSize,
-	mimeToExtension
+	mimeToExtension,
+	isValidMimeType
 };

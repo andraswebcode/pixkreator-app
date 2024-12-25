@@ -146,6 +146,8 @@ const fetchProject = (obj: any) => {
 				project.resetStack();
 				fitToScreen();
 			}, 20);
+		} else {
+			fitToScreen();
 		}
 	}
 	editor.activeLayerIds = [];

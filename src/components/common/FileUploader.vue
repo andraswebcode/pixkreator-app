@@ -3,6 +3,8 @@ import { ref, shallowRef, watch } from 'vue';
 import { VFileUpload, VFileUploadItem } from 'vuetify/labs/components';
 import useRequest from '../../hooks/request';
 import { useNotice } from '../../store';
+import { isValidMimeType } from '../../utils/functions';
+import { MimeType } from '../../types/common';
 
 const emit = defineEmits(['add']);
 const { save } = useRequest();
@@ -15,6 +17,10 @@ watch(
 	() => files.value,
 	(newFiles) => {
 		newFiles.forEach((file) => {
+			if (!isValidMimeType(file.type as MimeType)) {
+				return;
+			}
+
 			loadings.value[file.name] = true;
 
 			const img = new Image();
@@ -53,7 +59,7 @@ watch(
 <template>
 	<VFileUpload multiple density="comfortable" show-size v-model="files">
 		<template v-slot:item="{ file }">
-			<VFileUploadItem>
+			<VFileUploadItem v-if="isValidMimeType(file.type as MimeType)">
 				<template v-slot:append>
 					<VBtn
 						v-if="!loadings[file.name]"

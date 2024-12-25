@@ -3,7 +3,6 @@ import { onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import useRequest from '../../hooks/request';
 import { useNotice, useUser } from '../../store';
-import { uploadFile } from '../../utils/upload-file';
 
 const fileSources: { label: string; value: string }[] = [
 	{
@@ -31,13 +30,12 @@ const router = useRouter();
 const route = useRoute();
 const userData = useUser();
 const notice = useNotice();
-const { save, destroy } = useRequest();
 const search = ref(route.query.search);
 const source = ref(route.params.source);
 const items = ref<any>([]);
 const page = ref(2);
 const loading = ref(true);
-const { list } = useRequest();
+const { list, destroy } = useRequest();
 const filter = () => {
 	const query: any = {};
 	const params: any = {};
@@ -66,51 +64,6 @@ const loadMore = () => {
 			page.value++;
 		}
 	);
-};
-const upload = () => {
-	uploadFile(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'])
-		.then((response) => {
-			const blob = response?.[0];
-
-			if (!blob) {
-				return;
-			}
-
-			const img = new Image();
-			const url = URL.createObjectURL(blob);
-
-			img.src = url;
-
-			img.onload = () => {
-				const data = new FormData();
-
-				data.append('file', blob);
-				data.append('source', 'uploads');
-				data.append('width', img.width as any);
-				data.append('height', img.height as any);
-
-				save(
-					'',
-					'uploads',
-					data,
-					(state) => {
-						console.log(state);
-						items.value = [state].concat(items.value);
-						notice.send('Image saved successfully', 'success');
-						URL.revokeObjectURL(url);
-					},
-					(error) => {
-						console.warn(error);
-						notice.send(error.response?.data?.message || error.message, 'error');
-						URL.revokeObjectURL(url);
-					}
-				);
-			};
-		})
-		.catch((error) => {
-			console.error(error);
-			notice.send(error.response?.data?.message || error.message, 'error');
-		});
 };
 const editFile = (i: number) => {
 	const item = items.value[i];
@@ -198,7 +151,7 @@ onBeforeRouteUpdate((to) => {
 				<VRow justify="center" justify-md="end">
 					<VCol cols="auto" class="mr-4">
 						<VBtnGroup density="compact">
-							<VBtn prepend-icon="mdi-upload" @click="upload">Upload</VBtn>
+							<VBtn prepend-icon="mdi-upload">Upload</VBtn>
 						</VBtnGroup>
 					</VCol>
 				</VRow>

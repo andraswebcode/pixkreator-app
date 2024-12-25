@@ -34,7 +34,7 @@ const openDetails = (i: number, c: string) => {
 	category.value = c;
 };
 const addTemplate = () => {
-	const id = editorsChoice.value.find((cat) => cat.value === category.value)?.templates[
+	const id = editorsChoice.value.find((cat) => cat.slug === category.value)?.templates[
 		index.value
 	]?.id;
 	router.push({
