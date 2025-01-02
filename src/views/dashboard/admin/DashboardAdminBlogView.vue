@@ -17,7 +17,14 @@ const id = ref(0);
 const html = ref(false);
 const options = {
 	modules: {
-		toolbar: [{ header: [2, 3, false] }, 'bold', 'italic', 'underline', 'link']
+		toolbar: [
+			{ header: [2, 3, false] },
+			'bold',
+			'italic',
+			'underline',
+			'link',
+			{ list: 'bullet' }
+		]
 	}
 };
 const addNew = () => {

@@ -147,18 +147,21 @@ const addImage = () => {
 		<VSelect
 			v-if="model === 'dall-e-3'"
 			label="Quality"
+			:disabled="editor.aiIsGenerating"
 			:items="openaiQualities"
 			v-model="openaiQuality"
 		/>
 		<VSelect
 			v-if="model === 'dall-e-3'"
 			label="Size"
+			:disabled="editor.aiIsGenerating"
 			:items="openaiSizes"
 			v-model="openaiSize"
 		/>
 		<VSelect
 			v-if="model === 'dall-e-3'"
 			label="Style"
+			:disabled="editor.aiIsGenerating"
 			:items="openaiStyles"
 			v-model="openaiStyle"
 		/>

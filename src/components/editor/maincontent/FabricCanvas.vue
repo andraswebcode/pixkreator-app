@@ -8,6 +8,7 @@ import { EditorModeType, EditorPencilType } from '../../../store/editor';
 import { SNAP_THRESHOLD } from '../../../utils/constants';
 import useCanvas from '../../../hooks/canvas';
 import useImage from '../../../hooks/image';
+import { ByID } from '../../../store/project';
 
 let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -150,6 +151,7 @@ const onObjectModified = ({ target }) => {
 
 	const {
 		id,
+		type,
 		left,
 		top,
 		scaleX,
@@ -168,7 +170,7 @@ const onObjectModified = ({ target }) => {
 		path,
 		points
 	} = target;
-	const newProps = {
+	const newProps: Partial<ByID> = {
 		left: toFixed(left, 0),
 		top: toFixed(top, 0),
 		scaleX: toFixed(scaleX, 2),
@@ -177,16 +179,24 @@ const onObjectModified = ({ target }) => {
 		skewY: toFixed(skewY, 0),
 		angle: toFixed(angle, 0),
 		width: toFixed(width, 0),
-		height: toFixed(height, 0),
-		cropX: toFixed(cropX, 0),
-		cropY: toFixed(cropY, 0),
-		rx: toFixed(rx, 0),
-		ry: toFixed(ry, 0),
-		radius: toFixed(radius, 0),
-		text,
-		path,
-		points
+		height: toFixed(height, 0)
 	};
+
+	if (type === 'Image') {
+		newProps.cropX = toFixed(cropX, 0);
+		newProps.cropY = toFixed(cropY, 0);
+	} else if (type === 'IText') {
+		newProps.text = text;
+	} else if (type === 'Ellipse') {
+		newProps.rx = toFixed(rx, 0);
+		newProps.ry = toFixed(ry, 0);
+	} else if (type === 'Circle') {
+		newProps.radius = toFixed(radius, 0);
+	} else if (type === 'Path') {
+		newProps.path = path;
+	} else if (type === 'Polygon' || type === 'Polyline') {
+		newProps.points = points;
+	}
 
 	project.updateProps(id, newProps);
 };

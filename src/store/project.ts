@@ -12,8 +12,18 @@ export interface ByID extends FabricObjectProps, Partial<QRCodeOptions> {
 	id: string;
 	name: string;
 	type: string;
+	// Shapes
+	path?: any;
+	points?: any;
+	rx?: number;
+	ry?: number;
+	radius?: number;
+	// Image
 	src?: string;
 	filters?: ImageFilter[];
+	cropX?: number;
+	cropY?: number;
+	// Text
 	text?: string;
 	fontFamily?: string;
 	// Group

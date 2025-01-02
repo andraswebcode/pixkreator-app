@@ -126,6 +126,5 @@ declare module 'vue' {
     UserMenu: typeof import('./src/components/common/UserMenu.vue')['default']
     VerifyEmail: typeof import('./src/components/common/VerifyEmail.vue')['default']
     VerifyEmailAlert: typeof import('./src/components/common/VerifyEmailAlert.vue')['default']
-    VFileUploadItem: typeof import('vuetify/lib')['VFileUploadItem']
   }
 }
