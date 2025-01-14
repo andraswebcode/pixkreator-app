@@ -1,5 +1,6 @@
-import { PencilBrush, Shadow } from 'fabric';
+import { PencilBrush } from 'fabric';
 import { PROPath } from '../objects/path';
+import { PROShadow } from '../shadow';
 
 class PROPencilBrush extends PencilBrush {
 	public createPath(pathData) {
@@ -15,7 +16,7 @@ class PROPencilBrush extends PencilBrush {
 
 		if (this.shadow) {
 			this.shadow.affectStroke = true;
-			path.shadow = new Shadow(this.shadow);
+			path.shadow = new PROShadow(this.shadow);
 		}
 
 		return path;

@@ -17,6 +17,7 @@ import { PROPolygon } from './objects/polygon';
 import { PROQRCode } from './objects/qrcode';
 import { PROChart } from './objects/chart';
 import { PROCollage } from './objects/collage';
+import { PROShadow } from './shadow';
 
 // Shapes
 
@@ -41,3 +42,7 @@ classRegistry.setClass(PROBlackWhite);
 classRegistry.setClass(PROGamma);
 classRegistry.setClass(PROEmboss);
 classRegistry.setClass(PROSharpen);
+
+// Shadow, and Fillers
+
+classRegistry.setClass(PROShadow);

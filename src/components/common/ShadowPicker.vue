@@ -6,6 +6,7 @@ const properties = defineProps<{
 	disabled?: boolean;
 }>();
 const model = defineModel<{
+	type: 'shadow';
 	offsetX: number;
 	offsetY: number;
 	blur: number;
@@ -13,6 +14,7 @@ const model = defineModel<{
 } | null>({
 	required: true,
 	default: {
+		type: 'shadow',
 		offsetX: 0,
 		offsetY: 0,
 		blur: 0,
@@ -36,6 +38,7 @@ const hasShadow = computed(() => {
 const applyShadow = (apply: boolean | null) => {
 	if (apply) {
 		model.value = {
+			type: 'shadow',
 			offsetX: 0,
 			offsetY: 0,
 			blur: 5,
@@ -77,13 +80,13 @@ const applyShadow = (apply: boolean | null) => {
 			<VCardItem v-if="model">
 				<RangeSlider label="Offset X" :min="-100" :max="100" v-model="model.offsetX" />
 				<RangeSlider label="Offset Y" :min="-100" :max="100" v-model="model.offsetY" />
-				<RangeSlider label="Blur" :min="0" :max="40" v-model="model.blur" />
+				<RangeSlider label="Blur" :min="0" :max="100" v-model="model.blur" />
 				<ColorPicker label="Color" v-model="model.color" />
 			</VCardItem>
 			<VCardItem v-else>
 				<RangeSlider label="Offset X" :min="-100" :max="100" disabled />
 				<RangeSlider label="Offset Y" :min="-100" :max="100" disabled />
-				<RangeSlider label="Blur" :min="0" :max="40" disabled />
+				<RangeSlider label="Blur" :min="0" :max="100" disabled />
 				<ColorPicker label="Color" disabled />
 			</VCardItem>
 		</VCard>

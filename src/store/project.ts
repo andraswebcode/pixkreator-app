@@ -5,6 +5,7 @@ import { ImageFilter, ImageFilterType } from '../types/image-filter';
 import { PROGroup } from '../canvas/objects/group';
 import { QRCodeOptions } from '../types/apps';
 import { toRaw } from 'vue';
+import { enlivenObjects } from '../utils/enliven-objects';
 
 export type IDList = string[];
 
@@ -100,7 +101,7 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 	},
 	actions: {
 		addLayer(props) {
-			util.enlivenObjects([props]).then((shapes) => {
+			enlivenObjects([props]).then((shapes) => {
 				const layer: { type: string; id: string; objects: any[] } = shapes[0].toObject();
 				const { type, objects } = layer;
 				const id = layer.id || uniqueId(type);
@@ -165,7 +166,7 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 		},
 		groupLayers(ids) {
 			const layers = ids.map((id) => this.byIds[id]);
-			util.enlivenObjects(layers).then((shapes: any) => {
+			enlivenObjects(layers).then((shapes: any) => {
 				const group = new PROGroup(shapes);
 				const groupLayer = group.toObject();
 				const id = groupLayer.id || uniqueId('Group');
@@ -205,7 +206,7 @@ export default defineStore<string, ProjectState, ProjectGetters, ProjectActions>
 				objects: groupLayerBase.childIds?.map((id) => this.byIds[id]) || []
 			};
 
-			util.enlivenObjects([groupLayer]).then((groups: any) => {
+			enlivenObjects([groupLayer]).then((groups: any) => {
 				const shapes = groups[0].getObjects();
 
 				this.$patch({

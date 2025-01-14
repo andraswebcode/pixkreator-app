@@ -7,6 +7,7 @@ import {
 	TOriginX,
 	TOriginY
 } from 'fabric';
+import { PROShadow } from '../shadow';
 
 type CurrentControl = 'transform' | 'modify';
 
@@ -25,6 +26,14 @@ function Defaults<TBase extends Constructor<FabricObject>>(Base: TBase) {
 		objectCaching = false;
 
 		private _currentControls: CurrentControl = 'transform';
+
+		_set(key: string, value: any): this {
+			super._set(key, value);
+			if (key === 'shadow' && value && !(value instanceof PROShadow)) {
+				this.shadow = new PROShadow(value);
+			}
+			return this;
+		}
 
 		toObject(propertiesToInclude: string[] = []) {
 			return super.toObject(propertiesToInclude.concat(['id', 'name', 'selectable']));

@@ -9,6 +9,7 @@ import { SNAP_THRESHOLD } from '../../../utils/constants';
 import useCanvas from '../../../hooks/canvas';
 import useImage from '../../../hooks/image';
 import { ByID } from '../../../store/project';
+import { enlivenObjects } from '../../../utils/enliven-objects';
 
 let fabricCanvas: Canvas;
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -297,7 +298,7 @@ watch(
 					}
 					// Set filters
 					if (filters?.length) {
-						util.enlivenObjects(toRaw(filters))
+						enlivenObjects(toRaw(filters))
 							.then((response) => {
 								// @ts-ignore
 								object.applyFilters(response);
@@ -329,7 +330,7 @@ watch(
 		});
 
 		if (newLayers.length) {
-			util.enlivenObjects(newLayers)
+			enlivenObjects(newLayers)
 				.then((objects: any) => {
 					fabricCanvas.add(...objects);
 					editor.loading = false;
