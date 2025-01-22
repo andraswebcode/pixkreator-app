@@ -46,6 +46,7 @@ const defaults = {
 	LeftSideBarDrawer: {
 		tag: 'aside',
 		width: 356,
+		mobile: false,
 		VTabs: {
 			density: 'compact',
 			grow: true
@@ -61,6 +62,7 @@ const defaults = {
 	RightSideBarDrawer: {
 		tag: 'aside',
 		location: 'end',
+		mobile: false,
 		VTabs: {
 			density: 'compact',
 			grow: true

@@ -183,19 +183,24 @@ const onObjectModified = ({ target }) => {
 		height: toFixed(height, 0)
 	};
 
-	if (type === 'Image') {
+	if (type === 'Image' || type === 'image') {
 		newProps.cropX = toFixed(cropX, 0);
 		newProps.cropY = toFixed(cropY, 0);
-	} else if (type === 'IText') {
+	} else if (type === 'IText' || type === 'i-text') {
 		newProps.text = text;
-	} else if (type === 'Ellipse') {
+	} else if (type === 'Ellipse' || type === 'ellipse') {
 		newProps.rx = toFixed(rx, 0);
 		newProps.ry = toFixed(ry, 0);
-	} else if (type === 'Circle') {
+	} else if (type === 'Circle' || type === 'circle') {
 		newProps.radius = toFixed(radius, 0);
-	} else if (type === 'Path') {
+	} else if (type === 'Path' || type === 'path') {
 		newProps.path = path;
-	} else if (type === 'Polygon' || type === 'Polyline') {
+	} else if (
+		type === 'Polygon' ||
+		type === 'Polyline' ||
+		type === 'polygon' ||
+		type === 'polyline'
+	) {
 		newProps.points = points;
 	}
 
