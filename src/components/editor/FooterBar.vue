@@ -4,7 +4,7 @@ import { MAX_ZOOM, MIN_ZOOM, ZOOM_STEP } from '../../utils/constants';
 import useFitToScreen from '../../hooks/fittoscreen';
 import { useDisplay } from 'vuetify';
 
-const { smAndUp, mdAndUp } = useDisplay();
+const { smAndUp, lgAndUp } = useDisplay();
 const editor = useEditor();
 const fitToScreen = useFitToScreen();
 const toggleList = () => {
@@ -66,7 +66,7 @@ const zoom = (dir: string) => {
 								:min="MIN_ZOOM"
 								:max="MAX_ZOOM"
 								:step="ZOOM_STEP"
-								:width="mdAndUp ? 400 : 170"
+								:width="lgAndUp ? 400 : 170"
 								thumb-label
 							>
 								<template v-slot:prepend>
