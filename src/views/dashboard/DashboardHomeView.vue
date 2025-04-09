@@ -4,12 +4,13 @@ import useRequest from '../../hooks/request';
 import { useRouter } from 'vue-router';
 import { DETAILS_DIALOG_WIDTH } from '../../utils/constants';
 import { useDisplay } from 'vuetify';
-import { useUser } from '../../store';
+import { useUser, useNotice } from '../../store';
 
-const { list } = useRequest();
+const { list, save, destroy } = useRequest();
 const router = useRouter();
 const userData = useUser();
 const { mdAndUp } = useDisplay();
+const notice = useNotice();
 const recentProjects = ref<any[]>([]);
 const editorsChoice = ref<any[]>([]);
 const loadingProjects = ref(true);
@@ -27,6 +28,49 @@ const editProject = (i: number) => {
 			id: recentProjects.value[i].id
 		}
 	});
+};
+const cloneProject = (i: number) => () => {
+	const item = recentProjects.value[i];
+	const { title, description, width, height, background, layers, layer_ids } = item;
+
+	save(
+		'',
+		'designs',
+		{
+			title,
+			description,
+			status: 'private',
+			width,
+			height,
+			background,
+			layers,
+			layer_ids
+		},
+		(response) => {
+			notice.send('Design created successfully.', 'success');
+			recentProjects.value = [response].concat(recentProjects.value).slice(0, 6);
+		},
+		(error) => {
+			notice.send(error.response?.data?.message || error.message, 'error');
+		}
+	);
+};
+const deleteProject = (i: number) => () => {
+	const item = recentProjects.value[i];
+	const id = item.id;
+	const force = !!item.deleted_at;
+
+	destroy(
+		id,
+		'designs',
+		(data) => {
+			notice.send(data.message, 'success');
+			recentProjects.value = recentProjects.value.filter((item) => item.id !== id);
+		},
+		(error) => {
+			notice.send(error.response?.data?.message || error.message, 'error');
+		}
+	);
 };
 const openDetails = (i: number, c: string) => {
 	showDetails.value = true;
@@ -126,6 +170,18 @@ onMounted(() => {
 					:key="item.id"
 					:label="item.title"
 					cols="2"
+					:actions="[
+						{
+							label: 'Clone',
+							prependIcon: 'mdi-content-copy',
+							onClick: cloneProject(i)
+						},
+						{
+							label: 'Delete',
+							prependIcon: 'mdi-trash-can',
+							onClick: deleteProject(i)
+						}
+					]"
 					:json="{
 						...item,
 						layers: item.layer_ids.map((id) => {
