@@ -58,7 +58,6 @@ const cloneProject = (i: number) => () => {
 const deleteProject = (i: number) => () => {
 	const item = recentProjects.value[i];
 	const id = item.id;
-	const force = !!item.deleted_at;
 
 	destroy(
 		id,
