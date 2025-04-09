@@ -20,7 +20,7 @@ const addText = () => {
 	<div class="pa-4">
 		<VTextarea label="Text" v-model="text" />
 		<FontSelect label="Font Family" v-model="family" />
-		<VBtn block @click="addText">Add Text</VBtn>
+		<VBtn block :disabled="!text || !family" @click="addText">Add Text</VBtn>
 	</div>
 </template>
 
