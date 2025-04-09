@@ -2,19 +2,19 @@
 import { ref } from 'vue';
 import { useUser } from '../../../store';
 
-const tab = ref('storage');
+const tab = ref('upload');
 const userData = useUser();
 </script>
 
 <template>
 	<TabsWrapper v-if="userData.loggedIn">
 		<VTabs v-model="tab" fixed-tabs>
-			<VTab value="storage">Storage</VTab>
 			<VTab value="upload">Upload</VTab>
+			<VTab value="storage">Storage</VTab>
 		</VTabs>
 		<VDivider />
-		<LeftSideBarTabUploadStorage v-if="tab === 'storage'" />
-		<LeftSideBarTabUpload v-else-if="tab === 'upload'" />
+		<LeftSideBarTabUpload v-if="tab === 'upload'" />
+		<LeftSideBarTabUploadStorage v-else-if="tab === 'storage'" />
 	</TabsWrapper>
 	<LoginNotice v-else />
 </template>
