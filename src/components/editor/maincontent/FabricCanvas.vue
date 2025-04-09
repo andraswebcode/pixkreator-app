@@ -380,17 +380,19 @@ watch(
 	updateCanvas
 );
 watch(
-	(): [EditorModeType, EditorPencilType, number, string] => [
+	(): [EditorModeType, EditorPencilType, number, string, string] => [
 		editor.mode,
 		editor.pencil,
 		editor.penWidth,
-		editor.penColor
+		editor.penColor,
+		editor.penFill
 	],
-	([newMode, newPencil, newWidth, newColor]) => {
+	([newMode, newPencil, newWidth, newColor, newFill]) => {
 		fabricCanvas.setPencil(newPencil);
 		fabricCanvas.isDrawingMode = newMode === 'draw';
 		fabricCanvas.freeDrawingBrush!.width = newWidth;
 		fabricCanvas.freeDrawingBrush!.color = newColor;
+		fabricCanvas.freeDrawingBrush!.fill = newFill;
 	}
 );
 watch(

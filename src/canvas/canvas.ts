@@ -5,6 +5,7 @@ import { PROActiveSelection } from './objects/active-selection';
 import { EditorPencilType } from '../store/editor';
 import { PRORectBrush } from './brushes/rect';
 import { PROEllipseBrush } from './brushes/ellipse';
+import { ShapeBrush } from './brushes/shape';
 
 class Canvas extends FabricCanvas {
 	selectionColor = 'rgba(16, 187, 229, 0.1)';
@@ -19,6 +20,7 @@ class Canvas extends FabricCanvas {
 	selectionKey: ModifierKey = 'ctrlKey';
 	altActionKey: ModifierKey = 'ctrlKey';
 	uniScaleKey = null;
+	freeDrawingBrush?: PROPencilBrush | ShapeBrush;
 
 	showMargin = true;
 	margin = 20;

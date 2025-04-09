@@ -19,6 +19,7 @@ const switchDrawing = () => {
 		<VSelect label="Draw" v-model="editor.pencil" :items="pencilTypes" />
 		<RangeSlider label="Pencil Width" v-model="editor.penWidth" />
 		<ColorPicker label="Pencil Color" v-model="editor.penColor" />
+		<ColorPicker label="Fill Color" v-model="editor.penFill" />
 		<VBtn block :color="editor.mode === 'draw' ? 'primary' : ''" @click="switchDrawing">
 			{{ btnLabel }}
 		</VBtn>

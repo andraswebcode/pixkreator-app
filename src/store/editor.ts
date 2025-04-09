@@ -45,6 +45,7 @@ export interface EditorState {
 	pencil: EditorPencilType;
 	penWidth: number;
 	penColor: string;
+	penFill: string;
 	// Apps
 	activeApp: AppID | '';
 	// Layers
@@ -79,6 +80,7 @@ export default defineStore<string, EditorState, EditorGetters>('editor', {
 		pencil: 'brush',
 		penWidth: 2,
 		penColor: '#000000',
+		penFill: 'rgba(0, 0, 0, 0)',
 		activeApp: '',
 		activeLayerIds: [],
 		showMargin: true,

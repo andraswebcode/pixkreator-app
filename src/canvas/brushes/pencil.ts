@@ -3,9 +3,11 @@ import { PROPath } from '../objects/path';
 import { PROShadow } from '../shadow';
 
 class PROPencilBrush extends PencilBrush {
+	fill = 'rgba(0, 0, 0, 0)';
+
 	public createPath(pathData) {
 		const path = new PROPath(pathData, {
-			fill: null,
+			fill: this.fill,
 			stroke: this.color,
 			strokeWidth: this.width,
 			strokeLineCap: this.strokeLineCap,
