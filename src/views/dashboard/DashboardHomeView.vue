@@ -62,6 +62,7 @@ const deleteProject = (i: number) => () => {
 	destroy(
 		id,
 		'designs',
+		false,
 		(data) => {
 			notice.send(data.message, 'success');
 			recentProjects.value = recentProjects.value.filter((item) => item.id !== id);
