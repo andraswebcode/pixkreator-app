@@ -4,7 +4,7 @@ import { useProject } from '../../../store';
 
 const project = useProject();
 const text = ref('Text');
-const family = ref('Roboto');
+const family = ref('');
 const addText = () => {
 	project.addLayer({
 		type: 'i-text',
